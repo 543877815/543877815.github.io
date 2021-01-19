@@ -1,0 +1,2789 @@
+<!DOCTYPE html>
+
+
+
+
+
+<meta name="baidu-site-verification" content="5oRHLAQGnj">
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="baidu-site-verification" content="lwUVJQDQY6">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<script src="/js/src/echarts.common.min.js"></script>
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-flash.min.css?v=1.0.2">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="a5vmQFcAVEC4Sx0zdSaOZWOE35q4ZV1mgPnznYhQ1SQ">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="​">
+<meta name="keywords" content="Aws">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【AWS】- quizzes">
+<meta property="og:url" content="https://lifengjun.xin/2019/07/21/【AWS】-quizzes/index.html">
+<meta property="og:site_name" content="逗比学长的博客">
+<meta property="og:description" content="​">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-11-13T13:55:58.802Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【AWS】- quizzes">
+<meta name="twitter:description" content="​">
+
+
+
+
+
+
+  <link rel="canonical" href="https://lifengjun.xin/2019/07/21/【AWS】-quizzes/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【AWS】- quizzes | 逗比学长的博客</title>
+  
+
+
+
+
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-134155436-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-134155436-1');
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/js/src/APlayer.min.js"></script>
+<script type="text/javascript" src="/js/src/music.js"></script>
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">逗比学长的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">博客是写给我自己看的（叉腰）</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-top">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/top/" rel="section"><i class="menu-item-icon fa fa-fw fa-signal"></i> <br>热榜</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/links" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-quick-check">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/quick-check" rel="section"><i class="menu-item-icon fa fa-fw fa-pencil"></i> <br>速查</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-portal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/portal" rel="section"><i class="menu-item-icon fa fa-fw fa-rocket"></i> <br>传送门</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/543877815" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2019/07/21/【AWS】-quizzes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【AWS】- quizzes
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-21 19:15:04" itemprop="dateCreated datePublished" datetime="2019-07-21T19:15:04+08:00">2019-07-21</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-11-13 21:55:58" itemprop="dateModified" datetime="2020-11-13T21:55:58+08:00">2020-11-13</time>
+              
+            
+          </span>
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Aws/" itemprop="url" rel="index"><span itemprop="name">Aws</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+            <span id="/2019/07/21/【AWS】-quizzes/" class="leancloud_visitors" data-flag-title="【AWS】- quizzes">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-count">总字数：8.9k</span>
+          
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-count">阅读时长预计：32min </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>​    </p>
+<a id="more"></a>
+<h1 id="quiz"><a href="#quiz" class="headerlink" title="quiz"></a>quiz</h1><ul>
+<li><p>云计算以一种简单的方式通过 Internet 访问服务器、存储空间、数据库和各种应用程序服务。</p>
+</li>
+<li><p>[ ] 错误</p>
+</li>
+<li><p>[x] 正确</p>
+</li>
+<li><p>主要部署模型是（选择所有适用的模型）：</p>
+</li>
+<li><p>[ ] 利用</p>
+</li>
+<li>[x] 混合</li>
+<li>[x] 云</li>
+<li><p>[x] 本地</p>
+</li>
+<li><p>可用区由一个或多个分散的数据中心组成，每个都拥有独立的配套设施，其中包括冗余电源、网络和连接。</p>
+</li>
+<li><p>[ ] 错误</p>
+</li>
+<li><p>[x] 正确</p>
+</li>
+<li><p>混合部署使用虚拟化和资源管理工具，有时称为“私有云”。</p>
+</li>
+<li><p>[x] 错误</p>
+</li>
+<li><p>[ ] 正确</p>
+</li>
+<li><p>完形填空</p>
+<p> <strong><strong><strong>__</strong></strong></strong>由一个或多个可用区组成，在地理位置上分散，并将位于单独的地理区域或国家/地区。</p>
+<p> regions</p>
+</li>
+<li><p>选择云计算的优势（选择所有适用的优势）：</p>
+</li>
+<li><p>[x] 大范围规模经济的优势</p>
+</li>
+<li>[x] 无需预估容量</li>
+<li>[x] 将资本投入变成可变投入</li>
+<li><p>[x] 增加速度和灵活性</p>
+</li>
+<li><p>以下哪一项不是 AWS 云平台服务？</p>
+</li>
+<li><p>[ ] 分析</p>
+</li>
+<li>[x] 联网</li>
+<li>[ ] 物联网</li>
+<li><p>[ ] 移动服务</p>
+</li>
+<li><p>以下哪一项不是管理数据库实例的方法？</p>
+</li>
+<li><p>[ ] 命令行工具</p>
+</li>
+<li><p>[ ] AWS 管理控制台</p>
+</li>
+<li><p>[x] Amazon CloudFront</p>
+</li>
+<li><p>[ ] Amazon RDS API</p>
+<p>您可以通过 AWS 管理控制台、Amazon RDS API 和命令行工具创建和删除数据库实例、定义/优化数据库实例的基础设施属性，以及控制访问和安全性。</p>
+</li>
+<li><p>完形填空</p>
+<p> <strong><strong><strong><strong><em>_</em></strong></strong></strong></strong> 是一种可在云中提供可调整计算能力的 Web 服务。它旨在降低开发人员和系统管理员进行网络规模级计算的难度。</p>
+<p> Amazon Elastic Compute Cloud (Amazon EC2) is a web service that provides resizable compute capacity in the cloud. It is designed to make web-scale computing easier for developers.</p>
+</li>
+<li><p>为什么要衡量 Amazon EC2 实例性能？ 请选择最佳答案。</p>
+</li>
+<li><p>[ ] 识别适当的实例类型</p>
+</li>
+<li><p>[ ] 验证应用程序架构</p>
+</li>
+<li><p>[ ] 减少工作负载</p>
+</li>
+<li><p>[x] 识别适当的实例类型并验证应用程序架构</p>
+<p>Amazon EC2 可使您预置各种提供不同 CPU、内存、磁盘和联网组合的实例类型。启动新实例和并行运行测试的过程很简单，我们建议测量应用程序的性能，以确定适当的实例类型并验证应用程序架构。</p>
+</li>
+<li><p>下面哪个 AWS 服务是一种托管服务，可以轻松地在云中设置、操作和扩展关系数据库？</p>
+</li>
+<li><p>[x] Amazon RDS</p>
+</li>
+<li><p>[ ] Amazon Lambda</p>
+</li>
+<li><p>[ ] Amazon EC2</p>
+</li>
+<li><p>[ ] Amazon CloudFront</p>
+<p>Amazon Relational Database Service (Amazon RDS) 是一种托管服务，可让用户在云中轻松设置、操作和扩展关系数据库。</p>
+</li>
+<li><p>以下哪项服务是 AWS 数据库服务？</p>
+</li>
+<li><p>[ ] Kinesis</p>
+</li>
+<li><p>[ ] CloudFront</p>
+</li>
+<li><p>[x] DynamoDB</p>
+</li>
+<li><p>[ ] S3</p>
+<p>Amazon DynamoDB 是一种快速、全面托管的 NoSQL 数据库服务，它能让用户简单并且经济有效地存储和检索任何数据量，同时服务于任何程度的请求流量。所有数据项都存储在固态驱动器 (SSD) 中，同时在 3 个可用区之间进行复制，确保实现高可用性和持久性。通过 DynamoDB，您可以卸下由于运行和扩展高度可用的分布式数据库集群所带来的管理负担，同时仅为使用的资源支付低价</p>
+</li>
+<li><p>判断对错。</p>
+<p> 预留实例可以从一个区域移动到另一个区域。</p>
+</li>
+<li><p>[x] 错误</p>
+</li>
+<li><p>[ ] 正确</p>
+<p>每个预留实例都与一个特定区域关联，该区域在预留的生命周期内固定，无法更改。但是，每个预留都可以在相关区域内的任何可用区中使用。</p>
+</li>
+<li><p><strong><strong>_</strong></strong> 不需要您的组织管理底层基础设施 (通常是硬件和操作系统)，让您能够专注于应用程序的部署和管理。</p>
+</li>
+<li><p>[ ] 软件即服务 (SaaS)</p>
+</li>
+<li>[ ] 网络即服务 (NaaS)</li>
+<li>[x] 平台即服务 (PaaS)</li>
+<li><p>[ ] 身份即服务 (IaaS)</p>
+</li>
+<li><p>Amazon Route53 提供了什么？</p>
+</li>
+<li><p>[x] 一个可扩展的域名系统。</p>
+</li>
+<li>[ ] 一个用于 Amazon EC2 的 SSH 终端节点。</li>
+<li>[ ] 一个全球内容分发网络。</li>
+<li><p>[ ] 以上都不是。</p>
+</li>
+<li><p><strong><strong><strong>_</strong></strong></strong>模型允许将软件应用程序作为服务提供给最终用户。它是指部署在托管服务上并且可以通过互联网访问的软件。</p>
+</li>
+<li><p>[ ] 基础设即服务 (IaaS) 模型</p>
+</li>
+<li><p>[ ] 网络即服务 (NaaS) 模型</p>
+</li>
+<li><p>[x] 软件即服务 (SaaS) 模型</p>
+</li>
+<li><p>[ ] 平台即服务 (PaaS) 模型</p>
+<ul>
+<li><p>基础设施即服务 (IaaS)</p>
+<p>基础设施即服务有时缩写为 IaaS，包含云 IT 的基本构建块，通常提供对联网功能、计算机（虚拟或专用硬件）以及数据存储空间的访问。基础设施即服务提供最高等级的灵活性和对 IT 资源的管理控制，其机制与现今众多 IT 部门和开发人员所熟悉的现有 IT 资源最为接近。</p>
+</li>
+<li><p>平台即服务 (PaaS)：</p>
+<p>平台即服务消除了组织对底层基础设施（一般是硬件和操作系统）的管理需要，让您可以将更多精力放在应用程序的部署和管理上面。这有助于提高效率，因为您不用操心资源购置、容量规划、软件维护、补丁安装或与应用程序运行有关的任何无差别的繁重工作。</p>
+</li>
+<li><p>软件即服务 (SaaS)</p>
+<p>软件即服务提供了一种完善的产品，其运行和管理皆由服务提供商负责。人们通常所说的软件即服务指的是终端用户应用程序。使用 SaaS 产品时，服务的维护和底层基础设施的管理都不用您操心，您只需要考虑怎样使用 SaaS 软件就可以了。SaaS 的常见应用是基于 Web 的电子邮件，在这种应用场景中，您可以收发电子邮件而不用管理电子邮件产品的功能添加，也不需要维护电子邮件程序运行所在的服务器和操作系统。</p>
+</li>
+</ul>
+</li>
+<li><p>完形填空</p>
+<pre><code> _____________由一个或多个可用区组成，在地理位置上分散，并将位于单独的地理区域或国家/地区。
+</code></pre><p>  ​    regions</p>
+</li>
+<li><p>以下哪一项不是 AWS 云基础设施服务？</p>
+</li>
+<li><p>[ ] 计算</p>
+</li>
+<li><p>[ ] 数据库</p>
+</li>
+<li><p>[ ] 联网</p>
+</li>
+<li><p>[x] 分析</p>
+<p>云计算有三种主要类型，通常称为基础设施即服务 (IaaS)、平台即服务 (PaaS) 和软件即服务 (SaaS)。 AWS 云提供了各种各样的基础设施服务，例如计算能力、存储选项、联网和数据库等实用服务：按需交付、即时可用、采用按使用量付费定价模式。</p>
+</li>
+<li><p>判断对错</p>
+<p>  Amazon EC2 可以将实例放在多个位置。</p>
+</li>
+<li><p>[ ] 错误</p>
+</li>
+<li><p>[x] 正确</p>
+<p>Amazon EC2 可以将实例放在多个位置。Amazon EC2 位置由区域和可用区构成。通过在不同可用区启动实例，您可以保护应用程序免于单个位置故障的影响。</p>
+</li>
+<li><p>在 EC2 的基本监控包中，Amazon CloudWatch 提供了以下指标：</p>
+</li>
+<li><p>[ ] 所消耗的 CPU 积分数</p>
+</li>
+<li><p>[x] 所有答案选项</p>
+</li>
+<li><p>[ ] 当前正在使用的已分配 EC2 计算单位的百分比</p>
+</li>
+<li><p>[ ] 已完成的读取操作</p>
+<p>有关指标的完整列表，请访问<a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/viewing_metrics_with_cloudwatch.html" target="_blank" rel="noopener">列出实例的可用 CloudWatch 指标</a></p>
+</li>
+<li><p>默认情况下，客户可以运行多少个 Amazon RDS 数据库实例？</p>
+</li>
+<li><p>[ ] 20</p>
+</li>
+<li><p>[ ] 100</p>
+</li>
+<li><p>[ ] 30</p>
+</li>
+<li><p>[x] 40</p>
+<p>默认情况下，客户最多可以拥有 40 个 Amazon RDS 数据库实例。在这 40 个实例中，多达 10 个可以是 “包含许可证” 模型下的 Oracle 或 SQL Server 数据库实例。所有 40 个实例都可以在 “BYOL” 模型下用于 Amazon Aurora、MySQL、MariaDB、Oracle、SQL Server 或 PostgreSQL。如果您的应用程序需要更多数据库实例，您可以通过请求表单来请求其他数据库实例。</p>
+</li>
+<li><p>根据“AWS 可接受使用政策”，EC2 实例的渗透测试：</p>
+</li>
+<li><p>[ ] 可以由 AWS 执行，且定期由 AWS 执行。</p>
+</li>
+<li><p>[x] 可以由 AWS 执行，且由 AWS 按照客户要求执行。</p>
+</li>
+<li><p>[ ] 在任何情况下都是明确禁止的。</p>
+</li>
+<li><p>[ ] 可以由客户在自己的实例上执行（仅在通过 EC2 实例执行时）。</p>
+<p>我们的<a href="https://aws.amazon.com/aup/" target="_blank" rel="noopener">可接受使用政策</a>描述了 AWS 上允许和禁止的行为，包括禁止的安全违规和网络滥用的描述。</p>
+</li>
+<li><p><strong><strong><em>_</em></strong></strong>是一种用于访问、监控和管理远程数据中心基础设施的自助服务模型。</p>
+</li>
+<li><p>[ ] 平台即服务 (PaaS)</p>
+</li>
+<li>[ ] 软件即服务 (SaaS)</li>
+<li>[ ] 网络即服务 (NaaS)</li>
+<li><p>[x] 基础设施即服务 (IaaS)</p>
+</li>
+<li><p>Amazon EC2 位置由<strong><strong><strong>_</strong></strong></strong> 和 <strong><strong><strong>__</strong></strong></strong>组成。</p>
+<p>  regions and availability zones  </p>
+</li>
+<li><p>下面哪个 AWS 服务是一种计算服务，可让您上传代码并运行代码以响应事件（例如 Amazon S3 存储桶或 Amazon DynamoDB 表中的数据更改）？</p>
+</li>
+<li><p>[ ] Amazon S3</p>
+</li>
+<li>[x] Amazon Lambda</li>
+<li>[ ] Amazon CloudFront</li>
+<li><p>[ ] Amazon EC2</p>
+</li>
+<li><p><strong><em>__</em></strong>，Amazon Web Services (AWS) 开始以 Web 服务的形式向企业提供 IT 基础设施服务，现在通常称为云计算。</p>
+</li>
+<li><p>[x] 2006 年</p>
+</li>
+<li><p>[ ] 2008 年</p>
+</li>
+<li><p>[ ] 2000 年</p>
+</li>
+<li><p>[ ] 2003 年</p>
+<p>2006 年，Amazon Web Services (AWS) 开始以 Web 服务的形式向企业提供 IT 基础设施服务，现在通常称为云计算。</p>
+</li>
+<li><p>预留实例与按需数据库实例有何不同？</p>
+</li>
+<li><p>[ ] 内存资源</p>
+</li>
+<li><p>[ ] CPU 资源</p>
+</li>
+<li><p>[x] 计费方式</p>
+</li>
+<li><p>[ ] 存储容量</p>
+<p>在功能上，预留实例和按需数据库实例完全相同。唯一的区别是数据库实例的计费方式： 使用预留实例，您可以为数据中心中的计算机预留容量，并在这段时间内获得较低的每小时有效使用费率（与按需数据库实例相比）。</p>
+</li>
+<li><p>以下哪一项不是 AWS 云计算的优势？</p>
+</li>
+<li><p>[ ] 按使用量付费定价</p>
+</li>
+<li>[ ] 规模</li>
+<li>[x] 固定容量</li>
+<li><p>[ ] 提高速度和灵活性</p>
+</li>
+<li><p>以下哪项服务是 AWS 存储服务？</p>
+</li>
+<li><p>[ ] Redshift</p>
+</li>
+<li><p>[ ] CloudFront</p>
+</li>
+<li><p>[x] S3</p>
+</li>
+<li><p>[ ] Amazon Kinesis</p>
+<p> Amazon S3 是一种面向 Internet 的存储服务。该服务旨在降低开发人员进行网络规模级计算的难度。</p>
+</li>
+<li><p>可使用哪些功能来限制对 S3 中数据的访问？ （选择 2 个正确答案）</p>
+</li>
+<li><p>[x] 为存储桶创建 CloudFront 分配。</p>
+</li>
+<li><p>[x] 设置 S3 存储桶政策。</p>
+</li>
+<li><p>[ ] 使用 S3 虚拟托管。</p>
+</li>
+<li><p>[ ] 启用 IAM 联合身份验证。</p>
+</li>
+<li><p>[ ] 在存储桶或对象上设置 S3 ACL。</p>
+<p> 您可以添加源访问身份并自动更新存储桶策略，以授予源访问身份访问存储桶的权限。或者，您可以选择手动更改存储桶策略或更改 ACL，ACL 控制对存储桶中单个对象的权限。</p>
+<p>通常，如果您使用 Amazon S3 存储桶作为 CloudFront 分配的来源，则您授予每个人读取存储桶中对象的权限。这允许任何人通过 CloudFront 或使用 Amazon S3 URL 访问您的对象。CloudFront 不会公开 Amazon S3 URL，但如果您的应用程序直接从 Amazon S3 提供任何对象，或者任何人提供 Amazon S3 中特定对象的直接链接，则您的用户可能拥有这些 URL。</p>
+</li>
+<li><p>以下哪些策略可以实现更高的容错能力？  （选择所有适用的答案）</p>
+</li>
+<li><p>[x] 使用 Amazon Elastic Block Store (EBS) 实现持久性存储</p>
+</li>
+<li>[x] 按地理位置分配应用程序</li>
+<li>[x] 保持备用实例运行</li>
+<li><p>[x] 创建您自己的 AMI 的库</p>
+</li>
+<li><p><strong><strong><em>_</em></strong></strong>是一项完全托管式源代码控制服务，让公司能够轻松托管安全且高度可扩展的私有 Git 存储库。</p>
+</li>
+<li><p>[x] AWS CodeCommit</p>
+</li>
+<li>[ ] AWS 命令行界面 (CLI)</li>
+<li>[ ] AWS CodeDeploy</li>
+<li><p>[ ] AWS CodePipeline</p>
+</li>
+<li><p>AWS 提供的服务是针对 DevOps 设计的，并且首先为 AWS 云使用而构建。以下哪些 Amazon DevOps 工具/服务可帮助您安全地存储和版本化应用程序的源代码？ （选择所有适用的答案）</p>
+</li>
+<li><p>[x] AWS CodeDeploy</p>
+</li>
+<li>[x] AWS CodePipeline</li>
+<li>[ ] Amazon CloudFront</li>
+<li><p>[x] AWS CodeCommit</p>
+</li>
+<li><p>以下哪些是 AWS DevOps 的优势？ （选择所有适用的答案）</p>
+</li>
+<li><p>[ ] 孤立的团队</p>
+</li>
+<li>[x] 加强协作</li>
+<li>[x] 快速交付</li>
+<li><p>[x] 安全日志</p>
+</li>
+<li><p>以下哪些策略可以实现更高的容错能力？  （选择所有适用的答案）</p>
+</li>
+<li><p>[x] 创建您自己的 AMI 的库</p>
+</li>
+<li>[x] 使用 Amazon Elastic Block Store (EBS) 实现持久性存储</li>
+<li>[x] 按地理位置分配应用程序</li>
+<li><p>[x] 保持备用实例运行</p>
+</li>
+<li><p><strong><strong><strong><em>_</em></strong></strong></strong>是一种 DevOps 软件开发实践，通过该实践可以自动构建、测试和准备代码更改以便投产。</p>
+</li>
+<li><p>[ ] Drupal</p>
+</li>
+<li>[ ] 持续集成</li>
+<li>[ ] Beanstalk</li>
+<li><p>[x] 持续交付</p>
+</li>
+<li><p>以下哪一项不是稳健备份计划的策略？</p>
+</li>
+<li><p>[ ] 时间间隔：备份之间的时间，通常为每天，但对于某些应用程序，可能更频繁</p>
+</li>
+<li>[ ] 恢复计划</li>
+<li>[x] 弹性 IP 地址</li>
+<li><p>[ ] 保留期：取决于应用程序和回滚的业务要求</p>
+</li>
+<li><p>为了最大限度地减少停机时间，您可以始终让备用<strong><strong>__</strong></strong>保持运行，以便在发生故障时随时接管。</p>
+</li>
+<li><p>[x] 实例</p>
+</li>
+<li>[ ] VPC</li>
+<li>[ ] API</li>
+<li><p>[ ] 访问密钥</p>
+</li>
+<li><p>借助<strong><strong><em>__</em></strong></strong>，您可以更轻松地快速推出新功能、避免在应用程序部署过程中出现停机，并简化应用程序的更新工作。</p>
+</li>
+<li><p>[ ] AWS CodeCommit</p>
+</li>
+<li>[ ] DevOps</li>
+<li>[ ] AWS CodePipeline</li>
+<li><p>[x] AWS CodeDeploy</p>
+</li>
+<li><p>以下哪些是连续交付的好处？ （选择所有适用的答案）</p>
+</li>
+<li><p>[x] 更快地交付更新</p>
+</li>
+<li>[x] 自动执行软件发布过程</li>
+<li>[x] 提高开发人员的工作效率</li>
+<li><p>[x] 更快地查找和解决错误</p>
+</li>
+<li><p><strong><strong>__</strong></strong>定义为项目集合，其中最后一个添加到集合中的项目是第一个要删除的项目 –（后进先出）。</p>
+</li>
+<li><p>[ ] 数组</p>
+</li>
+<li>[x] 堆栈</li>
+<li>[ ] 队列</li>
+<li><p>[ ] 表</p>
+</li>
+<li><p><strong><strong><strong>__</strong></strong></strong>提供启动实例（云中的虚拟服务器）所需的信息。</p>
+</li>
+<li><p>[ ] 应用程序编程接口 (API)</p>
+</li>
+<li>[ ] CloudFront</li>
+<li>[ ] 索引文件</li>
+<li><p>[x] Amazon 系统映像 (AMI)</p>
+</li>
+<li><p>EBS 卷的年故障率 (AFR) 为<strong><strong><strong>_</strong></strong></strong>。</p>
+</li>
+<li><p>[x] 0.1% 和 0.5%</p>
+</li>
+<li>[ ] 3% 和 4%</li>
+<li>[ ] 2% 和 3%</li>
+<li><p>[ ] 1% 和 2%</p>
+</li>
+<li><p><strong><strong><em>_</em></strong></strong>是指围绕新软件产品的一系列活动，从新软件产品推出到产品成熟，可能还包括淘汰。</p>
+</li>
+<li><p>[x] 生命周期管理</p>
+</li>
+<li>[ ] 敏捷部署</li>
+<li>[ ] 发布管理</li>
+<li><p>[ ] 集成测试</p>
+</li>
+<li><p>以下哪项 AWS 服务允许您根据您定义的发布流程模型在每次发生代码更改时构建、测试和部署代码？</p>
+</li>
+<li><p>[x] AWS CodePipeline</p>
+</li>
+<li>[ ] DevOps</li>
+<li>[ ] AWS CodeCommit</li>
+<li><p>[ ] AWS CodeDeploy</p>
+</li>
+<li><p>以下哪些是在 AWS 上构建 Web 应用程序的原因？ （选择所有适用的答案）</p>
+</li>
+<li><p>[x] 身份识别与访问管理</p>
+</li>
+<li>[x] AWS OfficeWorks 可让您轻松部署和管理应用程序</li>
+<li>[x] 大幅缩短构建、开发和测试周期</li>
+<li><p>[x] Amazon EC2 实例跨越多个不同的性能级别，以支持您的应用程序要求</p>
+</li>
+<li><p>DevOps 最佳实践鼓励软件开发工程师和运营专业人员更好地合作。DevOps 的结果包括：（选择所有适用的答案）</p>
+</li>
+<li><p>[x] 提高代码质量</p>
+</li>
+<li>[x] 缩短上市时间</li>
+<li>[x] 加强协作</li>
+<li><p>[x] 可靠发布</p>
+</li>
+<li><p>这是一份正式文档，用于为软件开发人员详细描述产品的预期功能、外观以及与用户的交互。</p>
+</li>
+<li><p>[ ] 引导协议</p>
+</li>
+<li>[ ] 许可证</li>
+<li>[ ] 可接受使用策略</li>
+<li><p>[x] 功能规格</p>
+</li>
+<li><p>以下哪一项是持续交付的好处？（选择所有适用的答案）</p>
+</li>
+<li><p>[x] 自动化软件发布</p>
+</li>
+<li>[x] 提高开发人员的工作效率</li>
+<li>[x] 更快地提供更新</li>
+<li><p>[x] 更快地查找和解决错误</p>
+</li>
+<li><p>什么是 AWS DevOps？</p>
+</li>
+<li><p>[ ] 与云服务集成和扩展云服务的大型合作伙伴生态系统。</p>
+</li>
+<li>[x] 它集文化理念、实践和工具于一身，可以提高组织高速交付应用程序和服务的能力，与使用传统软件开发和基础设施管理流程相比，能够帮助组织更快地发展和改进产品。这种速度使组织能够更好地服务其客户，并在市场上更高效地参与竞争。</li>
+<li>[ ] 使用自动化，以便您可以更快、更高效地构建。</li>
+<li><p>[ ] 一套灵活的服务，旨在降低计算成本。</p>
+</li>
+<li><p>下面的 AWS 命令行界面脚本执行什么命令？</p>
+<p> 命令行脚本：</p>
+<p> pip install —upgrade awscli</p>
+</li>
+<li><p>[ ] 测试 AWS CLI 安装</p>
+</li>
+<li>[ ] 下载安装脚本</li>
+<li>[ ] 检查是否已经安装 Python</li>
+<li><p>[x] 升级现有 AWS CLI 安装  </p>
+</li>
+<li><p>在 Linux、OS X 或 Unix 操作系统和环境中，您应该使用哪种 AWS CLI 安装方法？</p>
+</li>
+<li><p>[x] awscli 库</p>
+</li>
+<li><p>[ ] MSI 安装程序</p>
+</li>
+<li><p>[ ] API Gateway</p>
+</li>
+<li><p>[ ] Pip</p>
+<p>有多种不同的方法可以在计算机上安装 AWS CLI，具体取决于您使用的操作系统和环境：</p>
+<p>在 Microsoft Windows 上 – 使用 MSI 安装程序。<br>在 Linux、OS X 或 Unix 上 – 使用 pip（适用于 Python 软件的软件包管理器）或使用捆绑安装程序手动安装。</p>
+</li>
+<li><p>下面的 AWS 命令行界面脚本执行什么命令？</p>
+<p> 命令行脚本：</p>
+<p> $ aws s3 sync myfolder s3://mybucket/myfolder —exclude *.tmp</p>
+<p> upload: myfolder/newfile.txt to s3://mybucket/myfolder/newfile.txt</p>
+</li>
+<li><p>[ ] 查看支持的服务</p>
+</li>
+<li>[ ] 递归上传和下载多个文件</li>
+<li>[x] 将本地文件夹的内容与 S3 存储桶中的副本同步。</li>
+<li><p>[ ] 查看 S3 存储桶的内容</p>
+</li>
+<li><p>以下哪项是适用于 C++ 的 AWS 开发工具包的核心库功能？</p>
+</li>
+<li><p>[ ] 凭证管理</p>
+</li>
+<li>[ ] 内存分配</li>
+<li>[x] 所有答案选项</li>
+<li><p>[ ] 日志记录  </p>
+</li>
+<li><p>以下哪项是关于 PHP 的正确陈述？</p>
+</li>
+<li><p>[x] 以上皆是</p>
+</li>
+<li>[ ] PHP 执行系统功能，即对于系统上的文件，它可以创建、打开、读取、写入和关闭它们。</li>
+<li>[ ] 通过 PHP 添加、删除、修改数据库中的元素。</li>
+<li><p>[ ] PHP 可以处理表单，即从文件中收集数据、将数据保存到文件中、通过电子邮件发送数据、将数据返回给用户。</p>
+</li>
+<li><p>哪项 AWS 服务允许您从命令行控制多个 AWS 服务，并通过脚本自动执行这些服务？</p>
+</li>
+<li><p>[ ] API Gateway</p>
+</li>
+<li>[ ] Amazon EC2</li>
+<li>[x] AWS 命令行界面 (CLI)</li>
+<li><p>[ ] Amazon Lambda</p>
+</li>
+<li><p>使用“aws configure”命令设置 AWS CLI 安装需要哪四条信息？（选择所有适用的答案）</p>
+</li>
+<li><p>[x] AWS 私有访问密钥</p>
+</li>
+<li>[ ] AWS 隐私访问密钥</li>
+<li>[x] 默认区域</li>
+<li>[x] AWS 访问密钥 ID</li>
+<li><p>[x] 默认输出格式（json、文本或表格）</p>
+</li>
+<li><p>以下哪一个不是通用 CMake 变量？</p>
+</li>
+<li><p>[ ] REGENERATE_CLIENTS</p>
+</li>
+<li><p>[ ] BUILD_ONLY</p>
+</li>
+<li><p>[x] TARGET_HOME</p>
+</li>
+<li><p>[ ] ADD_CUSTOM_CLIENTS</p>
+<p>detail: see <a href="https://docs.aws.amazon.com/sdk-for-cpp/v1/developer-guide/cmake-params.html" target="_blank" rel="noopener">web</a></p>
+</li>
+<li><p>以下哪一个不是 JavaScript 语句？</p>
+</li>
+<li><p>[ ] 关键字</p>
+</li>
+<li>[ ] 表达式</li>
+<li>[ ] 注释</li>
+<li><p>[x] 函数</p>
+</li>
+<li><p>AWS 提供一系列 Java 资源，包括博客、社区论坛和示例代码。 可在以下哪些 AWS 资源中找到 Java 代码示例？</p>
+</li>
+<li><p>[ ] AWS Java 开发中心</p>
+</li>
+<li>[ ] 适用于 Java 的 AWS 开发工具包入门指南</li>
+<li>[ ] AWS Java 开发论坛</li>
+<li><p>[x] GitHub 上适用于 Java 的 AWS 开发工具包</p>
+</li>
+<li><p>判断对错。NOT NULL 约束强制列不接受 null 值。</p>
+</li>
+<li><p>[x] 正确</p>
+</li>
+<li><p>[ ] 错误</p>
+</li>
+<li><p><strong><strong>_</strong></strong>是访问和操作数据库的标准语言。</p>
+</li>
+<li><p>[x] SQL</p>
+</li>
+<li>[ ] JavaScript</li>
+<li>[ ] CSS</li>
+<li><p>[ ] HTML</p>
+</li>
+<li><p>以下哪一种不是将数据导入到 Amazon RDS 的方法？</p>
+</li>
+<li><p>[ ] 适用于 MySQL 的 mysqlimport 实用程序</p>
+</li>
+<li><p>[x] 适用于 RDS 的复制/粘贴实用程序</p>
+</li>
+<li><p>[ ] 适用于 Oracle 的 SQL 加载程序</p>
+</li>
+<li><p>[ ] 使用 mysqldump</p>
+<p>有许多简单的方法可以将数据导入到 Amazon RDS，例如使用适用于 MySQL 的 mysqldump 或 mysqlimport 实用程序；适用于 Oracle 的数据泵、导入/导出或 SQL 加载程序；适用于 SQL Server 的导入/导出向导或批量复制程序 (BCP)；或适用于 PostgreSQL 的 pg_dump。有关数据导入和导出的详细信息，请参阅适用于 MySQL 的数据导入指南、适用于 Oracle 的数据导入指南、适用于 SQL Server 的数据导入指南或适用于 PostgreSQL 的数据导入指南。</p>
+</li>
+<li><p>Amazon DynamoDB 中的主键是什么？</p>
+</li>
+<li><p>[ ] 数据堆栈</p>
+</li>
+<li>[ ] 表中的数据记录</li>
+<li>[x] 表中每个项目的唯一标识符</li>
+<li><p>[ ] 表属性</p>
+</li>
+<li><p>使用下面的场景将每个任务排序为步骤 1、步骤 2 等，以便完成场景活动。</p>
+<p> 场景： 使用 Amazon DynamoDB 创建 NoSQL 表。</p>
+<p> 在 “表名称” 字段中，键入数据文件的名称。</p>
+<p> ​           [ 2 ]          </p>
+<p> 在“分区键”字段中键入数据属性，以便在分区之间传播数据，以实现可伸缩性。</p>
+<p> ​           [ 3 ]    </p>
+<p> 在 DynamoDB 控制台中，单击“创建表”。</p>
+<p> ​           [ 1 ]             </p>
+<p> 选中“添加排序键”框。在“排序键”字段中键入数据属性以启用轻松排序。</p>
+<p> ​           [ 4 ]   </p>
+<p> 单击“创建”。当创建的表准备就绪时，它将显示在表列表中，并带有复选框。  </p>
+<p> ​           [ 5 ]          </p>
+</li>
+<li><p>使用 SQL，如何从名为“Persons”的表中选择名为“FirstName”的列？</p>
+</li>
+<li><p>[x] SELECT FirstName FROM Persons</p>
+</li>
+<li>[ ] EXTRACT Persons.FirstName</li>
+<li>[ ] SELECT Persons.FirstName</li>
+<li><p>[ ] EXTRACT FirstName FROM Persons</p>
+</li>
+<li><p>预留实例与按需数据库实例有何不同？</p>
+</li>
+<li><p>[ ] 存储容量</p>
+</li>
+<li>[x] 计费方式</li>
+<li>[ ] CPU 资源</li>
+<li><p>[ ] 内存资源</p>
+</li>
+<li><p>判断对错。</p>
+</li>
+</ul>
+<p>预留实例可以从一个区域移动到另一个区域。</p>
+<ul>
+<li>[ ] 正确</li>
+<li><p>[x] 错误</p>
+</li>
+<li><p>以下哪一种不是管理数据库实例的方法？（答案要选AWS控制台才能通过）</p>
+</li>
+<li><p>[x] Amazon CloudFront</p>
+</li>
+<li><p>[ ] AWS 管理控制台</p>
+</li>
+<li><p>[ ] 命令行工具</p>
+</li>
+<li><p>[ ] Amazon RDS API</p>
+<p>您可以通过 AWS 管理控制台、Amazon RDS API 和命令行工具创建和删除数据库实例、定义/优化数据库实例的基础设施属性，以及控制访问和安全性。</p>
+</li>
+<li><p><em><strong><strong><strong>_</strong></strong></strong></em>是一个基本数据要素，不需要进一步细分。例如，<code>Department</code> 项可能具有多个属性，如 <code>DepartmentID</code>、<code>Name</code>、<code>Manager</code> 等等。</p>
+</li>
+<li><p>[x] 属性</p>
+</li>
+<li>[ ] 项</li>
+<li>[ ] 资产</li>
+<li><p>[ ] 元素</p>
+</li>
+<li><p><strong><strong><strong>__</strong></strong></strong>是相关数据条目的集合，由列和行组成。</p>
+</li>
+<li><p>[ ] 数据日志</p>
+</li>
+<li>[ ] 堆栈</li>
+<li>[ ] 集群</li>
+<li><p>[x] 表</p>
+</li>
+<li><p>TCP/IP 地址 65.32.98.254 的网络地址是什么？</p>
+</li>
+<li><p>[ ] 65</p>
+</li>
+<li>[ ] 65.32</li>
+<li>[x] 65.32.98</li>
+<li><p>[ ] 65.32.98.254</p>
+</li>
+<li><p>您正在构建一个系统向员工分发机密的培训视频。借助 CloudFront，可以使用哪种方法提供 S3 中存储的，但不能直接通过 S3 公开访问的内容？</p>
+</li>
+<li><p>[ ] 创建用于 CloudFront 的 Identity and Access Management (IAM) 用户，并授予 S3 存储桶中的对象访问该 IAM 用户的权利。</p>
+</li>
+<li><p>[ ] 创建一个 S3 存储桶策略，该策略将 CloudFront 分配 ID 列为“委托人”，并将目标存储桶列为 Amazon 资源名称 (ARN)。</p>
+</li>
+<li><p>[ ] 将 CloudFront 账户安全组“amazon-cf/amazon-cf-sg”添加到适当的 S3 存储桶策略中。</p>
+</li>
+<li><p>[x] 创建用于 CloudFront 的原始访问标识 (OAI)，并授予该 OAI 访问 S3 存储桶中的对象的权利。</p>
+<p>创建原始访问标识是正确答案。 原始访问标识是一个特殊用户，您将设置 CloudFront 服务使用此用户来访问受限内容。</p>
+</li>
+<li><p>如果您拥有超过 5000 名用户，并且需要在 AWS 托管目录和本地目录之间建立信任关系，哪个 AWS Directory Service 选项是最佳选项？</p>
+</li>
+<li><p>[x] 适用于 Microsoft Active Directory 的 AWS Directory Service（企业版）</p>
+</li>
+<li><p>[ ] Simple AD</p>
+</li>
+<li><p>[ ] AD Connector</p>
+<p>如果需要一个成本低廉且具有常用目录功能的可兼容 Active Directory 的服务，请使用 Simple AD。</p>
+<p>选择适用于 Microsoft Active Directory 的 AWS Directory Service（企业版），打造在 AWS 云上托管的功能丰富的 Microsoft Active Directory。</p>
+<p>利用我们的第三个选项 AD Connector，您只需将现有的本地 Active Directory 连接到 AWS 即可。</p>
+</li>
+<li><p>为了最大限度地减少停机时间，您可以始终让备用<strong><strong><strong><strong><strong><em>_</em></strong></strong></strong></strong></strong>保持运行状态，以便在发生故障时随时接管。</p>
+</li>
+<li><p>[ ] API</p>
+</li>
+<li>[ ] 访问密钥</li>
+<li>[ ] VPC</li>
+<li><p>[x] 实例</p>
+</li>
+<li><p>以下哪一项不是在分布式系统中处理许多并发请求的方法？</p>
+</li>
+<li><p>[ ] 生成一个单独的线程</p>
+</li>
+<li>[ ] 编写您自己的任务切换程序</li>
+<li>[x] 创建自定义虚拟机</li>
+<li>[ ] 处理程序池</li>
+</ul>
+<p>​    下面是处理并发请求的几种方法：</p>
+<ul>
+<li>方法 1 – 使用操作系统提供的内容：</li>
+<li><ul>
+<li>为每个请求派生一个单独的进程</li>
+<li>或者生成一个单独的线程</li>
+</ul>
+</li>
+<li>方法2 – 编写您自己的任务切换程序</li>
+<li><ul>
+<li>将每个响应分解为小步骤</li>
+<li>使用自定义事件驱动的分派程序进行调度</li>
+</ul>
+</li>
+<li>方法 3 – 处理程序池：</li>
+<li><ul>
+<li>创建在请求或步骤之间切换的线程池</li>
+</ul>
+</li>
+<li><p>选择 2 个最佳的答案选项。</p>
+<p> Amazon Glacier 设计用于：</p>
+</li>
+<li><p>[ ] 内容传输</p>
+</li>
+<li><p>[x] 长期备份</p>
+</li>
+<li><p>[x] 数据存档</p>
+</li>
+<li><p>[ ] 频繁访问您的数据</p>
+<p>Amazon Glacier 是一种安全、持久且成本极低的云存储服务，适用于数据存档和长期备份。为了保持低成本，Amazon Glacier 针对不经常访问的数据进行了优化，这些数据的检索时间通常需要几个小时。</p>
+<p><a href="https://aws.amazon.com/glacier/" target="_blank" rel="noopener">https://aws.amazon.com/glacier/</a></p>
+</li>
+<li><p>以下哪些 AWS Directory Service 先决条件针对 Simple AD、适用于 Microsoft Active Directory 的 AWS Directory Service 和 AD Connector（企业版）？（选择所有合适的答案）</p>
+</li>
+<li><p>[x] 创建包含至少两个子网的 VPC。每个子网必须位于不同的可用区中。</p>
+</li>
+<li><p>[ ] 创建安全组</p>
+</li>
+<li><p>[ ] 创建目录管理员账户</p>
+</li>
+<li><p>[x] VPC 必须具有默认硬件租赁</p>
+<p><a href="https://docs.aws.amazon.com/zh_cn/directoryservice/latest/admin-guide/prereq_simple.html" target="_blank" rel="noopener">Simple AD 先决条件</a></p>
+<p><a href="https://docs.aws.amazon.com/zh_cn/directoryservice/latest/admin-guide/ms_ad_getting_started_prereqs.html" target="_blank" rel="noopener">AWS Managed Microsoft AD 先决条件</a></p>
+<p><a href="https://docs.aws.amazon.com/zh_cn/directoryservice/latest/admin-guide/prereq_connector.html" target="_blank" rel="noopener">AD Connector 先决条件</a></p>
+</li>
+<li><p>在 AWS 上构建容错应用程序的第一步是创建<strong><strong><strong><strong>__</strong></strong></strong></strong>。</p>
+</li>
+<li><p>[ ] 安全策略</p>
+</li>
+<li>[ ] 您自己的 AMI 的库</li>
+<li>[ ] 访问权</li>
+<li><p>[x] API Gateway</p>
+</li>
+<li><p>在 EC2 的基本监控包中，Amazon CloudWatch 提供了以下指标：</p>
+</li>
+<li><p>[x] 管理程序可见指标，如 CPU 利用率</p>
+</li>
+<li><p>[ ] Web 服务器可见指标，如失败的事务请求数</p>
+</li>
+<li><p>[ ] 数据库可见指标，如连接数</p>
+</li>
+<li><p>[ ] 操作系统可见指标，如内存利用率</p>
+<p>正确答案是管理程序可见指标，如 CPU 利用率。</p>
+<p>有关详细答案，请参阅<a href="http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/working_with_metrics.html" target="_blank" rel="noopener">查看、发布指标以及绘制指标图表</a></p>
+</li>
+<li><p>请选择可标记的 Amazon EC2 资源。</p>
+</li>
+<li><p>[x] Amazon EBS 快照</p>
+</li>
+<li><p>[ ] 密钥对</p>
+</li>
+<li><p>[ ] 弹性 IP 地址</p>
+</li>
+<li><p>[ ] 置放群组</p>
+<p>正确答案是 Amazon EBS 快照。</p>
+<p>有关其他详细信息，请参阅<a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html" target="_blank" rel="noopener">标记您的 Amazon EC2 资源</a></p>
+<p>可以标记</p>
+<p>有关其他详细信息，请参阅<a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html" target="_blank" rel="noopener">标记您的 Amazon EC2 资源</a></p>
+</li>
+<li><p>每个区域每个 AWS 管理员账户可以启动多少个 WorkSpaces？</p>
+</li>
+<li><p>[ ] 15</p>
+</li>
+<li><p>[x] 20</p>
+</li>
+<li><p>[ ] 10</p>
+</li>
+<li><p>[ ] 5</p>
+<p>虽然对 WorkSpaces 的数量没有限制，但每个区域每个 AWS 账户设置了最多 20 个 WorkSpaces 的默认限制。</p>
+</li>
+<li><p>什么是容错能力？</p>
+</li>
+<li><p>[ ] 用于对数字（文字或变量）执行计算</p>
+</li>
+<li>[ ] 一个特殊的变量，它一次可以容纳多个值</li>
+<li>[ ] 用于执行特定任务的代码块</li>
+<li><p>[x] 即使用于构建系统的部分组件出现故障，系统仍能保持运行状态</p>
+</li>
+<li><p>为什么分布式系统有价值？（选择所有适用的答案）</p>
+</li>
+<li><p>[x] 提高可靠性</p>
+</li>
+<li><p>[x] 聚合资源实现高容量</p>
+</li>
+<li><p>[x] 所有答案选项</p>
+</li>
+<li><p>[x] 资源共享</p>
+<p>所有的答案选项都是正确的。</p>
+<p>使用分布式系统可以：</p>
+<ul>
+<li>资源共享（例如，共享文件服务器） </li>
+<li>克服地理隔离（例如 Web） </li>
+<li>提高可靠性</li>
+<li>聚合资源实现高容量（带宽：例如 Amazon S3）</li>
+</ul>
+</li>
+<li><p>默认情况下，Amazon Web Services 账户允许使用多少个弹性 IP 地址？</p>
+</li>
+<li><p>[ ] 0 个弹性 IP</p>
+</li>
+<li>[ ] 3 个弹性 IP</li>
+<li>[x] 5 个弹性 IP</li>
+<li><p>[ ] 1 个弹性 IP</p>
+</li>
+<li><p>哪种 AWS 服务可让您轻松地在 AWS 云中设置和运行 Microsoft Active Directory (AD)，或者将您的 AWS 资源与现有的 Microsoft Active Directory 连接？</p>
+</li>
+<li><p>[ ] Amazon DevOps</p>
+</li>
+<li>[ ] Amazon Elastic Compute Cloud</li>
+<li>[ ] API Gateway</li>
+<li><p>[x] AWS Directory Service</p>
+</li>
+<li><p>Amazon 提供一系列服务，旨在帮助初创公司配置安全的云环境。 以下 Amazon 服务中的哪一项让您能够构建具有延迟要求的高可用性、容错的环境？</p>
+</li>
+<li><p>[ ] Amazon Lambda</p>
+</li>
+<li>[ ] Amazon S3</li>
+<li>[ ] API Gateway 和 CloudFront</li>
+<li><p>[ ] Amazon Virtual Private Cloud (VPC)</p>
+</li>
+<li><p>以下哪一个不是分布式系统的特征？</p>
+</li>
+<li><p>[ ] 并发性</p>
+</li>
+<li>[ ] 容错</li>
+<li>[x] 未共享的资源</li>
+<li><p>[ ] 可扩展性</p>
+</li>
+<li><p>哪种 AWS 服务允许您轻松配置基于云的虚拟桌面，并为用户提供对文档、应用程序和资源的访问权限？</p>
+</li>
+<li><p>[ ] Amazon CloudFront</p>
+</li>
+<li>[x] Amazon WorkSpaces</li>
+<li>[ ] Amazon DevOps</li>
+<li><p>[ ] Amazon EC2</p>
+</li>
+<li><p><strong><strong>__</strong></strong>是通过 TCP/IP 网络或广域网传输的数据的单位。</p>
+</li>
+<li><p>[ ] 捆绑包</p>
+</li>
+<li>[ ] 数组</li>
+<li>[x] 数据包</li>
+<li><p>[ ] 地址</p>
+</li>
+<li><p>判断对错。</p>
+<p>  重建工作区时，会将卷恢复到先前状态。</p>
+</li>
+<li><p>[ ] 错误</p>
+</li>
+<li><p>[x] 正确</p>
+</li>
+<li><p>IP 地址是<strong><strong>_</strong></strong>位数字，用于唯一标识 TCP/IP 网络上的主机（计算机或其他设备，如打印机或路由器）。</p>
+</li>
+<li><p>[ ] 128</p>
+</li>
+<li>[x] 32</li>
+<li>[ ] 16</li>
+<li><p>[ ] 64</p>
+</li>
+<li><p>要保护 S3 数据免遭意外删除和意外覆盖，您应该：</p>
+</li>
+<li><p>[x] 在存储桶上启用 S3 版本控制</p>
+</li>
+<li><p>[ ] 仅使用签名 URL 访问 S3 数据</p>
+</li>
+<li><p>[ ] 启用多重身份验证 (MFA) 保护的访问</p>
+</li>
+<li><p>[ ] 启用 S3 去冗余存储</p>
+<p>正确答案是在存储桶上启用 S3 版本控制。</p>
+<p>版本控制是将对象的多个变体保留在同一存储桶中的方法。您可以使用版本控制来保留、检索和还原 Amazon S3 存储桶中存储的每个对象的每个版本。通过版本控制，您可以轻松地从意外的用户操作和应用程序故障中恢复。</p>
+<p>有关其他详细信息，请参阅<a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html" target="_blank" rel="noopener">使用版本控制</a></p>
+</li>
+<li><p>什么是分布式系统？</p>
+</li>
+<li><p>[ ] 共享内存多处理器</p>
+</li>
+<li>[ ] 网络文件共享系统</li>
+<li>[x] 由网络和/或软件连接的自治计算机集合，目的是生成集成计算设施</li>
+<li><p>[ ] 虚拟桌面系统</p>
+</li>
+<li><p><strong><em>_</em></strong>提供端到端数据通信，指定数据的打包、寻址、传输、路由和接收方式。</p>
+</li>
+<li><p>[ ] 中继器</p>
+</li>
+<li>[ ] 网卡</li>
+<li>[ ] 交换机</li>
+<li><p>[x] TCP/IP</p>
+</li>
+<li><p>判断对错。</p>
+<p>  默认情况下，用户被配置为其 WorkSpaces 的本地管理员。</p>
+</li>
+<li><p>[ ] 错误</p>
+</li>
+<li><p>[x] 正确</p>
+</li>
+<li><p>Amazon 提供一系列服务，旨在帮助初创公司配置安全的云环境。 以下 Amazon 服务中的哪一项让您能够构建具有延迟要求的高可用性、容错的环境？</p>
+</li>
+<li><p>[ ] API Gateway 和 CloudFront</p>
+</li>
+<li>[ ] Amazon S3</li>
+<li>[x] Amazon Virtual Private Cloud (VPC)</li>
+<li><p>[ ] Amazon Lambda</p>
+</li>
+<li><p>下面哪一个是 AWS 为数据安全而执行的操作流程？</p>
+</li>
+</ul>
+<ul>
+<li><p>[ ] EBS 卷和 EBS 快照的后台病毒扫描</p>
+</li>
+<li><p>[ ] 使用行业标准做法淘汰存储设备</p>
+</li>
+<li><p>[ ] 跨多个 AWS 区域复制数据。在 EBS 卷卸载时安全擦除 EBS 数据</p>
+</li>
+<li><p>[x] 对存储在任何共享存储设备上的数据进行 AES-256 加密</p>
+<p>正确答案是存储设备淘汰。</p>
+<p>当某个存储设备已达到其使用寿命的终点时，AWS 程序包括一个淘汰流程，此流程是为防止客户数据暴露给未授权的个人而设计的。作为淘汰流程的一部分，AWS 会使用“国家行业安全程序操作手册”或 NIST“存储介质清理指南”中详细描述的技术来销毁数据。如果无法使用这些程序来报废硬件设备，将依据行业标准实践进行消磁或物理销毁。 </p>
+<p>有关更多详细信息，请参阅 <a href="https://d0.awsstatic.com/whitepapers/Security/AWS_Security_Whitepaper.pdf" target="_blank" rel="noopener">AWS 安全流程概述白皮书</a></p>
+</li>
+<li><p><strong><strong><em>_</em></strong></strong> 是一种 Internet 协议，用于将连接信息从请求连接的源传递到请求连接到的目标。</p>
+</li>
+</ul>
+<ul>
+<li><p>[ ] 传输控制协议</p>
+</li>
+<li><p>[ ] 子网</p>
+</li>
+<li><p>[x] 代理协议</p>
+</li>
+<li><p>[ ] TCP/IP</p>
+<p>代理协议是一种 Internet 协议，用于将连接信息从请求连接的源传递到请求连接到的目标。</p>
+</li>
+<li><p>要提高数据吞吐量，您可以调整<strong><em>__</em></strong> 设置，如窗口缩放和选择性确认。</p>
+</li>
+</ul>
+<ul>
+<li>[ ] IP</li>
+<li>[x] TCP</li>
+<li>[ ] API</li>
+<li><p>[ ] 子网</p>
+</li>
+<li><p>适用于 C++ 的 AWS 开发工具包中的凭证管理界面的名称是什么？</p>
+</li>
+</ul>
+<ul>
+<li>[ ] AWSCredentialsManager</li>
+<li>[x] AWSCredentialsProvider</li>
+<li>[ ] AWSManager</li>
+<li><p>[ ] AWSCredentialsChain</p>
+</li>
+<li><p>Amazon RDS 是什么？</p>
+</li>
+</ul>
+<ul>
+<li>[x] 一种托管服务，让用户能够在云中轻松地设置、操作和扩展关系数据库</li>
+<li>[ ] 简化大数据框架运行的托管集群平台</li>
+<li>[ ] 一种 Web 服务，让用户能够轻松设置、管理和扩展云中的分布式内存缓存环境</li>
+<li><p>[ ] 一种完全托管的 NoSQL 数据库服务，提供快速可预测的性能，同时还能够实现无缝扩展</p>
+</li>
+<li><p>TCP/IP 协议使用<strong><strong><em>__</em></strong></strong>来确定主机是位于本地子网上还是远程网络上。</p>
+</li>
+</ul>
+<ul>
+<li>[ ] 数据包</li>
+<li>[x] 子网掩码</li>
+<li>[ ] 目录</li>
+<li><p>[ ] 捆绑包</p>
+</li>
+<li><p>判断对错。</p>
+<p>对 Amazon EC2 需要有基本的了解，这对于使用 AWS Directory Service 至关重要。</p>
+</li>
+<li><p>[x] 正确</p>
+</li>
+<li><p>[ ] 错误</p>
+<p>对 Amazon EC2 需要有基本的了解，这对于使用 AWS Directory Service 至关重要。我们建议您先阅读以下主题： </p>
+<ul>
+<li><em>适用于 Windows 实例的 Amazon EC2 用户指南</em>中的<a href="http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/concepts.html" target="_blank" rel="noopener">什么是 Amazon EC2？</a></li>
+<li><em>适用于 Windows 实例的 Amazon EC2 用户指南</em>中的<a href="http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/LaunchingAndUsingInstances.html" target="_blank" rel="noopener">启动 EC2 实例</a>。</li>
+<li><em>适用于 Windows 实例的 Amazon EC2 用户指南</em>中的<a href="http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/using-network-security.html" target="_blank" rel="noopener">安全组</a>。</li>
+<li><em>Amazon VPC 用户指南</em>中的<a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Introduction.html" target="_blank" rel="noopener">什么是 Amazon VPC？</a></li>
+<li><em>Amazon VPC 用户指南</em>中的<a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html" target="_blank" rel="noopener">向您的 VPC 添加硬件虚拟专用网关</a></li>
+</ul>
+</li>
+<li><p>TCP/IP 协议使用<strong><strong><em>__</em></strong></strong>来确定主机是位于本地子网上还是远程网络上。</p>
+</li>
+</ul>
+<ul>
+<li>[ ] 数据包</li>
+<li>[x] 子网掩码 </li>
+<li>[ ] 目录</li>
+<li><p>[ ] 捆绑包</p>
+</li>
+<li><p>当停止并启动具有关联弹性 IP 的 VPC (Virtual Private Cloud) 中的 EC2实例时，会发生以下哪些情况？ （选择 2 个答案）</p>
+</li>
+</ul>
+<ul>
+<li><p>[x] 实例存储设备上的所有数据都将丢失</p>
+</li>
+<li><p>[ ] 弹性 IP 将与实例取消关联</p>
+</li>
+<li><p>[x] 实例的基础主机发生更改</p>
+</li>
+<li><p>[ ] EBS (Elastic Block Store) 设备上的所有数据都将丢失</p>
+<p>正确答案是“实例存储设备上的所有数据都将丢失”和“实例的基础主机发生更改”</p>
+<p>当您停止某个实例时，任何实例存储卷上的数据都将被擦除。因此，如果实例存储卷上有任何您要保留的数据，请确保将其备份到持久性存储。</p>
+<p>如果您停止了 Amazon EBS 支持的实例，并且该实例显示“卡在”<code>正在停止</code>状态，则基础主机可能出现问题。</p>
+<p>有关详细答案，请参阅<a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html#starting-stopping-instances" target="_blank" rel="noopener">修改已停止实例</a></p>
+</li>
+<li><p>A 类 TCP/IP 地址的子网掩码是什么？</p>
+</li>
+</ul>
+<ul>
+<li>[ ] 255.255.255.255</li>
+<li>[ ] 255.255.0.0</li>
+<li>[ ] 255.255.255.0</li>
+<li><p>[x] 255.0.0.0</p>
+</li>
+<li><p>如果您有 5000 个或以下的用户，并且正在寻找成本最低的选项，哪个 AWS Directory Service 选项是最佳选择？</p>
+</li>
+</ul>
+<ul>
+<li>[x] Simple AD</li>
+<li>[ ] 适用于 Microsoft Active Directory 的 AWS Directory Service（企业版）</li>
+<li><p>[ ] AD Connector</p>
+</li>
+<li><p>您的 Web 应用程序前端由位于 Elastic Load Balancer 后方的多个 EC2 实例组成。您已将 ELB 配置为对上述 EC2 实例执行运行状况检查。如果实例未通过运行状况检查，那以下哪项表述是正确的？</p>
+</li>
+</ul>
+<ul>
+<li>[ ] 实例将被 ELB 自动替换。</li>
+<li>[x] ELB 将停止向未通过运行状况检查的实例发送流量。</li>
+<li>[ ] 实例将被 ELB 自动终止。</li>
+<li><p>[ ] 实例将被 ELB 隔离，以进行根本原因分析。</p>
+</li>
+<li><p>Amazon WorkSpaces 使用<strong><strong><em>__</em></strong></strong>来存储和管理工作区和用户信息。</p>
+</li>
+</ul>
+<ul>
+<li>[x] 目录</li>
+<li>[ ] 数组</li>
+<li>[ ] 表</li>
+<li><p>[ ] 实例</p>
+</li>
+<li><p>使用下面的场景将每个任务排序为步骤 1、步骤 2 等，以便完成场景活动。</p>
+<p>场景： 设置 AWS CodeCommit 账户为您的存储库用户强制实施多重身份验证 (MFA)。</p>
+<p>创建用于访问存储库的角色。</p>
+<p>​           [ Choose ]            </p>
+<p>使用在两个账户中具有 IAM 和 AWS CodeCommit 所需权限的用户的密钥配置 AWS CLI</p>
+<p>​           [ Choose ]            </p>
+<p>设置 AWS CLI</p>
+<p>​           [ Choose ]             </p>
+<p>创建新的 AWS CodeCommit 存储库。</p>
+<p>​           [ Choose ]          </p>
+<p>创建允许代入该角色的组。</p>
+<p>​           [ Choose ]         </p>
+<p>创建具有属于该组的 MFA 设备的用户。</p>
+</li>
+<li><p>用户数据在 AWS WorkSpaces 上备份的频率是多少？</p>
+</li>
+</ul>
+<ul>
+<li>[ ] 6 小时</li>
+<li>[ ] 3 小时</li>
+<li>[ ] 9 小时</li>
+<li>[x] 12 小时</li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Aws/" rel="tag"># Aws</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+              <div id="needsharebutton-postbottom">
+                <span class="btn">
+                  <i class="fa fa-share-alt" aria-hidden="true"></i>
+                </span>
+              </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/20/【AWS】-Cloud-Computing-101/" rel="next" title="【AWS】- Cloud Computing 101">
+                <i class="fa fa-chevron-left"></i> 【AWS】- Cloud Computing 101
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/21/docker学习日志/" rel="prev" title="docker学习日志">
+                docker学习日志 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        
+          <ul class="sidebar-nav motion-element">
+            <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+              文章目录
+            </li>
+            <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+              站点概览
+            </li>
+          </ul>
+        
+      
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/25082467?v=4" alt="lifengjun">
+            
+              <p class="site-author-name" itemprop="name">lifengjun</p>
+              <p class="site-description motion-element" itemprop="description">个人学习笔记和日志</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/543877815" title="GitHub &rarr; https://github.com/543877815" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:543877815@qq.com" title="E-Mail &rarr; mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+          
+          <!--noindex-->
+            <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+              <div class="post-toc">
+
+                
+                
+                
+                
+
+                
+                  <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#quiz"><span class="nav-number">1.</span> <span class="nav-text">quiz</span></a></li></ol></div>
+                
+
+              </div>
+            </div>
+          <!--/noindex-->
+          
+      
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lifengjun</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+    
+
+  
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+  
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '970dc8fd856c3e17f9f0',
+    clientSecret: '7f6d29828dd1f4a02336c480ba1012f1851b0eb0',
+    repo: '543877815.github.io',
+    owner: '543877815',
+    admin: ['543877815'],
+    id: md5(location.pathname),
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $('.leancloud_visitors');
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
+            
+              .done(function() {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.time + 1);
+              })
+            
+              .fail(function ({ responseJSON }) {
+                console.log(`Failed to save Visitor num, with error message: ${responseJSON.error}`);
+              })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1 }))
+                .done(function() {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function() {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+        .fail(function ({ responseJSON }) {
+          console.log(`LeanCloud Counter Error: ${responseJSON.code} ${responseJSON.error}`);
+        });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + '7lnT19QcEeBPLqbdFz6RXmt6-gzGzoHsz')
+        .done(function({ api_server }) {
+          var Counter = function(method, url, data) {
+            return $.ajax({
+              method: method,
+              url: 'https://' + api_server + '/1.1' + url,
+              headers: {
+                'X-LC-Id': '7lnT19QcEeBPLqbdFz6RXmt6-gzGzoHsz',
+                'X-LC-Key': '0m9MYgfgDxi38rb89hJ8gUHF',
+                'Content-Type': 'application/json',
+              },
+              data: data
+            });
+          };
+          
+            addCount(Counter);
+          
+        });
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+  <script>
+    
+      pbOptions = {};
+      
+        pbOptions.iconStyle = "box";
+      
+        pbOptions.boxForm = "horizontal";
+      
+        pbOptions.position = "bottomCenter";
+      
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+        flOptions.iconStyle = "box";
+      
+        flOptions.boxForm = "horizontal";
+      
+        flOptions.position = "middleRight";
+      
+        flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+
+  
+
+  
+  
+  
+    
+  
+  <script src="https://cdn.jsdelivr.net/npm/pangu@3/dist/browser/pangu.min.js"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+  <script src="/js/src/js.cookie.js?v=7.0.0"></script>
+  <script src="/js/src/scroll-cookie.js?v=7.0.0"></script>
+
+
+  
+
+  
+
+  
+
+<script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=i;var e=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function i(){e&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,a=0;a<r.length;a++)0<=(t=(t=r[a]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}i(),n.addEventListener("scroll",function(){var t,e;t=i,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body>
+</html>

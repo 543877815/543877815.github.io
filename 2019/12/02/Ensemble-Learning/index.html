@@ -1,0 +1,1949 @@
+<!DOCTYPE html>
+
+
+
+
+
+<meta name="baidu-site-verification" content="5oRHLAQGnj">
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="baidu-site-verification" content="lwUVJQDQY6">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<script src="/js/src/echarts.common.min.js"></script>
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-flash.min.css?v=1.0.2">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="a5vmQFcAVEC4Sx0zdSaOZWOE35q4ZV1mgPnznYhQ1SQ">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Adaboost、GBDT、xgboost的个人理解">
+<meta name="keywords" content="machine learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ensemble Learning">
+<meta property="og:url" content="https://lifengjun.xin/2019/12/02/Ensemble-Learning/index.html">
+<meta property="og:site_name" content="逗比学长的博客">
+<meta property="og:description" content="Adaboost、GBDT、xgboost的个人理解">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:updated_time" content="2020-11-13T13:55:58.998Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ensemble Learning">
+<meta name="twitter:description" content="Adaboost、GBDT、xgboost的个人理解">
+<meta name="twitter:image" content="https://lifengjun.xin/images/loading.gif">
+
+
+
+
+
+
+  <link rel="canonical" href="https://lifengjun.xin/2019/12/02/Ensemble-Learning/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Ensemble Learning | 逗比学长的博客</title>
+  
+
+
+
+
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-134155436-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-134155436-1');
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/js/src/APlayer.min.js"></script>
+<script type="text/javascript" src="/js/src/music.js"></script>
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">逗比学长的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">博客是写给我自己看的（叉腰）</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-top">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/top/" rel="section"><i class="menu-item-icon fa fa-fw fa-signal"></i> <br>热榜</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/links" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-quick-check">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/quick-check" rel="section"><i class="menu-item-icon fa fa-fw fa-pencil"></i> <br>速查</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-portal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/portal" rel="section"><i class="menu-item-icon fa fa-fw fa-rocket"></i> <br>传送门</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/543877815" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2019/12/02/Ensemble-Learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Ensemble Learning
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-02 11:21:08" itemprop="dateCreated datePublished" datetime="2019-12-02T11:21:08+08:00">2019-12-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-11-13 21:55:58" itemprop="dateModified" datetime="2020-11-13T21:55:58+08:00">2020-11-13</time>
+              
+            
+          </span>
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+            <span id="/2019/12/02/Ensemble-Learning/" class="leancloud_visitors" data-flag-title="Ensemble Learning">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-count">总字数：2.1k</span>
+          
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-count">阅读时长预计：8min </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Adaboost、GBDT、xgboost的个人理解</p>
+<a id="more"></a>
+<h1 id="前向分布算法"><a href="#前向分布算法" class="headerlink" title="前向分布算法"></a>前向分布算法</h1><p><img src="/images/loading.gif" data-original="/2019/12/02/Ensemble-Learning/5.png" alt="1"></p>
+<h1 id="Adaboost"><a href="#Adaboost" class="headerlink" title="Adaboost"></a>Adaboost</h1><h2 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h2><p><strong>Adaboost</strong> 算法的基本原理就是将多个弱分类器进行结合，最终成为一个强分类器。与 bagging 不同的是，这个弱分类器的训练不是并行化的，而是采用一种迭代的方式。其基本步骤就是：</p>
+<ul>
+<li>每次训练只训练一个弱分类器，训练好的弱分类器将参与到下一次迭代，也就是说第 <strong>N</strong> 次迭代中会有 <strong>N-1</strong> 个分类器是之前就训练好的，在其他参数不变的情况下训练第 <strong>N</strong> 个分类器。</li>
+<li>该第 <strong>N</strong> 个分类器训练的时候，要找到一组新的训练数据，让前面 <strong>N-1</strong> 个分类器在其上的表现很差，然后让第 <strong>N</strong> 个分类器这组数据上训练。怎么找到这组新的训练数据，其实就是权重的调整，其思想就是第 <strong>N</strong> 个分类器将着重关注前面 <strong>N-1</strong> 个分类器中分错的样本，即通过重采样的方法给予这些数据更高的权重，也相当于改变样本的概率分布，这将使得前 <strong>N-1</strong> 个分类器在该样本上表现不佳，而只要第 <strong>N</strong> 个分类器在该样本上正确分类即能获得很高的性能。</li>
+<li>最终，在此基础上，对所有 <strong>N</strong> 个弱分类器采用加权投票的方法来对测试样本进行预测，这 <strong>N</strong> 个弱分类器的权重将由其分类正确率来决定，正确率越高的弱分类器在强分类器中拥有更大的权重。</li>
+</ul>
+<h2 id="具体流程"><a href="#具体流程" class="headerlink" title="具体流程"></a>具体流程</h2><p>自己总结的计算具体流程：</p>
+<ul>
+<li><p>假设有$N$个训练样本<script type="math/tex">\{(x_1,y_1),...(x_N,y_N)\},y_i\in\{-1,+1\}</script>，第 1 次迭代每个样本的权重初始化为：</p>
+<script type="math/tex; mode=display">
+w_{1i}=\frac{1}{N},i=1,2,...N</script></li>
+<li><p>第 <strong>k</strong> 次迭代中的分类器 $C$ 的样本加权错误率为（分母为权重归一化）：</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+\epsilon_k=\frac{\sum_{i=1}^Nw_{ki}C(f_k(x_i)\ne(\hat y_i))}{\sum_{i=1}^Nw_{ki}}</script><ul>
+<li><p>对于错误分类的样本，其第 <strong>k+1</strong> 次迭代的权重将被调整为：</p>
+<script type="math/tex; mode=display">
+w_{(k+1)i}=w_{ki}*d_k</script><p>对于正确分类的样本，其第 <strong>k+1</strong> 次迭代的权重将被调整为：</p>
+<script type="math/tex; mode=display">
+w_{(k+1)}i=\frac{w_{ki}}{d_k}</script><p>其中<script type="math/tex">d_k=\sqrt\frac{1-\epsilon_k}{\epsilon_k}</script>，由于错误率（二分类问题）是一个小于 0.5 的数，所以<script type="math/tex">d_k</script>是一个大于 1 的数，权重调整目的是使错误样本的权重更高，在下一轮迭代中有更高的概率被选中，降低正确样本的选中概率。</p>
+</li>
+<li><p>为了统一描述权重的更新往往用<script type="math/tex">a_k=\frac{1}{2}ln(\sqrt\frac{1-\epsilon_k}{\epsilon_k})</script>来替代<script type="math/tex">d_k</script>，这样权重的更新可以描述为：</p>
+<script type="math/tex; mode=display">
+w_{(k+1)i}=w_{ki}*\exp{(-\hat y^if_k(x^i)a_t)}</script><p>同时权重更新完之后需要对权重进行归一化使得<script type="math/tex">\sum_{i=1}^N w_ki=1</script>（其实就是上面第二步分母做的事情，主要是保证加权误差率的正确）。</p>
+</li>
+<li><p>另外，新训练好的弱分类器将加入到集成模型中：</p>
+<script type="math/tex; mode=display">
+F_k(x)=F_{k-1}(x)+a_kf_k(x)</script></li>
+<li><p>最后，强分类器将表达为 <script type="math/tex">k</script> 次迭代的 <script type="math/tex">k</script> 个弱分类器的权重和：</p>
+<script type="math/tex; mode=display">
+F_k(x)=sign(\sum_{i=i}^ka_if_i(x))</script></li>
+</ul>
+<h2 id="运算案例"><a href="#运算案例" class="headerlink" title="运算案例"></a>运算案例</h2><p>下面是一个李宏毅老师深度学习的例子以帮助理解：</p>
+<ul>
+<li><img src="/images/loading.gif" data-original="/2019/12/02/Ensemble-Learning/1.png" alt="1"></li>
+</ul>
+<p>初始一共有10个样本，并且每个样本的权重是一致的，假如有这么一个弱分类器<script type="math/tex">f_1(x)</script>，其产生的决策边界如图黑线所示，其中蓝色区域为其分类的正样本，红色区域为其分类的负样本，那么一共有三个被红色圈中的样本分类错误，所以第一次迭代的错误率<script type="math/tex">\epsilon_1=0.30</script>，那么<script type="math/tex">d_1=\sqrt\frac{1-\epsilon_1}{\epsilon_1}=\sqrt\frac{1-0.3}{0.3}\approx1.53</script>，那么分类正确的样本权重将调整为<script type="math/tex">w_{2i}=\frac{w_{1i}}{d_1}=0.65</script>，分类错误的样本权重将调整为<script type="math/tex">w_{2i}=w_{1i}*d_i=1.53</script>，第 1 个弱分类器的权重<script type="math/tex">a_1=ln(d_1)=0.42</script>，这个例子讲的时候<script type="math/tex">a_k</script>没有乘<script type="math/tex">\frac{1}{2}</script>。</p>
+<ul>
+<li><img src="/images/loading.gif" data-original="/2019/12/02/Ensemble-Learning/2.png" alt="2"></li>
+</ul>
+<p>这是第 2 次迭代。</p>
+<ul>
+<li><img src="/images/loading.gif" data-original="/2019/12/02/Ensemble-Learning/3.png" alt="3"></li>
+</ul>
+<p>这是第 3 次迭代。</p>
+<p><img src="/images/loading.gif" data-original="/2019/12/02/Ensemble-Learning/4.png" alt="4"></p>
+<p>最终所有弱分类器的加权组合将会得到一个强分类器，这个强分类器将会正确分类这个实例的所有样本。</p>
+<p>看了很多例子，这个例子对我来说最形象生动，但是注意这个例子的权重调整没有进行归一化。</p>
+<h2 id="公式推导"><a href="#公式推导" class="headerlink" title="公式推导"></a>公式推导</h2><h3 id="证明：为什么a-k-frac-1-2-ln-sqrt-frac-1-epsilon-k-epsilon-k-？"><a href="#证明：为什么a-k-frac-1-2-ln-sqrt-frac-1-epsilon-k-epsilon-k-？" class="headerlink" title="证明：为什么a_k=\frac{1}{2}ln(\sqrt\frac{1-\epsilon_k}{\epsilon_k})？"></a>证明：为什么<script type="math/tex">a_k=\frac{1}{2}ln(\sqrt\frac{1-\epsilon_k}{\epsilon_k})</script>？</h3><ul>
+<li><p>假如有一个训练集<script type="math/tex">\{(x_1,y_1), (x_2,y_2),...,(x_N,y_N)\}, y_i\in\{-1,1\}</script>，在第 <strong>m-1</strong> 次迭代后已经有一个多种弱分类器组合而成的线性分类器：</p>
+<script type="math/tex; mode=display">
+C_{(m-1)}(x_i)=a_1k_1(x_i)+...+a_{(m-1)}k_{(k-1)}(x_i)</script></li>
+<li><p>在第 <strong>m</strong> 次迭代将要训练第 <strong>m</strong> 个弱分类器<script type="math/tex">k_m</script>，它的权重是<script type="math/tex">a_m</script>，使之成为一个更强的分类器：</p>
+<script type="math/tex; mode=display">
+C_m(x_i)=C_{(m-1)}(x_i)+a_mk_m(x_i)</script></li>
+<li><p>所以仍然需要确定弱分类器<script type="math/tex">k_m</script>及其权重<script type="math/tex">a_m</script>，因此定义强分类器<script type="math/tex">C_m</script>总指数误差为：</p>
+<script type="math/tex; mode=display">
+E=\sum_{i=1}^Ne^{-y_iC_m(c_i)}=\sum_{i=1}^Ne^{-y_iC_{m-1}(x_i)}e^{-y_ia_mk_m(x_i)}</script><p>注：指数误差通常用在boosting中，指数误差始终大于 0，但是确保越接近正确的结果误差越小，反之越大。</p>
+</li>
+<li><p>令 <script type="math/tex">w_i^{(1)}=1</script> 以及 <script type="math/tex">w_i^{(m)}=e^{-y_iC_{m-1}(x_i)},m>1</script>，可以将上式简化为</p>
+<script type="math/tex; mode=display">
+E=\sum_{i=1}^Nw_i^{(m)}e^{-y_ia_mk_m(x_i)}</script></li>
+<li><p>我们可以将上式写成下面这种形式（即将错误分类和正确分类的误差进行求和）：</p>
+<script type="math/tex; mode=display">
+E=\sum_{y_i=k_m(x_i)}w_i^{(m)}e^{-a_m}+\sum_{y_i\ne k_m(x_i)}w_i^{(m)}e^{a_m}</script><p>这意味着总误差是所有正确分类和错误分类的加权误差和。</p>
+</li>
+<li><p>由于<script type="math/tex">w_i</script>是一个常数，为了找到一个新的弱分类器权重<script type="math/tex">a_m</script>能够最小化误差$E$，则对$E$进行求导：</p>
+<script type="math/tex; mode=display">
+\frac{dE}{da_m}=\frac{d(\sum_{y=k_m(x_i)}w_i^{(m)}e^{-a_m}+\sum_{y\ne k_m(x_i)}w_i^{(m)}e^{a_m})}{da_m}</script></li>
+<li><p>令上述公式为 0 可以求得</p>
+<div><div class="fold_hider"><div class="close hider_title">detail</div></div><div class="fold">
+<script type="math/tex; mode=display">
+\begin{align}&\frac{dE}{da_m}=-\sum_{y_i=k_m(x_i)}w_i^{(m)}e^{-a_m}+\sum_{y_i\ne k_m(x_i)}w_i^{(m)}e^{-a_m}=0\\\text{because }&e^{-a_m}\text{ does not depend on }i\\&\sum_{y_i=k_m(x_i)}w_i^{(m)}e^{-a_m} = \sum_{y_i\ne k_m(x_i)}w_i^{(m)}e^{-a_m}\\&-a_m+log(\sum_{y_i=k_m(x_i)}w_i^{(m)})=a_m+log(\sum_{y_i\ne k_m(x_i)}x_i^{(m)})\\&-2a_m=log(\frac{\sum_{y_i\ne k_m(x_i)}w_i^{(m)}}{\sum_{y_i=k_m(x_i)}w_i^{(m)}})\\&a_m=-\frac{1}{2}log(\frac{\sum_{y_i\ne k_m(x_i)}w_i^{(m)}}{\sum_{y_i=k_m(x_i)}w_i^{(m)}})\\&a_m=\frac{1}{2}log(\frac{\sum_{y_i=k_m(x_i)}w_i^{(m)}}{\sum_{y_i\ne k_m(x_i)}w_i^{(m)}})\\\end{align}</script>
+</div></div>
+<script type="math/tex; mode=display">
+a_m=\frac{1}{2}ln(\frac{\sum_{y_i=k_m(x_i)}w_i^{(m)}}{\sum_{y_i\ne k_m(x_i)}w_i^{(m)}})=\frac{1}{2}ln(\frac{1-\epsilon_m}{\epsilon_m})</script><p>其中<script type="math/tex">\epsilon_m=\frac{\sum_{y_i\ne k_m(x_i)}w_i^{(m)}}{\sum_{i=1}^Nw_i^{(m)}}</script>。</p>
+</li>
+</ul>
+<h3 id="证明：Adaboost随着迭代次数增加，误差率会越来越小。"><a href="#证明：Adaboost随着迭代次数增加，误差率会越来越小。" class="headerlink" title="证明：Adaboost随着迭代次数增加，误差率会越来越小。"></a>证明：Adaboost随着迭代次数增加，误差率会越来越小。</h3><p><img src="/images/loading.gif" data-original="/2019/12/02/Ensemble-Learning/5.png" alt="5"></p>
+<p>结合上图，误差函数将被定义为</p>
+<script type="math/tex; mode=display">
+\delta(x)=
+\begin{cases}
+0,\hat y^ng(x^n) > 0\\
+1,\hat y^ng(x^n) < 0\\
+\end{cases}\\
+其中，g(x)=\sum^{T}_{t=1}a_tf_t(x)</script><p>从图中可直观的感受到其小于等于一个上界函数<script type="math/tex">\sum_n e^{-\hat y^ng(x^n)}</script>。这个式子实际上等于第 <strong>T</strong> 次迭代的样本权重和<script type="math/tex">Z_{T+1}=\sum_n w_n^{(T+1)}</script>。证明如下：</p>
+<p>根据</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\begin{cases}
+&w_n^{(1)}=1 \\
+&w^{(t+1)}_n=w_t^n*e^{-\hat y^nf_t(x^n)a_t}
+\end{cases}
+\Rightarrow 
+w^{(T+1)}_n=\prod_{t=1}^{T}e^{-\hat y^nf_t(x^n)a_t}
+\end{align}</script><p>则</p>
+<script type="math/tex; mode=display">
+\begin{align}
+Z_{T+1}&=\sum_nw_n^{(T+1)}\\
+&=\sum_n\prod_{t=1}^{T}e^{-\hat y^nf_t(x^n)a_t}\\
+&=\sum_ne^{-\hat y^n\sum_{t=1}^Tf_t(x^n)a_t}\\
+&=\sum_ne^{-\hat y^ng(x^n)}\\
+\end{align}</script><p>下面要证明该上界函数将越来越小:</p>
+<p>根据</p>
+<script type="math/tex; mode=display">
+\begin{align}
+Z_1&=N\\
+Z_t&=Z_{t-1}\epsilon_te^{a_t}+Z_{t-1}(1-\epsilon_t)e^{-a_t} \\
+&\text{ (上式左部表示错误分类的样本，右部表示正确分类的样本)}\\ 
+&=Z_{t-1}\epsilon_t\sqrt\frac{1-\epsilon_t}{\epsilon_t}+Z_{t-1}(1-\epsilon_t)\sqrt\frac{\epsilon_t}{1-\epsilon_t}\\
+&=Z_{t-1}*2\sqrt {\epsilon_t(1-\epsilon_t)}
+\end{align}</script><p>如果使用递推的方式则有</p>
+<script type="math/tex; mode=display">
+Z_{T+1}=N\prod_{t=1}^T2\sqrt{\epsilon_t(1-\epsilon_t)}</script><p>结合上述证明，结论是：</p>
+<script type="math/tex; mode=display">
+\delta(x)\le\prod_{t=1}^T2\sqrt{\epsilon_t(1-\epsilon_t)}</script><p>由于<script type="math/tex">\epsilon_t<0.5</script>，所以训练数据的错误率会随着迭代次数的增加而越来越小。</p>
+<p>令 <script type="math/tex">\gamma_m=\frac{1}{2}-\epsilon_t</script>，则 <script type="math/tex">\gamma\gt0</script>，有</p>
+<script type="math/tex; mode=display">
+\prod_{t=1}^T2\sqrt{\epsilon_t(1-\epsilon_t)}=\prod_{t=1}^T\sqrt{1-4\gamma_m^2}\le e^{-2\sum_{t=1}^T\gamma_m^2}</script><p>证明如下（自<a href="https://www.jianshu.com/u/c5df9e229a67" target="_blank" rel="noopener">文哥的学习日记</a>）：</p>
+<p>要证：</p>
+<script type="math/tex; mode=display">
+\prod_{t=1}^T\sqrt{1-4\gamma_m^2}\le e^{-2\sum_{t=1}^T\gamma_m^2}</script><p>即证：</p>
+<script type="math/tex; mode=display">
+\sqrt{1-4\gamma^2_m}\le e^{-2\gamma^2_m} \\
+1-4\gamma_m^2\le e^{-4\gamma_m^2} \\</script><p>令 <script type="math/tex">x=4\gamma_m^2</script>，因为<script type="math/tex">\gamma_m=\frac{1}{2}-e_m,e_m\in[0,1]</script>，所以 <script type="math/tex">\gamma_m\in[-\frac{1}{2},\frac{1}{2}]</script>，所以 <script type="math/tex">x\in[0,1]</script>，令：</p>
+<script type="math/tex; mode=display">
+f(x)=e^{-x}+x-1</script><p>则：</p>
+<script type="math/tex; mode=display">
+f'(x)=-e^{-x}+1\ge0</script><p>所以 <script type="math/tex">f(x)</script> 递增，又因为 <script type="math/tex">f(0)=0</script>，所以 <script type="math/tex">f(x)\ge 0</script> 在 <script type="math/tex">x\in[0,1]</script> 上成立，故原式得证。</p>
+<p><strong>推论</strong>：如果存在 <script type="math/tex">\gamma\gt0</script>，对所有 $m$ 有<script type="math/tex">\gamma_m\ge\gamma</script>，则</p>
+<script type="math/tex; mode=display">
+\frac{1}{T}\sum_{i=1}^TI(G(x_i)\ne y_i)\le e^{-2T\gamma^2}</script><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>paper: <a href="http://www.inf.fu-berlin.de/inst/ag-ki/adaboost4.pdf" target="_blank" rel="noopener">AdaBoost and the Super Bowl of Classifiers A Tutorial Introduction to Adaptive Boosting</a></p>
+<p>李宏毅深度学习：<a href="https://datawhalechina.github.io/leeml-notes/#/chapter38/chapter38?id=adaboost" target="_blank" rel="noopener">https://datawhalechina.github.io/leeml-notes/#/chapter38/chapter38?id=adaboost</a></p>
+<p>wikipedia.org: <a href="https://en.wikipedia.org/wiki/AdaBoost" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/AdaBoost</a></p>
+<p>李航：统计学习方法第二版</p>
+<p>网站：<a href="https://www.jianshu.com/u/c5df9e229a67" target="_blank" rel="noopener">https://www.jianshu.com/u/c5df9e229a67</a></p>
+<p>实现：参考@<a href="https://nbviewer.jupyter.org/github/ljpzzz/machinelearning/blob/master/ensemble-learning/adaboost-classifier.ipynb" target="_blank" rel="noopener">ljpzzz</a></p>
+<h1 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h1><p>使用前向分布算法构建提升树：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&f_0(x)=0\\
+&f_m(x)=f_{m-1}(x)+T(x;\Theta_m),\;\;m=1,2,...,M\\
+&f_M(x)=\sum_{m=1}^MT(x;\Theta_m)
+\end{align}</script><p>需要求解最小化损失函数的参数$\Theta$：</p>
+<script type="math/tex; mode=display">
+\hat\Theta=\arg\;\min_{\Theta_m}\sum_{i=1}^NL(y_i,f_{m-1}(x_i)+T(x_i;\Theta_m))</script><p>当采用平方误差损失函数时：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+L(y,f(x))&=(y-f(x))^2\\
+L(y,f_{m-1}(x)+T(x;\Theta_m))&=[y-f_{m-1}(x)-T(x;\Theta_m)]^2\\
+&=[r-T(x;\Theta)]^2
+\end{align}</script><p>这里 $r$ 是当前模型拟合数据的误差 <script type="math/tex">r=y-f_{m-1}(x)</script></p>
+<p>算例：</p>
+<p><img src="/images/loading.gif" data-original="/2019/12/02/Ensemble-Learning/8.png" width="45%"></p>
+<p><img src="/images/loading.gif" data-original="/2019/12/02/Ensemble-Learning/9.png" alt="9"></p>
+<p><img src="/images/loading.gif" data-original="/2019/12/02/Ensemble-Learning/10.png" alt="10"></p>
+<h2 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.cnblogs.com/pinard/p/6140514.html" target="_blank" rel="noopener">梯度提升树(GBDT)原理小结</a>[</p>
+<p><a href="https://www.cnblogs.com/pinard/p/6143927.html" target="_blank" rel="noopener">scikit-learn 梯度提升树(GBDT)调参小结</a></p>
+<p>李航：统计学习方法第二版</p>
+<h1 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h1><p><a href="https://www.cnblogs.com/pinard/p/10979808.html" target="_blank" rel="noopener">XGBoost算法原理小结</a></p>
+<p><a href="https://www.cnblogs.com/pinard/p/11114748.html" target="_blank" rel="noopener">XGBoost类库使用小结</a></p>
+
+      
+    </div>
+
+    
+      
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+              <div id="needsharebutton-postbottom">
+                <span class="btn">
+                  <i class="fa fa-share-alt" aria-hidden="true"></i>
+                </span>
+              </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/30/learn-Keras/" rel="next" title="Learn Keras">
+                <i class="fa fa-chevron-left"></i> Learn Keras
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/14/【论文笔记】-Towards-Evaluating-the-Robustness-of-Neural-Networks/" rel="prev" title="【论文笔记】 Towards Evaluating the Robustness of Neural Networks">
+                【论文笔记】 Towards Evaluating the Robustness of Neural Networks <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        
+          <ul class="sidebar-nav motion-element">
+            <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+              文章目录
+            </li>
+            <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+              站点概览
+            </li>
+          </ul>
+        
+      
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/25082467?v=4" alt="lifengjun">
+            
+              <p class="site-author-name" itemprop="name">lifengjun</p>
+              <p class="site-description motion-element" itemprop="description">个人学习笔记和日志</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/543877815" title="GitHub &rarr; https://github.com/543877815" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:543877815@qq.com" title="E-Mail &rarr; mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+          
+          <!--noindex-->
+            <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+              <div class="post-toc">
+
+                
+                
+                
+                
+
+                
+                  <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前向分布算法"><span class="nav-number">1.</span> <span class="nav-text">前向分布算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Adaboost"><span class="nav-number">2.</span> <span class="nav-text">Adaboost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本步骤"><span class="nav-number">2.1.</span> <span class="nav-text">基本步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体流程"><span class="nav-number">2.2.</span> <span class="nav-text">具体流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运算案例"><span class="nav-number">2.3.</span> <span class="nav-text">运算案例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公式推导"><span class="nav-number">2.4.</span> <span class="nav-text">公式推导</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#证明：为什么a-k-frac-1-2-ln-sqrt-frac-1-epsilon-k-epsilon-k-？"><span class="nav-number">2.4.1.</span> <span class="nav-text">证明：为什么a_k=\frac{1}{2}ln(\sqrt\frac{1-\epsilon_k}{\epsilon_k})？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#证明：Adaboost随着迭代次数增加，误差率会越来越小。"><span class="nav-number">2.4.2.</span> <span class="nav-text">证明：Adaboost随着迭代次数增加，误差率会越来越小。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">2.5.</span> <span class="nav-text">参考</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GBDT"><span class="nav-number">3.</span> <span class="nav-text">GBDT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考-1"><span class="nav-number">3.1.</span> <span class="nav-text">参考</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XGBoost"><span class="nav-number">4.</span> <span class="nav-text">XGBoost</span></a></li></ol></div>
+                
+
+              </div>
+            </div>
+          <!--/noindex-->
+          
+      
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lifengjun</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+    
+
+  
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+  
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '970dc8fd856c3e17f9f0',
+    clientSecret: '7f6d29828dd1f4a02336c480ba1012f1851b0eb0',
+    repo: '543877815.github.io',
+    owner: '543877815',
+    admin: ['543877815'],
+    id: md5(location.pathname),
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $('.leancloud_visitors');
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
+            
+              .done(function() {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.time + 1);
+              })
+            
+              .fail(function ({ responseJSON }) {
+                console.log(`Failed to save Visitor num, with error message: ${responseJSON.error}`);
+              })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1 }))
+                .done(function() {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function() {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+        .fail(function ({ responseJSON }) {
+          console.log(`LeanCloud Counter Error: ${responseJSON.code} ${responseJSON.error}`);
+        });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + '7lnT19QcEeBPLqbdFz6RXmt6-gzGzoHsz')
+        .done(function({ api_server }) {
+          var Counter = function(method, url, data) {
+            return $.ajax({
+              method: method,
+              url: 'https://' + api_server + '/1.1' + url,
+              headers: {
+                'X-LC-Id': '7lnT19QcEeBPLqbdFz6RXmt6-gzGzoHsz',
+                'X-LC-Key': '0m9MYgfgDxi38rb89hJ8gUHF',
+                'Content-Type': 'application/json',
+              },
+              data: data
+            });
+          };
+          
+            addCount(Counter);
+          
+        });
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+  <script>
+    
+      pbOptions = {};
+      
+        pbOptions.iconStyle = "box";
+      
+        pbOptions.boxForm = "horizontal";
+      
+        pbOptions.position = "bottomCenter";
+      
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+        flOptions.iconStyle = "box";
+      
+        flOptions.boxForm = "horizontal";
+      
+        flOptions.position = "middleRight";
+      
+        flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+
+  
+
+  
+  
+  
+    
+  
+  <script src="https://cdn.jsdelivr.net/npm/pangu@3/dist/browser/pangu.min.js"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+  <script src="/js/src/js.cookie.js?v=7.0.0"></script>
+  <script src="/js/src/scroll-cookie.js?v=7.0.0"></script>
+
+
+  
+
+  
+
+  
+
+<script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=i;var e=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function i(){e&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,a=0;a<r.length;a++)0<=(t=(t=r[a]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}i(),n.addEventListener("scroll",function(){var t,e;t=i,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body>
+</html>

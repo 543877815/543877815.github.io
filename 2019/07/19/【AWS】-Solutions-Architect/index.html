@@ -1,0 +1,3060 @@
+<!DOCTYPE html>
+
+
+
+
+
+<meta name="baidu-site-verification" content="5oRHLAQGnj">
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="baidu-site-verification" content="lwUVJQDQY6">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<script src="/js/src/echarts.common.min.js"></script>
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-flash.min.css?v=1.0.2">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="a5vmQFcAVEC4Sx0zdSaOZWOE35q4ZV1mgPnznYhQ1SQ">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="​">
+<meta name="keywords" content="Aws">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【AWS】- Solutions Architect">
+<meta property="og:url" content="https://lifengjun.xin/2019/07/19/【AWS】-Solutions-Architect/index.html">
+<meta property="og:site_name" content="逗比学长的博客">
+<meta property="og:description" content="​">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-11-13T13:55:58.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【AWS】- Solutions Architect">
+<meta name="twitter:description" content="​">
+
+
+
+
+
+
+  <link rel="canonical" href="https://lifengjun.xin/2019/07/19/【AWS】-Solutions-Architect/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【AWS】- Solutions Architect | 逗比学长的博客</title>
+  
+
+
+
+
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-134155436-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-134155436-1');
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/js/src/APlayer.min.js"></script>
+<script type="text/javascript" src="/js/src/music.js"></script>
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">逗比学长的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">博客是写给我自己看的（叉腰）</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-top">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/top/" rel="section"><i class="menu-item-icon fa fa-fw fa-signal"></i> <br>热榜</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/links" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-quick-check">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/quick-check" rel="section"><i class="menu-item-icon fa fa-fw fa-pencil"></i> <br>速查</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-portal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/portal" rel="section"><i class="menu-item-icon fa fa-fw fa-rocket"></i> <br>传送门</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/543877815" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2019/07/19/【AWS】-Solutions-Architect/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【AWS】- Solutions Architect
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-19 17:01:47" itemprop="dateCreated datePublished" datetime="2019-07-19T17:01:47+08:00">2019-07-19</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-11-13 21:55:58" itemprop="dateModified" datetime="2020-11-13T21:55:58+08:00">2020-11-13</time>
+              
+            
+          </span>
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Aws/" itemprop="url" rel="index"><span itemprop="name">Aws</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+            <span id="/2019/07/19/【AWS】-Solutions-Architect/" class="leancloud_visitors" data-flag-title="【AWS】- Solutions Architect">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-count">总字数：13.5k</span>
+          
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-count">阅读时长预计：48min </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>​      </p>
+<a id="more"></a>
+<h1 id="Solutions-Architect"><a href="#Solutions-Architect" class="headerlink" title="Solutions Architect"></a>Solutions Architect</h1><h2 id="云中的职业"><a href="#云中的职业" class="headerlink" title="云中的职业"></a>云中的职业</h2><p>公司越来越多地转向云来部署他们的应用程序并分析数据。 这些公司需要雇用能够帮助他们开发和管理云架构的员工，这并不奇怪。</p>
+<p>云职业充满乐趣且回报丰厚。但在这些领域工作的人真正做些什么呢？ 鉴于使用云的工作和公司的多样化，这个问题不只有一个答案。浏览以下视频和资源，了解一些以创新和创造性方式解决重大问题的人员和客户。<a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/04_ca_assoc/04_ca_assoc.mp4" target="_blank" rel="noopener">视频</a></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/06_aws_solution_arch/06_aws_solution_arch.mp4" target="_blank" rel="noopener">成为 AWS 的解决方案架构师是什么感觉？ 听听我们自己的心声</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/07_aws_solution_architect/07_aws_solution_architect.mp4" target="_blank" rel="noopener">想成为 AWS 解决方案架构师？- 申请加入 Amazon Web Services</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/08_aws_anz_solarc/08_aws_anz_solarc.mp4" target="_blank" rel="noopener">成为 AWS ANZ 的解决方案架构师是什么感觉？</a></li>
+</ul>
+<h2 id="软件开发：-架构和开发运营"><a href="#软件开发：-架构和开发运营" class="headerlink" title="软件开发： 架构和开发运营"></a>软件开发： 架构和开发运营</h2><h3 id="软件开发：-简介"><a href="#软件开发：-简介" class="headerlink" title="软件开发： 简介"></a>软件开发： 简介</h3><p>软件开发是一种使用特定编程语言创建独立软件或单个软件的过程。它涉及编写一系列相互关联的编程代码，提供所开发软件的功能。软件开发也可以称为应用程序开发和软件设计。</p>
+<p>与软件开发相关的主题包括：</p>
+<ul>
+<li>架构</li>
+<li>开发运营</li>
+<li>编程语言</li>
+<li>脚本语言</li>
+<li>移动应用程序</li>
+<li>Web 开发</li>
+</ul>
+<h3 id="软件开发：一般性问题"><a href="#软件开发：一般性问题" class="headerlink" title="软件开发：一般性问题"></a>软件开发：一般性问题</h3><p><a href="https://www.coursera.org/learn/software-architecture" target="_blank" rel="noopener">软件架构</a></p>
+<p><a href="https://www.coursera.org/lecture/software-processes/software-architecture-definition-gkXeB" target="_blank" rel="noopener">软件开发过程和方法： 定义</a></p>
+<p><a href="https://www.udacity.com/course/software-architecture-design--ud821" target="_blank" rel="noopener">软件架构和设计</a></p>
+<h3 id="软件开发：-开发运营"><a href="#软件开发：-开发运营" class="headerlink" title="软件开发： 开发运营"></a>软件开发： 开发运营</h3><p>开发运营是文化哲学、实践和工具的组合，它能够提高组织能力以高速交付应用程序和服务：与使用传统的软件开发和基础设施管理流程的组织相比，其革新和改进产品的速度更快。这种速度使组织能够更好地服务其客户，并在市场上更高效地参与竞争。了解<a href="https://aws.amazon.com/solutions/case-studies/lululemon-athletica/" target="_blank" rel="noopener">此客户 </a>如何在 AWS 云中利用开发运营。<a href="https://aws.amazon.com/devops" target="_blank" rel="noopener">开发运营和 AWS</a>、<a href="https://aws.amazon.com/devops/what-is-devops" target="_blank" rel="noopener">什么是开发运营？ </a></p>
+<h3 id="持续集成"><a href="#持续集成" class="headerlink" title="持续集成"></a><strong>持续集成</strong></h3><p><a href="https://aws.amazon.com/devops/continuous-integration/" target="_blank" rel="noopener">持续集成 </a>是一种开发运营软件开发实践，通过该实践，开发人员可定期将代码更改并入中央存储库，然后运行自动化构建和测试。持续集成通常是指软件发布过程的构建或集成阶段，同时包含自动化组件（例如，CI 或构建服务）和文化组件（例如，学习频繁集成）。持续集成的主要目标是更快地查找和解决错误、提高软件质量以及减少验证和发布新软件更新所需的时间。</p>
+<h3 id="持续交付"><a href="#持续交付" class="headerlink" title="持续交付"></a><strong>持续交付</strong></h3><p><a href="https://aws.amazon.com/devops/continuous-delivery" target="_blank" rel="noopener">持续交付 </a>是一种开发运营软件开发实践，通过该实践可以自动构建、测试和准备代码更改以便投产。它通过在构建阶段之后将所有代码更改部署到测试环境和/或生产环境来扩展持续集成。在正确实施持续交付时，开发人员将始终拥有已通过标准化测试流程的部署就绪构建构件。</p>
+<p>持续交付使开发人员能够实现测试自动化，而不仅仅是单元测试，这样他们便可以在部署到客户之前跨多个维度验证应用程序更新。这些测试可能包括 UI 测试、负载测试、集成测试、API 可靠性测试等。这有助于开发人员更彻底地验证更新并提前发现问题。借助云，可以轻松且经济高效地自动创建和复制用于测试的多个环境，而这以前很难在本地完成。</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/250_cibp/250_cibp.mp4" target="_blank" rel="noopener">软件开发的持续集成最佳实践</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/89_explore_devops/89_explore_devops.mp4" target="_blank" rel="noopener">将容器部署的 CICD 管道构建到 Amazon ECS</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/90_devops_pipelines/90_devops_pipelines.mp4" target="_blank" rel="noopener">AWS 上的开发运营</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/88_devops_chicago/88_devops_chicago.mp4" target="_blank" rel="noopener">Amazon 的开发运营文化</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/91_devops_amazon_tools/91_devops_amazon_tools.mp4" target="_blank" rel="noopener">探索 AWS 上的开发运营</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/92_bluegreen/92_bluegreen.mp4" target="_blank" rel="noopener">使用 AWS 加速开发运营管道</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/93_scale_webapps/93_scale_webapps.mp4" target="_blank" rel="noopener">Amazon 的开发运营： 查看我们的工具和流程</a></li>
+</ul>
+<p><strong>开发人员工具：</strong></p>
+<p><a href="https://aws.amazon.com/products/developer-tools" target="_blank" rel="noopener">AWS 开发人员工具</a></p>
+<p><strong>付诸行动：</strong></p>
+<p><a href="https://aws.amazon.com/training/course-descriptions/developing" target="_blank" rel="noopener">Developing on AWS</a></p>
+<h3 id="软件开发：-蓝-绿开发运营"><a href="#软件开发：-蓝-绿开发运营" class="headerlink" title="软件开发： 蓝/绿开发运营"></a>软件开发： 蓝/绿开发运营</h3><p>您知道<strong>蓝</strong>/<strong>绿</strong>开发意味着什么吗？ 构建和部署软件的其他策略是什么？</p>
+<p><strong>蓝</strong>/<strong>绿</strong>部署是发布软件代码的变更管理策略。 <strong>蓝</strong>/<strong>绿</strong>部署（也可以称为 A/B 部署）需要两个相同的硬件环境（即配置方式完全相同）。当一个环境处于活动状态并为最终用户提供服务时，另一个环境则保持空闲状态。</p>
+<p><strong>蓝</strong>/<strong>绿</strong>部署通常用于面向消费者的应用程序和具有关键正常运行时间要求的应用程序。新代码将发布到非活动环境，并在其中进行全面测试。代码经过审核后，团队通常通过调整路由器配置来重定向应用程序流量，使空闲环境处于活动状态。当下一个软件迭代准备就绪时，过程反转。</p>
+<p>如果在切换后发现问题，流量可以被引导回仍然运行原始版本的空闲配置。一旦新代码在生产环境中通过测试，团队可以选择更新空闲配置环境中的代码，以提供用于灾难恢复功能的附加度量。<a href="https://searchitoperations.techtarget.com/definition/blue-green-deployment" target="_blank" rel="noopener">17</a></p>
+<ul>
+<li><a href="https://aws.amazon.com/quickstart/architecture/blue-green-deployment" target="_blank" rel="noopener">AWS 上的蓝/绿部署</a></li>
+<li><a href="https://aws-quickstart.s3.amazonaws.com/quickstart-codepipeline-bluegreen-deployment/doc/blue-green-deployments-to-aws-elastic-beanstalk-on-the-aws-cloud.pdf" target="_blank" rel="noopener">快速入门指南： AWS 云上 AWS Elastic </a></li>
+<li><a href="https://aws-quickstart.s3.amazonaws.com/quickstart-codepipeline-bluegreen-deployment/doc/blue-green-deployments-to-aws-elastic-beanstalk-on-the-aws-cloud.pdf" target="_blank" rel="noopener">Beanstalk 的蓝绿部署</a></li>
+</ul>
+<p><strong>查看以下资源可了解有关云中的开发运营的更多信息。</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/94_deploying_aws/94_deploying_aws.mp4" target="_blank" rel="noopener">深入了解 AWS 上完成的蓝/绿部署</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/95_inspector/95_inspector.mp4" target="_blank" rel="noopener">利用 AWS Elastic Beanstalk 扩展 Web 应用程序</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/98_codecommit_deploy/98_codecommit_deploy.mp4" target="_blank" rel="noopener">部署自动化： 从开发人员手中的键盘到最终用户看到的屏幕</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/96_deployment_automation/96_deployment_automation.mp4" target="_blank" rel="noopener">在 AWS 上部署应用程序简介</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/97_beanstalk_deployment/97_beanstalk_deployment.mp4" target="_blank" rel="noopener">Amazon Inspector 入门</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/99_api_gateway/99_api_gateway.mp4" target="_blank" rel="noopener">AWS Elastic Beanstalk 部署演练</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/100_buildon_aws/100_buildon_aws.mp4" target="_blank" rel="noopener">AWS KC 视频： 如何将代码从 CodeCommit 存储库部署到 Elastic Beanstalk 环境？</a></li>
+</ul>
+<p><strong>付诸行动：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/getting-started/tutorials/deploy-code-vm/?trk=gs_card" target="_blank" rel="noopener">将代码部署到虚拟机</a></li>
+<li><a href="https://aws.amazon.com/getting-started/tutorials/launch-an-app" target="_blank" rel="noopener">启动 Web 应用程序</a></li>
+</ul>
+<h3 id="软件开发：-基础设施即代码"><a href="#软件开发：-基础设施即代码" class="headerlink" title="软件开发： 基础设施即代码"></a>软件开发： 基础设施即代码</h3><p>随着您的团队和基础设施的增长，跟踪 IT 资源更改以及更改人员和更改时间变得更加困难。对基础设施资源实施标准也变得更为困难，从而导致配置偏差和潜在的安全问题。在 AWS 上，您可以轻松标准化常用 IT 服务的基础设施配置，同时为您的公司启用自助服务预置。将这些资源预置完毕后，您可以跟踪它们的连接方式，并监控配置更改和偏差。在本次会话中，我们将讨论如何利用 AWS Service Catalog、AWS Config 和 AWS CloudTrail 的组合，实现高水平的标准化、配置合规性和监控。</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/110_manage_infra_code/110_manage_infra_code.mp4" target="_blank" rel="noopener">基础设施即代码</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/111_infra_governance/111_infra_governance.mp4" target="_blank" rel="noopener">深入探讨： 基础设施即代码</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/111_infra_governance/111_infra_governance.mp4" target="_blank" rel="noopener">管理基础设施即代码</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/113_intro_mobile_hub/113_intro_mobile_hub.mp4" target="_blank" rel="noopener">利用 AWS 改善基础设施管理</a></li>
+</ul>
+<p><a href="https://aws.amazon.com/premiumsupport/trustedadvisor/best-practices" target="_blank" rel="noopener">Trusted Advisor 最佳实践（检查）- 性能</a></p>
+<p>查看下面的产品和服务矩阵，详细了解一些 AWS 基础设施资源。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>工具类别</strong></th>
+<th><strong>服务</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>预置</td>
+<td><a href="https://aws.amazon.com/cloudformation/" target="_blank" rel="noopener">AWS CloudFormation </a></td>
+<td><a href="https://aws.amazon.com/cloudformation/" target="_blank" rel="noopener">AWS CloudFormation</a> 是一项服务，它提供了一种用于描述和预置云环境中所有基础设施资源的通用语言。CloudFormation 允许您使用简单的文本文件以自动和安全的方式跨所有区域和账户建模和预置应用程序所需的全部资源。所有内容都建模后，此文本文件将作为云环境的唯一真实来源。您还可以在 <a href="https://aws.amazon.com/servicecatalog/" target="_blank" rel="noopener">AWS Service Catalog</a> 创建已批准的 CloudFormation 文件集合，以便您的组织仅部署已批准且符合要求的资源。</td>
+</tr>
+<tr>
+<td>运营管理</td>
+<td><a href="https://aws.amazon.com/systems-manager/" target="_blank" rel="noopener">AWS Systems Manager </a><a href="https://aws.amazon.com/config/" target="_blank" rel="noopener">AWS CloudTrail AWS Config </a></td>
+<td>AWS 为系统和运营管理提供一组服务，允许您通过适当的管理和合规性来控制基础设施资源。您可以使用 <a href="https://aws.amazon.com/systems-manager/" target="_blank" rel="noopener">AWS Systems Manager</a>快速查看和监控您的所有资源并自动执行常见运营任务，如修补或状态管理。Systems Manager 提供一个统一的用户界面，您可以在此界面轻松管理您的云运营活动。您还可以使用 <a href="https://aws.amazon.com/cloudtrail/" target="_blank" rel="noopener">AWS CloudTrail</a> 记录组织内的用户活动，使用 <a href="https://aws.amazon.com/config/" target="_blank" rel="noopener">AWS Config </a> 清查资源中的所有配置。</td>
+</tr>
+<tr>
+<td>监控和日志记录</td>
+<td><a href="https://aws.amazon.com/cloudwatch/" target="_blank" rel="noopener">Amazon CloudWatch </a></td>
+<td><a href="https://aws.amazon.com/cloudwatch/" target="_blank" rel="noopener">Amazon CloudWatch</a> 是一项针对 AWS 云资源和在 AWS 上运行的应用程序的监控服务。您可以使用 CloudWatch 收集和跟踪指标、收集和监控日志文件、设置警报并自动应对您的 AWS 资源的变化。CloudWatch 能够监控 Amazon EC2 实例、Amazon DynamoDB 表和 Amazon RDS DB 实例等各种 AWS 资源，也能够监控应用程序生成的自定义指标和日志文件。CloudWatch 还提供了描述 AWS 资源更改的事件流，您可以使用这些事件对应用程序中的更改做出反应。</td>
+</tr>
+<tr>
+<td>配置管理的托管服务</td>
+<td><a href="https://aws.amazon.com/opsworks/" target="_blank" rel="noopener">AWS OpsWorks </a></td>
+<td><a href="https://aws.amazon.com/opsworks/" target="_blank" rel="noopener">AWS OpsWorks</a> 是一种完全托管的配置管理服务，用于托管和扩展 Chef Automate 和 Puppet Enterprise 服务器。借助 OpsWorks，您无需安装和运营自己的配置管理系统，也不用操心其基础设施的扩展。它还可以与您现有的 Chef 和 Puppet 工具无缝协作。OpsWorks 将自动修补、更新和备份您的 Chef 和 Puppet 服务器，并维护其可用性。如果您是 Chef 或 Puppet 现有用户，OpsWorks 是很好的选择。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="quiz"><a href="#quiz" class="headerlink" title="quiz"></a>quiz</h3><ol>
+<li>以下哪些策略可以实现更高的容错能力？  （选择所有适用的答案）</li>
+</ol>
+<ul>
+<li>[x] 使用 Amazon Elastic Block Store (EBS) 实现持久性存储</li>
+<li>[x] 按地理位置分配应用程序</li>
+<li>[x] 保持备用实例运行</li>
+<li>[x] 创建您自己的 AMI 的库</li>
+</ul>
+<ol>
+<li><strong><strong><em>_</em></strong></strong>是一项完全托管式源代码控制服务，让公司能够轻松托管安全且高度可扩展的私有 Git 存储库。</li>
+</ol>
+<ul>
+<li>[x] AWS CodeCommit</li>
+<li>[ ] AWS 命令行界面 (CLI)</li>
+<li>[ ] AWS CodeDeploy</li>
+<li>[ ] AWS CodePipeline</li>
+</ul>
+<ol>
+<li>AWS 提供的服务是针对 DevOps 设计的，并且首先为 AWS 云使用而构建。以下哪些 Amazon DevOps 工具/服务可帮助您安全地存储和版本化应用程序的源代码？ （选择所有适用的答案）</li>
+</ol>
+<ul>
+<li>[x] AWS CodeDeploy</li>
+<li>[x] AWS CodePipeline</li>
+<li>[ ] Amazon CloudFront</li>
+<li>[x] AWS CodeCommit</li>
+</ul>
+<ol>
+<li>以下哪些是 AWS DevOps 的优势？ （选择所有适用的答案）</li>
+</ol>
+<ul>
+<li>[ ] 孤立的团队</li>
+<li>[x] 加强协作</li>
+<li>[x] 快速交付</li>
+<li>[x] 安全日志</li>
+</ul>
+<ol>
+<li>以下哪些策略可以实现更高的容错能力？  （选择所有适用的答案）</li>
+</ol>
+<ul>
+<li>[x] 创建您自己的 AMI 的库</li>
+<li>[x] 使用 Amazon Elastic Block Store (EBS) 实现持久性存储</li>
+<li>[x] 按地理位置分配应用程序</li>
+<li>[x] 保持备用实例运行</li>
+</ul>
+<ol>
+<li><strong><strong><strong><em>_</em></strong></strong></strong>是一种 DevOps 软件开发实践，通过该实践可以自动构建、测试和准备代码更改以便投产。</li>
+</ol>
+<ul>
+<li>[ ] Drupal</li>
+<li>[ ] 持续集成</li>
+<li>[ ] Beanstalk</li>
+<li>[x] 持续交付</li>
+</ul>
+<ol>
+<li>以下哪一项不是稳健备份计划的策略？</li>
+</ol>
+<ul>
+<li>[ ] 时间间隔：备份之间的时间，通常为每天，但对于某些应用程序，可能更频繁</li>
+<li>[ ] 恢复计划</li>
+<li>[x] 弹性 IP 地址</li>
+<li>[ ] 保留期：取决于应用程序和回滚的业务要求</li>
+</ul>
+<ol>
+<li>为了最大限度地减少停机时间，您可以始终让备用<strong><strong>__</strong></strong>保持运行，以便在发生故障时随时接管。</li>
+</ol>
+<ul>
+<li>[x] 实例</li>
+<li>[ ] VPC</li>
+<li>[ ] API</li>
+<li>[ ] 访问密钥</li>
+</ul>
+<ol>
+<li>借助<strong><strong><em>__</em></strong></strong>，您可以更轻松地快速推出新功能、避免在应用程序部署过程中出现停机，并简化应用程序的更新工作。</li>
+</ol>
+<ul>
+<li>[ ] AWS CodeCommit</li>
+<li>[ ] DevOps</li>
+<li>[ ] AWS CodePipeline</li>
+<li>[x] AWS CodeDeploy</li>
+</ul>
+<ol>
+<li>以下哪些是连续交付的好处？ （选择所有适用的答案）</li>
+</ol>
+<ul>
+<li>[x] 更快地交付更新</li>
+<li>[x] 自动执行软件发布过程</li>
+<li>[x] 提高开发人员的工作效率</li>
+<li>[x] 更快地查找和解决错误</li>
+</ul>
+<ol>
+<li><strong><strong>__</strong></strong>定义为项目集合，其中最后一个添加到集合中的项目是第一个要删除的项目 –（后进先出）。</li>
+</ol>
+<ul>
+<li>[ ] 数组</li>
+<li>[x] 堆栈</li>
+<li>[ ] 队列</li>
+<li>[ ] 表</li>
+</ul>
+<ol>
+<li><strong><strong><strong>__</strong></strong></strong>提供启动实例（云中的虚拟服务器）所需的信息。</li>
+</ol>
+<ul>
+<li>[ ] 应用程序编程接口 (API)</li>
+<li>[ ] CloudFront</li>
+<li>[ ] 索引文件</li>
+<li>[x] Amazon 系统映像 (AMI)</li>
+</ul>
+<ol>
+<li>EBS 卷的年故障率 (AFR) 为<strong><strong><strong>_</strong></strong></strong>。</li>
+</ol>
+<ul>
+<li>[x] 0.1% 和 0.5%</li>
+<li>[ ] 3% 和 4%</li>
+<li>[ ] 2% 和 3%</li>
+<li>[ ] 1% 和 2%</li>
+</ul>
+<ol>
+<li><strong><strong><em>_</em></strong></strong>是指围绕新软件产品的一系列活动，从新软件产品推出到产品成熟，可能还包括淘汰。</li>
+</ol>
+<ul>
+<li>[x] 生命周期管理</li>
+<li>[ ] 敏捷部署</li>
+<li>[ ] 发布管理</li>
+<li>[ ] 集成测试</li>
+</ul>
+<ol>
+<li>以下哪项 AWS 服务允许您根据您定义的发布流程模型在每次发生代码更改时构建、测试和部署代码？</li>
+</ol>
+<ul>
+<li>[x] AWS CodePipeline</li>
+<li>[ ] DevOps</li>
+<li>[ ] AWS CodeCommit</li>
+<li>[ ] AWS CodeDeploy</li>
+</ul>
+<ol>
+<li>以下哪些是在 AWS 上构建 Web 应用程序的原因？ （选择所有适用的答案）</li>
+</ol>
+<ul>
+<li>[x] 身份识别与访问管理</li>
+<li>[x] AWS OfficeWorks 可让您轻松部署和管理应用程序</li>
+<li>[x] 大幅缩短构建、开发和测试周期</li>
+<li>[x] Amazon EC2 实例跨越多个不同的性能级别，以支持您的应用程序要求</li>
+</ul>
+<ol>
+<li>DevOps 最佳实践鼓励软件开发工程师和运营专业人员更好地合作。DevOps 的结果包括：（选择所有适用的答案）</li>
+</ol>
+<ul>
+<li>[x] 提高代码质量</li>
+<li>[x] 缩短上市时间</li>
+<li>[x] 加强协作</li>
+<li>[x] 可靠发布</li>
+</ul>
+<ol>
+<li>这是一份正式文档，用于为软件开发人员详细描述产品的预期功能、外观以及与用户的交互。</li>
+</ol>
+<ul>
+<li>[ ] 引导协议</li>
+<li>[ ] 许可证</li>
+<li>[ ] 可接受使用策略</li>
+<li>[x] 功能规格</li>
+</ul>
+<ol>
+<li>以下哪一项是持续交付的好处？（选择所有适用的答案）</li>
+</ol>
+<ul>
+<li>[x] 自动化软件发布</li>
+<li>[x] 提高开发人员的工作效率</li>
+<li>[x] 更快地提供更新</li>
+<li>[x] 更快地查找和解决错误</li>
+</ul>
+<ol>
+<li>什么是 AWS DevOps？</li>
+</ol>
+<ul>
+<li>[ ] 与云服务集成和扩展云服务的大型合作伙伴生态系统。</li>
+<li>[x] 它集文化理念、实践和工具于一身，可以提高组织高速交付应用程序和服务的能力，与使用传统软件开发和基础设施管理流程相比，能够帮助组织更快地发展和改进产品。这种速度使组织能够更好地服务其客户，并在市场上更高效地参与竞争。</li>
+<li>[ ] 使用自动化，以便您可以更快、更高效地构建。</li>
+<li>[ ] 一套灵活的服务，旨在降低计算成本。</li>
+</ul>
+<h2 id="软件开发：-编程和脚本"><a href="#软件开发：-编程和脚本" class="headerlink" title="软件开发： 编程和脚本"></a>软件开发： 编程和脚本</h2><h3 id="软件开发：-编程-C、C-、C"><a href="#软件开发：-编程-C、C-、C" class="headerlink" title="软件开发： 编程 - C、C#、C++"></a>软件开发： 编程 - C、C#、C++</h3><p><a href="https://www.techopedia.com/definition/24068/c-programming-language-c" target="_blank" rel="noopener"><strong>C</strong> </a>是一种高级通用编程语言，非常适合开发固件或便携式应用程序。C 最初用于编写系统软件，由 Dennis Ritchie 于 20 世纪 70 年代早期在贝尔实验室为 Unix 操作系统开发。C 名列最广泛使用的语言之一，拥有适用于大多数计算机系统的编译器并影响了许多流行语言，特别是 C++。</p>
+<p><a href="https://www.techopedia.com/definition/26272/c-sharp" target="_blank" rel="noopener"><strong>C#</strong></a> 是一种面向对象的通用编程 (OOP) 语言，用于联网和 Web 开发。C# 被指定为公共语言基础设施 (CLI) 语言。1999 年 1 月，荷兰软件工程师 Anders Hejlsberg 组建了一个团队，开发 C# 作为 Microsoft 的 NET 框架的补充。最初，C# 作为面向对象的类 C 语言 (Cool) 开发。为了避免潜在的商标问题，更改了实际名称。2000 年 1 月，NET 作为 C# 发布。其 NET 框架促进了多种 Web 技术。</p>
+<p><a href="https://www.techopedia.com/definition/26184/c-programming-language" target="_blank" rel="noopener"><strong>C++</strong> </a>是一种面向对象的通用编程 (OOP) 语言，由 Bjarne Stroustrup 开发，是 C 语言的延伸。因此，可以用“C 风格”或“面向对象的风格”编写 C++ 代码。 在某些情况下，它可以通过两种方式编码，因此是一个有效的混合语言示例。C++ 被认为是中级语言，因为它封装了高级和低级语言功能。最初，该语言被称为“带类的 C 语言”，因为它具有 C 语言的所有属性与“类”的附加概念。 不过，它于 1983 年被重命名为 C++。</p>
+<p><strong>c、c#、c++视频资源：</strong></p>
+<ul>
+<li><a href="https://www.edx.org/learn/c-programming" target="_blank" rel="noopener">C、C# 和 C++ 编程课程</a></li>
+<li><a href="https://www.coursera.org/specializations/c-programming" target="_blank" rel="noopener">C 专业化编程简介</a></li>
+<li><a href="https://www.learn-cpp.org/" target="_blank" rel="noopener">了解 C++</a></li>
+<li><a href="https://www.learncs.org/" target="_blank" rel="noopener">了解 C#</a></li>
+</ul>
+<p><strong>AWS 资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/sdk-for-cpp" target="_blank" rel="noopener">适用于 C++ 的 AWS 开发工具包</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/128_aws_cli/128_aws_cli.mp4" target="_blank" rel="noopener">使用 C++ 构建高性能原生云应用程序</a></li>
+</ul>
+<h3 id="软件开发：-编程-NET"><a href="#软件开发：-编程-NET" class="headerlink" title="软件开发： 编程 - .NET"></a>软件开发： 编程 - .NET</h3><p><a href="https://www.techopedia.com/definition/16458/visual-basic-net-vb.net" target="_blank" rel="noopener">Visual Basic .NET </a> (VB.NET) 是 Microsoft 的一种面向对象的编程 (OOP) 语言。它从 Visual Basic 6 (VB6) 演变而来，以满足日益增长的轻松 Web 服务和 Web 开发需求。 VB.net 旨在利用基于 .NET 框架的类和运行时环境。它由 Microsoft 重新设计，作为其 .NET 产品组的一部分。VB.NET 支持抽象、继承和多态性。</p>
+<p><strong>AWS 资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/developers/getting-started/net" target="_blank" rel="noopener">适用于 .NET 的 AWS 开发工具包入门</a></li>
+<li><a href="https://aws.amazon.com/net" target="_blank" rel="noopener">Windows 和 .NET 开发人员中心</a></li>
+</ul>
+<h3 id="软件开发：-编程-Java"><a href="#软件开发：-编程-Java" class="headerlink" title="软件开发： 编程 - Java"></a>软件开发： 编程 - Java</h3><p>Java 是一种为多个平台生成软件的编程语言。当程序员编写 Java 应用程序时，编译代码（也称为字节码）可在大多数操作系统(OS) 上运行，包括 Windows、Linux 和 Mac OS。Java 的大部分语法派生自 C 和 C++ 编程语言。 Java 于 20 世纪 90 年代中期由 Sun Microsystems 前计算机科学家 James A. Gosling 开发。</p>
+<p><strong>java视频资源：</strong></p>
+<ul>
+<li><a href="https://www.edx.org/course/introduction-to-java-programming-starting-to-code-with-java" target="_blank" rel="noopener">Java 编程简介： 开始使用 Java 编写代码</a></li>
+<li><a href="https://www.coursera.org/specializations/java-programming" target="_blank" rel="noopener">Java 编程和软件工程基础知识</a></li>
+<li><a href="https://www.udacity.com/course/intro-to-java-programming--cs046" target="_blank" rel="noopener">Java 编程简介</a></li>
+<li><a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-092-introduction-to-programming-in-java-january-iap-2010/#" target="_blank" rel="noopener">Java 编程简介</a></li>
+</ul>
+<p><strong>AWS 资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/java" target="_blank" rel="noopener">Java 开发人员中心</a></li>
+<li><a href="https://aws.amazon.com/developers/getting-started/java" target="_blank" rel="noopener">适用于 Java 的 AWS 开发工具包入门</a></li>
+</ul>
+<h3 id="软件开发：-编程-Python"><a href="#软件开发：-编程-Python" class="headerlink" title="软件开发： 编程 - Python"></a>软件开发： 编程 - Python</h3><p><a href="https://www.techopedia.com/definition/3533/python" target="_blank" rel="noopener">Python</a> 是一种多范式、通用的解释性高级编程语言。Python 允许程序员使用不同的编程风格来创建简单或复杂的程序，获得更快的结果和编写代码，就像使用人类语言一样。开发过程中使用 Python 的一些常用系统和应用程序包括 Google Search、YouTube、BitTorrent、Google App Engine、Eve Online、Maya 和 iRobot。</p>
+<p><strong>python视频资源：</strong></p>
+<ul>
+<li><a href="https://www.udacity.com/course/programming-foundations-with-python--ud036" target="_blank" rel="noopener">Python 编程基础知识</a></li>
+<li><a href="https://www.learnpython.org/" target="_blank" rel="noopener">了解 Python</a></li>
+</ul>
+<p><strong>AWS 资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/python" target="_blank" rel="noopener">Python</a></li>
+<li><a href="https://aws.amazon.com/developers/getting-started/python" target="_blank" rel="noopener">适用于 Python 的 AWS 开发工具包入门</a></li>
+<li><a href="https://aws.amazon.com/premiumsupport/knowledge-center/python-boto3-virtualenv" target="_blank" rel="noopener">如何使用 boto3 创建隔离的 Python 3.4 环境？</a></li>
+</ul>
+<h3 id="软件开发：-脚本-CLI"><a href="#软件开发：-脚本-CLI" class="headerlink" title="软件开发： 脚本 - CLI"></a>软件开发： 脚本 - CLI</h3><p><a href="https://www.techopedia.com/definition/3337/command-line-interface-cli" target="_blank" rel="noopener">命令行界面</a> (CLI) 是一个基于文本的界面，用于操作软件和操作系统，同时允许用户在界面中键入单个命令并以相同方式接收回复，从而响应视觉提示。CLI 与当前在最新操作系统中使用的图形用户界面 (GUI) 完全不同。</p>
+<p><strong>AWS 资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/cli" target="_blank" rel="noopener">AWS CLI</a>：AWS 命令行界面 (CLI) 是用于管理 AWS 服务的统一工具。只需通过一个工具进行下载和配置，您就可以使用命令行控制多个 AWS 服务并利用脚本来自动执行这些服务。</li>
+<li><a href="http://docs.aws.amazon.com/general/latest/gr/GetTheTools.html" target="_blank" rel="noopener">AWS 命令行工具</a>：该索引将强调用于开发和管理 AWS 应用程序的主要开发人员工具、开发工具包、IDE 工具包和命令行工具。</li>
+</ul>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/131_aws_cli_deepdive/131_aws_cli_deepdive.mp4" target="_blank" rel="noopener">深入探讨： AWS 命令行界面</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/132_aws_config/132_aws_config.mp4" target="_blank" rel="noopener">AWS Config 规则： 改善对配置更改的管理</a></li>
+</ul>
+<p><strong>付诸行动：</strong></p>
+<ul>
+<li><a href="https://qwiklabs.com/focuses/2203?locale=en&amp;parent=catalog" target="_blank" rel="noopener">使用脚本和 AWS CLI 自动化 AWS 服务</a></li>
+<li><a href="https://github.com/aws/aws-cli" target="_blank" rel="noopener">GitHub 上的 AWS CLI</a></li>
+</ul>
+<h3 id="软件开发：-脚本-Javascript"><a href="#软件开发：-脚本-Javascript" class="headerlink" title="软件开发： 脚本 - Javascript"></a>软件开发： 脚本 - Javascript</h3><p><a href="https://www.techopedia.com/definition/3929/javascript-js" target="_blank" rel="noopener">JavaScript</a> (JS) 是一种脚本语言，主要用于 Web。它用于增强 HTML 页面，通常嵌入在 HTML 代码中。JavaScript 是一种解释性语言。因此，它不需要编译。JavaScript 以互动和动态的方式渲染网页。这允许页面对事件作出反应，呈现特殊效果，接受可变文本，验证数据，创建 cookie，检测用户的浏览器等</p>
+<p><strong>javascript视频资源：</strong></p>
+<ul>
+<li><a href="https://www.udacity.com/course/javascript-basics--ud804" target="_blank" rel="noopener">JavaScript 简介</a></li>
+<li><a href="https://www.udacity.com/course/object-oriented-javascript--ud015" target="_blank" rel="noopener">JavaScript 测试</a></li>
+<li><a href="https://www.udacity.com/course/object-oriented-javascript--ud015" target="_blank" rel="noopener">面向对象的 JavaScript</a></li>
+<li><a href="https://www.udacity.com/course/javascript-promises--ud898" target="_blank" rel="noopener">JavaScript 承诺</a>69096</li>
+<li><a href="https://www.udacity.com/course/javascript-design-patterns--ud989" target="_blank" rel="noopener">JavaScript 设计模式</a></li>
+</ul>
+<p><strong>AWS 资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/javascript" target="_blank" rel="noopener">JavaScript 开发人员中心</a></li>
+<li><a href="https://aws.amazon.com/developers/getting-started/nodejs" target="_blank" rel="noopener">Node.js 中适用于 JavaScript 的 AWS 开发工具包入门</a></li>
+</ul>
+<h3 id="软件开发：-脚本-PHP"><a href="#软件开发：-脚本-PHP" class="headerlink" title="软件开发： 脚本 - PHP"></a>软件开发： 脚本 - PHP</h3><p> <a href="https://www.techopedia.com/definition/24406/php-hypertext-preprocessor-php" target="_blank" rel="noopener">PHP</a>是 PHP 超文本预处理器的递归缩写， 是一种用于创建动态和交互式 HTML 网页的脚本语言。当网站访问者打开页面时，服务器会处理 PHP 命令，然后将结果发送到访问者的浏览器。</p>
+<p><strong>AWS 资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/php" target="_blank" rel="noopener">PHP 开发人员中心</a></li>
+<li><a href="https://aws.amazon.com/developers/getting-started/php" target="_blank" rel="noopener">适用于 PHP 的 AWS 开发工具包入门</a></li>
+</ul>
+<h3 id="软件开发：-脚本-Powershell"><a href="#软件开发：-脚本-Powershell" class="headerlink" title="软件开发： 脚本 - Powershell"></a>软件开发： 脚本 - Powershell</h3><p> <a href="https://www.techopedia.com/definition/25975/powershell" target="_blank" rel="noopener">PowerShell</a>是 Microsoft 提供的一种命令行外壳和脚本语言被集成到 .NET 框架中的自动化任务框架，可嵌入到其他应用程序中。它可自动执行批处理，并创建系统管理工具。它包括超过 130 个标准的功能性命令行工具，使管理员能够通过访问组件对象模型 (COM) 和 Windows Management Instrumentation (WMI) 在本地及远程 Windows 系统上执行任务。</p>
+<p><strong>AWS 资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/130_aws_powershell/130_aws_powershell.mp4" target="_blank" rel="noopener">适用于 Windows PowerShell 的 AWS 工具： 入门</a></li>
+</ul>
+<h3 id="软件开发：-脚本-Ruby"><a href="#软件开发：-脚本-Ruby" class="headerlink" title="软件开发： 脚本 - Ruby"></a>软件开发： 脚本 - Ruby</h3><p><a href="https://www.techopedia.com/definition/3301/ruby" target="_blank" rel="noopener">Ruby</a> 是一种面向对象的开源编程语言，由 Yukihiro “Matz” Matsumoto 创建。创建 Ruby 的目的在于提供一种专注于简单性和工作效率的编程语言，其灵感来自 Lisp、Smalltalk 和 Perl。虽然 Ruby 本身即具有面向对象的特点，它也可以使用程序和功能编程方式进行应用。</p>
+<p><strong>资源：</strong></p>
+<ul>
+<li><a href="https://www.ruby-lang.org/en" target="_blank" rel="noopener">Ruby： 程序员的最佳搭档</a></li>
+</ul>
+<p><strong>AWS 资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/ruby" target="_blank" rel="noopener">AWS Ruby 开发人员中心</a></li>
+<li><a href="https://aws.amazon.com/developers/getting-started/ruby" target="_blank" rel="noopener">适用于 Ruby 的 AWS 开发工具包入门</a></li>
+</ul>
+<h3 id="quiz-1"><a href="#quiz-1" class="headerlink" title="quiz"></a>quiz</h3><ol>
+<li><p>下面的 AWS 命令行界面脚本执行什么命令？</p>
+<p>命令行脚本：</p>
+<p>pip install —upgrade awscli</p>
+</li>
+</ol>
+<ul>
+<li>[ ] 测试 AWS CLI 安装</li>
+<li>[ ] 下载安装脚本</li>
+<li>[ ] 检查是否已经安装 Python</li>
+<li>[x] 升级现有 AWS CLI 安装  </li>
+</ul>
+<ol>
+<li>在 Linux、OS X 或 Unix 操作系统和环境中，您应该使用哪种 AWS CLI 安装方法？</li>
+</ol>
+<ul>
+<li><p>[x] awscli 库</p>
+</li>
+<li><p>[ ] MSI 安装程序</p>
+</li>
+<li><p>[ ] API Gateway</p>
+</li>
+<li><p>[ ] Pip</p>
+<p>有多种不同的方法可以在计算机上安装 AWS CLI，具体取决于您使用的操作系统和环境：</p>
+<p>在 Microsoft Windows 上 – 使用 MSI 安装程序。<br>在 Linux、OS X 或 Unix 上 – 使用 pip（适用于 Python 软件的软件包管理器）或使用捆绑安装程序手动安装。</p>
+</li>
+</ul>
+<ol>
+<li><p>下面的 AWS 命令行界面脚本执行什么命令？</p>
+<p>命令行脚本：</p>
+<p>$ aws s3 sync myfolder s3://mybucket/myfolder —exclude *.tmp</p>
+<p>upload: myfolder/newfile.txt to s3://mybucket/myfolder/newfile.txt</p>
+</li>
+</ol>
+<ul>
+<li>[ ] 查看支持的服务</li>
+<li>[ ] 递归上传和下载多个文件</li>
+<li>[x] 将本地文件夹的内容与 S3 存储桶中的副本同步。</li>
+<li>[ ] 查看 S3 存储桶的内容</li>
+</ul>
+<ol>
+<li>以下哪项是适用于 C++ 的 AWS 开发工具包的核心库功能？</li>
+</ol>
+<ul>
+<li>[ ] 凭证管理</li>
+<li>[ ] 内存分配</li>
+<li>[x] 所有答案选项</li>
+<li>[ ] 日志记录  </li>
+</ul>
+<ol>
+<li>以下哪项是关于 PHP 的正确陈述？</li>
+</ol>
+<ul>
+<li>[x] 以上皆是</li>
+<li>[ ] PHP 执行系统功能，即对于系统上的文件，它可以创建、打开、读取、写入和关闭它们。</li>
+<li>[ ] 通过 PHP 添加、删除、修改数据库中的元素。</li>
+<li>[ ] PHP 可以处理表单，即从文件中收集数据、将数据保存到文件中、通过电子邮件发送数据、将数据返回给用户。</li>
+</ul>
+<ol>
+<li>哪项 AWS 服务允许您从命令行控制多个 AWS 服务，并通过脚本自动执行这些服务？</li>
+</ol>
+<ul>
+<li>[ ] API Gateway</li>
+<li>[ ] Amazon EC2</li>
+<li>[x] AWS 命令行界面 (CLI)</li>
+<li>[ ] Amazon Lambda</li>
+</ul>
+<ol>
+<li>使用“aws configure”命令设置 AWS CLI 安装需要哪四条信息？（选择所有适用的答案）</li>
+</ol>
+<ul>
+<li>[x] AWS 私有访问密钥</li>
+<li>[ ] AWS 隐私访问密钥</li>
+<li>[x] 默认区域</li>
+<li>[x] AWS 访问密钥 ID</li>
+<li>[x] 默认输出格式（json、文本或表格）</li>
+</ul>
+<ol>
+<li>以下哪一个不是通用 CMake 变量？</li>
+</ol>
+<ul>
+<li><p>[ ] REGENERATE_CLIENTS</p>
+</li>
+<li><p>[ ] BUILD_ONLY</p>
+</li>
+<li><p>[x] TARGET_HOME</p>
+</li>
+<li><p>[ ] ADD_CUSTOM_CLIENTS</p>
+<p>detail: see <a href="https://docs.aws.amazon.com/sdk-for-cpp/v1/developer-guide/cmake-params.html" target="_blank" rel="noopener">web</a></p>
+</li>
+</ul>
+<ol>
+<li>以下哪一个不是 JavaScript 语句？</li>
+</ol>
+<ul>
+<li>[ ] 关键字</li>
+<li>[ ] 表达式</li>
+<li>[ ] 注释</li>
+<li>[x] 函数</li>
+</ul>
+<ol>
+<li>AWS 提供一系列 Java 资源，包括博客、社区论坛和示例代码。 可在以下哪些 AWS 资源中找到 Java 代码示例？</li>
+</ol>
+<ul>
+<li>[ ] AWS Java 开发中心</li>
+<li>[ ] 适用于 Java 的 AWS 开发工具包入门指南</li>
+<li>[ ] AWS Java 开发论坛</li>
+<li>[x] GitHub 上适用于 Java 的 AWS 开发工具包</li>
+</ul>
+<h2 id="数据和数据库：-关系和非关系"><a href="#数据和数据库：-关系和非关系" class="headerlink" title="数据和数据库： 关系和非关系"></a>数据和数据库： 关系和非关系</h2><h3 id="Databases：-非关系"><a href="#Databases：-非关系" class="headerlink" title="Databases： 非关系"></a>Databases： 非关系</h3><p>非关系数据库是不包含关系数据库管理系统 (RDBMS) 提升的表/密钥模型的数据库。此类数据库需要数据操作技术和流程，旨在为大公司面临的大数据问题提供解决方案。最受欢迎的新兴非关系数据库称为 NoSQL (Not Only SQL)。</p>
+<p><strong>视频资源</strong>：</p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/36_dynamodb/36_dynamodb.mp4" target="_blank" rel="noopener">从门外汉成长为 NoSQL 专家： Amazon DynamoDB 教程</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/38_nosql_best/38_nosql_best.mp4" target="_blank" rel="noopener">使用 Amazon DynamoDB 的 SQL 到 NoSQL 最佳实践</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/37_ddb_intro/37_ddb_intro.mp4" target="_blank" rel="noopener">DynamoDB 简介</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/39_ddb/39_ddb.mp4" target="_blank" rel="noopener">Amazon DynamoDB - 快速灵活的 NoSQL 数据库</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="http://docs.aws.amazon.com/quickstart/latest/mongodb/welcome.html" target="_blank" rel="noopener">AWS 上的 MongoDB</a></li>
+<li><a href="https://www.udacity.com/course/data-wrangling-with-mongodb--ud032" target="_blank" rel="noopener">与 MongoDB 进行数据整合</a></li>
+<li><a href="https://aws.amazon.com/getting-started/tutorials/create-nosql-table" target="_blank" rel="noopener">创建和查询 NoSQL 表</a></li>
+</ul>
+<h3 id="Databases：-关系"><a href="#Databases：-关系" class="headerlink" title="Databases： 关系"></a>Databases： 关系</h3><p>关系数据库 (RDB) 是由按表、记录或列整理的多个数据集组成的集合。RDB 在数据库表之间建立明确界定的关系。表格可传达和共享信息，从而提高数据的可搜索性，并改善数据整理和报告方式。RDB 使用结构化查询语言 (SQL)，这是一个标准用户应用程序，为数据库交互提供了一个简单的编程接口。RDB 源于映射数据集的数学函数概念，由 Edgar F. Codd 开发。</p>
+<p><strong>概念和要点</strong></p>
+<ul>
+<li><a href="https://www.udacity.com/course/intro-to-relational-databases--ud197" target="_blank" rel="noopener">关系数据库简介</a></li>
+</ul>
+<p><strong>视频资源</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/42_rds_getting_started/42_rds_getting_started.mp4" target="_blank" rel="noopener">Amazon Relational Database Service (Amazon RDS) 入门</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/41_rds/41_rds.mp4" target="_blank" rel="noopener">深入探究 Amazon Relational Database Service (RDS)</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/43_aurora/43_aurora.mp4" target="_blank" rel="noopener">适用于企业级数据库应用程序的 Amazon Auror</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/44_sql_server/44_sql_server.mp4" target="_blank" rel="noopener">AWS 中的 Microsoft SQL Server 简介</a></li>
+</ul>
+<p><strong>文本资源</strong></p>
+<ul>
+<li><a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.MySQL.CommonDBATasks.html" target="_blank" rel="noopener">MySQL 的数据库管理员常见任务</a></li>
+<li><a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.Oracle.html#CHAP_GettingStarted.Deleting.Oracle" target="_blank" rel="noopener">删除数据库实例 AWS</a></li>
+<li><a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.MySQL.html" target="_blank" rel="noopener">创建 MySQL 数据库实例</a></li>
+<li><a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.RestoringFromSnapshot.html" target="_blank" rel="noopener">从数据库快照还原数据库实例</a></li>
+<li><a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.Oracle.html" target="_blank" rel="noopener">创建 Oracle 数据库实例</a></li>
+<li><a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/TUT_WebAppWithRDS.html" target="_blank" rel="noopener">创建 Web 服务器和 Amazon RDS 数据库</a></li>
+<li><a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.CreatingConnecting.SQLServer.html" target="_blank" rel="noopener">创建 Microsoft SQL Server 数据库实例</a></li>
+<li><a href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Troubleshooting.html" target="_blank" rel="noopener">RDS 问题排查</a></li>
+</ul>
+<p><strong>付诸行动</strong></p>
+<ul>
+<li><a href="https://run.qwiklab.com/focuses/380?parent=catalog" target="_blank" rel="noopener">Amazon Relational Database Service (RDS) (Windows) 简介</a></li>
+<li><a href="https://run.qwiklab.com/focuses/379?parent=catalog" target="_blank" rel="noopener">Amazon Relational Database Service (RDS) (Linux) 简介</a></li>
+</ul>
+<h3 id="quiz-2"><a href="#quiz-2" class="headerlink" title="quiz"></a>quiz</h3><ol>
+<li>判断对错。NOT NULL 约束强制列不接受 null 值。</li>
+</ol>
+<ul>
+<li>[x] 正确</li>
+<li>[ ] 错误</li>
+</ul>
+<ol>
+<li><strong><strong>_</strong></strong>是访问和操作数据库的标准语言。</li>
+</ol>
+<ul>
+<li>[x] SQL</li>
+<li>[ ] JavaScript</li>
+<li>[ ] CSS</li>
+<li>[ ] HTML</li>
+</ul>
+<ol>
+<li>以下哪一种不是将数据导入到 Amazon RDS 的方法？</li>
+</ol>
+<ul>
+<li><p>[ ] 适用于 MySQL 的 mysqlimport 实用程序</p>
+</li>
+<li><p>[x] 适用于 RDS 的复制/粘贴实用程序</p>
+</li>
+<li><p>[ ] 适用于 Oracle 的 SQL 加载程序</p>
+</li>
+<li><p>[ ] 使用 mysqldump</p>
+<p>有许多简单的方法可以将数据导入到 Amazon RDS，例如使用适用于 MySQL 的 mysqldump 或 mysqlimport 实用程序；适用于 Oracle 的数据泵、导入/导出或 SQL 加载程序；适用于 SQL Server 的导入/导出向导或批量复制程序 (BCP)；或适用于 PostgreSQL 的 pg_dump。有关数据导入和导出的详细信息，请参阅适用于 MySQL 的数据导入指南、适用于 Oracle 的数据导入指南、适用于 SQL Server 的数据导入指南或适用于 PostgreSQL 的数据导入指南。</p>
+</li>
+</ul>
+<ol>
+<li>Amazon DynamoDB 中的主键是什么？</li>
+</ol>
+<ul>
+<li>[ ] 数据堆栈</li>
+<li>[ ] 表中的数据记录</li>
+<li>[x] 表中每个项目的唯一标识符</li>
+<li>[ ] 表属性</li>
+</ul>
+<ol>
+<li><p>使用下面的场景将每个任务排序为步骤 1、步骤 2 等，以便完成场景活动。</p>
+<p>场景： 使用 Amazon DynamoDB 创建 NoSQL 表。</p>
+<p>在 “表名称” 字段中，键入数据文件的名称。</p>
+<p>​           [ 2 ]          </p>
+<p>在“分区键”字段中键入数据属性，以便在分区之间传播数据，以实现可伸缩性。</p>
+<p>​           [ 3 ]    </p>
+<p>在 DynamoDB 控制台中，单击“创建表”。</p>
+<p>​           [ 1 ]             </p>
+<p>选中“添加排序键”框。在“排序键”字段中键入数据属性以启用轻松排序。</p>
+<p>​           [ 4 ]   </p>
+<p>单击“创建”。当创建的表准备就绪时，它将显示在表列表中，并带有复选框。  </p>
+<p>​           [ 5 ]          </p>
+</li>
+<li><p>使用 SQL，如何从名为“Persons”的表中选择名为“FirstName”的列？</p>
+</li>
+</ol>
+<ul>
+<li>[x] SELECT FirstName FROM Persons</li>
+<li>[ ] EXTRACT Persons.FirstName</li>
+<li>[ ] SELECT Persons.FirstName</li>
+<li>[ ] EXTRACT FirstName FROM Persons</li>
+</ul>
+<h2 id="数据和数据库：-管理、迁移、结构"><a href="#数据和数据库：-管理、迁移、结构" class="headerlink" title="数据和数据库： 管理、迁移、结构"></a>数据和数据库： 管理、迁移、结构</h2><h3 id="Databases：-数据管理和数据迁移"><a href="#Databases：-数据管理和数据迁移" class="headerlink" title="Databases： 数据管理和数据迁移"></a>Databases： 数据管理和数据迁移</h3><p><strong>数据管理</strong></p>
+<p>数据库管理系统 (DBMS) 是用于创建和管理数据库的系统软件。DBMS 为用户和程序员提供了创建、检索、更新和管理数据的系统方法。</p>
+<p><a href="https://www.coursera.org/learn/core-database" target="_blank" rel="noopener">核心数据库概念 (Coursera)</a></p>
+<p><a href="https://www.coursera.org/learn/database-management" target="_blank" rel="noopener">数据库管理要点</a></p>
+<p><strong>数据迁移</strong></p>
+<p>数据迁移是在计算机、存储设备或格式之间传输数据的过程。它是任何系统实施、升级或整合的关键考虑因素。</p>
+<p><a href="https://aws.amazon.com/dms/" target="_blank" rel="noopener">AWS Schema Conversion Tool</a> 通过以下方法来简化异构数据库的迁移工作：将源数据库架构和大部分的数据库代码对象（包括视图、存储过程和函数等）自动转换成与目标数据库兼容的格式。</p>
+<p><strong>AWS 技术提示：</strong></p>
+<ul>
+<li>它会清楚地标记无法自动转换的任意对象，以便您进行手动转换，以完成迁移。</li>
+<li>SCT 还可以扫描嵌入式 SQL 语句的应用程序源代码，并将其转换为数据库架构转换项目的一部分</li>
+<li>在此过程中，SCT 通过将旧的 Oracle 和 SQL Server 功能转换为其等效的 AWS 服务来执行云原生代码优化，从而帮助您在数据库迁移的同时实现应用程序的现代化。</li>
+<li>架构转换完成后，SCT 可以使用内置数据迁移代理帮助将数据从一系列数据仓库迁移到 Amazon Redshift。</li>
+<li>您的源数据库可以是本地数据库，也可以位于 Amazon RDS 或 EC2 中，目标数据库可以位于 Amazon RDS 或 EC2 中。</li>
+</ul>
+<p><strong>资源</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/27_dms/27_dms.mp4" target="_blank" rel="noopener">AWS Database Migration Service</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/29_data_migration_strategies/29_data_migration_strategies.mp4" target="_blank" rel="noopener">云数据迁移： 将数据存入 AWS 的 6 种策略</a></li>
+</ul>
+<p><strong>付诸行动</strong></p>
+<ul>
+<li><a href="https://qwiklabs.com/focuses/851?locale=en&amp;parent=catalog" target="_blank" rel="noopener">AWS Database Migration Service 简介</a></li>
+</ul>
+<h3 id="Databases：-数据结构"><a href="#Databases：-数据结构" class="headerlink" title="Databases： 数据结构"></a>Databases： 数据结构</h3><p><strong>数据结构</strong></p>
+<p>数据结构是软件开发的关键部分，也是开发人员面试问题最常见的主题之一。好消息是它们基本上只是用于组织和存储数据的专用格式。</p>
+<p><strong>资源</strong></p>
+<p><a href="https://medium.com/swlh/introduction-to-data-structures-9134b7d064a6" target="_blank" rel="noopener">数据结构简介  </a></p>
+<p><a href="https://oli.cmu.edu/jcourse/webui/syllabus/module.do?context=c09ba6b280020ca601821c03d9c0a100" target="_blank" rel="noopener">数据结构 - 卡内基梅隆大学  </a></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><a href="https://medium.com/swlh/introduction-to-data-structures-9134b7d064a6" target="_blank" rel="noopener">数据结构简介  </a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://oli.cmu.edu/jcourse/webui/syllabus/module.do?context=c09ba6b280020ca601821c03d9c0a100" target="_blank" rel="noopener">数据结构 - 卡内基梅隆大学  </a></td>
+</tr>
+<tr>
+<td><a href="https://www.edx.org/course/data-structures-fundamentals-uc-san-diegox-algs201x" target="_blank" rel="noopener">数据结构基础知识 - EDX - UCSD  </a></td>
+</tr>
+<tr>
+<td><a href="https://www.coursera.org/learn/data-structures" target="_blank" rel="noopener">数据结构基础知识 - Coursera - UCSD  </a></td>
+</tr>
+<tr>
+<td><a href="https://www.coursera.org/lecture/cloud-computing/orientation-towards-cloud-computing-concepts-some-basic-computer-science-9vZYG" target="_blank" rel="noopener">面向云计算概念的方向： 基本计算机科学基础知识  </a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>云中的数据结构</strong></p>
+<p><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/30_backup/30_backup.mp4" target="_blank" rel="noopener">有关构建云备份和恢复解决方案的最佳实践</a></p>
+<h3 id="Databases：-数据仓库和数据湖"><a href="#Databases：-数据仓库和数据湖" class="headerlink" title="Databases： 数据仓库和数据湖"></a>Databases： 数据仓库和数据湖</h3><p><em>数据仓库</em>是从操作系统和外部数据源派生的公司信息和数据的集合。数据仓库旨在通过允许在不同聚合级别进行数据整合、分析和报告来支持业务决策。数据通过提取、传输和加载过程填充到数据仓库。</p>
+<p><em>数据湖</em>是一个存储库，它以原生格式存储大量原始数据，直到需要这些数据为止。分层数据仓库在文件或文件夹中存储数据，而数据湖使用平面架构来存储数据。</p>
+<p><strong>概念和要点</strong></p>
+<p><a href="https://aws.amazon.com/data-warehouse/" target="_blank" rel="noopener">数据仓库概念</a></p>
+<p><a href="https://aws.amazon.com/big-data/what-is-a-data-lake" target="_blank" rel="noopener">什么是数据湖？</a></p>
+<p><strong>云中的数据仓库</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/31_data_warehouse/31_data_warehouse.mp4" target="_blank" rel="noopener">使用 Amazon Redshift 构建数据仓库</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/34_data_warehousing/34_data_warehousing.mp4" target="_blank" rel="noopener">AWS 上的数据仓库： 详细对比</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/32_redshift_best_practices/32_redshift_best_practices.mp4" target="_blank" rel="noopener">有关使用 Amazon Redshift 建立数据仓库的最佳实践</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/33_redshift/33_redshift.mp4" target="_blank" rel="noopener">用于大数据分析的 Amazon Redshift</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/35_data_lake/35_data_lake.mp4" target="_blank" rel="noopener">在 AWS 上构建数据湖</a></li>
+</ul>
+<p><strong>云中的数据湖</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/answers/big-data/data-lake-solution" target="_blank" rel="noopener">AWS 上的数据湖</a></li>
+</ul>
+<p><strong>付诸行动</strong></p>
+<p><a href="https://qwiklabs.com/focuses/276?locale=en&amp;parent=catalog" target="_blank" rel="noopener">Amazon Redshift 简介</a></p>
+<p><a href="http://docs.aws.amazon.com/redshift/latest/gsg/getting-started.html" target="_blank" rel="noopener">构建数据仓库</a></p>
+<p>与数据仓库不同，数据湖是所有数据（包括结构化和非结构化数据）的集中存储库。数据仓库使用针对分析优化的预定义架构。在数据湖中，未定义架构，支持其他类型的分析，如大数据分析、全文搜索、实时分析和机器学习。请参阅下面的对比图，了解更多详细信息。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th><strong>数据仓库</strong></th>
+<th><strong>数据湖</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>数据</strong></td>
+<td>来自事务系统、运营数据库和业务线应用程序的关系数据</td>
+<td>来自物联网设备、网站、移动应用程序、社交媒体和企业应用程序的非关系和关系数据</td>
+</tr>
+<tr>
+<td><strong>架构</strong></td>
+<td>在数据仓库实施之前设计（写时架构）</td>
+<td>在分析时写入（读时架构）</td>
+</tr>
+<tr>
+<td><strong>性价比</strong></td>
+<td>使用更高成本的存储实现最快的查询结果</td>
+<td>使用更低成本的存储实现更快的查询结果</td>
+</tr>
+<tr>
+<td><strong>数据质量</strong></td>
+<td>作为事实的核心版本的经过精心整理的数据</td>
+<td>可能经过整理，也可能没有经过整理的任何数据（即原始数据）</td>
+</tr>
+<tr>
+<td><strong>用户</strong></td>
+<td>业务分析师、数据科学家和数据开发人员</td>
+<td>数据科学家、数据开发人员和业务分析师（使用经过整理的数据）</td>
+</tr>
+<tr>
+<td><strong>分析</strong></td>
+<td>批处理报告、BI 和可视化效果</td>
+<td>机器学习、预测分析、数据发现和分析</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="quiz-3"><a href="#quiz-3" class="headerlink" title="quiz"></a>quiz</h3><ol>
+<li>预留实例与按需数据库实例有何不同？</li>
+</ol>
+<ul>
+<li>[ ] 存储容量</li>
+<li>[x] 计费方式</li>
+<li>[ ] CPU 资源</li>
+<li>[ ] 内存资源</li>
+</ul>
+<ol>
+<li>判断对错。</li>
+</ol>
+<p>预留实例可以从一个区域移动到另一个区域。</p>
+<ul>
+<li>[ ] 正确</li>
+<li>[x] 错误</li>
+</ul>
+<ol>
+<li>以下哪一种不是管理数据库实例的方法？（答案要选AWS控制台才能通过）</li>
+</ol>
+<ul>
+<li><p>[x] Amazon CloudFront</p>
+</li>
+<li><p>[ ] AWS 管理控制台</p>
+</li>
+<li><p>[ ] 命令行工具</p>
+</li>
+<li><p>[ ] Amazon RDS API</p>
+<p>您可以通过 AWS 管理控制台、Amazon RDS API 和命令行工具创建和删除数据库实例、定义/优化数据库实例的基础设施属性，以及控制访问和安全性。</p>
+</li>
+</ul>
+<ol>
+<li><em><strong><strong><strong>_</strong></strong></strong></em>是一个基本数据要素，不需要进一步细分。例如，<code>Department</code> 项可能具有多个属性，如 <code>DepartmentID</code>、<code>Name</code>、<code>Manager</code> 等等。</li>
+</ol>
+<ul>
+<li>[x] 属性</li>
+<li>[ ] 项</li>
+<li>[ ] 资产</li>
+<li>[ ] 元素</li>
+</ul>
+<ol>
+<li><strong><strong><strong>__</strong></strong></strong>是相关数据条目的集合，由列和行组成。</li>
+</ol>
+<ul>
+<li>[ ] 数据日志</li>
+<li>[ ] 堆栈</li>
+<li>[ ] 集群</li>
+<li>[x] 表</li>
+</ul>
+<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><h3 id="网络：-简介"><a href="#网络：-简介" class="headerlink" title="网络： 简介"></a>网络： 简介</h3><p>计算机网络是指通过通信渠道连接在一起以方便广大用户进行通信和资源共享的一组计算机系统和其他计算机硬件设备。网络通常根据其特征进行分类。<a href="https://www.techopedia.com/definition/25597/computer-network" target="_blank" rel="noopener">[16]</a></p>
+<p>与联网相关的主题包括：</p>
+<ul>
+<li>架构和故障排除</li>
+<li>基础设施预置</li>
+<li>目录服务</li>
+</ul>
+<h3 id="网络：-架构"><a href="#网络：-架构" class="headerlink" title="网络： 架构"></a>网络： 架构</h3><p>网络架构是组织计算机网络的完整框架。网络架构图提供了已建立的网络的全貌以及所有可访问资源的详细视图。它包括用于通信、电缆和设备类型、网络布局和拓扑、物理和无线连接、已实施的区域和未来计划的硬件组件。此外，软件规则和协议也构成网络架构。此架构始终由网络管理员与网络工程师和其他设计工程师协调设计。<a href="https://www.techopedia.com/definition/8549/network-architecture" target="_blank" rel="noopener">[6]</a></p>
+<p><strong>网络资源：</strong></p>
+<p><a href="https://www.udacity.com/course/computer-networking--ud436" target="_blank" rel="noopener">计算机联网</a></p>
+<p><strong>协议资源：</strong></p>
+<p><a href="https://www.coursera.org/learn/tcpip#about" target="_blank" rel="noopener">TCP 和 IP 网络</a></p>
+<h3 id="网络：-架构（续）"><a href="#网络：-架构（续）" class="headerlink" title="网络： 架构（续）"></a>网络： 架构（续）</h3><p>云计算架构是指云计算所需的组件和子组件。这些组件通常包括前端平台（胖客户端、瘦客户端、移动设备）、后端平台（服务器、存储）、基于云的交付和网络（Internet、Intranet、Intercloud）。 简而言之，前端是您看到的部分，后端是幕后发生的计算。</p>
+<p>云服务可通过 Internet 公开或私下交付，也可以通过 Intranet 传送到公司的网络中。有时，组织会结合使用两种方式。</p>
+<p>无论实际的“云”位于何处（公司自己的数据中心或服务提供商的数据中心），云计算都通过联网来方便地按需访问共享的计算资源池，如网络、存储、服务器、服务和应用程序。通过使用虚拟化，可以根据需要快速轻松地预配置和发布这些资产。</p>
+<p>由于虚拟化和虚拟机管理程序等技术，许多虚拟服务器可能存在于单个物理服务器上。这些技术支持其他云订阅，如平台即服务 (PaaS)、基础设施即服务 (IaaS) 等。</p>
+<p><strong>前端平台</strong></p>
+<p>前端是客户端、客户或用户可见的一端。前端部分包括用户界面，以及用于访问云系统的客户端计算机系统或网络。</p>
+<p><strong>后端平台</strong></p>
+<p>后端部分位于服务提供商使用的一端。其中包括各种服务器、计算机、数据存储系统、虚拟机和程序，所有这些共同构成计算服务云。后端还负责提供安全机制、流量控制和协议，用于连接网络计算机进行通信。</p>
+<p><strong>基于云的交付</strong></p>
+<p>如今，云计算服务无处不在。例如，如果您使用 QuickBooks 进行会计工作，使用 Expedia 来安排旅行，或者使用 Netflix 来观看喜爱的电视剧，那么您就是云计算用户。这些都是公司或个人可以购买的订阅示例，这些订阅使他们能够使用该软件（通常称为软件即服务，简称 SaaS）。</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/46_vpc/46_vpc.mp4" target="_blank" rel="noopener">AWS 深入探究： 其核心分布式系统 AWS</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/289_vdc/289_vdc.mp4" target="_blank" rel="noopener">创建虚拟数据中心： VPC 基础知识和连接</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/48_nat_gateway/48_nat_gateway.mp4" target="_blank" rel="noopener">Amazon VPC 的 VPC 设计和新功能</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/50_connect_vpc/50_connect_vpc.mp4" target="_blank" rel="noopener">Web 运行日志分析</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/53_workspaces/53_workspaces.mp4" target="_blank" rel="noopener">使用 Amazon Web Services 的 SSL</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Introduction.html" target="_blank" rel="noopener">Amazon VPC 是什么？  </a> </li>
+<li><a href="http://docs.aws.amazon.com/quickstart/latest/vpc/welcome.html" target="_blank" rel="noopener">使用 Amazon VPC 构建模块化且可扩展的虚拟网络架构  </a> </li>
+<li><a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Security.html" target="_blank" rel="noopener">您的 VPC 安全性  </a></li>
+<li><a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html" target="_blank" rel="noopener">VPC 和子网基础知识  </a></li>
+<li><a href="http://media.amazonwebservices.com/architecturecenter/AWS_ac_ra_loganalysis_11.pdf" target="_blank" rel="noopener">AWS 日志分析  </a> </li>
+<li><a href="http://media.amazonwebservices.com/architecturecenter/AWS_ac_ra_loganalysis_11.pdf" target="_blank" rel="noopener">日志分析  </a></li>
+<li><a href="http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/Welcome.html" target="_blank" rel="noopener">什么是 VPC 对等？  </a></li>
+<li><a href="http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/enable-proxy-protocol.html" target="_blank" rel="noopener">为负载均衡器配置代理协议支持  </a> </li>
+<li><a href="https://aws.amazon.com/getting-started/projects/backup-data-to-cloud/" target="_blank" rel="noopener">将数据备份到云中</a> </li>
+</ul>
+<p><strong>付诸行动：</strong></p>
+<ul>
+<li><a href="https://run.qwiklab.com/focuses/359?parent=catalog" target="_blank" rel="noopener">构建第一个 Amazon Virtual Private Cloud (VPC)  </a> </li>
+<li><a href="https://gist.github.com/pablitoc/91c40d820f207879969c" target="_blank" rel="noopener">为 AWS 代理协议配置 AWS ELB 策略  </a> </li>
+<li><a href="https://qwiklabs.com/quests/6?locale=en" target="_blank" rel="noopener">计算和联网</a>        </li>
+</ul>
+<h3 id="网络：-问题排查"><a href="#网络：-问题排查" class="headerlink" title="网络： 问题排查"></a>网络： 问题排查</h3><p>AWS 拥有大量资源，可帮助您排查问题。<a href="https://aws.amazon.com/premiumsupport/knowledge-center/" target="_blank" rel="noopener">查看此网站，了解最常见问题的列表。</a></p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/62_vmware/62_vmware.mp4" target="_blank" rel="noopener">VMware Cloud on AWS</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/51_vpn/51_vpn.mp4" target="_blank" rel="noopener">AWS 知识中心视频： 有哪些选项可以连接到我的 Amazon VPC？</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/52_ssl/52_ssl.mp4" target="_blank" rel="noopener">AWS 知识中心视频： “如何使用 Amazon VPC 创建 VPN？</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/premiumsupport/knowledge-center/connectivity-linux/" target="_blank" rel="noopener">如何在 Linux 中排查 TCP/IP 连接问题？  </a></li>
+<li><a href="https://aws.amazon.com/premiumsupport/knowledge-center/connectivity-windows/" target="_blank" rel="noopener">  </a><a href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/admin_troubleshooting.html" target="_blank" rel="noopener">AWS Directory Service 管理问题排查  </a> </li>
+<li><a href="https://aws.amazon.com/premiumsupport/knowledge-center/connect-vpc/" target="_blank" rel="noopener">我应该如何连接到我的 Amazon Virtual Private Cloud？  </a> </li>
+<li><a href="https://www.pluralsight.com/blog/it-ops/network-troubleshooting-tools" target="_blank" rel="noopener">前 10 大网络问题排查工具  </a></li>
+<li><a href="https://www.linkedin.com/learning/learning-network-troubleshooting" target="_blank" rel="noopener">学习网络问题排查</a></li>
+</ul>
+<h3 id="网络：-预置"><a href="#网络：-预置" class="headerlink" title="网络： 预置"></a><strong>网络： 预置</strong></h3><p>预置是指在企业范围内对多种类型的 IT 系统资源进行配置、部署和管理。组织的 IT 或人力资源部门监督预置过程，该过程用于监控用户和客户的访问权限和隐私，同时确保企业资源安全。</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/54_desktops_apps/54_desktops_apps.mp4" target="_blank" rel="noopener">Amazon WorkSpaces 简介</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/55_lemongrass_sap/55_lemongrass_sap.mp4" target="_blank" rel="noopener">在 AWS 上部署桌面和应用程序</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/257_cfn/257_cfn.mp4" target="_blank" rel="noopener">AWS CloudFormation 简介</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/57_directory_service/57_directory_service.mp4" target="_blank" rel="noopener">使用 AWS 进行实时编码： 构建更好的 CloudFormation 模板</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/259_cfn_deepdive/259_cfn_deepdive.mp4" target="_blank" rel="noopener">深入探讨 AWS CloudFormation</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/EC2Win_Infrastructure.html#EC2InstanceAndWindowsServer" target="_blank" rel="noopener">Windows Server 与 Amazon EC2 Windows 实例之间的区别</a></li>
+<li><a href="https://aws.amazon.com/getting-started/projects/provision-cloud-desktops" target="_blank" rel="noopener">在云中预置桌面</a></li>
+<li><a href="https://aws.amazon.com/getting-started/projects/launch-lamp-web-app" target="_blank" rel="noopener">构建 SharePoint 服务器农场</a></li>
+<li><a href="https://aws.amazon.com/cloudformation/aws-cloudformation-templates" target="_blank" rel="noopener">AWS CloudFormation 模板</a></li>
+</ul>
+<p><strong>付诸行动：</strong></p>
+<ul>
+<li><a href="https://qwiklabs.com/focuses/383?locale=en&amp;parent=catalog" target="_blank" rel="noopener">AWS CloudFormation 简介</a></li>
+</ul>
+<h3 id="网络：-目录服务"><a href="#网络：-目录服务" class="headerlink" title="网络： 目录服务"></a>网络： 目录服务</h3><p>目录服务是存储、组织和提供对目录信息的访问以统一网络资源的软件系统。目录服务将网络资源的网络名称映射到网络地址并为网络定义命名结构。</p>
+<p>目录服务为协议和网络拓扑提供透明度，允许用户访问资源，而不必知道设备的物理位置。它是网络操作系统的重要组成部分，是服务交付平台的中央信息存储库。</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/59_identity_federation/59_identity_federation.mp4" target="_blank" rel="noopener">AWS Directory Service 深入探讨</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/60_active_directory/60_active_directory.mp4" target="_blank" rel="noopener">一应俱全： AWS 的联合身份验证</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/61_netperf/61_netperf.mp4" target="_blank" rel="noopener">将 Active Directory 与 AWS 工作负载集成的最佳实践</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/58_dirservice_deep_dive/58_dirservice_deep_dive.mp4" target="_blank" rel="noopener">AWS 上的目录服务有助于管理网络操作系统。</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/directoryservice" target="_blank" rel="noopener">AWS Directory Service</a></li>
+<li><a href="http://docs.aws.amazon.com/quickstart/latest/active-directory-ds/welcome.html" target="_blank" rel="noopener">AWS 云上的 Active Directory 域服务</a></li>
+<li><a href="http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/common-issues.html#boot-dsrm" target="_blank" rel="noopener">将 EC2 Windows 实例启动至目录服务还原模式 (DSRM)</a></li>
+<li><a href="https://docs.aws.amazon.com/directoryservice/latest/admin-guide/what_is.html" target="_blank" rel="noopener">AWS Directory Service 用户指南</a></li>
+<li><a href="http://docs.aws.amazon.com/directoryservice/latest/admin-guide/admin_troubleshooting.html" target="_blank" rel="noopener">AWS Directory Service 管理问题排查</a></li>
+</ul>
+<h3 id="quiz-4"><a href="#quiz-4" class="headerlink" title="quiz"></a>quiz</h3><ol>
+<li>TCP/IP 地址 65.32.98.254 的网络地址是什么？</li>
+</ol>
+<ul>
+<li>[ ] 65</li>
+<li>[ ] 65.32</li>
+<li>[x] 65.32.98</li>
+<li>[ ] 65.32.98.254</li>
+</ul>
+<ol>
+<li>您正在构建一个系统向员工分发机密的培训视频。借助 CloudFront，可以使用哪种方法提供 S3 中存储的，但不能直接通过 S3 公开访问的内容？</li>
+</ol>
+<ul>
+<li><p>[ ] 创建用于 CloudFront 的 Identity and Access Management (IAM) 用户，并授予 S3 存储桶中的对象访问该 IAM 用户的权利。</p>
+</li>
+<li><p>[ ] 创建一个 S3 存储桶策略，该策略将 CloudFront 分配 ID 列为“委托人”，并将目标存储桶列为 Amazon 资源名称 (ARN)。</p>
+</li>
+<li><p>[ ] 将 CloudFront 账户安全组“amazon-cf/amazon-cf-sg”添加到适当的 S3 存储桶策略中。</p>
+</li>
+<li><p>[x] 创建用于 CloudFront 的原始访问标识 (OAI)，并授予该 OAI 访问 S3 存储桶中的对象的权利。</p>
+<p>创建原始访问标识是正确答案。 原始访问标识是一个特殊用户，您将设置 CloudFront 服务使用此用户来访问受限内容。</p>
+</li>
+</ul>
+<ol>
+<li>如果您拥有超过 5000 名用户，并且需要在 AWS 托管目录和本地目录之间建立信任关系，哪个 AWS Directory Service 选项是最佳选项？</li>
+</ol>
+<ul>
+<li><p>[x] 适用于 Microsoft Active Directory 的 AWS Directory Service（企业版）</p>
+</li>
+<li><p>[ ] Simple AD</p>
+</li>
+<li><p>[ ] AD Connector</p>
+<p>如果需要一个成本低廉且具有常用目录功能的可兼容 Active Directory 的服务，请使用 Simple AD。</p>
+<p>选择适用于 Microsoft Active Directory 的 AWS Directory Service（企业版），打造在 AWS 云上托管的功能丰富的 Microsoft Active Directory。</p>
+<p>利用我们的第三个选项 AD Connector，您只需将现有的本地 Active Directory 连接到 AWS 即可。</p>
+</li>
+</ul>
+<ol>
+<li>为了最大限度地减少停机时间，您可以始终让备用<strong><strong><strong><strong><strong><em>_</em></strong></strong></strong></strong></strong>保持运行状态，以便在发生故障时随时接管。</li>
+</ol>
+<ul>
+<li>[ ] API</li>
+<li>[ ] 访问密钥</li>
+<li>[ ] VPC</li>
+<li>[x] 实例</li>
+</ul>
+<ol>
+<li>以下哪一项不是在分布式系统中处理许多并发请求的方法？</li>
+</ol>
+<ul>
+<li>[ ] 生成一个单独的线程</li>
+<li>[ ] 编写您自己的任务切换程序</li>
+<li>[x] 创建自定义虚拟机</li>
+<li>[ ] 处理程序池</li>
+</ul>
+<p>​    下面是处理并发请求的几种方法：</p>
+<ul>
+<li><p>方法 1 – 使用操作系统提供的内容：</p>
+</li>
+<li><ul>
+<li>为每个请求派生一个单独的进程</li>
+<li>或者生成一个单独的线程</li>
+</ul>
+</li>
+<li><p>方法2 – 编写您自己的任务切换程序</p>
+</li>
+<li><ul>
+<li>将每个响应分解为小步骤</li>
+<li>使用自定义事件驱动的分派程序进行调度</li>
+</ul>
+</li>
+<li><p>方法 3 – 处理程序池：</p>
+</li>
+<li><ul>
+<li>创建在请求或步骤之间切换的线程池</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><p>选择 2 个最佳的答案选项。</p>
+<p>Amazon Glacier 设计用于：</p>
+</li>
+</ol>
+<ul>
+<li><p>[ ] 内容传输</p>
+</li>
+<li><p>[x] 长期备份</p>
+</li>
+<li><p>[x] 数据存档</p>
+</li>
+<li><p>[ ] 频繁访问您的数据</p>
+<p>Amazon Glacier 是一种安全、持久且成本极低的云存储服务，适用于数据存档和长期备份。为了保持低成本，Amazon Glacier 针对不经常访问的数据进行了优化，这些数据的检索时间通常需要几个小时。</p>
+<p><a href="https://aws.amazon.com/glacier/" target="_blank" rel="noopener">https://aws.amazon.com/glacier/</a></p>
+</li>
+</ul>
+<ol>
+<li>以下哪些 AWS Directory Service 先决条件针对 Simple AD、适用于 Microsoft Active Directory 的 AWS Directory Service 和 AD Connector（企业版）？（选择所有合适的答案）</li>
+</ol>
+<ul>
+<li><p>[x] 创建包含至少两个子网的 VPC。每个子网必须位于不同的可用区中。</p>
+</li>
+<li><p>[ ] 创建安全组</p>
+</li>
+<li><p>[ ] 创建目录管理员账户</p>
+</li>
+<li><p>[x] VPC 必须具有默认硬件租赁</p>
+<p><a href="https://docs.aws.amazon.com/zh_cn/directoryservice/latest/admin-guide/prereq_simple.html" target="_blank" rel="noopener">Simple AD 先决条件</a></p>
+<p><a href="https://docs.aws.amazon.com/zh_cn/directoryservice/latest/admin-guide/ms_ad_getting_started_prereqs.html" target="_blank" rel="noopener">AWS Managed Microsoft AD 先决条件</a></p>
+<p><a href="https://docs.aws.amazon.com/zh_cn/directoryservice/latest/admin-guide/prereq_connector.html" target="_blank" rel="noopener">AD Connector 先决条件</a></p>
+</li>
+</ul>
+<ol>
+<li>在 AWS 上构建容错应用程序的第一步是创建<strong><strong><strong><strong>__</strong></strong></strong></strong>。</li>
+</ol>
+<ul>
+<li>[ ] 安全策略</li>
+<li>[ ] 您自己的 AMI 的库</li>
+<li><p>[ ] 访问权</p>
+</li>
+<li><p>[x] API Gateway</p>
+</li>
+</ul>
+<ol>
+<li>在 EC2 的基本监控包中，Amazon CloudWatch 提供了以下指标：</li>
+</ol>
+<ul>
+<li><p>[x] 管理程序可见指标，如 CPU 利用率</p>
+</li>
+<li><p>[ ] Web 服务器可见指标，如失败的事务请求数</p>
+</li>
+<li><p>[ ] 数据库可见指标，如连接数</p>
+</li>
+<li><p>[ ] 操作系统可见指标，如内存利用率</p>
+<p>正确答案是管理程序可见指标，如 CPU 利用率。</p>
+<p>有关详细答案，请参阅<a href="http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/working_with_metrics.html" target="_blank" rel="noopener">查看、发布指标以及绘制指标图表</a></p>
+</li>
+</ul>
+<ol>
+<li>请选择可标记的 Amazon EC2 资源。</li>
+</ol>
+<ul>
+<li><p>[x] Amazon EBS 快照</p>
+</li>
+<li><p>[ ] 密钥对</p>
+</li>
+<li><p>[ ] 弹性 IP 地址</p>
+</li>
+<li><p>[ ] 置放群组</p>
+<p>正确答案是 Amazon EBS 快照。</p>
+<p>有关其他详细信息，请参阅<a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html" target="_blank" rel="noopener">标记您的 Amazon EC2 资源</a></p>
+<p>可以标记</p>
+<p>有关其他详细信息，请参阅<a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html" target="_blank" rel="noopener">标记您的 Amazon EC2 资源</a></p>
+</li>
+</ul>
+<ol>
+<li>每个区域每个 AWS 管理员账户可以启动多少个 WorkSpaces？</li>
+</ol>
+<ul>
+<li><p>[ ] 15</p>
+</li>
+<li><p>[x] 20</p>
+</li>
+<li><p>[ ] 10</p>
+</li>
+<li><p>[ ] 5</p>
+<p>虽然对 WorkSpaces 的数量没有限制，但每个区域每个 AWS 账户设置了最多 20 个 WorkSpaces 的默认限制。</p>
+</li>
+</ul>
+<ol>
+<li>什么是容错能力？</li>
+</ol>
+<ul>
+<li>[ ] 用于对数字（文字或变量）执行计算</li>
+<li>[ ] 一个特殊的变量，它一次可以容纳多个值</li>
+<li>[ ] 用于执行特定任务的代码块</li>
+<li>[x] 即使用于构建系统的部分组件出现故障，系统仍能保持运行状态</li>
+</ul>
+<ol>
+<li>为什么分布式系统有价值？（选择所有适用的答案）</li>
+</ol>
+<ul>
+<li><p>[x] 提高可靠性</p>
+</li>
+<li><p>[x] 聚合资源实现高容量</p>
+</li>
+<li><p>[x] 所有答案选项</p>
+</li>
+<li><p>[x] 资源共享</p>
+<p>所有的答案选项都是正确的。</p>
+<p>使用分布式系统可以：</p>
+<ul>
+<li>资源共享（例如，共享文件服务器） </li>
+<li>克服地理隔离（例如 Web） </li>
+<li>提高可靠性</li>
+<li>聚合资源实现高容量（带宽：例如 Amazon S3）</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>默认情况下，Amazon Web Services 账户允许使用多少个弹性 IP 地址？</li>
+</ol>
+<ul>
+<li>[ ] 0 个弹性 IP</li>
+<li>[ ] 3 个弹性 IP</li>
+<li>[x] 5 个弹性 IP</li>
+<li>[ ] 1 个弹性 IP</li>
+</ul>
+<ol>
+<li>哪种 AWS 服务可让您轻松地在 AWS 云中设置和运行 Microsoft Active Directory (AD)，或者将您的 AWS 资源与现有的 Microsoft Active Directory 连接？</li>
+</ol>
+<ul>
+<li>[ ] Amazon DevOps</li>
+<li>[ ] Amazon Elastic Compute Cloud</li>
+<li>[ ] API Gateway</li>
+<li>[x] AWS Directory Service</li>
+</ul>
+<ol>
+<li>Amazon 提供一系列服务，旨在帮助初创公司配置安全的云环境。 以下 Amazon 服务中的哪一项让您能够构建具有延迟要求的高可用性、容错的环境？</li>
+</ol>
+<ul>
+<li>[ ] Amazon Lambda</li>
+<li>[ ] Amazon S3</li>
+<li>[ ] API Gateway 和 CloudFront</li>
+<li>[ ] Amazon Virtual Private Cloud (VPC)</li>
+</ul>
+<ol>
+<li>以下哪一个不是分布式系统的特征？</li>
+</ol>
+<ul>
+<li>[ ] 并发性</li>
+<li>[ ] 容错</li>
+<li>[x] 未共享的资源</li>
+<li>[ ] 可扩展性</li>
+</ul>
+<ol>
+<li>哪种 AWS 服务允许您轻松配置基于云的虚拟桌面，并为用户提供对文档、应用程序和资源的访问权限？</li>
+</ol>
+<ul>
+<li>[ ] Amazon CloudFront</li>
+<li>[x] Amazon WorkSpaces</li>
+<li>[ ] Amazon DevOps</li>
+<li>[ ] Amazon EC2</li>
+</ul>
+<ol>
+<li><strong><strong>__</strong></strong>是通过 TCP/IP 网络或广域网传输的数据的单位。</li>
+</ol>
+<ul>
+<li>[ ] 捆绑包</li>
+<li>[ ] 数组</li>
+<li>[x] 数据包</li>
+<li>[ ] 地址</li>
+</ul>
+<ol>
+<li><p>判断对错。</p>
+<p>重建工作区时，会将卷恢复到先前状态。</p>
+</li>
+</ol>
+<ul>
+<li>[ ] 错误</li>
+<li>[x] 正确</li>
+</ul>
+<ol>
+<li>IP 地址是<strong><strong>_</strong></strong>位数字，用于唯一标识 TCP/IP 网络上的主机（计算机或其他设备，如打印机或路由器）。</li>
+</ol>
+<ul>
+<li>[ ] 128</li>
+<li>[x] 32</li>
+<li>[ ] 16</li>
+<li>[ ] 64</li>
+</ul>
+<ol>
+<li>要保护 S3 数据免遭意外删除和意外覆盖，您应该：</li>
+</ol>
+<ul>
+<li><p>[x] 在存储桶上启用 S3 版本控制</p>
+</li>
+<li><p>[ ] 仅使用签名 URL 访问 S3 数据</p>
+</li>
+<li><p>[ ] 启用多重身份验证 (MFA) 保护的访问</p>
+</li>
+<li><p>[ ] 启用 S3 去冗余存储</p>
+<p>正确答案是在存储桶上启用 S3 版本控制。</p>
+<p>版本控制是将对象的多个变体保留在同一存储桶中的方法。您可以使用版本控制来保留、检索和还原 Amazon S3 存储桶中存储的每个对象的每个版本。通过版本控制，您可以轻松地从意外的用户操作和应用程序故障中恢复。</p>
+<p>有关其他详细信息，请参阅<a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html" target="_blank" rel="noopener">使用版本控制</a></p>
+</li>
+</ul>
+<ol>
+<li>什么是分布式系统？</li>
+</ol>
+<ul>
+<li>[ ] 共享内存多处理器</li>
+<li>[ ] 网络文件共享系统</li>
+<li>[x] 由网络和/或软件连接的自治计算机集合，目的是生成集成计算设施</li>
+<li>[ ] 虚拟桌面系统</li>
+</ul>
+<ol>
+<li><strong><em>_</em></strong>提供端到端数据通信，指定数据的打包、寻址、传输、路由和接收方式。</li>
+</ol>
+<ul>
+<li>[ ] 中继器</li>
+<li>[ ] 网卡</li>
+<li>[ ] 交换机</li>
+<li>[x] TCP/IP</li>
+</ul>
+<ol>
+<li><p>判断对错。</p>
+<p>默认情况下，用户被配置为其 WorkSpaces 的本地管理员。</p>
+</li>
+</ol>
+<ul>
+<li>[ ] 错误</li>
+<li>[x] 正确</li>
+</ul>
+<ol>
+<li>Amazon 提供一系列服务，旨在帮助初创公司配置安全的云环境。 以下 Amazon 服务中的哪一项让您能够构建具有延迟要求的高可用性、容错的环境？</li>
+</ol>
+<ul>
+<li>[ ] API Gateway 和 CloudFront</li>
+<li>[ ] Amazon S3</li>
+<li>[x] Amazon Virtual Private Cloud (VPC)</li>
+<li>[ ] Amazon Lambda</li>
+</ul>
+<h2 id="Quiz-最终评估"><a href="#Quiz-最终评估" class="headerlink" title="Quiz: 最终评估"></a>Quiz: 最终评估</h2><p>下面哪一个是 AWS 为数据安全而执行的操作流程？</p>
+<ul>
+<li><p>[ ] EBS 卷和 EBS 快照的后台病毒扫描</p>
+</li>
+<li><p>[ ] 使用行业标准做法淘汰存储设备</p>
+</li>
+<li><p>[ ] 跨多个 AWS 区域复制数据。在 EBS 卷卸载时安全擦除 EBS 数据</p>
+</li>
+<li><p>[x] 对存储在任何共享存储设备上的数据进行 AES-256 加密</p>
+<p>正确答案是存储设备淘汰。</p>
+<p>当某个存储设备已达到其使用寿命的终点时，AWS 程序包括一个淘汰流程，此流程是为防止客户数据暴露给未授权的个人而设计的。作为淘汰流程的一部分，AWS 会使用“国家行业安全程序操作手册”或 NIST“存储介质清理指南”中详细描述的技术来销毁数据。如果无法使用这些程序来报废硬件设备，将依据行业标准实践进行消磁或物理销毁。 </p>
+<p>有关更多详细信息，请参阅 <a href="https://d0.awsstatic.com/whitepapers/Security/AWS_Security_Whitepaper.pdf" target="_blank" rel="noopener">AWS 安全流程概述白皮书</a></p>
+</li>
+</ul>
+<p><strong><strong><em>_</em></strong></strong> 是一种 Internet 协议，用于将连接信息从请求连接的源传递到请求连接到的目标。</p>
+<ul>
+<li><p>[ ] 传输控制协议</p>
+</li>
+<li><p>[ ] 子网</p>
+</li>
+<li><p>[x] 代理协议</p>
+</li>
+<li><p>[ ] TCP/IP</p>
+<p>代理协议是一种 Internet 协议，用于将连接信息从请求连接的源传递到请求连接到的目标。</p>
+</li>
+</ul>
+<p>要提高数据吞吐量，您可以调整<strong><em>__</em></strong> 设置，如窗口缩放和选择性确认。</p>
+<ul>
+<li>[ ] IP</li>
+<li>[x] TCP</li>
+<li>[ ] API</li>
+<li>[ ] 子网</li>
+</ul>
+<p>适用于 C++ 的 AWS 开发工具包中的凭证管理界面的名称是什么？</p>
+<ul>
+<li>[ ] AWSCredentialsManager</li>
+<li>[x] AWSCredentialsProvider</li>
+<li>[ ] AWSManager</li>
+<li>[ ] AWSCredentialsChain</li>
+</ul>
+<p>Amazon RDS 是什么？</p>
+<ul>
+<li>[x] 一种托管服务，让用户能够在云中轻松地设置、操作和扩展关系数据库</li>
+<li>[ ] 简化大数据框架运行的托管集群平台</li>
+<li>[ ] 一种 Web 服务，让用户能够轻松设置、管理和扩展云中的分布式内存缓存环境</li>
+<li>[ ] 一种完全托管的 NoSQL 数据库服务，提供快速可预测的性能，同时还能够实现无缝扩展</li>
+</ul>
+<p>TCP/IP 协议使用<strong><strong><em>__</em></strong></strong>来确定主机是位于本地子网上还是远程网络上。</p>
+<ul>
+<li>[ ] 数据包</li>
+<li>[x] 子网掩码</li>
+<li>[ ] 目录</li>
+<li>[ ] 捆绑包</li>
+</ul>
+<p>判断对错。</p>
+<p>对 Amazon EC2 需要有基本的了解，这对于使用 AWS Directory Service 至关重要。</p>
+<ul>
+<li><p>[x] 正确</p>
+</li>
+<li><p>[ ] 错误</p>
+<p>对 Amazon EC2 需要有基本的了解，这对于使用 AWS Directory Service 至关重要。我们建议您先阅读以下主题： </p>
+<ul>
+<li><em>适用于 Windows 实例的 Amazon EC2 用户指南</em>中的<a href="http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/concepts.html" target="_blank" rel="noopener">什么是 Amazon EC2？</a></li>
+<li><em>适用于 Windows 实例的 Amazon EC2 用户指南</em>中的<a href="http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/LaunchingAndUsingInstances.html" target="_blank" rel="noopener">启动 EC2 实例</a>。</li>
+<li><em>适用于 Windows 实例的 Amazon EC2 用户指南</em>中的<a href="http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/using-network-security.html" target="_blank" rel="noopener">安全组</a>。</li>
+<li><em>Amazon VPC 用户指南</em>中的<a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Introduction.html" target="_blank" rel="noopener">什么是 Amazon VPC？</a></li>
+<li><em>Amazon VPC 用户指南</em>中的<a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html" target="_blank" rel="noopener">向您的 VPC 添加硬件虚拟专用网关</a></li>
+</ul>
+</li>
+</ul>
+<p>TCP/IP 协议使用<strong><strong><em>__</em></strong></strong>来确定主机是位于本地子网上还是远程网络上。</p>
+<ul>
+<li>[ ] 数据包</li>
+<li>[x] 子网掩码 </li>
+<li>[ ] 目录</li>
+<li><p>[ ] 捆绑包</p>
+<p>当停止并启动具有关联弹性 IP 的 VPC (Virtual Private Cloud) 中的 EC2实例时，会发生以下哪些情况？ （选择 2 个答案）</p>
+</li>
+<li><p>[x] 实例存储设备上的所有数据都将丢失</p>
+</li>
+<li><p>[ ] 弹性 IP 将与实例取消关联</p>
+</li>
+<li><p>[x] 实例的基础主机发生更改</p>
+</li>
+<li><p>[ ] EBS (Elastic Block Store) 设备上的所有数据都将丢失</p>
+<p>正确答案是“实例存储设备上的所有数据都将丢失”和“实例的基础主机发生更改”</p>
+<p>当您停止某个实例时，任何实例存储卷上的数据都将被擦除。因此，如果实例存储卷上有任何您要保留的数据，请确保将其备份到持久性存储。</p>
+<p>如果您停止了 Amazon EBS 支持的实例，并且该实例显示“卡在”<code>正在停止</code>状态，则基础主机可能出现问题。</p>
+<p>有关详细答案，请参阅<a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html#starting-stopping-instances" target="_blank" rel="noopener">修改已停止实例</a></p>
+</li>
+</ul>
+<p>A 类 TCP/IP 地址的子网掩码是什么？</p>
+<ul>
+<li>[ ] 255.255.255.255</li>
+<li>[ ] 255.255.0.0</li>
+<li>[ ] 255.255.255.0</li>
+<li>[x] 255.0.0.0</li>
+</ul>
+<p>如果您有 5000 个或以下的用户，并且正在寻找成本最低的选项，哪个 AWS Directory Service 选项是最佳选择？</p>
+<ul>
+<li>[x] Simple AD</li>
+<li>[ ] 适用于 Microsoft Active Directory 的 AWS Directory Service（企业版）</li>
+<li>[ ] AD Connector</li>
+</ul>
+<p>您的 Web 应用程序前端由位于 Elastic Load Balancer 后方的多个 EC2 实例组成。您已将 ELB 配置为对上述 EC2 实例执行运行状况检查。如果实例未通过运行状况检查，那以下哪项表述是正确的？</p>
+<ul>
+<li>[ ] 实例将被 ELB 自动替换。</li>
+<li>[x] ELB 将停止向未通过运行状况检查的实例发送流量。</li>
+<li>[ ] 实例将被 ELB 自动终止。</li>
+<li>[ ] 实例将被 ELB 隔离，以进行根本原因分析。</li>
+</ul>
+<p>Amazon WorkSpaces 使用<strong><strong><em>__</em></strong></strong>来存储和管理工作区和用户信息。</p>
+<ul>
+<li>[x] 目录</li>
+<li>[ ] 数组</li>
+<li>[ ] 表</li>
+<li>[ ] 实例</li>
+</ul>
+<p>使用下面的场景将每个任务排序为步骤 1、步骤 2 等，以便完成场景活动。</p>
+<p>场景： 设置 AWS CodeCommit 账户为您的存储库用户强制实施多重身份验证 (MFA)。</p>
+<p>创建用于访问存储库的角色。</p>
+<p>​           [ Choose ]            </p>
+<p>使用在两个账户中具有 IAM 和 AWS CodeCommit 所需权限的用户的密钥配置 AWS CLI</p>
+<p>​           [ Choose ]            </p>
+<p>设置 AWS CLI</p>
+<p>​           [ Choose ]             </p>
+<p>创建新的 AWS CodeCommit 存储库。</p>
+<p>​           [ Choose ]          </p>
+<p>创建允许代入该角色的组。</p>
+<p>​           [ Choose ]         </p>
+<p>创建具有属于该组的 MFA 设备的用户。</p>
+<p>用户数据在 AWS WorkSpaces 上备份的频率是多少？</p>
+<ul>
+<li>[ ] 6 小时</li>
+<li>[ ] 3 小时</li>
+<li>[ ] 9 小时</li>
+<li>[x] 12 小时</li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Aws/" rel="tag"># Aws</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+              <div id="needsharebutton-postbottom">
+                <span class="btn">
+                  <i class="fa fa-share-alt" aria-hidden="true"></i>
+                </span>
+              </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/06/从python开始的虚拟环境配置日志/" rel="next" title="从python开始的虚拟环境配置日志">
+                <i class="fa fa-chevron-left"></i> 从python开始的虚拟环境配置日志
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/20/【AWS】-Cloud-Computing-101/" rel="prev" title="【AWS】- Cloud Computing 101">
+                【AWS】- Cloud Computing 101 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        
+          <ul class="sidebar-nav motion-element">
+            <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+              文章目录
+            </li>
+            <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+              站点概览
+            </li>
+          </ul>
+        
+      
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/25082467?v=4" alt="lifengjun">
+            
+              <p class="site-author-name" itemprop="name">lifengjun</p>
+              <p class="site-description motion-element" itemprop="description">个人学习笔记和日志</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/543877815" title="GitHub &rarr; https://github.com/543877815" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:543877815@qq.com" title="E-Mail &rarr; mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+          
+          <!--noindex-->
+            <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+              <div class="post-toc">
+
+                
+                
+                
+                
+
+                
+                  <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Solutions-Architect"><span class="nav-number">1.</span> <span class="nav-text">Solutions Architect</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#云中的职业"><span class="nav-number">1.1.</span> <span class="nav-text">云中的职业</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件开发：-架构和开发运营"><span class="nav-number">1.2.</span> <span class="nav-text">软件开发： 架构和开发运营</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#软件开发：-简介"><span class="nav-number">1.2.1.</span> <span class="nav-text">软件开发： 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件开发：一般性问题"><span class="nav-number">1.2.2.</span> <span class="nav-text">软件开发：一般性问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件开发：-开发运营"><span class="nav-number">1.2.3.</span> <span class="nav-text">软件开发： 开发运营</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持续集成"><span class="nav-number">1.2.4.</span> <span class="nav-text">持续集成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持续交付"><span class="nav-number">1.2.5.</span> <span class="nav-text">持续交付</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件开发：-蓝-绿开发运营"><span class="nav-number">1.2.6.</span> <span class="nav-text">软件开发： 蓝/绿开发运营</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件开发：-基础设施即代码"><span class="nav-number">1.2.7.</span> <span class="nav-text">软件开发： 基础设施即代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quiz"><span class="nav-number">1.2.8.</span> <span class="nav-text">quiz</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件开发：-编程和脚本"><span class="nav-number">1.3.</span> <span class="nav-text">软件开发： 编程和脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#软件开发：-编程-C、C-、C"><span class="nav-number">1.3.1.</span> <span class="nav-text">软件开发： 编程 - C、C#、C++</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件开发：-编程-NET"><span class="nav-number">1.3.2.</span> <span class="nav-text">软件开发： 编程 - .NET</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件开发：-编程-Java"><span class="nav-number">1.3.3.</span> <span class="nav-text">软件开发： 编程 - Java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件开发：-编程-Python"><span class="nav-number">1.3.4.</span> <span class="nav-text">软件开发： 编程 - Python</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件开发：-脚本-CLI"><span class="nav-number">1.3.5.</span> <span class="nav-text">软件开发： 脚本 - CLI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件开发：-脚本-Javascript"><span class="nav-number">1.3.6.</span> <span class="nav-text">软件开发： 脚本 - Javascript</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件开发：-脚本-PHP"><span class="nav-number">1.3.7.</span> <span class="nav-text">软件开发： 脚本 - PHP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件开发：-脚本-Powershell"><span class="nav-number">1.3.8.</span> <span class="nav-text">软件开发： 脚本 - Powershell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件开发：-脚本-Ruby"><span class="nav-number">1.3.9.</span> <span class="nav-text">软件开发： 脚本 - Ruby</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quiz-1"><span class="nav-number">1.3.10.</span> <span class="nav-text">quiz</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据和数据库：-关系和非关系"><span class="nav-number">1.4.</span> <span class="nav-text">数据和数据库： 关系和非关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Databases：-非关系"><span class="nav-number">1.4.1.</span> <span class="nav-text">Databases： 非关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Databases：-关系"><span class="nav-number">1.4.2.</span> <span class="nav-text">Databases： 关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quiz-2"><span class="nav-number">1.4.3.</span> <span class="nav-text">quiz</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据和数据库：-管理、迁移、结构"><span class="nav-number">1.5.</span> <span class="nav-text">数据和数据库： 管理、迁移、结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Databases：-数据管理和数据迁移"><span class="nav-number">1.5.1.</span> <span class="nav-text">Databases： 数据管理和数据迁移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Databases：-数据结构"><span class="nav-number">1.5.2.</span> <span class="nav-text">Databases： 数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Databases：-数据仓库和数据湖"><span class="nav-number">1.5.3.</span> <span class="nav-text">Databases： 数据仓库和数据湖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quiz-3"><span class="nav-number">1.5.4.</span> <span class="nav-text">quiz</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络"><span class="nav-number">1.6.</span> <span class="nav-text">网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络：-简介"><span class="nav-number">1.6.1.</span> <span class="nav-text">网络： 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络：-架构"><span class="nav-number">1.6.2.</span> <span class="nav-text">网络： 架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络：-架构（续）"><span class="nav-number">1.6.3.</span> <span class="nav-text">网络： 架构（续）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络：-问题排查"><span class="nav-number">1.6.4.</span> <span class="nav-text">网络： 问题排查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络：-预置"><span class="nav-number">1.6.5.</span> <span class="nav-text">网络： 预置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络：-目录服务"><span class="nav-number">1.6.6.</span> <span class="nav-text">网络： 目录服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quiz-4"><span class="nav-number">1.6.7.</span> <span class="nav-text">quiz</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Quiz-最终评估"><span class="nav-number">1.7.</span> <span class="nav-text">Quiz: 最终评估</span></a></li></ol></li></ol></div>
+                
+
+              </div>
+            </div>
+          <!--/noindex-->
+          
+      
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lifengjun</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+    
+
+  
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+  
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '970dc8fd856c3e17f9f0',
+    clientSecret: '7f6d29828dd1f4a02336c480ba1012f1851b0eb0',
+    repo: '543877815.github.io',
+    owner: '543877815',
+    admin: ['543877815'],
+    id: md5(location.pathname),
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $('.leancloud_visitors');
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
+            
+              .done(function() {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.time + 1);
+              })
+            
+              .fail(function ({ responseJSON }) {
+                console.log(`Failed to save Visitor num, with error message: ${responseJSON.error}`);
+              })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1 }))
+                .done(function() {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function() {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+        .fail(function ({ responseJSON }) {
+          console.log(`LeanCloud Counter Error: ${responseJSON.code} ${responseJSON.error}`);
+        });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + '7lnT19QcEeBPLqbdFz6RXmt6-gzGzoHsz')
+        .done(function({ api_server }) {
+          var Counter = function(method, url, data) {
+            return $.ajax({
+              method: method,
+              url: 'https://' + api_server + '/1.1' + url,
+              headers: {
+                'X-LC-Id': '7lnT19QcEeBPLqbdFz6RXmt6-gzGzoHsz',
+                'X-LC-Key': '0m9MYgfgDxi38rb89hJ8gUHF',
+                'Content-Type': 'application/json',
+              },
+              data: data
+            });
+          };
+          
+            addCount(Counter);
+          
+        });
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+  <script>
+    
+      pbOptions = {};
+      
+        pbOptions.iconStyle = "box";
+      
+        pbOptions.boxForm = "horizontal";
+      
+        pbOptions.position = "bottomCenter";
+      
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+        flOptions.iconStyle = "box";
+      
+        flOptions.boxForm = "horizontal";
+      
+        flOptions.position = "middleRight";
+      
+        flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+
+  
+
+  
+  
+  
+    
+  
+  <script src="https://cdn.jsdelivr.net/npm/pangu@3/dist/browser/pangu.min.js"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+  <script src="/js/src/js.cookie.js?v=7.0.0"></script>
+  <script src="/js/src/scroll-cookie.js?v=7.0.0"></script>
+
+
+  
+
+  
+
+  
+
+<script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=i;var e=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function i(){e&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,a=0;a<r.length;a++)0<=(t=(t=r[a]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}i(),n.addEventListener("scroll",function(){var t,e;t=i,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body>
+</html>

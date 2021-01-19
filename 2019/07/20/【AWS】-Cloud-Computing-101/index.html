@@ -1,0 +1,2581 @@
+<!DOCTYPE html>
+
+
+
+
+
+<meta name="baidu-site-verification" content="5oRHLAQGnj">
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="baidu-site-verification" content="lwUVJQDQY6">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<script src="/js/src/echarts.common.min.js"></script>
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-flash.min.css?v=1.0.2">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="a5vmQFcAVEC4Sx0zdSaOZWOE35q4ZV1mgPnznYhQ1SQ">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="​">
+<meta name="keywords" content="Aws">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【AWS】- Cloud Computing 101">
+<meta property="og:url" content="https://lifengjun.xin/2019/07/20/【AWS】-Cloud-Computing-101/index.html">
+<meta property="og:site_name" content="逗比学长的博客">
+<meta property="og:description" content="​">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-11-13T13:55:58.801Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【AWS】- Cloud Computing 101">
+<meta name="twitter:description" content="​">
+
+
+
+
+
+
+  <link rel="canonical" href="https://lifengjun.xin/2019/07/20/【AWS】-Cloud-Computing-101/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【AWS】- Cloud Computing 101 | 逗比学长的博客</title>
+  
+
+
+
+
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-134155436-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-134155436-1');
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/js/src/APlayer.min.js"></script>
+<script type="text/javascript" src="/js/src/music.js"></script>
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">逗比学长的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">博客是写给我自己看的（叉腰）</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-top">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/top/" rel="section"><i class="menu-item-icon fa fa-fw fa-signal"></i> <br>热榜</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/links" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-quick-check">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/quick-check" rel="section"><i class="menu-item-icon fa fa-fw fa-pencil"></i> <br>速查</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-portal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/portal" rel="section"><i class="menu-item-icon fa fa-fw fa-rocket"></i> <br>传送门</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/543877815" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2019/07/20/【AWS】-Cloud-Computing-101/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【AWS】- Cloud Computing 101
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-20 00:44:01" itemprop="dateCreated datePublished" datetime="2019-07-20T00:44:01+08:00">2019-07-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-11-13 21:55:58" itemprop="dateModified" datetime="2020-11-13T21:55:58+08:00">2020-11-13</time>
+              
+            
+          </span>
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Aws/" itemprop="url" rel="index"><span itemprop="name">Aws</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+            <span id="/2019/07/20/【AWS】-Cloud-Computing-101/" class="leancloud_visitors" data-flag-title="【AWS】- Cloud Computing 101">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-count">总字数：10.5k</span>
+          
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-count">阅读时长预计：38min </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>​    </p>
+<a id="more"></a>
+<h1 id="Section-1"><a href="#Section-1" class="headerlink" title="Section 1"></a>Section 1</h1><h2 id="云计算基础知识"><a href="#云计算基础知识" class="headerlink" title="云计算基础知识"></a>云计算基础知识</h2><h3 id="AWS-云计算"><a href="#AWS-云计算" class="headerlink" title="AWS 云计算"></a>AWS 云计算</h3><p>“云计算”是指通过云服务平台经由 Internet 按需提供计算能力、数据库存储、应用程序及其他IT 资源，并且采用按需付费的定价方式。无论您是运行与数百万移动用户共享照片的应用程序还是支持公司的重要运营，云服务平台都可以提供对灵活的低成本 IT 资源的快速访问。通过云计算，您无需先期巨资投入硬件，再花大量时间来维护和管理这些硬件。与此相反，您可以精准配置所需的适当类型和规模的计算资源，为您最新的创意提供助力或者帮助运作您的 IT 部门。您可以根据需要访问（几乎是瞬时）任意数量的资源，而且只需为所用资源付费。</p>
+<p>云计算以一种简单的方式通过 Internet 访问服务器、存储、数据库和各种应用程序服务。云服务平台（如 Amazon Web Services）拥有并维护这些应用程序服务所需的网络连接硬件，您使用 Web应用程序配置并使用您需要的资源。<a href="https://docs.aws.amazon.com/whitepapers/latest/aws-overview/what-is-cloud-computing.html" target="_blank" rel="noopener">[1]</a>2006 年，Amazon Web Services (AWS) 开始以 Web 服务的形式向企业提供 IT 基础设施服务，现在通常称为云计算。云计算的主要优势之一是能够以根据业务发展来扩展的较低可变成本来替代前期资本基础设施费用。利用云，企业无需再提前数周或数月规划和采购服务器及其他 IT 基础设施。而是可以在几分钟内即时运行成百上千台服务器并更快达成结果。</p>
+<p>如今，AWS 在云中提供高度可靠、可扩展、低成本的基础设施平台，为全球 190 个国家/地区的数十万家企业提供支持。<a href="https://docs.aws.amazon.com/whitepapers/latest/aws-overview/introduction.html" target="_blank" rel="noopener">[3]</a></p>
+<h3 id="云的优势"><a href="#云的优势" class="headerlink" title="云的优势"></a>云的优势</h3><p>• <strong>将资本投入变成可变投入</strong> — 您可以在使用计算资源时再付费，并且只需为自己所使用的计算资源付费，而不是在还不清楚如何使用数据中心和服务器之前就对其进行大量投资。</p>
+<p>• <strong>大范围规模经济的优势</strong> — 您可以使用云计算来实现自行无法实现的更低的可变成本。数十万家客户聚集在云中，这使得 AWS 等提供商能够实现更高的规模经济效益，从而提供更低的即用即付价格。</p>
+<p>• <strong>无需预估容量</strong> — 不必再猜测基础设施容量需求。如果您在部署应用程序前确定了容量，结果常常是出现昂贵的资源闲置或容量不足。而利用云计算，这些问题都不会出现。您可以根据需要使用容量，而且只需几分钟就可以根据需要扩大或缩小容量。</p>
+<p>• <strong>增加速度和灵活性</strong> — 在云计算环境中，只需单击鼠标即可获取新的 IT 资源，这意味着可以将为开发人员提供可用资源的时间从数周缩短为几分钟。这让组织的灵活性能够大大增加，因为用于试验和开发的成本和时间明显减少了。</p>
+<p>• <strong>无需在运行和维护数据中心方面进行投资</strong> — 关注让您的业务脱颖而出的项目，而非基础设施。使用云计算，您可以专注于自己的客户，而不用忙于搬动沉重的机架、堆叠服务器以及为服务器供电。</p>
+<p>• <strong>数分钟内实现全球化部署</strong> — 只需几次单击，即可轻松地在全球多个区域内部署您的应用程序。这意味着，您能够用最少的成本为您的客户提供更低的延迟和更好的体验。[4]</p>
+<h3 id="总拥有成本"><a href="#总拥有成本" class="headerlink" title="总拥有成本"></a>总拥有成本</h3><p>AWS 可以减少投资大笔资本支出的需求，并提供即付即用的定价模式，让您能够按需投资容量，仅在业务需要时使用，从而帮助您降低总拥有成本 (TCO)。通过我们的 TCO 计算器，您可以估算使用 AWS 能够节省的成本，并提供一组详细的报告，可以在高管演示文稿中使用。通过计算器，您还可以选择修改最符合您业务需求的假设。</p>
+<p>TCO 计算器就部署 AWS 可能实现的成本节省提供了方向性指导。该工具基于底层计算模式构建，可以完成客户根据用户提供的数据可以实现的公平价值评估。该工具仅用于近似值计算。<a href="https://aws.amazon.com/tco-calculator/" target="_blank" rel="noopener">[8]</a></p>
+<h3 id="云计算类型"><a href="#云计算类型" class="headerlink" title="云计算类型"></a>云计算类型</h3><p>云计算让开发人员和 IT 部门能够专注于最重要的职能，避免无差别劳动（如采购、维护和容量规划）。随着云计算的日渐普及，已经出现许多不同的模型和部署策略，以满足不同用户的特定需求。不同类型的云服务和部署方法可为您提供不同级别的控制、灵活性和管理。了解基础设施即服务、平台即服务和软件即服务之间的差异，以及可以使用的部署策略，有助于根据需求选用合适的服务组合。<a href="https://docs.aws.amazon.com/aws-technical-content/latest/aws-overview/types-of-cloud-computing.html" target="_blank" rel="noopener">[5]</a></p>
+<p><strong>基础设施即服务 (IaaS)</strong>：</p>
+<p>基础设施即服务（即 IaaS）包含云 IT 基本构建块，通常提供对网络功能、计算机（虚拟或专用硬件）以及数据存储空间的访问。基础设施即服务为您提供了最高级别的灵活性和对 IT 资源的管理控制，并且与当今许多 IT 部门和开发人员熟悉的现有 IT 资源极其相似。</p>
+<p><strong>平台即服务 (PaaS)：</strong></p>
+<p>平台即服务不需要您的组织管理底层基础设施（通常是硬件和操作系统），让您能够专注于应用程序的部署和管理。这有助于提高效率，因为您不用操心资源购置、容量规划、软件维护、补丁安装或任何与应用程序运行相关的千遍一律的繁重工作。</p>
+<p><strong>软件即服务 (SaaS)：</strong></p>
+<p>软件即服务为您提供由服务提供商运营和管理的完整产品。通常人们所说的软件即服务指的是终端用户应用程序。使用 SaaS 产品时，您不必考虑如何维护服务或如何管理底层基础设施；您只需要考虑如何运用具体软件。SaaS 应用程序的一个常见示例是基于 Web 的电子邮件，您可以使用它发送和接收电子邮件，而无需管理电子邮件产品的功能添加或维护运行电子邮件程序的服务器和操作系统。</p>
+<h3 id="部署模式"><a href="#部署模式" class="headerlink" title="部署模式"></a>部署模式</h3><p><strong>云</strong></p>
+<p>基于云的应用程序完全部署在云中且应用程序的所有组件都在云中运行。云中的应用程序是在云中创建或从现有基础设施迁移而来，以利用<a href="https://aws.amazon.com/what-is-cloud-computing/" target="_blank" rel="noopener">云计算的优势</a>。基于云的应用程序可以构建于低级别基础设施组件之上，也可由一个或多个可用区组成以使用较高级别的服务，这些服务提供了从核心基础设施的管理、架构和扩展要求中抽象提取的能力。</p>
+<p><strong>混合</strong></p>
+<p>混合部署是一种在基于云的资源和非云现有资源之间连接基础设施和应用程序的方法。最常见的混合部署方法是在云与现有的本地基础设施之间进行，将组织的基础设施扩展和拓展到云中，同时将云资源连接到内部系统。有关 AWS 如何帮助您进行混合部署的更多信息，请访问我们的<a href="https://aws.amazon.com/enterprise/hybrid/" target="_blank" rel="noopener">混合部署</a>页面。</p>
+<p><strong>本地</strong></p>
+<p>利用虚拟化和资源管理工具在本地部署资源，有时也称作“私有云”。本地部署无法提供云计算的诸多好处，有时我们需要其提供<a href="https://aws.amazon.com/enterprise/hybrid/" target="_blank" rel="noopener">专用资源</a>的能力。在大多数情况下，这种部署模式与传统的 IT 基础设施相同，但它会利用应用程序管理和虚拟化技术来尝试提高资源利用率。<a href="https://docs.aws.amazon.com/whitepapers/latest/aws-overview/types-of-cloud-computing.html" target="_blank" rel="noopener">[5]</a></p>
+<h3 id="全球基础设施"><a href="#全球基础设施" class="headerlink" title="全球基础设施"></a>全球基础设施</h3><p>AWS 为 190 多个国家或地区的数百万个现有客户提供服务。我们正逐步扩大<a href="https://aws.amazon.com/about-aws/global-infrastructure/" target="_blank" rel="noopener">全球基础设施</a>，帮助全球客户实现更低的延迟性和更高的吞吐量，并确保他们的数据仅驻留在其指定的 AWS 区域。在我们的客户拓展其业务时，AWS 将持续提供满足其全球需求的基础设施。</p>
+<p>AWS 云基础设施围绕 AWS 区域和可用区构建。AWS 区域是指全球范围内的某个物理节点，每个区域由多个可用区组成。可用区由一个或多个分散的数据中心组成，每个数据中心都具有冗余电源、网络和连接，安放在独立的设施中。这些可用区能够运行生产应用程序和数据库，使其具备比在单个数据中心中运行时更强的可用性、容错能力和可扩展性。AWS 云在全球 16 个地理区域内运营着 42 个可用区，而且 2017 年还将有另外 5 个可用区和 2 个区域上线。</p>
+<p>每个 Amazon 地区均被设计为与其它 Amazon 地区完全隔离。这可实现最大程度的容错能力和稳定性。每个可用区都是独立的，但区域内的可用区通过低延迟链接相连。AWS 为您提供在多个地理区域内以及在每个 AWS 区域的多个可用区中放置实例和存储数据的灵活性。每个可用区域均设计为独立的故障区域。这意味着可用区域分隔在一个典型的大城市区域内，并位于较低风险的冲击平原中（特定的洪水区分类随 AWS 区域不同而不同）。除了离散分布的不间断电源 (UPS) 和现场备用发电设施，它们通过来自独立公用事业公司的不同电网供以电力，进一步减少了单点故障。可用区域冗余连接至多个 1 级传输供应商。<a href="https://docs.aws.amazon.com/whitepapers/latest/aws-overview/global-infrastructure.html" target="_blank" rel="noopener">[6]</a></p>
+<h3 id="安全性与合规性"><a href="#安全性与合规性" class="headerlink" title="安全性与合规性"></a>安全性与合规性</h3><p>AWS <a href="https://aws.amazon.com/security/" target="_blank" rel="noopener">云安全性</a>的优先级最高。作为 AWS 客户，您将会从专为满足大多数安全敏感型组织的要求而打造的数据中心和网络架构中受益。云的安全性与本地数据中心的安全性大体相同，只是少了维护设施和硬件的成本。在云中，您不必管理物理服务器或存储设备。相反，您将使用基于软件的安全工具监控和保护进出云资源的信息流。</p>
+<p>AWS 云的一大优势是：您可以进行扩展、不断创新、保持安全的环境并且只需为使用的服务付费。这意味着您可以获得所需的安全性，且成本比本地环境中的成本更低。</p>
+<p>成为 AWS 客户，您可以继承 AWS 策略、架构和运营流程的所有最佳实践，满足对安全要求最为苛刻的客户的需求。获得您在安全控制方面所需的灵活性和敏捷性。</p>
+<p>AWS 云支持责任共担模式。AWS 负责管理<strong>云本身</strong>的安全，<strong>云内部</strong>的安全则由您负责。也就是说，您可以控制选择实施哪种安全措施来保护自己的内容、平台、应用程序、系统和网络，这与您对现场数据中心所做的操作并无不同。</p>
+<p>AWS 通过在线资源、人员和合作伙伴为您提供指导和专业知识。AWS 为您提供有关当前问题的建议。在遇到安全问题时，您还可以选择与 AWS 合作。</p>
+<p>您可以访问数百种工具和功能，帮助您实现自己的安全目标。AWS 提供涵盖网络安全、配置管理、访问控制和数据加密的安全相关工具和功能。</p>
+<p>最后，AWS 环境受到持续审计，并获得了跨地理区域和垂直市场的多家认证机构颁发的证书。在 AWS 环境中，您可以利用自动化工具生成资产清单和特权访问报告。</p>
+<p><strong>AWS 安全性的优势</strong></p>
+<ul>
+<li><strong>确保您的数据安全</strong>：AWS 基础设施可提供强大的保护措施，以帮助保护您的隐私。所有数据均存储在高度安全的 AWS 数据中心内。</li>
+<li><strong>满足合规性要求</strong>：AWS 在其基础设施中管理数十项合规性计划。这意味着我们已替您履行了合规性职责。</li>
+<li><strong>节省开支</strong>：通过使用 AWS 数据中心降低成本。保持最高标准的安全性，而不必管理您自己的设施</li>
+<li><strong>快速扩展</strong>：安全性因您的 AWS 云使用情况而异。无论您的企业规模如何，AWS 基础设施都旨在确保数据安全。<a href="https://docs.aws.amazon.com/aws-technical-content/latest/aws-overview/security-and-compliance.html" target="_blank" rel="noopener">[7]</a></li>
+</ul>
+<p><a href="https://aws.amazon.com/compliance/" target="_blank" rel="noopener">AWS 云合规性</a>可帮助您理解 AWS 用以维持云中的安全和数据保护的可靠控制。我们在 AWS 云基础设施上构建统时，也就分担了合规性责任。通过将侧重于监管的、支持审核的服务功能与适用的合规性或审核标准结合使AWS 合规性促成者能够基于传统计划进行构建。这可帮助客户建立 AWS 安全控制环境并在该环境中运营。</p>
+<p>AWS 向客户提供的 IT 基础设施是根据安全最佳实践和各种 IT 安全标准设计和管理的。以下是AWS 遵守的部分保障计划的列表：</p>
+<ul>
+<li>SOC 1/ISAE 3402、SOC 2、SOC 3<br>FISMA、DIACAP 和 FedRAMP</li>
+<li>PCI DSS 1 级</li>
+<li>ISO 9001、ISO 27001、ISO 27018</li>
+</ul>
+<p>AWS 通过白皮书、报告、认证、资格鉴定和其他第三方鉴证向客户提供了各种有关其 IT 控制环境的信息。有关更多信息，请参阅<a href="http://d0.awsstatic.com/whitepapers/compliance/AWS_Risk_and_Compliance_Whitepaper.pdf" target="_blank" rel="noopener">风险与合规性白皮书</a>和 <a href="https://aws.amazon.com/security/" target="_blank" rel="noopener">AWS 安全中心</a>。<a href="https://docs.aws.amazon.com/whitepapers/latest/aws-overview/security-and-compliance.html" target="_blank" rel="noopener">[7]</a></p>
+<h3 id="诚聘英才"><a href="#诚聘英才" class="headerlink" title="诚聘英才"></a>诚聘英才</h3><p>我们目前正通过 AWS Educate 计划尝试公开招募一些<strong>重要且关键的云相关职位</strong>。通过这个计划，我们将介绍和探索以下工作岗位所需的技能和能力 — 点击这里查看相关职位。</p>
+<ul>
+<li>云支持人员</li>
+<li>云支持工程师</li>
+<li>数据科学家</li>
+<li>数据集成专家</li>
+<li>软件工程师</li>
+<li>应用程序开发人员</li>
+<li>开发运营工程师</li>
+<li>网络开发工程师</li>
+<li>网络安全专家</li>
+<li>机器学习专家</li>
+</ul>
+<h3 id="参考案例"><a href="#参考案例" class="headerlink" title="参考案例"></a>参考案例</h3><ol>
+<li><a href="https://docs.aws.amazon.com/aws-technical-content/latest/aws-overview/what-iscloud- computing.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/aws-technical-content/latest/aws-overview/what-iscloud- computing.html</a></li>
+<li><a href="https://commons.wikimedia.org/wiki/File:Cloud_computing_layers.png" target="_blank" rel="noopener">https://commons.wikimedia.org/wiki/File:Cloud_computing_layers.png</a></li>
+<li><a href="https://docs.aws.amazon.com/aws-technical-content/latest/awsoverview/introduction.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/aws-technical-content/latest/awsoverview/introduction.html</a></li>
+<li><a href="https://docs.aws.amazon.com/aws-technical-content/latest/aws-overview/sixadvantages-of- cloud-computing.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/aws-technical-content/latest/aws-overview/sixadvantages-of- cloud-computing.html</a></li>
+<li><a href="https://docs.aws.amazon.com/aws-technical-content/latest/aws-overview/types-ofcloud- computing.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/aws-technical-content/latest/aws-overview/types-ofcloud- computing.html</a></li>
+<li><a href="https://docs.aws.amazon.com/aws-technical-content/latest/awsoverview/global- infrastructure.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/aws-technical-content/latest/awsoverview/global- infrastructure.html</a></li>
+<li><a href="https://docs.aws.amazon.com/aws-technical-content/latest/awsoverview/security-and- compliance.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/aws-technical-content/latest/awsoverview/security-and- compliance.html</a></li>
+<li><a href="https://aws.amazon.com/tco-calculator/" target="_blank" rel="noopener">https://aws.amazon.com/tco-calculator/</a></li>
+</ol>
+<h3 id="quiz"><a href="#quiz" class="headerlink" title="quiz"></a>quiz</h3><ol>
+<li>云计算以一种简单的方式通过 Internet 访问服务器、存储空间、数据库和各种应用程序服务。</li>
+</ol>
+<ul>
+<li>[ ] 错误</li>
+<li>[x] 正确</li>
+</ul>
+<ol>
+<li>主要部署模型是（选择所有适用的模型）：</li>
+</ol>
+<ul>
+<li>[ ] 利用</li>
+<li>[x] 混合</li>
+<li>[x] 云</li>
+<li>[x] 本地</li>
+</ul>
+<ol>
+<li>可用区由一个或多个分散的数据中心组成，每个都拥有独立的配套设施，其中包括冗余电源、网络和连接。</li>
+</ol>
+<ul>
+<li>[ ] 错误</li>
+<li>[x] 正确</li>
+</ul>
+<ol>
+<li>混合部署使用虚拟化和资源管理工具，有时称为“私有云”。</li>
+</ol>
+<ul>
+<li>[x] 错误</li>
+<li>[ ] 正确</li>
+</ul>
+<ol>
+<li><p>完形填空</p>
+<p><strong><strong><strong>__</strong></strong></strong>由一个或多个可用区组成，在地理位置上分散，并将位于单独的地理区域或国家/地区。</p>
+<p>regions</p>
+</li>
+<li><p>选择云计算的优势（选择所有适用的优势）：</p>
+</li>
+</ol>
+<ul>
+<li>[x] 大范围规模经济的优势</li>
+<li>[x] 无需预估容量</li>
+<li>[x] 将资本投入变成可变投入</li>
+<li>[x] 增加速度和灵活性</li>
+</ul>
+<ol>
+<li>以下哪一项不是 AWS 云平台服务？</li>
+</ol>
+<ul>
+<li>[ ] 分析</li>
+<li>[x] 联网</li>
+<li>[ ] 物联网</li>
+<li>[ ] 移动服务</li>
+</ul>
+<h1 id="Section-2"><a href="#Section-2" class="headerlink" title="Section 2"></a>Section 2</h1><h2 id="AWS-云计算服务简介"><a href="#AWS-云计算服务简介" class="headerlink" title="AWS 云计算服务简介"></a>AWS 云计算服务简介</h2><h3 id="AWS-概述"><a href="#AWS-概述" class="headerlink" title="AWS 概述"></a>AWS 概述</h3><p>“云计算”是指通过云服务平台经由 Internet 按需提供计算能力、数据库存储、应用程序及其他 IT 资源，并且采用按需付费的定价方式。</p>
+<h4 id="云计算基础知识-1"><a href="#云计算基础知识-1" class="headerlink" title="云计算基础知识"></a>云计算基础知识</h4><p>无论您是运行与数百万移动用户共享照片的应用程序, 还是支持公司的关键运营, 云服务平台都能快速访问灵活、低成本的 IT 资源。使用云计算, 您不必在硬件上投入大量资金, 也无需花费大量时间来维护和管理硬件。相反, 您可以精确配置所需的正确类型和规模的计算资源, 以便为您的新想法提供动力或帮助运行 IT 部门。您可以根据需要 (几乎立即) 访问任意数量的资源, 并且只需为所使用的资源付费。</p>
+<h4 id="云计算是如何工作的？"><a href="#云计算是如何工作的？" class="headerlink" title="云计算是如何工作的？"></a>云计算是如何工作的？</h4><p>云计算通过互联网以简单的方式访问服务器、存储、数据库和各种应用程序服务。云服务平台 (如 Amazon Web Services) 拥有并维护这些应用程序服务所需的网络连接硬件, 您可以使用 web 应用程序来调配和使用所需的资源。</p>
+<p><strong>文本资源</strong>：</p>
+<ul>
+<li><a href="https://aws.amazon.com/console/faqs/" target="_blank" rel="noopener">AWS Management Console FAQ</a></li>
+<li><a href="https://aws.amazon.com/premiumsupport/knowledge-center/" target="_blank" rel="noopener">Knowledge center</a></li>
+</ul>
+<h3 id="AWS-计算服务"><a href="#AWS-计算服务" class="headerlink" title="AWS 计算服务"></a>AWS 计算服务</h3><h4 id="虚拟服务器托管、容器管理和无服务器计算。"><a href="#虚拟服务器托管、容器管理和无服务器计算。" class="headerlink" title="虚拟服务器托管、容器管理和无服务器计算。"></a>虚拟服务器托管、容器管理和无服务器计算。</h4><p>构建和运行您的业务均始于计算，无论您是构建移动应用程序，还是运行大规模集群对人类基因组进行排序。AWS 具有超过 70 项基础设施服务，并计划于未来数年内交付数千项新功能。AWS 拥有超过两倍的计算实例系列、双倍的合规性认证以及任何其他云供应商的最大全球覆盖范围，提供了一个强大且可扩展的平台来帮助各种类型和规模的组织快速创新。</p>
+<p>AWS 提供多种计算产品，让您能够以虚拟服务器、容器或代码方式部署、运行和扩展应用程序。</p>
+<h4 id="Amazon-EC2"><a href="#Amazon-EC2" class="headerlink" title="Amazon EC2"></a>Amazon EC2</h4><p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/174_intro_ec2/174_intro_ec2.mp4" target="_blank" rel="noopener">Amazon EC2 简介 - 弹性云服务器和使用 AWS 进行托管</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/175_intro_ec2_long/175_intro_ec2_long.mp4" target="_blank" rel="noopener">Amazon EC2 简介</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/176_ec2_foundations/176_ec2_foundations.mp4" target="_blank" rel="noopener">AWS re:Invent 2017： Amazon EC2 基础</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/ec2/instance-types/" target="_blank" rel="noopener">Amazon EC2 实例类型</a></li>
+<li><a href="https://aws.amazon.com/ec2/faqs/" target="_blank" rel="noopener">Amazon EC2 常见问题</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/getting-started/tutorials/launch-a-virtual-machine/" target="_blank" rel="noopener">启动 Linux 虚拟机</a></li>
+<li><a href="https://qwiklabs.com/focuses/2548" target="_blank" rel="noopener">创建 Amazon EC2 实例（适用于 Linux）</a></li>
+<li><a href="https://aws.amazon.com/getting-started/tutorials/launch-windows-vm/" target="_blank" rel="noopener">启动 Windows 虚拟机</a></li>
+</ul>
+<h4 id="Amazon-Lightsail"><a href="#Amazon-Lightsail" class="headerlink" title="Amazon Lightsail"></a>Amazon Lightsail</h4><p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/182_lightsail/182_lightsail.mp4" target="_blank" rel="noopener">AWS re:Invent 2016： Amazon Lightsail 简介</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://lightsail.aws.amazon.com/ls/docs/getting-started" target="_blank" rel="noopener">AWS Lightsail 文档</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://lightsail.aws.amazon.com/ls/docs/how-to/article/lightsail-how-to-set-up-ssh" target="_blank" rel="noopener">为基于 Linux/Unix 的 Lightsail 实例设置 SSH</a></li>
+</ul>
+<h4 id="Amazon-Elastic-Container-Service-ECS"><a href="#Amazon-Elastic-Container-Service-ECS" class="headerlink" title="Amazon Elastic Container Service (ECS)"></a>Amazon Elastic Container Service (ECS)</h4><ul>
+<li><strong>视频资源：</strong></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/185_ecs_core/185_ecs_core.mp4" target="_blank" rel="noopener">Amazon ECS： 核心概念</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/190_fargate/190_fargate.mp4" target="_blank" rel="noopener">AWS re:Invent 2017： 全新推出！ Amazon Fargate (CON214) 简介</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/189_buzzfeed_ecs/189_buzzfeed_ecs.mp4" target="_blank" rel="noopener">在 Amazon ECS 上运行 BuzzFeed 时需要了解的八件事</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><p><a href="https://aws.amazon.com/ecs/getting-started/" target="_blank" rel="noopener">Amazon Elastic Container Service 入门</a></p>
+</li>
+<li><p><a href="https://aws.amazon.com/ecs/resources/" target="_blank" rel="noopener">Amazon Elastic Container Service 资源</a></p>
+</li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/getting-started/tutorials/deploy-docker-containers/" target="_blank" rel="noopener">在 Amazon Elastic Container Service (Amazon ECS) 上部署 Docker 容器</a></li>
+</ul>
+<h4 id="Amazon-Lambda"><a href="#Amazon-Lambda" class="headerlink" title="Amazon Lambda"></a>Amazon Lambda</h4><p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/191_lambda_intro/191_lambda_intro.mp4" target="_blank" rel="noopener">AWS Lambda 简介 - Amazon Web Services 上的无服务器计算</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/192_lambda_gs/192_lambda_gs.mp4" target="_blank" rel="noopener">AWS re:Invent 2017： 使用 AWS Lambda 的无服务器计算入门</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/lambda/getting-started/" target="_blank" rel="noopener">AWS Lambda 入门</a></li>
+<li><a href="https://aws.amazon.com/lambda/resources/" target="_blank" rel="noopener">AWS Lambda 资源</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/getting-started/tutorials/run-serverless-code/" target="_blank" rel="noopener">使用 AWS Lambda 运行无服务器“Hello, World!”</a></li>
+<li><a href="https://qwiklabs.com/focuses/2966" target="_blank" rel="noopener">AWS Lambda 简介</a></li>
+</ul>
+<h3 id="AWS-分析服务"><a href="#AWS-分析服务" class="headerlink" title="AWS 分析服务"></a>AWS 分析服务</h3><p>用于轻松而经济高效地处理、分析和可视化数据的功能强大的服务。</p>
+<p>从数据中提取见解和可操作信息需要大量可有效地、可扩展地且经济高效地处理数据的技术。AWS 提供了一套全面的服务来处理分析流程链中的每个步骤，包括数据仓库、商业智能、批处理、流式处理、机器学习和数据工作流协调。这些服务功能强大、灵活且易于使用，使组织能够快速轻松地使用原始数据。</p>
+<h4 id="Amazon-ElasticSearch"><a href="#Amazon-ElasticSearch" class="headerlink" title="Amazon ElasticSearch"></a>Amazon ElasticSearch</h4><p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/197_elasticsearch/197_elasticsearch.mp4" target="_blank" rel="noopener">AWS re:Invent 2017： 在 Expedia 中使用 Amazon Elasticsearch Service 的日志分析 (ABD331)</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/198_elasticsearch_5/198_elasticsearch_5.mp4" target="_blank" rel="noopener">具有 Elasticsearch 5 的 Amazon Elasticsearch Service - 2017 年 2 月 AWS 在线技术讲座</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/elasticsearch-service/faqs/" target="_blank" rel="noopener">Amazon Elasticsearch Service 常见问题</a></li>
+<li><a href="https://aws.amazon.com/elasticsearch-service/getting-started/" target="_blank" rel="noopener">Amazon Elasticsearch Service 入门</a></li>
+</ul>
+<h4 id="Amazon-Elastic-MapReduce"><a href="#Amazon-Elastic-MapReduce" class="headerlink" title="Amazon Elastic MapReduce"></a>Amazon Elastic MapReduce</h4><p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/201_mapreduce/201_mapreduce.mp4" target="_blank" rel="noopener">Amazon Elastic MapReduce (EMR) 简介</a></li>
+<li><p><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/202_emr_getting_started/202_emr_getting_started.mp4" target="_blank" rel="noopener">AWS 5 月网络研讨会系列 - Amazon EMR 入门</a></p>
+</li>
+<li><p><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/203_emr_tech/203_emr_tech.mp4" target="_blank" rel="noopener">AWS re:Invent 2015 | (BDT208) Amazon Elastic MapReduce 技术简介</a></p>
+</li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/emr/getting-started/" target="_blank" rel="noopener">Amazon Elastic MapReduce 入门</a></li>
+<li><a href="https://aws.amazon.com/emr/faqs/" target="_blank" rel="noopener">Amazon Elastic MapReduce 常见问题</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://qwiklabs.com/focuses/267" target="_blank" rel="noopener">使用 Hadoop 分析大数据</a></li>
+</ul>
+<h4 id="Amazon-Kinesis"><a href="#Amazon-Kinesis" class="headerlink" title="Amazon Kinesis"></a>Amazon Kinesis</h4><p>轻松地实时收集、处理和分析视频和数据流。</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/207_kinesis/207_kinesis.mp4" target="_blank" rel="noopener">AWS re:Invent 2017 - 介绍 Amazon Kinesis Video Streams</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/212_firehose/212_firehose.mp4" target="_blank" rel="noopener">Amazon Kinesis Firehose 简介</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/216_analytics/216_analytics.mp4" target="_blank" rel="noopener">Amazon Kinesis Analytics 简介</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/kinesis/video-streams/faqs/" target="_blank" rel="noopener">Amazon Kinesis Video Streams 常见问题</a></li>
+<li><a href="https://aws.amazon.com/kinesis/data-streams/getting-started/" target="_blank" rel="noopener">Amazon Kinesis Data Streams 入门</a></li>
+<li><a href="https://aws.amazon.com/kinesis/data-firehose/faqs/" target="_blank" rel="noopener">Amazon Kinesis Firehose 常见问题</a></li>
+<li><a href="https://aws.amazon.com/kinesis/data-firehose/getting-started/" target="_blank" rel="noopener">Amazon Kinesis Data Firehose 入门</a></li>
+<li><a href="https://aws.amazon.com/kinesis/data-analytics/faqs/" target="_blank" rel="noopener">Amazon Kinesis Data Analytics 常见问题</a></li>
+<li><a href="https://aws.amazon.com/kinesis/data-analytics/getting-started/" target="_blank" rel="noopener">Amazon Kinesis Data Analytics 入门</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://s3-us-west-2.amazonaws.com/kinesis-video-streaming/kinesis-video-raspberry-pi-getting-started.pdf" target="_blank" rel="noopener">Kinesis Video Streams Raspberry Pi 教程</a></li>
+<li><a href="https://run.qwiklab.com/focuses/2988" target="_blank" rel="noopener">Amazon Kinesis Firehose 简介</a></li>
+</ul>
+<h4 id="Amazon-Redshift"><a href="#Amazon-Redshift" class="headerlink" title="Amazon Redshift"></a>Amazon Redshift</h4><p>快速简单、经济高效的数据仓库。</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/219_redshift/219_redshift.mp4" target="_blank" rel="noopener">AWS 上的数据仓库解决方案 Amazon Redshift 介绍</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/234_redshift/234_redshift.mp4" target="_blank" rel="noopener">AWS re:Invent 2017： 使用 Amazon Redshift &amp; Redsh 的数据仓库的最佳实践 (ABD304)</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/redshift/getting-started/" target="_blank" rel="noopener">Amazon Redshift 入门</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://qwiklabs.com/focuses/2366" target="_blank" rel="noopener">Amazon Redshift 介绍</a></li>
+</ul>
+<h4 id="Amazon-Athena"><a href="#Amazon-Athena" class="headerlink" title="Amazon Athena"></a>Amazon Athena</h4><p>可立即开始查询数据。数秒内即可获得结果。只需为您运行的查询付费。</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/222_athena/222_athena.mp4" target="_blank" rel="noopener">AWS re:Invent 2016 - 宣布推出 Amazon Athena</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/223_athena_deepdive/223_athena_deepdive.mp4" target="_blank" rel="noopener">AWS re:Invent 2017： Amazon Athena 的深入探讨和最佳实践 (ABD339)</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/athena/latest/ug/what-is.html" target="_blank" rel="noopener">什么是 Amazon Athena</a></li>
+<li><a href="https://docs.aws.amazon.com/athena/latest/ug/getting-started.html" target="_blank" rel="noopener">Amazon Athena 入门</a></li>
+</ul>
+<h3 id="AWS-数据库服务"><a href="#AWS-数据库服务" class="headerlink" title="AWS 数据库服务"></a>AWS 数据库服务</h3><p>专为满足您的所有应用程序需求而构建的数据库</p>
+<p>托管关系、非关系、数据仓库、内存中数据存储和图形数据库。</p>
+<p>AWS 提供一系列广泛的数据库选项，能够满足特定的应用程序使用案例要求。我们的完全托管数据库服务包括关系数据库 (适用于事务性应用程序)、非关系数据库 (适用于 Internet 规模应用程序)、数据仓库 (适用于分析)、内存数据存储 (适用于缓存和实时工作负载) 和图形数据库 (适用于构建具有高度互联数据的应用程序)。如果您要将现有数据库迁移到 AWS，AWS Database Migration Service 可以让您轻松且经济高效地达到此目的。</p>
+<h4 id="Amazon-DynamoDB"><a href="#Amazon-DynamoDB" class="headerlink" title="Amazon DynamoDB"></a>Amazon DynamoDB</h4><p>适用于任何规模的快速灵活的 NoSQL 数据库服务。只需为您需要的吞吐量和存储空间付费。</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/226_ddb_gs/226_ddb_gs.mp4" target="_blank" rel="noopener">2016 年度 AWS 峰会系列 | 芝加哥 - Amazon DynamoDB 入门</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/227_ddb_wn/227_ddb_wn.mp4" target="_blank" rel="noopener">AWS re:Invent 2017： DynamoDB - 新增功能</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/dynamodb/getting-started/" target="_blank" rel="noopener">Amazon DynamoDB 入门</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/getting-started/tutorials/create-nosql-table/" target="_blank" rel="noopener">Amazon DynamoDB 创建和查询 NoSQL 表</a></li>
+<li><a href="https://run.qwiklab.com/focuses/2376" target="_blank" rel="noopener">Amazon DynamoDB 简介</a></li>
+</ul>
+<h4 id="Amazon-Relational-Database-Service-RDS"><a href="#Amazon-Relational-Database-Service-RDS" class="headerlink" title="Amazon Relational Database Service (RDS)"></a>Amazon Relational Database Service (RDS)</h4><p>托管关系数据库服务，配备六种常用数据库引擎供您选择。只需单击几下，即可在云中设置、操作和扩展关系数据库。</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/230_rds/230_rds.mp4" target="_blank" rel="noopener">Amazon Relational Database Service (RDS) 简介</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/rds/getting-started/" target="_blank" rel="noopener">Amazon Relational Database Service (RDS) 入门</a></li>
+<li><a href="https://aws.amazon.com/rds/faqs/" target="_blank" rel="noopener">Amazon RDS 常见问题</a></li>
+</ul>
+<p><a href="https://aws.amazon.com/rds/faqs/" target="_blank" rel="noopener">Amazon RDS 常见问题</a></p>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://run.qwiklab.com/focuses/3463" target="_blank" rel="noopener">Amazon Relational Database Service (RDS) 简介 (Linux)</a></li>
+</ul>
+<h4 id="Amazon-Redshift-1"><a href="#Amazon-Redshift-1" class="headerlink" title="Amazon Redshift"></a>Amazon Redshift</h4><p>快速简单、经济高效的数据仓库。</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/219_redshift/219_redshift.mp4" target="_blank" rel="noopener">AWS 上的数据仓库解决方案 Amazon Redshift 介绍</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/234_redshift/234_redshift.mp4" target="_blank" rel="noopener">AWS re:Invent 2017： 使用 Amazon Redshift</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/redshift/getting-started/" target="_blank" rel="noopener">Amazon Redshift 入门</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/redshift/latest/gsg/getting-started.html" target="_blank" rel="noopener">Amazon Redshift 入门教程</a></li>
+<li><a href="https://run.qwiklab.com/focuses/2366" target="_blank" rel="noopener">Amazon Redshift 介绍</a></li>
+</ul>
+<h4 id="Amazon-Aurora"><a href="#Amazon-Aurora" class="headerlink" title="Amazon Aurora"></a>Amazon Aurora</h4><p>为云构建的 MySQL 和 PostgreSQL 兼容关系数据库。具有商用数据库的性能和可用性，但成本只是商用数据库的 1/10。</p>
+<p><strong>视频资源：</strong></p>
+<p><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/238_aurora/238_aurora.mp4" target="_blank" rel="noopener">如何在 Amazon Aurora 上创建您的第一个数据库集群</a></p>
+<p><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/239_aurora/239_aurora.mp4" target="_blank" rel="noopener">AWS re:Invent 2017： Amazon Aurora 入门</a></p>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/rds/aurora/resources/" target="_blank" rel="noopener">Amazon Aurora 资源</a></li>
+<li><a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Aurora.html" target="_blank" rel="noopener">Amazon RDS 上的 Amazon Aurora</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.html" target="_blank" rel="noopener">教程</a></li>
+</ul>
+<h3 id="AWS-存储服务"><a href="#AWS-存储服务" class="headerlink" title="AWS 存储服务"></a>AWS 存储服务</h3><p>可靠、可扩展且安全的数据存储位置</p>
+<p>云存储是云计算的关键组成部分，同时保留应用程序使用的信息。大数据分析、数据仓库、物联网、数据库、备份和存档应用程序全部依赖于某种形式的数据存储架构。云存储通常比传统的本地存储系统更可靠、扩展性更高且更安全。</p>
+<p>AWS 提供完整的云存储服务，支持应用程序和存档合规性需求。从对象、文件和块存储服务以及云数据迁移选项中进行选择，以开始设计云 IT 环境的基础。</p>
+<h4 id="Amazon-Elastic-Block-Storage-EBS"><a href="#Amazon-Elastic-Block-Storage-EBS" class="headerlink" title="Amazon Elastic Block Storage (EBS)"></a>Amazon Elastic Block Storage (EBS)</h4><p>在 Amazon EC2 实例的持久性卷上存储和处理数据块数据</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/271_ebs/271_ebs.mp4" target="_blank" rel="noopener">Amazon Elastic Block Store (EBS) 概述</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/ebs/developer-resources/" target="_blank" rel="noopener">Amazon EBS 资源</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://qwiklabs.com/focuses/3458" target="_blank" rel="noopener">Amazon Elastic Block Store (EBS) 简介</a></li>
+</ul>
+<h4 id="Amazon-Elastic-File-System-EFS"><a href="#Amazon-Elastic-File-System-EFS" class="headerlink" title="Amazon Elastic File System (EFS)"></a>Amazon Elastic File System (EFS)</h4><p>在简单、可扩展的文件系统中存储和共享数据</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/274_efs/274_efs.mp4" target="_blank" rel="noopener">介绍 Amazon Elastic File System</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/efs/getting-started/" target="_blank" rel="noopener">Amazon EFS 入门</a></li>
+<li><a href="https://aws.amazon.com/efs/resources/" target="_blank" rel="noopener">Amazon Elastic File System 资源</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://qwiklabs.com/focuses/3048" target="_blank" rel="noopener">Amazon Elastic File System 简介</a></li>
+</ul>
+<h4 id="Amazon-S3"><a href="#Amazon-S3" class="headerlink" title="Amazon S3"></a>Amazon S3</h4><p>对象存储</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><p><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/278_s3/278_s3.mp4" target="_blank" rel="noopener">Amazon Simple Storage Service (S3) 简介 - AWS 上的云存储</a></p>
+</li>
+<li><p><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/282_glacier/282_glacier.mp4" target="_blank" rel="noopener">AWS re:Invent 2017： 深入探讨 Amazon S3 和 Amazon Glacier Storage Management</a></p>
+</li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/Introduction.html" target="_blank" rel="noopener">Amazon S3 简介</a></li>
+<li><a href="http://docs.aws.amazon.com/AmazonS3/latest/gsg/GetStartedWithS3.html" target="_blank" rel="noopener">Amazon Simple Storage Service 入门</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://qwiklabs.com/focuses/2355" target="_blank" rel="noopener">Amazon Simple Storage Service (S3) 简介</a></li>
+</ul>
+<h4 id="Amazon-Glacier"><a href="#Amazon-Glacier" class="headerlink" title="Amazon Glacier"></a>Amazon Glacier</h4><p>在低成本存储中存档数据</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/283_glacier/283_glacier.mp4" target="_blank" rel="noopener">Amazon Glacier 简介</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/glacier/getting-started/" target="_blank" rel="noopener">Amazon Glacier 入门</a></li>
+<li><a href="https://aws.amazon.com/glacier/developer-resources/" target="_blank" rel="noopener">Amazon Glacier 资源</a></li>
+</ul>
+<h3 id="AWS-联网和内容分发服务"><a href="#AWS-联网和内容分发服务" class="headerlink" title="AWS 联网和内容分发服务"></a>AWS 联网和内容分发服务</h3><p>Virtual Private Cloud、直接连接、负载均衡和 DNS</p>
+<p>利用 AWS 联网产品，您能够隔离云基础设施、扩展请求处理容量并将物理网络连接到私有虚拟网络。</p>
+<p>AWS 联网产品协同工作以满足您的应用程序需求。例如，Elastic Load Balancing 与 Amazon Virtual Private Cloud (VPC) 配合使用，提供稳定的联网和安全功能。</p>
+<h4 id="Amazon-Virtual-Private-Cloud-VPC"><a href="#Amazon-Virtual-Private-Cloud-VPC" class="headerlink" title="Amazon Virtual Private Cloud (VPC)"></a>Amazon Virtual Private Cloud (VPC)</h4><p>使用您自己的私有虚拟网络隔离云资源</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/288_vpc/288_vpc.mp4" target="_blank" rel="noopener">AWS SA 白板 | Amazon Virtual Private Cloud (VPC)</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/289_vdc/289_vdc.mp4" target="_blank" rel="noopener">AWS re:Invent 2017： 创建虚拟数据中心： VPC 基础知识和连接</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/vpc/" target="_blank" rel="noopener">Amazon Virtual Private Cloud</a></li>
+<li><a href="https://aws.amazon.com/vpc/faqs/" target="_blank" rel="noopener">Amazon VPC 常见问题</a></li>
+</ul>
+<h4 id="Amazon-Direct-Connect"><a href="#Amazon-Direct-Connect" class="headerlink" title="Amazon Direct Connect"></a>Amazon Direct Connect</h4><p>您的网络与 Amazon VPC 之间的专用网络连接</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/290_directconnect/290_directconnect.mp4" target="_blank" rel="noopener">AWS SA 白板 | AWS Direct Connect</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/directconnect/" target="_blank" rel="noopener">AWS Direct Connect</a></li>
+<li><a href="https://aws.amazon.com/directconnect/faqs/" target="_blank" rel="noopener">AWS Direct Connect 常见问题</a></li>
+</ul>
+<h4 id="Amazon-Route-53"><a href="#Amazon-Route-53" class="headerlink" title="Amazon Route 53"></a>Amazon Route 53</h4><p>高度可用、可扩展的云 DNS，用于将用户请求连接到您的 AWS 资源</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/293_dns/293_dns.mp4" target="_blank" rel="noopener">AWS re:Invent 2017： DNS 揭秘： Amazon Route 53 的全球流量管理</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/294_slack_route53/294_slack_route53.mp4" target="_blank" rel="noopener">Slack： 在 AWS 上与 HAProxy 和 Route53 进行实时通信</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/route53/faqs/" target="_blank" rel="noopener">Amazon Route 53 常见问题</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li>Amazon Route 53 简介</li>
+</ul>
+<h4 id="Amazon-Elastic-Load-Balancing"><a href="#Amazon-Elastic-Load-Balancing" class="headerlink" title="Amazon Elastic Load Balancing"></a>Amazon Elastic Load Balancing</h4><p>在云中跨多个 Amazon EC2 实例自动分配应用程序流量</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/297_elb/297_elb.mp4" target="_blank" rel="noopener">Elastic Network Load Balancer 简介</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/elasticloadbalancing/" target="_blank" rel="noopener">Elastic Load Balancing</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://run.qwiklab.com/focuses/3441" target="_blank" rel="noopener">Elastic Load Balancing 简介</a></li>
+</ul>
+<h4 id="Amazon-CloudFront"><a href="#Amazon-CloudFront" class="headerlink" title="Amazon CloudFront"></a>Amazon CloudFront</h4><p>高度安全的全球内容分发网络 (CDN)</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/300_global_network/300_global_network.mp4" target="_blank" rel="noopener">re:Invent 2016： Amazon 全球网络和 CloudFront PoPs 简介，James Hamilton</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/302_cloudfront_lambda/302_cloudfront_lambda.mp4" target="_blank" rel="noopener">AWS re:Invent 2017： Amazon CloudFront 和 AWS Lambda@Edge 简介</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/cloudfront/details/" target="_blank" rel="noopener">Amazon CloudFront 详情和常见问题</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/getting-started/tutorials/deliver-content-faster/" target="_blank" rel="noopener">更快速地分发内容</a></li>
+</ul>
+<h2 id="AWS相关工具"><a href="#AWS相关工具" class="headerlink" title="AWS相关工具"></a>AWS相关工具</h2><h3 id="AWS-开发人员工具"><a href="#AWS-开发人员工具" class="headerlink" title="AWS 开发人员工具"></a>AWS 开发人员工具</h3><p>托管代码，自动生成和测试应用程序，并将其部署到 AWS</p>
+<p>AWS 开发人员工具是一组服务，旨在让从事<a href="https://aws.amazon.com/devops/" target="_blank" rel="noopener">开发运营</a>的开发人员和 IT 运营专家能够安全快速地交付软件。 这些服务融合在一起，可以帮助您安全地对应用程序的源代码进行存储和版本控制，还可帮助您自动生成、测试应用程序并将其部署至 AWS 或本地环境。您可以使用 AWS CodePipeline 通过这些服务和第三方工具来协调端到端软件发布工作流程，或者将每个服务与现有工具独立集成。</p>
+<h4 id="Amazon-CodeCommit"><a href="#Amazon-CodeCommit" class="headerlink" title="Amazon CodeCommit"></a>Amazon CodeCommit</h4><p>AWS CodeCommit 是一种完全托管的<a href="https://aws.amazon.com/devops/source-control/" target="_blank" rel="noopener">源代码控制</a>服务，这项服务使公司能够轻松地托管安全且高度可扩展的私有 Git 存储库。CodeCommit 使您无需运作自己的源控制系统或担心基础设施的扩展能力。您可以使用 CodeCommit 将来自源代码的任何数据安全存储为二进制文件，而且它可以无缝兼容您现有的 Git 工具。</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/243_codecommit/243_codecommit.mp4" target="_blank" rel="noopener">AWS CodeCommit 简介</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/codecommit/details/" target="_blank" rel="noopener">CodeCommit 产品详情</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up.html" target="_blank" rel="noopener">设置 AWS CodeCommit</a></li>
+</ul>
+<h4 id="Amazon-CodePipeline"><a href="#Amazon-CodePipeline" class="headerlink" title="Amazon CodePipeline"></a>Amazon CodePipeline</h4><p>WS CodePipeline 是一种<a href="https://aws.amazon.com/devops/continuous-integration/" target="_blank" rel="noopener">持续集成</a>与<a href="https://aws.amazon.com/devops/continuous-delivery/" target="_blank" rel="noopener">持续交付</a>服务，可以实现快速而可靠的应用程序和基础设施更新。根据您定义的发布流程模型，只要代码发生变化，CodePipeline 便会构建、测试和部署您的代码。这使您能够快速而可靠地提供各种功能和更新。您可使用我们针对常用第三方服务（如 GitHub）的预先构建的插件，或通过将您的自定义插件集成到您发布流程中的任何阶段，来轻松构建端到端解决方案。使用 AWS CodePipeline 时，只需按实际用量付费。无前期费用，无长期承诺。</p>
+<p><strong>视频资源：</strong></p>
+<p><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/246_codepipeline/246_codepipeline.mp4" target="_blank" rel="noopener">AWS CodePipeline 简介 - Amazon Web Services 上的持续交付</a></p>
+<p><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/247_cicd/247_cicd.mp4" target="_blank" rel="noopener">如何使用 AWS Lambda 和 AWS CodePipeline 进行持续集成和持续部署</a></p>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/codepipeline/getting-started/" target="_blank" rel="noopener">Codepipeline 入门</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/codepipeline/latest/userguide/tutorials-simple-s3.html" target="_blank" rel="noopener">教程： 创建一个简单的管道（Amazon S3 存储桶）</a></li>
+</ul>
+<h4 id="Amazon-CodeBuild"><a href="#Amazon-CodeBuild" class="headerlink" title="Amazon CodeBuild"></a>Amazon CodeBuild</h4><p>生成和测试可持续扩展的代码。仅为您使用的生成时间付费。</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/250_cibp/250_cibp.mp4" target="_blank" rel="noopener">AWS re:Invent 2017： 软件开发团队的持续集成最佳实践</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/codebuild/" target="_blank" rel="noopener">AWS CodeBuild</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/codebuild/getting-started/" target="_blank" rel="noopener">CodeBuild 入门</a></li>
+</ul>
+<h4 id="Amazon-CodeDeploy"><a href="#Amazon-CodeDeploy" class="headerlink" title="Amazon CodeDeploy"></a>Amazon CodeDeploy</h4><p>AWS CodeDeploy 是一项自动将软件部署到各种计算服务（包括 Amazon EC2、AWS Lambda 和在本地运行的实例）的服务。借助 AWS CodeDeploy，您可以更轻松地快速推出新功能、避免在应用程序部署过程中出现停机，并简化应用程序的更新工作。</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/253_codedeploy/253_codedeploy.mp4" target="_blank" rel="noopener">AWS CodeDeploy 简介 - 通过 Amazon Web Services 自动进行软件部署</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/codedeploy/getting-started/" target="_blank" rel="noopener">CodeDeploy 产品详情</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/getting-started/tutorials/deploy-code-vm/" target="_blank" rel="noopener">CodeDeploy 教程</a></li>
+</ul>
+<h3 id="AWS-管理工具"><a href="#AWS-管理工具" class="headerlink" title="AWS 管理工具"></a>AWS 管理工具</h3><p>完全掌控您的云环境</p>
+<p>AWS 提供了一组管理工具，让您以编程方式预配置、监控和自动执行云环境的所有组件。使用这些工具，您可以在不限制开发速度的情况下保持一致的控制。AWS 提供了四种管理工具，它们协同工作并与 AWS 平台的每个部分（从 Amazon EC2 到 Amazon DynamoDB）集成，以便您轻松控制云基础设施的所有部分。</p>
+<h4 id="Amazon-CloudFormation"><a href="#Amazon-CloudFormation" class="headerlink" title="Amazon CloudFormation"></a>Amazon CloudFormation</h4><p>对您所有的云基础设施资源建模并进行预置。</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/257_cfn/257_cfn.mp4" target="_blank" rel="noopener">AWS CloudFormation 简介</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/259_cfn_deepdive/259_cfn_deepdive.mp4" target="_blank" rel="noopener">AWS re:Invent 2017： 深入探讨 AWS CloudFormation</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/cloudformation/resources/" target="_blank" rel="noopener">AWS CloudFormation 资源</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://run.qwiklab.com/focuses/3467" target="_blank" rel="noopener">AWS CloudFormation 简介</a></li>
+</ul>
+<h4 id="Amazon-CloudWatch"><a href="#Amazon-CloudWatch" class="headerlink" title="Amazon CloudWatch"></a>Amazon CloudWatch</h4><p>监控资源和应用程序。</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/261_cloudwatch_ecs/261_cloudwatch_ecs.mp4" target="_blank" rel="noopener">结合使用 AWS Cloudwatch 和 Amazon ECS</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/262_cloudwatch_alerts/262_cloudwatch_alerts.mp4" target="_blank" rel="noopener">AWS re:Invent 2017： 充分利用 Amazon CloudWatch 警报： 智能</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/cloudwatch/getting-started/" target="_blank" rel="noopener">Amazon CloudWatch 入门</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/GettingSetup.html" target="_blank" rel="noopener">Amazon CloudWatch 入门</a></li>
+</ul>
+<h4 id="Amazon-Systems-Manager"><a href="#Amazon-Systems-Manager" class="headerlink" title="Amazon Systems Manager"></a>Amazon Systems Manager</h4><p>了解运行状况并对 AWS 资源采取行动。</p>
+<p><strong>视频资源：</strong></p>
+<ul>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/265_systemsmanager/265_systemsmanager.mp4" target="_blank" rel="noopener">Amazon EC2 Systems Manager 简介</a></li>
+<li><a href="https://s3.cn-north-1.amazonaws.com.cn/aws-educate/videos/267_systemsmanager/267_systemsmanager.mp4" target="_blank" rel="noopener">AWS re:Invent 2017： GPS： 工具太多了？ Amazon EC2 Systems Manager 桥接操作</a></li>
+</ul>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/systems-manager/getting-started/" target="_blank" rel="noopener">AWS Systems Manager 入门</a></li>
+</ul>
+<h4 id="Amazon-CloudTrail"><a href="#Amazon-CloudTrail" class="headerlink" title="Amazon CloudTrail"></a>Amazon CloudTrail</h4><p>跟踪用户活动和 API 使用率。</p>
+<p><strong>文本资源：</strong></p>
+<ul>
+<li><a href="https://aws.amazon.com/cloudtrail/" target="_blank" rel="noopener">AWS CloudTrail</a></li>
+<li><a href="https://aws.amazon.com/cloudtrail/getting-started/" target="_blank" rel="noopener">AWS CloudTrail 入门</a></li>
+</ul>
+<p><strong>行动呼吁：</strong></p>
+<ul>
+<li><a href="https://qwiklabs.com/focuses/2367" target="_blank" rel="noopener">AWS Key Management Service 简介</a></li>
+</ul>
+<h2 id="quiz-1"><a href="#quiz-1" class="headerlink" title="quiz"></a>quiz</h2><ol>
+<li>以下哪一项不是管理数据库实例的方法？</li>
+</ol>
+<ul>
+<li><p>[ ] 命令行工具</p>
+</li>
+<li><p>[ ] AWS 管理控制台</p>
+</li>
+<li><p>[x] Amazon CloudFront</p>
+</li>
+<li><p>[ ] Amazon RDS API</p>
+<p>您可以通过 AWS 管理控制台、Amazon RDS API 和命令行工具创建和删除数据库实例、定义/优化数据库实例的基础设施属性，以及控制访问和安全性。</p>
+</li>
+</ul>
+<ol>
+<li><p>完形填空</p>
+<p><strong><strong><strong><strong><em>_</em></strong></strong></strong></strong> 是一种可在云中提供可调整计算能力的 Web 服务。它旨在降低开发人员和系统管理员进行网络规模级计算的难度。</p>
+<p>Amazon Elastic Compute Cloud (Amazon EC2) is a web service that provides resizable compute capacity in the cloud. It is designed to make web-scale computing easier for developers.</p>
+</li>
+<li><p>为什么要衡量 Amazon EC2 实例性能？ 请选择最佳答案。</p>
+</li>
+</ol>
+<ul>
+<li><p>[ ] 识别适当的实例类型</p>
+</li>
+<li><p>[ ] 验证应用程序架构</p>
+</li>
+<li><p>[ ] 减少工作负载</p>
+</li>
+<li><p>[x] 识别适当的实例类型并验证应用程序架构</p>
+<p>Amazon EC2 可使您预置各种提供不同 CPU、内存、磁盘和联网组合的实例类型。启动新实例和并行运行测试的过程很简单，我们建议测量应用程序的性能，以确定适当的实例类型并验证应用程序架构。</p>
+</li>
+</ul>
+<ol>
+<li>下面哪个 AWS 服务是一种托管服务，可以轻松地在云中设置、操作和扩展关系数据库？</li>
+</ol>
+<ul>
+<li><p>[x] Amazon RDS</p>
+</li>
+<li><p>[ ] Amazon Lambda</p>
+</li>
+<li><p>[ ] Amazon EC2</p>
+</li>
+<li><p>[ ] Amazon CloudFront</p>
+<p>Amazon Relational Database Service (Amazon RDS) 是一种托管服务，可让用户在云中轻松设置、操作和扩展关系数据库。</p>
+</li>
+</ul>
+<ol>
+<li>以下哪项服务是 AWS 数据库服务？</li>
+</ol>
+<ul>
+<li><p>[ ] Kinesis</p>
+</li>
+<li><p>[ ] CloudFront</p>
+</li>
+<li><p>[x] DynamoDB</p>
+</li>
+<li><p>[ ] S3</p>
+<p>Amazon DynamoDB 是一种快速、全面托管的 NoSQL 数据库服务，它能让用户简单并且经济有效地存储和检索任何数据量，同时服务于任何程度的请求流量。所有数据项都存储在固态驱动器 (SSD) 中，同时在 3 个可用区之间进行复制，确保实现高可用性和持久性。通过 DynamoDB，您可以卸下由于运行和扩展高度可用的分布式数据库集群所带来的管理负担，同时仅为使用的资源支付低价</p>
+</li>
+</ul>
+<ol>
+<li><p>判断对错。</p>
+<p>预留实例可以从一个区域移动到另一个区域。</p>
+</li>
+</ol>
+<ul>
+<li><p>[x] 错误</p>
+</li>
+<li><p>[ ] 正确</p>
+<p>每个预留实例都与一个特定区域关联，该区域在预留的生命周期内固定，无法更改。但是，每个预留都可以在相关区域内的任何可用区中使用。</p>
+</li>
+</ul>
+<ol>
+<li><strong><strong>_</strong></strong> 不需要您的组织管理底层基础设施 (通常是硬件和操作系统)，让您能够专注于应用程序的部署和管理。</li>
+</ol>
+<ul>
+<li><p>[ ] 软件即服务 (SaaS)</p>
+</li>
+<li><p>[ ] 网络即服务 (NaaS)</p>
+</li>
+<li><p>[x] 平台即服务 (PaaS)</p>
+</li>
+<li><p>[ ] 身份即服务 (IaaS)</p>
+</li>
+</ul>
+<ol>
+<li>Amazon Route53 提供了什么？</li>
+</ol>
+<ul>
+<li><p>[x] 一个可扩展的域名系统。</p>
+</li>
+<li><p>[ ] 一个用于 Amazon EC2 的 SSH 终端节点。</p>
+</li>
+<li><p>[ ] 一个全球内容分发网络。</p>
+</li>
+<li><p>[ ] 以上都不是。</p>
+</li>
+</ul>
+<ol>
+<li><strong><strong><strong>_</strong></strong></strong>模型允许将软件应用程序作为服务提供给最终用户。它是指部署在托管服务上并且可以通过互联网访问的软件。</li>
+</ol>
+<ul>
+<li><p>[ ] 基础设即服务 (IaaS) 模型</p>
+</li>
+<li><p>[ ] 网络即服务 (NaaS) 模型</p>
+</li>
+<li><p>[x] 软件即服务 (SaaS) 模型</p>
+</li>
+<li><p>[ ] 平台即服务 (PaaS) 模型</p>
+<ul>
+<li><p>基础设施即服务 (IaaS)</p>
+<p>基础设施即服务有时缩写为 IaaS，包含云 IT 的基本构建块，通常提供对联网功能、计算机（虚拟或专用硬件）以及数据存储空间的访问。基础设施即服务提供最高等级的灵活性和对 IT 资源的管理控制，其机制与现今众多 IT 部门和开发人员所熟悉的现有 IT 资源最为接近。</p>
+</li>
+<li><p>平台即服务 (PaaS)：</p>
+<p>平台即服务消除了组织对底层基础设施（一般是硬件和操作系统）的管理需要，让您可以将更多精力放在应用程序的部署和管理上面。这有助于提高效率，因为您不用操心资源购置、容量规划、软件维护、补丁安装或与应用程序运行有关的任何无差别的繁重工作。</p>
+</li>
+<li><p>软件即服务 (SaaS)</p>
+<p>软件即服务提供了一种完善的产品，其运行和管理皆由服务提供商负责。人们通常所说的软件即服务指的是终端用户应用程序。使用 SaaS 产品时，服务的维护和底层基础设施的管理都不用您操心，您只需要考虑怎样使用 SaaS 软件就可以了。SaaS 的常见应用是基于 Web 的电子邮件，在这种应用场景中，您可以收发电子邮件而不用管理电子邮件产品的功能添加，也不需要维护电子邮件程序运行所在的服务器和操作系统。</p>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><p>完形填空</p>
+<p>   <strong><strong><strong>_</strong></strong></strong>由一个或多个可用区组成，在地理位置上分散，并将位于单独的地理区域或国家/地区。</p>
+<p>​    regions</p>
+</li>
+<li><p>以下哪一项不是 AWS 云基础设施服务？</p>
+</li>
+</ol>
+<ul>
+<li><p>[ ] 计算</p>
+</li>
+<li><p>[ ] 数据库</p>
+</li>
+<li><p>[ ] 联网</p>
+</li>
+<li><p>[x] 分析</p>
+<p>云计算有三种主要类型，通常称为基础设施即服务 (IaaS)、平台即服务 (PaaS) 和软件即服务 (SaaS)。 AWS 云提供了各种各样的基础设施服务，例如计算能力、存储选项、联网和数据库等实用服务：按需交付、即时可用、采用按使用量付费定价模式。</p>
+</li>
+</ul>
+<ol>
+<li><p>判断对错</p>
+<p>Amazon EC2 可以将实例放在多个位置。</p>
+</li>
+</ol>
+<ul>
+<li><p>[ ] 错误</p>
+</li>
+<li><p>[x] 正确</p>
+<p>Amazon EC2 可以将实例放在多个位置。Amazon EC2 位置由区域和可用区构成。通过在不同可用区启动实例，您可以保护应用程序免于单个位置故障的影响。</p>
+</li>
+</ul>
+<ol>
+<li>在 EC2 的基本监控包中，Amazon CloudWatch 提供了以下指标：</li>
+</ol>
+<ul>
+<li><p>[ ] 所消耗的 CPU 积分数</p>
+</li>
+<li><p>[x] 所有答案选项</p>
+</li>
+<li><p>[ ] 当前正在使用的已分配 EC2 计算单位的百分比</p>
+</li>
+<li><p>[ ] 已完成的读取操作</p>
+<p>有关指标的完整列表，请访问<a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/viewing_metrics_with_cloudwatch.html" target="_blank" rel="noopener">列出实例的可用 CloudWatch 指标</a></p>
+</li>
+</ul>
+<ol>
+<li>默认情况下，客户可以运行多少个 Amazon RDS 数据库实例？</li>
+</ol>
+<ul>
+<li><p>[ ] 20</p>
+</li>
+<li><p>[ ] 100</p>
+</li>
+<li><p>[ ] 30</p>
+</li>
+<li><p>[x] 40</p>
+<p>默认情况下，客户最多可以拥有 40 个 Amazon RDS 数据库实例。在这 40 个实例中，多达 10 个可以是 “包含许可证” 模型下的 Oracle 或 SQL Server 数据库实例。所有 40 个实例都可以在 “BYOL” 模型下用于 Amazon Aurora、MySQL、MariaDB、Oracle、SQL Server 或 PostgreSQL。如果您的应用程序需要更多数据库实例，您可以通过请求表单来请求其他数据库实例。</p>
+</li>
+</ul>
+<ol>
+<li>根据“AWS 可接受使用政策”，EC2 实例的渗透测试：</li>
+</ol>
+<ul>
+<li><p>[ ] 可以由 AWS 执行，且定期由 AWS 执行。</p>
+</li>
+<li><p>[x] 可以由 AWS 执行，且由 AWS 按照客户要求执行。</p>
+</li>
+<li><p>[ ] 在任何情况下都是明确禁止的。</p>
+</li>
+<li><p>[ ] 可以由客户在自己的实例上执行（仅在通过 EC2 实例执行时）。</p>
+<p>我们的<a href="https://aws.amazon.com/aup/" target="_blank" rel="noopener">可接受使用政策</a>描述了 AWS 上允许和禁止的行为，包括禁止的安全违规和网络滥用的描述。</p>
+</li>
+</ul>
+<ol>
+<li><strong><strong><em>_</em></strong></strong>是一种用于访问、监控和管理远程数据中心基础设施的自助服务模型。</li>
+</ol>
+<ul>
+<li>[ ] 平台即服务 (PaaS)</li>
+<li>[ ] 软件即服务 (SaaS)</li>
+<li>[ ] 网络即服务 (NaaS)</li>
+<li>[x] 基础设施即服务 (IaaS)</li>
+</ul>
+<ol>
+<li><p>Amazon EC2 位置由<strong><strong><strong>_</strong></strong></strong> 和 <strong><strong><strong>__</strong></strong></strong>组成。</p>
+<p>regions and availability zones  </p>
+</li>
+<li><p>下面哪个 AWS 服务是一种计算服务，可让您上传代码并运行代码以响应事件（例如 Amazon S3 存储桶或 Amazon DynamoDB 表中的数据更改）？</p>
+</li>
+</ol>
+<ul>
+<li>[ ] Amazon S3</li>
+<li>[x] Amazon Lambda</li>
+<li>[ ] Amazon CloudFront</li>
+<li>[ ] Amazon EC2</li>
+</ul>
+<ol>
+<li><strong><em>__</em></strong>，Amazon Web Services (AWS) 开始以 Web 服务的形式向企业提供 IT 基础设施服务，现在通常称为云计算。</li>
+</ol>
+<ul>
+<li><p>[x] 2006 年</p>
+</li>
+<li><p>[ ] 2008 年</p>
+</li>
+<li><p>[ ] 2000 年</p>
+</li>
+<li><p>[ ] 2003 年</p>
+<p>2006 年，Amazon Web Services (AWS) 开始以 Web 服务的形式向企业提供 IT 基础设施服务，现在通常称为云计算。</p>
+</li>
+</ul>
+<ol>
+<li>预留实例与按需数据库实例有何不同？</li>
+</ol>
+<ul>
+<li><p>[ ] 内存资源</p>
+</li>
+<li><p>[ ] CPU 资源</p>
+</li>
+<li><p>[x] 计费方式</p>
+</li>
+<li><p>[ ] 存储容量</p>
+<p>在功能上，预留实例和按需数据库实例完全相同。唯一的区别是数据库实例的计费方式： 使用预留实例，您可以为数据中心中的计算机预留容量，并在这段时间内获得较低的每小时有效使用费率（与按需数据库实例相比）。</p>
+</li>
+</ul>
+<ol>
+<li>以下哪一项不是 AWS 云计算的优势？</li>
+</ol>
+<ul>
+<li>[ ] 按使用量付费定价</li>
+<li>[ ] 规模</li>
+<li>[x] 固定容量</li>
+<li>[ ] 提高速度和灵活性</li>
+</ul>
+<ol>
+<li>以下哪项服务是 AWS 存储服务？</li>
+</ol>
+<ul>
+<li><p>[ ] Redshift</p>
+</li>
+<li><p>[ ] CloudFront</p>
+</li>
+<li><p>[x] S3</p>
+</li>
+<li><p>[ ] Amazon Kinesis</p>
+<p> Amazon S3 是一种面向 Internet 的存储服务。该服务旨在降低开发人员进行网络规模级计算的难度。</p>
+</li>
+</ul>
+<ol>
+<li>可使用哪些功能来限制对 S3 中数据的访问？ （选择 2 个正确答案）</li>
+</ol>
+<ul>
+<li><p>[x] 为存储桶创建 CloudFront 分配。</p>
+</li>
+<li><p>[x] 设置 S3 存储桶政策。</p>
+</li>
+<li><p>[ ] 使用 S3 虚拟托管。</p>
+</li>
+<li><p>[ ] 启用 IAM 联合身份验证。</p>
+</li>
+<li><p>[ ] 在存储桶或对象上设置 S3 ACL。</p>
+<p> 您可以添加源访问身份并自动更新存储桶策略，以授予源访问身份访问存储桶的权限。或者，您可以选择手动更改存储桶策略或更改 ACL，ACL 控制对存储桶中单个对象的权限。</p>
+<p>通常，如果您使用 Amazon S3 存储桶作为 CloudFront 分配的来源，则您授予每个人读取存储桶中对象的权限。这允许任何人通过 CloudFront 或使用 Amazon S3 URL 访问您的对象。CloudFront 不会公开 Amazon S3 URL，但如果您的应用程序直接从 Amazon S3 提供任何对象，或者任何人提供 Amazon S3 中特定对象的直接链接，则您的用户可能拥有这些 URL。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Aws/" rel="tag"># Aws</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+              <div id="needsharebutton-postbottom">
+                <span class="btn">
+                  <i class="fa fa-share-alt" aria-hidden="true"></i>
+                </span>
+              </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/19/【AWS】-Solutions-Architect/" rel="next" title="【AWS】- Solutions Architect">
+                <i class="fa fa-chevron-left"></i> 【AWS】- Solutions Architect
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/21/【AWS】-quizzes/" rel="prev" title="【AWS】- quizzes">
+                【AWS】- quizzes <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        
+          <ul class="sidebar-nav motion-element">
+            <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+              文章目录
+            </li>
+            <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+              站点概览
+            </li>
+          </ul>
+        
+      
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/25082467?v=4" alt="lifengjun">
+            
+              <p class="site-author-name" itemprop="name">lifengjun</p>
+              <p class="site-description motion-element" itemprop="description">个人学习笔记和日志</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/543877815" title="GitHub &rarr; https://github.com/543877815" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:543877815@qq.com" title="E-Mail &rarr; mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+          
+          <!--noindex-->
+            <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+              <div class="post-toc">
+
+                
+                
+                
+                
+
+                
+                  <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Section-1"><span class="nav-number">1.</span> <span class="nav-text">Section 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#云计算基础知识"><span class="nav-number">1.1.</span> <span class="nav-text">云计算基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AWS-云计算"><span class="nav-number">1.1.1.</span> <span class="nav-text">AWS 云计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#云的优势"><span class="nav-number">1.1.2.</span> <span class="nav-text">云的优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总拥有成本"><span class="nav-number">1.1.3.</span> <span class="nav-text">总拥有成本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#云计算类型"><span class="nav-number">1.1.4.</span> <span class="nav-text">云计算类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署模式"><span class="nav-number">1.1.5.</span> <span class="nav-text">部署模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全球基础设施"><span class="nav-number">1.1.6.</span> <span class="nav-text">全球基础设施</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全性与合规性"><span class="nav-number">1.1.7.</span> <span class="nav-text">安全性与合规性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#诚聘英才"><span class="nav-number">1.1.8.</span> <span class="nav-text">诚聘英才</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考案例"><span class="nav-number">1.1.9.</span> <span class="nav-text">参考案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quiz"><span class="nav-number">1.1.10.</span> <span class="nav-text">quiz</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section-2"><span class="nav-number">2.</span> <span class="nav-text">Section 2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AWS-云计算服务简介"><span class="nav-number">2.1.</span> <span class="nav-text">AWS 云计算服务简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AWS-概述"><span class="nav-number">2.1.1.</span> <span class="nav-text">AWS 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#云计算基础知识-1"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">云计算基础知识</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#云计算是如何工作的？"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">云计算是如何工作的？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AWS-计算服务"><span class="nav-number">2.1.2.</span> <span class="nav-text">AWS 计算服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#虚拟服务器托管、容器管理和无服务器计算。"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">虚拟服务器托管、容器管理和无服务器计算。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-EC2"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">Amazon EC2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Lightsail"><span class="nav-number">2.1.2.3.</span> <span class="nav-text">Amazon Lightsail</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Elastic-Container-Service-ECS"><span class="nav-number">2.1.2.4.</span> <span class="nav-text">Amazon Elastic Container Service (ECS)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Lambda"><span class="nav-number">2.1.2.5.</span> <span class="nav-text">Amazon Lambda</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AWS-分析服务"><span class="nav-number">2.1.3.</span> <span class="nav-text">AWS 分析服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-ElasticSearch"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">Amazon ElasticSearch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Elastic-MapReduce"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">Amazon Elastic MapReduce</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Kinesis"><span class="nav-number">2.1.3.3.</span> <span class="nav-text">Amazon Kinesis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Redshift"><span class="nav-number">2.1.3.4.</span> <span class="nav-text">Amazon Redshift</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Athena"><span class="nav-number">2.1.3.5.</span> <span class="nav-text">Amazon Athena</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AWS-数据库服务"><span class="nav-number">2.1.4.</span> <span class="nav-text">AWS 数据库服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-DynamoDB"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">Amazon DynamoDB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Relational-Database-Service-RDS"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">Amazon Relational Database Service (RDS)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Redshift-1"><span class="nav-number">2.1.4.3.</span> <span class="nav-text">Amazon Redshift</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Aurora"><span class="nav-number">2.1.4.4.</span> <span class="nav-text">Amazon Aurora</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AWS-存储服务"><span class="nav-number">2.1.5.</span> <span class="nav-text">AWS 存储服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Elastic-Block-Storage-EBS"><span class="nav-number">2.1.5.1.</span> <span class="nav-text">Amazon Elastic Block Storage (EBS)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Elastic-File-System-EFS"><span class="nav-number">2.1.5.2.</span> <span class="nav-text">Amazon Elastic File System (EFS)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-S3"><span class="nav-number">2.1.5.3.</span> <span class="nav-text">Amazon S3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Glacier"><span class="nav-number">2.1.5.4.</span> <span class="nav-text">Amazon Glacier</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AWS-联网和内容分发服务"><span class="nav-number">2.1.6.</span> <span class="nav-text">AWS 联网和内容分发服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Virtual-Private-Cloud-VPC"><span class="nav-number">2.1.6.1.</span> <span class="nav-text">Amazon Virtual Private Cloud (VPC)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Direct-Connect"><span class="nav-number">2.1.6.2.</span> <span class="nav-text">Amazon Direct Connect</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Route-53"><span class="nav-number">2.1.6.3.</span> <span class="nav-text">Amazon Route 53</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Elastic-Load-Balancing"><span class="nav-number">2.1.6.4.</span> <span class="nav-text">Amazon Elastic Load Balancing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-CloudFront"><span class="nav-number">2.1.6.5.</span> <span class="nav-text">Amazon CloudFront</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AWS相关工具"><span class="nav-number">2.2.</span> <span class="nav-text">AWS相关工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AWS-开发人员工具"><span class="nav-number">2.2.1.</span> <span class="nav-text">AWS 开发人员工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-CodeCommit"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">Amazon CodeCommit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-CodePipeline"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">Amazon CodePipeline</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-CodeBuild"><span class="nav-number">2.2.1.3.</span> <span class="nav-text">Amazon CodeBuild</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-CodeDeploy"><span class="nav-number">2.2.1.4.</span> <span class="nav-text">Amazon CodeDeploy</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AWS-管理工具"><span class="nav-number">2.2.2.</span> <span class="nav-text">AWS 管理工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-CloudFormation"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">Amazon CloudFormation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-CloudWatch"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">Amazon CloudWatch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-Systems-Manager"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">Amazon Systems Manager</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Amazon-CloudTrail"><span class="nav-number">2.2.2.4.</span> <span class="nav-text">Amazon CloudTrail</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#quiz-1"><span class="nav-number">2.3.</span> <span class="nav-text">quiz</span></a></li></ol></li></ol></div>
+                
+
+              </div>
+            </div>
+          <!--/noindex-->
+          
+      
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lifengjun</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+    
+
+  
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+  
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '970dc8fd856c3e17f9f0',
+    clientSecret: '7f6d29828dd1f4a02336c480ba1012f1851b0eb0',
+    repo: '543877815.github.io',
+    owner: '543877815',
+    admin: ['543877815'],
+    id: md5(location.pathname),
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $('.leancloud_visitors');
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
+            
+              .done(function() {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.time + 1);
+              })
+            
+              .fail(function ({ responseJSON }) {
+                console.log(`Failed to save Visitor num, with error message: ${responseJSON.error}`);
+              })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1 }))
+                .done(function() {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function() {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+        .fail(function ({ responseJSON }) {
+          console.log(`LeanCloud Counter Error: ${responseJSON.code} ${responseJSON.error}`);
+        });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + '7lnT19QcEeBPLqbdFz6RXmt6-gzGzoHsz')
+        .done(function({ api_server }) {
+          var Counter = function(method, url, data) {
+            return $.ajax({
+              method: method,
+              url: 'https://' + api_server + '/1.1' + url,
+              headers: {
+                'X-LC-Id': '7lnT19QcEeBPLqbdFz6RXmt6-gzGzoHsz',
+                'X-LC-Key': '0m9MYgfgDxi38rb89hJ8gUHF',
+                'Content-Type': 'application/json',
+              },
+              data: data
+            });
+          };
+          
+            addCount(Counter);
+          
+        });
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+  <script>
+    
+      pbOptions = {};
+      
+        pbOptions.iconStyle = "box";
+      
+        pbOptions.boxForm = "horizontal";
+      
+        pbOptions.position = "bottomCenter";
+      
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+        flOptions.iconStyle = "box";
+      
+        flOptions.boxForm = "horizontal";
+      
+        flOptions.position = "middleRight";
+      
+        flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+
+  
+
+  
+  
+  
+    
+  
+  <script src="https://cdn.jsdelivr.net/npm/pangu@3/dist/browser/pangu.min.js"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+  <script src="/js/src/js.cookie.js?v=7.0.0"></script>
+  <script src="/js/src/scroll-cookie.js?v=7.0.0"></script>
+
+
+  
+
+  
+
+  
+
+<script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=i;var e=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function i(){e&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,a=0;a<r.length;a++)0<=(t=(t=r[a]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}i(),n.addEventListener("scroll",function(){var t,e;t=i,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body>
+</html>
