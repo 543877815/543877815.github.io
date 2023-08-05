@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="​    因为不是天天都有时间来维护博客，因为比较菜所以要做很多输入才有时间思考才有可能做输出，因此之前很多关于Hexo日常使用的命令都忘得一干二净，所以写下来省得以后又得查，但是以前怎么配置的hexo已经完全忘了hhh，如果有时间再写吧，但是这个东西的迭代还是很快的，所以写了以后也未必有用，就像评论系统的引用，看了很多以前的博文都是要自己手动添加yml代码，但是现在只需要在配置文件进行相关的配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo命令和markdown语法记录">
+<meta property="og:url" content="https://lifengjun.xin/2019/04/03/hexo%E5%91%BD%E4%BB%A4%E5%92%8Cmarkdown%E8%AF%AD%E6%B3%95%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="逗比学长的博客">
+<meta property="og:description" content="​    因为不是天天都有时间来维护博客，因为比较菜所以要做很多输入才有时间思考才有可能做输出，因此之前很多关于Hexo日常使用的命令都忘得一干二净，所以写下来省得以后又得查，但是以前怎么配置的hexo已经完全忘了hhh，如果有时间再写吧，但是这个东西的迭代还是很快的，所以写了以后也未必有用，就像评论系统的引用，看了很多以前的博文都是要自己手动添加yml代码，但是现在只需要在配置文件进行相关的配置">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="article:published_time" content="2019-04-03T01:57:22.000Z">
+<meta property="article:modified_time" content="2023-08-05T14:24:59.460Z">
+<meta property="article:author" content="lifengjun">
+<meta property="article:tag" content="markdown">
+<meta property="article:tag" content="Latex">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lifengjun.xin/images/loading.gif">
+
+<link rel="canonical" href="https://lifengjun.xin/2019/04/03/hexo%E5%91%BD%E4%BB%A4%E5%92%8Cmarkdown%E8%AF%AD%E6%B3%95%E8%AE%B0%E5%BD%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+
+  <title>hexo命令和markdown语法记录 | 逗比学长的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/543877815" class="github-corner" aria-label="View source on GitHub">
+    <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#000000; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+    <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">逗比学长的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">博客是写给我自己看的（叉腰）</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-quick-check">
+
+    <a href="/quick-check" rel="section"><i class="fa fa-calendar fa-fw"></i>速查</a>
+
+  </li>
+        <li class="menu-item menu-item-portal">
+
+    <a href="/portal" rel="section"><i class="fa fa-rocket fa-fw"></i>传送门</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2019/04/03/hexo%E5%91%BD%E4%BB%A4%E5%92%8Cmarkdown%E8%AF%AD%E6%B3%95%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hexo命令和markdown语法记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-04-03 09:57:22" itemprop="dateCreated datePublished" datetime="2019-04-03T09:57:22+08:00">2019-04-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-05 22:24:59" itemprop="dateModified" datetime="2023-08-05T22:24:59+08:00">2023-08-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/hexo/" itemprop="url" rel="index"><span itemprop="name">hexo</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>​    因为不是天天都有时间来维护博客，因为比较菜所以要做很多输入才有时间思考才有可能做输出，因此之前很多关于Hexo<font color="#c7254e">日常使用</font>的命令都忘得一干二净，所以写下来省得以后又得查，但是以前怎么配置的hexo已经完全忘了hhh，如果有时间再写吧，但是这个东西的迭代还是很快的，所以写了以后也未必有用，就像评论系统的引用，看了很多以前的博文都是要自己手动添加yml代码，但是现在只需要在配置文件进行相关的配置即可。</p>
+<p>​    另外，打算记一点markdown语法，因为以后可能要码公式。</p>
+<span id="more"></span>
+<h1 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h1><h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p><strong>安装</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+<p><strong>生成静态网页</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g 或 hexo generate</span><br></pre></td></tr></table></figure>
+<p><strong>清除缓存</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
+<p><strong>在本地启动服务</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s 或 hexo server</span><br></pre></td></tr></table></figure>
+<p><strong>部属到线上</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d 或 hexo deploy</span><br></pre></td></tr></table></figure>
+<p><strong>创建新的页面</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &quot;pageName&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>创建新的博客</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post &quot;postName&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>创建新的草稿</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hexo new draft &quot;draftName&quot;</span><br><span class="line"></span><br><span class="line">**发布，部署到github**</span><br><span class="line"></span><br><span class="line">​```shell</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+<p><strong>bugs</strong></p>
+<div class="note danger">
+            <p>hexo: conmand not found</p>
+          </div>
+<p>命令行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config list --json</span><br></pre></td></tr></table></figure>
+<p>找到prefix如下</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="attr">&quot;prefix&quot;</span><span class="punctuation">:</span> <span class="string">&quot;C:\\Users\\[user-name]\\AppData\\Roaming\\npm&quot;</span><span class="punctuation">,</span></span><br><span class="line">    ...</span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>将博客目录下的 <font color="#c7254e">/node_modules/hexo-cli/bin</font>加入到系统变量的path路径中</p>
+<h2 id="新的配置"><a href="#新的配置" class="headerlink" title="新的配置"></a>新的配置</h2><h3 id="Echart的引入"><a href="#Echart的引入" class="headerlink" title="Echart的引入"></a>Echart的引入</h3><p>请参照我的另一篇<a href="/2019/04/08/echarts使用相关/">博客</a></p>
+<h3 id="代码块高亮部分"><a href="#代码块高亮部分" class="headerlink" title="代码块高亮部分"></a>代码块高亮部分</h3><p>参考了<a target="_blank" rel="noopener" href="https://www.w3ctrain.com/2017/12/11/hexo-code-block/">这篇博客</a></p>
+<p>于目录/themes/next/source/css/_custom/custom.styl中加入</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Custom styles.</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.highlight</span> &#123;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.highlight-wrap</span><span class="selector-attr">[data-rel]</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">padding-top</span>: <span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#f7f7f7</span>;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">10px</span> <span class="number">30px</span> <span class="number">0px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.4</span>);</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">35px</span> <span class="number">0</span>;</span><br><span class="line">  ::-webkit-scrollbar &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">10px</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ::-webkit-scrollbar-track &#123;</span><br><span class="line">      -webkit-<span class="attribute">box-shadow</span>: inset <span class="number">0</span> <span class="number">0</span> <span class="number">6px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">      <span class="attribute">border-radius</span>: <span class="number">10px</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ::-webkit-scrollbar-thumb &#123;</span><br><span class="line">      <span class="attribute">border-radius</span>: <span class="number">10px</span>;</span><br><span class="line">      -webkit-<span class="attribute">box-shadow</span>: inset <span class="number">0</span> <span class="number">0</span> <span class="number">6px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.5</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-pseudo">&amp;::before</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: white;</span><br><span class="line">    <span class="attribute">content</span>: <span class="built_in">attr</span>(data-rel);</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">38px</span>;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">38px</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#21252b</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">&#x27;Source Sans Pro&#x27;</span>, sans-serif;</span><br><span class="line">    <span class="attribute">font-weight</span>: bold;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0px</span> <span class="number">80px</span>;</span><br><span class="line">    <span class="attribute">text-indent</span>: <span class="number">15px</span>;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-pseudo">&amp;::after</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&quot; &quot;</span>;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    -webkit-<span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#fc625d</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">13px</span>;</span><br><span class="line">    -webkit-<span class="attribute">box-shadow</span>: <span class="number">20px</span> <span class="number">0px</span> <span class="number">#fdbc40</span>, <span class="number">40px</span> <span class="number">0px</span> <span class="number">#35cd4b</span>;</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">20px</span> <span class="number">0px</span> <span class="number">#fdbc40</span>, <span class="number">40px</span> <span class="number">0px</span> <span class="number">#35cd4b</span>;</span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">3</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以及于<code>/themes/next/script/</code>下新建文件<code>codeblock.js</code>加入下述代码，即在hexo的after-post-render过滤器替换了HTML片段。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> attributes = [</span><br><span class="line">  <span class="string">&#x27;autocomplete=&quot;off&quot;&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;autocorrect=&quot;off&quot;&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;autocapitalize=&quot;off&quot;&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;spellcheck=&quot;false&quot;&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;contenteditable=&quot;true&quot;&#x27;</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> attributesStr = attributes.<span class="title function_">join</span>(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line"></span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">filter</span>.<span class="title function_">register</span>(<span class="string">&#x27;after_post_render&#x27;</span>, <span class="keyword">function</span> (<span class="params">data</span>) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (<span class="regexp">/&lt;figure class=&quot;highlight ([a-zA-Z]+)&quot;&gt;.*?&lt;\/figure&gt;/</span>.<span class="title function_">test</span>(data.<span class="property">content</span>)) &#123;</span><br><span class="line"></span><br><span class="line">    data.<span class="property">content</span> = data.<span class="property">content</span>.<span class="title function_">replace</span>(<span class="regexp">/&lt;figure class=&quot;highlight ([a-zA-Z]+)&quot;&gt;.*?&lt;\/figure&gt;/</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> language = <span class="title class_">RegExp</span>.<span class="property">$1</span> || <span class="string">&#x27;plain&#x27;</span>;</span><br><span class="line">      <span class="keyword">var</span> lastMatch = <span class="title class_">RegExp</span>.<span class="property">lastMatch</span>;</span><br><span class="line"></span><br><span class="line">      lastMatch = lastMatch.<span class="title function_">replace</span>(<span class="regexp">/&lt;figure class=&quot;highlight /</span>, <span class="string">&#x27;&lt;figure class=&quot;iseeu highlight /&#x27;</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> <span class="string">&#x27;&lt;div class=&quot;highlight-wrap&quot;&#x27;</span> + attributesStr + <span class="string">&#x27;data-rel=&quot;&#x27;</span> + language.<span class="title function_">toUpperCase</span>() + <span class="string">&#x27;&quot;&gt;&#x27;</span> + lastMatch + <span class="string">&#x27;&lt;/div&gt;&#x27;</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> data;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="博客文章加密"><a href="#博客文章加密" class="headerlink" title="博客文章加密"></a>博客文章加密</h3><p>使用<a target="_blank" rel="noopener" href="https://github.com/MikeCoder/hexo-blog-encrypt">hexo-blog-encrypt</a>插件，安装如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-blog-encrypt</span><br></pre></td></tr></table></figure>
+<p>在<code>_config.yml</code>中加入</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">encrypt:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>在你想要加密的文章中配置</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: Hello World</span><br><span class="line">date: 2016-03-30 21:18:02</span><br><span class="line">password: mikemessi</span><br><span class="line">abstract: Welcome to my blog, enter password to read.</span><br><span class="line"><span class="section">message: Welcome to my blog, enter password to read.</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>password is the blog password.</li>
+<li>abstract is the content which will be showed in the blog list page.</li>
+<li>message is the content which will be showed in the blog detail page.</li>
+</ul>
+<p><strong>加密后的sidebar异常</strong>，解决方案见：<a target="_blank" rel="noopener" href="https://yuyuforest.com/2018/10/18/encrypt-toc/">https://yuyuforest.com/2018/10/18/encrypt-toc/</a></p>
+<h3 id="文章置顶"><a href="#文章置顶" class="headerlink" title="文章置顶"></a>文章置顶</h3><ol>
+<li>修改仓库，使其支持置顶功能</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-generator-index --save</span><br><span class="line">npm install hexo-generator-index-pin-top --save</span><br></pre></td></tr></table></figure>
+<ol>
+<li>在文章中添加置顶信息</li>
+</ol>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">title: Hello World！</span><br><span class="line">date: 2018-06-26 10:37:59</span><br><span class="line">tags: 随笔</span><br><span class="line">top: 10</span><br></pre></td></tr></table></figure>
+<h3 id="图片懒加载"><a href="#图片懒加载" class="headerlink" title="图片懒加载"></a>图片懒加载</h3><p>使用<strong><a target="_blank" rel="noopener" href="https://github.com/Troy-Yang/hexo-lazyload-image">hexo-lazyload-image</a></strong>插件，安装如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-lazyload-image --save</span><br></pre></td></tr></table></figure>
+<p>在博客配置<code>_config.yml</code>中添加一下代码，图片放在<code>theme\next\source\images</code>下：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">lazyload:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span> </span><br><span class="line">  <span class="attr">onlypost:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">loadingImg:</span> <span class="string">/images/loading.gif</span></span><br></pre></td></tr></table></figure>
+<h3 id="加载进度条"><a href="#加载进度条" class="headerlink" title="加载进度条"></a>加载进度条</h3><p>使用<strong><a target="_blank" rel="noopener" href="https://github.com/theme-next/theme-next-pace">theme-next-pace</a></strong>插件</p>
+<ol>
+<li>修改目录到<strong>NexT</strong>下，要有 <code>layout</code>, <code>source</code>, <code>languages</code> 和其他文件</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> themes/next</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">ls</span></span></span><br><span class="line">_config.yml  crowdin.yml  docs  gulpfile.js  languages  layout  LICENSE.md  package.json  README.md  scripts  source</span><br></pre></td></tr></table></figure>
+<ol>
+<li>拉取模块到 <code>source/lib</code> 目录下:</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/theme-next/theme-next-pace <span class="built_in">source</span>/lib/pace</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>配置主题文件<code>_config.yml</code></li>
+</ol>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pace:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Themes list:</span></span><br><span class="line">  <span class="comment"># big-counter | bounce | barber-shop | center-atom | center-circle | center-radar | center-simple</span></span><br><span class="line">  <span class="comment"># corner-indicator | fill-left | flat-top | flash | loading-bar | mac-osx | material | minimal</span></span><br><span class="line">  <span class="attr">theme:</span> <span class="string">minimal</span></span><br></pre></td></tr></table></figure>
+<h3 id="代码块折叠功能"><a href="#代码块折叠功能" class="headerlink" title="代码块折叠功能"></a>代码块折叠功能</h3><div><div class="fold_hider"><div class="close hider_title">点击显/隐</div></div><div class="fold">
+<p>你需要折叠的内容</p>
+
+</div></div>
+<p>参考了这篇的<a target="_blank" rel="noopener" href="https://jerryhanjj.github.io/2018/04/05/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%8F%8A%E4%BC%98%E5%8C%96%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E6%B7%BB%E5%8A%A0%E4%BB%A3%E7%A0%81%E6%8A%98%E5%8F%A0%E5%8A%9F%E8%83%BD/">博客</a></p>
+<p>步骤如下：</p>
+<p>1.在POST主文件中添加JS判断代码，在<code>/themes/next/source/js/src/post-details.js</code>中添加一下代码，可以在文件开头添加即可：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="variable language_">document</span>).<span class="title function_">ready</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    $(<span class="variable language_">document</span>).<span class="title function_">on</span>(<span class="string">&#x27;click&#x27;</span>, <span class="string">&#x27;.fold_hider&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        $(<span class="string">&#x27;&gt;.fold&#x27;</span>, <span class="variable language_">this</span>.<span class="property">parentNode</span>).<span class="title function_">slideToggle</span>();</span><br><span class="line">        $(<span class="string">&#x27;&gt;:first&#x27;</span>, <span class="variable language_">this</span>).<span class="title function_">toggleClass</span>(<span class="string">&#x27;open&#x27;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 默认情况下展开</span></span><br><span class="line">    <span class="comment">// $(&quot;div.fold&quot;).css(&quot;display&quot;,&quot;open&quot;);</span></span><br><span class="line">    <span class="comment">// 默认情况下折叠</span></span><br><span class="line">    $(<span class="string">&quot;div.fold&quot;</span>).<span class="title function_">css</span>(<span class="string">&quot;display&quot;</span>,<span class="string">&quot;none&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>2.定义内建标签，在<code>/themes/next/scripts/</code>中新建文件 <code>tags.js</code>并添加如下代码： </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  @haohuawu</span></span><br><span class="line"><span class="comment">  修复 Nunjucks 的 tag 里写 ```代码块```，最终都会渲染成 undefined 的问题</span></span><br><span class="line"><span class="comment">  https://github.com/hexojs/hexo/issues/2400</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">const</span> rEscapeContent = <span class="regexp">/&lt;escape(?:[^&gt;]*)&gt;([\s\S]*?)&lt;\/escape&gt;/g</span>;</span><br><span class="line"><span class="keyword">const</span> placeholder = <span class="string">&#x27;\uFFFD&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> rPlaceholder = <span class="regexp">/(?:&lt;|&amp;lt;)\!--\uFFFD(\d+)--(?:&gt;|&amp;gt;)/g</span>;</span><br><span class="line"><span class="keyword">const</span> cache = [];</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">escapeContent</span>(<span class="params">str</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&#x27;&lt;!--&#x27;</span> + placeholder + (cache.<span class="title function_">push</span>(str) - <span class="number">1</span>) + <span class="string">&#x27;--&gt;&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">filter</span>.<span class="title function_">register</span>(<span class="string">&#x27;before_post_render&#x27;</span>, <span class="keyword">function</span>(<span class="params">data</span>) &#123;</span><br><span class="line">  data.<span class="property">content</span> = data.<span class="property">content</span>.<span class="title function_">replace</span>(rEscapeContent, <span class="keyword">function</span>(<span class="params">match, content</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> escapeContent(content);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> data;</span><br><span class="line">&#125;);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">filter</span>.<span class="title function_">register</span>(<span class="string">&#x27;after_post_render&#x27;</span>, <span class="keyword">function</span>(<span class="params">data</span>) &#123;</span><br><span class="line">  data.<span class="property">content</span> = data.<span class="property">content</span>.<span class="title function_">replace</span>(rPlaceholder, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> cache[<span class="variable language_">arguments</span>[<span class="number">1</span>]];</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> data;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p> 在同一目录下新建文件<code>fold.js</code>添加如下代码： </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* global hexo */</span></span><br><span class="line"><span class="comment">// Usage: &#123;% fold ???? %&#125; Something &#123;% endfold %&#125;</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fold</span> (args, content) &#123;</span><br><span class="line">    <span class="keyword">var</span> text = args[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">if</span>(!text) text = <span class="string">&quot;点击显/隐&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&lt;div&gt;&lt;div class=&quot;fold_hider&quot;&gt;&lt;div class=&quot;close hider_title&quot;&gt;&#x27;</span> + text + <span class="string">&#x27;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;fold&quot;&gt;\n&#x27;</span> + hexo.<span class="property">render</span>.<span class="title function_">renderSync</span>(&#123;<span class="attr">text</span>: content, <span class="attr">engine</span>: <span class="string">&#x27;markdown&#x27;</span>&#125;) + <span class="string">&#x27;\n&lt;/div&gt;&lt;/div&gt;&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">tag</span>.<span class="title function_">register</span>(<span class="string">&#x27;fold&#x27;</span>, fold, &#123;<span class="attr">ends</span>: <span class="literal">true</span>&#125;);</span><br></pre></td></tr></table></figure>
+<p>3.添加折叠功能样式，在<code>/themes/next/soure/css/_custom/custom.styl</code>添加如下代码： </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// Custom styles.</span><br><span class="line"><span class="selector-class">.hider_title</span>&#123;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">&quot;Microsoft Yahei&quot;</span>;</span><br><span class="line">    <span class="attribute">cursor</span>: pointer;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.close</span><span class="selector-pseudo">:after</span>&#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&quot;▼&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.open</span><span class="selector-pseudo">:after</span>&#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&quot;▲&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.feed-link</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4.使用方法</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% fold 点击显/隐内容 %&#125;</span><br><span class="line">你需要折叠的内容</span><br><span class="line">&#123;% endfold %&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="文章字数和阅读时长"><a href="#文章字数和阅读时长" class="headerlink" title="文章字数和阅读时长"></a>文章字数和阅读时长</h3><p>安装 <a target="_blank" rel="noopener" href="https://github.com/willin/hexo-wordcount"><strong>hexo-wordcount</strong></a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-wordcount --save</span><br></pre></td></tr></table></figure>
+<p>然后在主题的配置文件中，配置如下内容：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Post wordcount display settings</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/willin/hexo-wordcount</span></span><br><span class="line"><span class="attr">post_wordcount:</span></span><br><span class="line">  <span class="attr">item_text:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">wordcount:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">min2read:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>对于Swig文件需要像如下加入数据</p>
+<p>Post Count:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;post-count&quot;</span>&gt;</span>&#123;&#123; wordcount(post.content) &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Post Minutes to Read:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;post-count&quot;</span>&gt;</span>&#123;&#123; min2read(post.content) &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Total Count:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;post-count&quot;</span>&gt;</span>&#123;&#123; totalcount(site) &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>其中totalcount是对站点所有字数的统计，我在<code>next/layout/archive.swig</code>中这个位置添加了如下字段。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; __(&#x27;cheers.&#x27; + cheers) &#125;&#125;! &#123;&#123; _p(&quot;counter.archive_posts&quot;, site.posts.length) &#125;&#125; 一共码了&#123;&#123; totalcount(site)&#125;&#125;字， &#123;&#123; __(&#x27;keep_on&#x27;) &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>在归档页面呈现的效果如下：</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/03/hexo%E5%91%BD%E4%BB%A4%E5%92%8Cmarkdown%E8%AF%AD%E6%B3%95%E8%AE%B0%E5%BD%95/2.png" alt="2"></p>
+<p>至于wordcount和min2read，由于是对每个post的统计，所以在<code>next/layout/__macro/post.swig</code>中加入以下字段</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if theme.post_wordcount.wordcount %&#125;</span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;post-meta-divider&quot;</span>&gt;</span>|<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;post-count&quot;</span>&gt;</span>&#123;&#123; __(&#x27;post.wordcount&#x27;)  + __(&#x27;symbol.colon&#x27;) + wordcount(post.content) &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line">&#123;% if theme.post_wordcount.min2read %&#125;</span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;post-meta-divider&quot;</span>&gt;</span>|<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;post-count&quot;</span>&gt;</span>&#123;&#123; __(&#x27;post.min2read&#x27;) + __(&#x27;symbol.colon&#x27;) + min2read(post.content)&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<p>其中<code>theme.post_wordcount.wordcount</code>是在主题文件<code>__config.yml</code>中拿的值，所以要在主题文件<code>__config.yml</code>中添加字段</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">post_wordcount:</span></span><br><span class="line">  <span class="attr">item_text:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">wordcount:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">min2read:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>而双花括号中的字段是在<code>/language/zh-CN.yml</code>中取的值，所以要在<code>post</code>下面加上<code>wordcount</code>和<code>min2read</code>字段，写上你想要的文字。这里为什么不直接在<code>swig</code>文件中写上中文文字，理解很简单，就是为了语言和<code>html</code>的分离，如果在根目录<code>__config.yml</code>中修改了语言，不需要修改<code>swig</code>文件也能够使展示变得正常，这相当于一种解耦。</p>
+<h3 id="LeanCloud配置使用"><a href="#LeanCloud配置使用" class="headerlink" title="LeanCloud配置使用"></a>LeanCloud配置使用</h3><p>参考<a target="_blank" rel="noopener" href="https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/LEANCLOUD-COUNTER-SECURITY.md">hexo-theme-next</a>，这个文件在<code>themes/next/docs/</code>也有，叫<code>LEANCLOUD-COUNTER-SECURITY.md</code>。</p>
+<h3 id="图片弹出效果-fancybox"><a href="#图片弹出效果-fancybox" class="headerlink" title="图片弹出效果 - fancybox"></a>图片弹出效果 - fancybox</h3><p>fancybox 的特性：</p>
+<ul>
+<li>允许我们用鼠标和键盘上的四个方向键切换图片</li>
+<li>可以根据当前窗口大小自动调整弹出框的大小，当我们改变浏览器窗口大小时，将会看到弹出框自动缩放了</li>
+<li>支持缩略图和按钮帮助导航</li>
+</ul>
+<p>设置图片显示，配置见 <a target="_blank" rel="noopener" href="https://github.com/theme-next/theme-next-fancybox3">theme-next-fancybox3</a></p>
+<h3 id="添加gitalk评论功能"><a href="#添加gitalk评论功能" class="headerlink" title="添加gitalk评论功能"></a>添加gitalk评论功能</h3><p>在<code>themes/next/_config.yml</code>中有相关gitalk配置</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">gitalk:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">github_id:</span>  <span class="string">github</span></span><br><span class="line">  <span class="attr">repo:</span>  <span class="number">543877815.</span><span class="string">github.io</span></span><br><span class="line">  <span class="attr">client_id:</span>  </span><br><span class="line">  <span class="attr">client_secret:</span>  </span><br><span class="line">  <span class="attr">admin_user:</span>  <span class="number">543877815</span></span><br><span class="line">  <span class="attr">distraction_free_mode:</span> <span class="literal">true</span> <span class="comment"># Facebook-like distraction free mode</span></span><br></pre></td></tr></table></figure>
+<p>其中<code>client_id</code>和<code>client_secret</code>在github的<code>setting/Developer settings/OAuth Apps</code>中进行创建与配置。</p>
+<p>配置文件下面还有一个gitalk的js和css需要进行填写</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># gitalk</span></span><br><span class="line"><span class="comment"># See: https://github.com/gitalk/gitalk</span></span><br><span class="line"><span class="comment"># Example:</span></span><br><span class="line"><span class="attr">gitalk_js:</span> <span class="string">https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js</span></span><br><span class="line"><span class="attr">gitalk_css:</span> <span class="string">https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="添加音乐"><a href="#添加音乐" class="headerlink" title="添加音乐"></a>添加音乐</h3><p>访问 Aplayer 网站：<a target="_blank" rel="noopener" href="https://github.com/MoePlayer/APlayer">GitHub Aplayer</a>。下载源码到本地，解压后将dist的css文件放置在<code>theme\next\source\css</code>文件中，将js文件放置在<code>themes\next\source\js\src</code>文件中，新建<code>themes\next\source\js\src\music.js</code>文件，添加内容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ap = <span class="keyword">new</span> <span class="title class_">APlayer</span>(&#123;</span><br><span class="line">    <span class="attr">container</span>: <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;aplayer&#x27;</span>),</span><br><span class="line">    <span class="attr">fixed</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">autoplay</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">audio</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&quot;灰色头像&quot;</span>,</span><br><span class="line">        <span class="attr">artist</span>: <span class="string">&#x27;许嵩&#x27;</span>,</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;http://www.ytmp3.cn/down/59697.mp3&#x27;</span>,</span><br><span class="line">        <span class="attr">cover</span>: <span class="string">&#x27;http://img.ytmp3.cn/image/79.jpg&#x27;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;多余的解释&#x27;</span>,</span><br><span class="line">        <span class="attr">artist</span>: <span class="string">&#x27;许嵩&#x27;</span>,</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;http://www.ytmp3.cn/down/60447.mp3&#x27;</span>,</span><br><span class="line">        <span class="attr">cover</span>: <span class="string">&#x27;http://img.ytmp3.cn/image/78.jpg&#x27;</span>,</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>然后配置<code>theme\next\layout\_layout.swig</code>文件，将下述代码添加到<code>&lt;body&gt;&lt;/body&gt;</code>之间。然后就能看到左下角的音乐播放器。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;link <span class="attribute">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attribute">href</span>=<span class="string">&quot;/css/APlayer.min.css&quot;</span>&gt;</span><br><span class="line">&lt;div <span class="attribute">id</span>=<span class="string">&quot;aplayer&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;script <span class="attribute">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attribute">src</span>=<span class="string">&quot;/js/src/APlayer.min.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script <span class="attribute">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attribute">src</span>=<span class="string">&quot;/js/src/music.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="新增页面"><a href="#新增页面" class="headerlink" title="新增页面"></a>新增页面</h3><h4 id="通用操作"><a href="#通用操作" class="headerlink" title="通用操作"></a>通用操作</h4><p>这个页面是区别于博文的新页面，通过<code>hexo new page [pageName]</code>在博客的<code>source</code>下生成一个叫<code>[pageName]</code>的目录，里面有一个文件叫<code>index.md</code>，这个markdown文件将被直接用于渲染这个页面，可以写html、css、js代码，目录中还会生成一个叫<code>index</code>的文件夹，里面可以放静态资源。</p>
+<p>然后在<strong>侧边栏</strong>添加页面链接，主题配置文件<code>_config.yml</code>中添加<code>key: value</code>字段，<code>key</code>字段是页面在配置文件中的唯一标识，<code>value</code>字段中<code>||</code>左边的是访资源的路径，<code>||</code>右边是链接的图标，用的是<a target="_blank" rel="noopener" href="https://fontawesome.dashgame.com/">fontawsome</a>的类名。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">home</span></span><br><span class="line">  <span class="attr">top:</span> <span class="string">/top/</span> <span class="string">||</span> <span class="string">signal</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">th</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">tags</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">archive</span></span><br><span class="line">  <span class="attr">about:</span> <span class="string">/about/</span> <span class="string">||</span> <span class="string">user</span></span><br><span class="line">  <span class="attr">links:</span> <span class="string">/links</span> <span class="string">||</span> <span class="string">link</span></span><br></pre></td></tr></table></figure>
+<p>为侧边栏链接添加<strong>中文描述</strong>，在默认情况下，链接默认会显示为<code>_config.yml</code>中配置的<code>key</code>，如果想要修改为中文描述，需要在<code>themes\next\languages\zh-CN.yml</code>中添加<code>menu.[pageName]</code>的描述</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">首页</span></span><br><span class="line">  <span class="attr">top:</span> <span class="string">热榜</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">归档</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">分类</span></span><br><span class="line">  <span class="attr">links:</span> <span class="string">友链</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">标签</span></span><br><span class="line">  <span class="attr">about:</span> <span class="string">关于</span></span><br><span class="line">  <span class="attr">search:</span> <span class="string">搜索</span></span><br></pre></td></tr></table></figure>
+<h4 id="新增阅读排行页面"><a href="#新增阅读排行页面" class="headerlink" title="新增阅读排行页面"></a>新增阅读排行页面</h4><p>参考自<a target="_blank" rel="noopener" href="https://tding.top/archives/baf1ffd.html">小丁的个人博客</a>，需要先配置<a target="_blank" rel="noopener" href="https://leancloud.cn/">LeanCloud</a>，然后<code>hexo n page top</code> 新建页面，会生成 top 目录，编辑其中自动生成的 <code>index.md</code> 文件，将其中的代码替换如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;top&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"><span class="variable constant_">AV</span>.<span class="title function_">initialize</span>(<span class="string">&quot;leancloud_appid&quot;</span>, <span class="string">&quot;leancloud_appkey&quot;</span>);</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">var</span> time=<span class="number">0</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">var</span> title=<span class="string">&quot;&quot;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">var</span> url=<span class="string">&quot;&quot;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">var</span> query = <span class="keyword">new</span> <span class="variable constant_">AV</span>.<span class="title class_">Query</span>(<span class="string">&#x27;Counter&#x27;</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  query.<span class="title function_">notEqualTo</span>(<span class="string">&#x27;id&#x27;</span>,<span class="number">0</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  query.<span class="title function_">descending</span>(<span class="string">&#x27;time&#x27;</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  query.<span class="title function_">limit</span>(<span class="number">1000</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  query.<span class="title function_">find</span>().<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">todo</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">20</span>;i++)&#123;  <span class="comment">// 20 为显示Top 20热度的文章</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="keyword">var</span> result=todo[i].<span class="property">attributes</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      time=result.<span class="property">time</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      title=result.<span class="property">title</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      url=result.<span class="property">url</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="keyword">var</span> content=<span class="string">&quot;&lt;p&gt;&quot;</span>+<span class="string">&quot;&lt;font color=&#x27;#1C1C1C&#x27;&gt;&quot;</span>+<span class="string">&quot;【文章热度:&quot;</span>+time+<span class="string">&quot;℃】&quot;</span>+<span class="string">&quot;&lt;/font&gt;&quot;</span>+<span class="string">&quot;&lt;a href=&#x27;&quot;</span>+<span class="string">&quot;$&#123;yourUrl&#125;&quot;</span>+url+<span class="string">&quot;&#x27;&gt;&quot;</span>+title+<span class="string">&quot;&lt;/a&gt;&quot;</span>+<span class="string">&quot;&lt;/p&gt;&quot;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;top&quot;</span>).<span class="property">innerHTML</span>+=content</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;, <span class="keyword">function</span> (<span class="params">error</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;error&quot;</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>并将其中的 <code>leancloud_appid</code>、<code>leancloud_appkey</code> 和<strong>页面链接</strong>替换为你的。</p>
+<h4 id="新增友链页面"><a href="#新增友链页面" class="headerlink" title="新增友链页面"></a>新增友链页面</h4><p>参考自<a target="_blank" rel="noopener" href="https://tding.top/archives/73ce4e7.html">小丁的个人博客</a>，首先<code>hexo n page links</code> 新建页面，会生成 links 目录，编辑其中自动生成的 <code>index.md</code> 文件，将其中的代码替换如下：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 友链</span><br><span class="line"><span class="section">type: links</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span>.links-content&#123;margin-top:1rem&#125;.link-navigation::after&#123;content:&quot; &quot;;display:block;clear:both&#125;.card&#123;width:130px;font-size:1rem;padding:0;border-radius:4px;transition-duration:.15s;margin-bottom:1rem;display:block;float:left;box-shadow:0 2px 6px 0 rgba(0,0,0,.12);background:#f5f5f5&#125;.card&#123;margin-left:16px&#125;@media(max-width:567px)&#123;.card&#123;margin-left:16px;width:calc((100% - 16px)/2)&#125;.card:nth-child(2n+1)&#123;margin-left:0&#125;.card:not(:nth-child(2n+1))&#123;margin-left:16px&#125;&#125;@media(min-width:567px)&#123;.card&#123;margin-left:16px;width:calc((100% - 32px)/3)&#125;.card:nth-child(3n+1)&#123;margin-left:0&#125;.card:not(:nth-child(3n+1))&#123;margin-left:16px&#125;&#125;@media(min-width:768px)&#123;.card&#123;margin-left:16px;width:calc((100% - 48px)/4)&#125;.card:nth-child(4n+1)&#123;margin-left:0&#125;.card:not(:nth-child(4n+1))&#123;margin-left:16px&#125;&#125;@media(min-width:1200px)&#123;.card&#123;margin-left:16px;width:calc((100% - 64px)/5)&#125;.card:nth-child(5n+1)&#123;margin-left:0&#125;.card:not(:nth-child(5n+1))&#123;margin-left:16px&#125;&#125;.card:hover&#123;transform:scale(1.1);box-shadow:0 2px 6px 0 rgba(0,0,0,.12),0 0 6px 0 rgba(0,0,0,.04)&#125;.card .thumb&#123;width:100%;height:0;padding-bottom:100%;background-size:100% 100%!important&#125;.posts-expand .post-body img&#123;margin:0;padding:0;border:0&#125;.card .card-header&#123;display:block;text-align:center;padding:1rem .25rem;font-weight:500;color:#333;white-space:normal&#125;.card .card-header a&#123;font-style:normal;color:#2bbc8a;font-weight:700;text-decoration:none;border:0&#125;.card .card-header a:hover&#123;color:#d480aa;text-decoration:none;border:0&#125;<span class="language-xml"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;links-content&quot;</span>&gt;</span></span><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;link-navigation&quot;</span> <span class="attr">id</span>=<span class="string">&quot;links1&quot;</span>&gt;</span></span><span class="language-xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><span class="language-xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><span class="language-xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">------</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;text-align:center;&quot;</span>&gt;</span></span><span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;with-love&quot;</span> <span class="attr">id</span>=<span class="string">&quot;animate1&quot;</span>&gt;</span></span></span><br><span class="line"><span class="code">    &lt;i class=&quot;fa fa-heart&quot;&gt;&lt;/i&gt;</span></span><br><span class="line"><span class="code">  &lt;/span&gt;留言添加友链&lt;span class=&quot;with-love&quot; id=&quot;animate2&quot;&gt;</span></span><br><span class="line"><span class="code">    &lt;i class=&quot;fa fa-heart&quot;&gt;&lt;/i&gt;</span></span><br><span class="line"><span class="code">  &lt;/span&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="code">  </span></span><br><span class="line"><span class="code">------</span></span><br><span class="line"><span class="code"></span></span><br><span class="line">&#123;% note success %&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">## 友链格式</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 网站名称：小丁的个人博客</span><br><span class="line"><span class="bullet">-</span> 网站地址：[<span class="string">https://tding.top</span>](<span class="link">https://tding.top</span>)</span><br><span class="line"><span class="bullet">-</span> 网站描述：世间所有的相遇，都是久别重逢</span><br><span class="line"><span class="bullet">-</span> 网站Logo/头像：[<span class="string">https://tding.top/images/avatar.webp</span>](<span class="link">https://tding.top/images/avatar.webp</span>)</span><br><span class="line"></span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在页面目录 <code>/source/links/</code> 中添加 <code>linklist.json</code>，示例：</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">```json</span><br><span class="line">[</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="string">&quot;nickname&quot;</span>: <span class="string">&quot;三水非冰博客&quot;</span>,</span><br><span class="line">		<span class="string">&quot;avatar&quot;</span>: <span class="string">&quot;https://www.sanshuifeibing.com/usr/images/avatar2.jpg&quot;</span>,</span><br><span class="line">		<span class="string">&quot;site&quot;</span>: <span class="string">&quot;https://www.sanshuifeibing.com&quot;</span></span><br><span class="line">	&#125;,</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="string">&quot;nickname&quot;</span>: <span class="string">&quot;北宸&quot;</span>,</span><br><span class="line">		<span class="string">&quot;avatar&quot;</span>: <span class="string">&quot;https://leafjame.github.io/images/beichen.png&quot;</span>,</span><br><span class="line">		<span class="string">&quot;site&quot;</span>: <span class="string">&quot;https://leafjame.github.io&quot;</span></span><br><span class="line">	&#125;,</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="string">&quot;nickname&quot;</span>: <span class="string">&quot;千灵夙赋&quot;</span>,</span><br><span class="line">		<span class="string">&quot;avatar&quot;</span>: <span class="string">&quot;https://qianling.pw/images/avatar.png&quot;</span>,</span><br><span class="line">		<span class="string">&quot;site&quot;</span>: <span class="string">&quot;https://qianling.pw/&quot;</span></span><br><span class="line">	&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>创建<code>link.js</code>保存在<code>themes\next\source\js\src\</code>下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">link = &#123;</span><br><span class="line">  <span class="attr">init</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">var</span> that = <span class="variable language_">this</span>;</span><br><span class="line">      <span class="comment">//这里设置的是刚才的 linklist.json 文件路径</span></span><br><span class="line">      $.<span class="title function_">getJSON</span>(<span class="string">&quot;/links/linklist.json&quot;</span>,</span><br><span class="line">      <span class="keyword">function</span>(<span class="params">data</span>) &#123;</span><br><span class="line">          that.<span class="title function_">render</span>(data);</span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">render</span>: <span class="keyword">function</span>(<span class="params">data</span>) &#123;</span><br><span class="line">      <span class="keyword">var</span> html, nickname, avatar, site, li = <span class="string">&quot;&quot;</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; data.<span class="property">length</span>; i++) &#123;</span><br><span class="line">          nickname = data[i].<span class="property">nickname</span>;</span><br><span class="line">          avatar = data[i].<span class="property">avatar</span>;</span><br><span class="line">          site = data[i].<span class="property">site</span>;</span><br><span class="line">          li += <span class="string">&#x27;&lt;div class=&quot;card&quot;&gt;&#x27;</span> + <span class="string">&#x27;&lt;a href=&quot;&#x27;</span> + site + <span class="string">&#x27;&quot; target=&quot;_blank&quot;&gt;&#x27;</span> + <span class="string">&#x27;&lt;div class=&quot;thumb&quot; style=&quot;background: url( &#x27;</span> + avatar + <span class="string">&#x27;);&quot;&gt;&#x27;</span> + <span class="string">&#x27;&lt;/div&gt;&#x27;</span> + <span class="string">&#x27;&lt;/a&gt;&#x27;</span> + <span class="string">&#x27;&lt;div class=&quot;card-header&quot;&gt;&#x27;</span> + <span class="string">&#x27;&lt;div&gt;&lt;a href=&quot;&#x27;</span> + site + <span class="string">&#x27;&quot; target=&quot;_blank&quot;&gt;&#x27;</span> + nickname + <span class="string">&#x27;&lt;/a&gt;&lt;/div&gt;&#x27;</span> + <span class="string">&#x27;&lt;/div&gt;&#x27;</span> + <span class="string">&#x27;&lt;/div&gt;&#x27;</span>;</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line">      $(<span class="string">&quot;.link-navigation&quot;</span>).<span class="title function_">append</span>(li);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">link.<span class="title function_">init</span>();</span><br></pre></td></tr></table></figure>
+<p>最后在<code>/source/links/index.md</code>中引入该js:<code>&lt;script src=&quot;/js/src/link.js&quot;&gt;&lt;/script&gt;</code>，另外可能需要自己添加<code>jquery.js</code></p>
+<h2 id="Tag-Plugin语法"><a href="#Tag-Plugin语法" class="headerlink" title="Tag Plugin语法"></a>Tag Plugin语法</h2><p><a target="_blank" rel="noopener" href="https://tding.top/archives/29bfe8c9.html">参考自小丁的个人博客</a></p>
+<h3 id="文本居中引用"><a href="#文本居中引用" class="headerlink" title="文本居中引用"></a>文本居中引用</h3><div class="tabs" id="tab1"><ul class="nav-tabs"><li class="tab active"><a href="#tab1-1">代码</a></li><li class="tab"><a href="#tab1-2">效果</a></li></ul><div class="tab-content"><div class="tab-pane active" id="tab1-1"><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% cq %&#125;世间所有的相遇，都是久别重逢&#123;% endcq %&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="tab1-2"><blockquote class="blockquote-center">
+            <i class="fa fa-quote-left"></i>
+            <p>世间所有的相遇，都是久别重逢</p>
+
+            <i class="fa fa-quote-right"></i>
+          </blockquote></div></div></div>
+<h3 id="提示块"><a href="#提示块" class="headerlink" title="提示块"></a>提示块</h3><div class="tabs" id="tab2"><ul class="nav-tabs"><li class="tab active"><a href="#tab2-1">代码</a></li><li class="tab"><a href="#tab2-2">效果</a></li><li class="tab"><a href="#tab2-3">主题配置项</a></li></ul><div class="tab-content"><div class="tab-pane active" id="tab2-1"><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;% note default %&#125;</span><br><span class="line">default 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note primary %&#125;</span><br><span class="line">primary 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note success %&#125;</span><br><span class="line">success 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note info %&#125;</span><br><span class="line">info 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note warning %&#125;</span><br><span class="line">warning 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note danger %&#125;</span><br><span class="line">danger 提示块标签</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="tab2-2"><div class="note default">
+            <p>default 提示块标签</p>
+          </div>
+
+<div class="note primary">
+            <p>primary 提示块标签</p>
+          </div>
+
+<div class="note success">
+            <p>success 提示块标签</p>
+          </div>
+
+<div class="note info">
+            <p>info 提示块标签</p>
+          </div>
+
+<div class="note warning">
+            <p>warning 提示块标签</p>
+          </div>
+
+<div class="note danger">
+            <p>danger 提示块标签</p>
+          </div></div><div class="tab-pane" id="tab2-3"><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Note tag (bs-callout).</span></span><br><span class="line"><span class="attr">note:</span></span><br><span class="line">  <span class="comment"># Note tag style values:</span></span><br><span class="line">  <span class="comment">#  - simple    bs-callout old alert style. Default.</span></span><br><span class="line">  <span class="comment">#  - modern    bs-callout new (v2-v3) alert style.</span></span><br><span class="line">  <span class="comment">#  - flat      flat callout style with background, like on Mozilla or StackOverflow.</span></span><br><span class="line">  <span class="comment">#  - disabled  disable all CSS styles import of note tag.</span></span><br><span class="line">  <span class="comment"># 风格</span></span><br><span class="line">  <span class="attr">style:</span> <span class="string">flat</span></span><br><span class="line">  <span class="comment"># 要不要图标</span></span><br><span class="line">  <span class="attr">icons:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># 圆角矩形</span></span><br><span class="line">  <span class="attr">border_radius:</span> <span class="number">3</span></span><br><span class="line">  <span class="comment"># Offset lighter of background in % for modern and flat styles (modern: -12 | 12; flat: -18 | 6).</span></span><br><span class="line">  <span class="comment"># Offset also applied to label tag variables. This option can work with disabled note tag.</span></span><br><span class="line">  <span class="attr">light_bg_offset:</span> <span class="number">0</span></span><br></pre></td></tr></table></figure></div></div></div>
+<h3 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h3><div class="tabs" id="tab3"><ul class="nav-tabs"><li class="tab active"><a href="#tab3-1">代码</a></li><li class="tab"><a href="#tab3-2">效果</a></li></ul><div class="tab-content"><div class="tab-pane active" id="tab3-1"><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;% label default@默认 %&#125; </span><br><span class="line">&#123;% label primary@主要 %&#125;</span><br><span class="line">&#123;% label success@成功 %&#125;</span><br><span class="line">&#123;% label info@信息 %&#125; </span><br><span class="line">&#123;% label warning@警告 %&#125; </span><br><span class="line">&#123;% label danger@危险 %&#125; </span><br><span class="line">&#123;% label success@这是成功的信息%&#125;</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="tab3-2"><p><span class="label default">默认</span><br><span class="label primary">主要</span><br><span class="label success">成功</span><br><span class="label info">信息</span><br><span class="label warning">警告</span><br><span class="label danger">危险</span><br><span class="label success">这是成功的信息</span></p></div></div></div>
+<h3 id="选项卡"><a href="#选项卡" class="headerlink" title="选项卡"></a>选项卡</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% tabs tab,1 %&#125; 名字为tab是唯一标识，默认在第1个选项卡，如果是-1则隐藏</span><br><span class="line">&lt;!-- tab --&gt;</span><br><span class="line"><span class="strong">**选项卡 1**</span> </span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&lt;!-- tab --&gt;</span><br><span class="line"><span class="strong">**选项卡 2**</span></span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&lt;!-- tab A --&gt;</span><br><span class="line"><span class="strong">**选项卡 3**</span> 名字为A</span><br><span class="line">&lt;!-- endtab --&gt;</span><br><span class="line">&#123;% endtabs %&#125;</span><br></pre></td></tr></table></figure>
+<div class="tabs" id="tab"><ul class="nav-tabs"><li class="tab active"><a href="#tab-1">tab 1</a></li><li class="tab"><a href="#tab-2">tab 2</a></li><li class="tab"><a href="#tab-3">A</a></li></ul><div class="tab-content"><div class="tab-pane active" id="tab-1"><p><strong>选项卡 1</strong> </p></div><div class="tab-pane" id="tab-2"><p><strong>选项卡 2</strong></p></div><div class="tab-pane" id="tab-3"><p><strong>选项卡 3</strong> 名字为A</p></div></div></div>
+<p>主题<code>_config.yml</code>配置项</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Tabs tag</span></span><br><span class="line"><span class="attr">tabs:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">transition:</span></span><br><span class="line">    <span class="attr">tabs:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">labels:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">border_radius:</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h3 id="按钮"><a href="#按钮" class="headerlink" title="按钮"></a>按钮</h3><div class="tabs" id="tab4"><ul class="nav-tabs"><li class="tab active"><a href="#tab4-1">代码及参数</a></li><li class="tab"><a href="#tab4-2">示例</a></li><li class="tab"><a href="#tab4-3">多个按钮居中显示</a></li></ul><div class="tab-content"><div class="tab-pane active" id="tab4-1"><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% button url, text, icon [class], [title] %&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>url</code> : 绝对或相对 URL</li>
+<li><code>text</code> : 按钮文字，如果未指定图标则为必须</li>
+<li><code>icon</code> : FontAwesome 图标名称（开头没有’fa-‘）。如果未指定文本，则为必需</li>
+<li><code>[class]</code> : FontAwesome 类：<code>fa-fw | fa-lg | fa-2x | fa-3x | fa-4x | fa-5X</code> ，可选参数。</li>
+<li><code>[title]</code> : 鼠标悬停时的工具提示，可选参数。</li>
+</ul>
+<p>注意：最好添加 <code>&lt;div&gt;</code> 标签，测试时没加 div，下面显示不完全，加上非常美观。</p></div><div class="tab-pane" id="tab4-2"><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span>&#123;% button https://tding.top/ ,首页,home fa-fw,这是小丁的个人博客首页%&#125;<span class="language-xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<div><a class="btn" target="_blank" rel="noopener" href="https://tding.top/ " title="这是小丁的个人博客首页">
+            <i class="fa fa-home fa-fw"></i>首页
+          </a></div></div><div class="tab-pane" id="tab4-3"><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;text-center&quot;</span>&gt;</span></span></span><br><span class="line"><span class="code">    &lt;div&gt;</span></span><br><span class="line"><span class="code">        &#123;% button https://tding.top/ ,首页,home fa-fw,这是小丁的个人博客首页%&#125;</span></span><br><span class="line"><span class="code">        &#123;% button https://tding.top/movies/ ,观影,film fa-fw,豆瓣电影%&#125; </span></span><br><span class="line"><span class="code">        &#123;% button https://tding.top/books/ ,阅读,book fa-fw,豆瓣读书%&#125;</span></span><br><span class="line"><span class="code">    &lt;/div&gt;</span></span><br><span class="line"><span class="code">&lt;/div&gt;</span></span><br></pre></td></tr></table></figure>
+<div class="text-center"><div><a class="btn" target="_blank" rel="noopener" href="https://tding.top/ " title="这是小丁的个人博客首页">
+            <i class="fa fa-home fa-fw"></i>首页
+          </a> <a class="btn" target="_blank" rel="noopener" href="https://tding.top/movies/ " title="豆瓣电影">
+            <i class="fa fa-film fa-fw"></i>观影
+          </a> <a class="btn" target="_blank" rel="noopener" href="https://tding.top/books/ " title="豆瓣读书">
+            <i class="fa fa-book fa-fw"></i>阅读
+          </a></div></div></div></div></div>
+<h1 id="Markdown"><a href="#Markdown" class="headerlink" title="Markdown"></a>Markdown</h1><h2 id="Html"><a href="#Html" class="headerlink" title="Html"></a>Html</h2><div class="tabs" id="tab5"><ul class="nav-tabs"><li class="tab active"><a href="#tab5-1">bootstrap样式1</a></li><li class="tab"><a href="#tab5-2">bootstrap样式2</a></li><li class="tab"><a href="#tab5-3">下标</a></li><li class="tab"><a href="#tab5-4">上标</a></li><li class="tab"><a href="#tab5-5">居中</a></li><li class="tab"><a href="#tab5-6">图片的坑</a></li><li class="tab"><a href="#tab5-7">修改图片大小</a></li></ul><div class="tab-content"><div class="tab-pane active" id="tab5-1"><p><table><tr><td bgcolor="#f8d7da"><font color="#c7254e">hexo new "博客文章文件名"</font></td></tr></table><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span> <span class="attr">bgcolor</span>=<span class="string">#f8d7da</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">font</span> <span class="attr">color</span>=<span class="string">#c7254e</span>&gt;</span>hexo new &quot;博客文章文件名&quot;<span class="tag">&lt;/<span class="name">font</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure></p></div><div class="tab-pane" id="tab5-2"><table>
+    <tr>
+        <td bgcolor="#333">
+            <font color="#fff">Ctrl + ,</font>
+        </td>
+    </tr> 
+</table>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span> <span class="attr">bgcolor</span>=<span class="string">#333</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">font</span> <span class="attr">color</span>=<span class="string">#fff</span>&gt;</span>hexo new &quot;博客文章文件名&quot;<span class="tag">&lt;/<span class="name">font</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="tab5-3"><p><strong>H<sub>2</sub>O</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">H<span class="tag">&lt;<span class="name">sub</span>&gt;</span>2<span class="tag">&lt;/<span class="name">sub</span>&gt;</span>O</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="tab5-4"><p>X<sup>2</sup></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X<span class="tag">&lt;<span class="name">sup</span>&gt;</span>2<span class="tag">&lt;/<span class="name">sup</span>&gt;</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="tab5-5"><p><center>我在中间</center><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">center</span>&gt;</span>我在中间<span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br></pre></td></tr></table></figure></p></div><div class="tab-pane" id="tab5-6"><p>正确引用：</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/03/hexo%E5%91%BD%E4%BB%A4%E5%92%8Cmarkdown%E8%AF%AD%E6%B3%95%E8%AE%B0%E5%BD%95/1.png" alt="1"></p></div><div class="tab-pane" id="tab5-7"><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;2019-09-18-Re-recognizing-machine-learning\5.png&quot;</span> <span class="attr">width</span>=<span class="string">&quot;75%&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure></div></div></div>
+<h1 id="Latex"><a href="#Latex" class="headerlink" title="Latex"></a>Latex</h1><h2 id="安装Mathjax插件"><a href="#安装Mathjax插件" class="headerlink" title="安装Mathjax插件"></a><strong>安装Mathjax插件</strong></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-math --save</span><br></pre></td></tr></table></figure>
+<h2 id="更换Hexo的markdown渲染引擎"><a href="#更换Hexo的markdown渲染引擎" class="headerlink" title="更换Hexo的markdown渲染引擎"></a><strong>更换Hexo的markdown渲染引擎</strong></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked --save</span><br><span class="line">npm install hexo-renderer-kramed --save</span><br></pre></td></tr></table></figure>
+<h2 id="解决语义冲突"><a href="#解决语义冲突" class="headerlink" title="解决语义冲突"></a><strong>解决语义冲突</strong></h2><p>由于LaTeX与markdown语法有语义冲突，在markdown中，斜体和加粗可以用<em>或者<em>表示，在这里我们修改变量，将</em>用于LaTeX，而使用</em>表示markdown中的斜体和加粗，于 <font color="#c7254e">node_modules\kramed\lib\rules\inline.js</font> 中</p>
+<p>修改11行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//escape: /^\\([\\`*&#123;&#125;\[\]()#$+\-.!_&gt;])/,</span></span><br><span class="line"> <span class="attr">escape</span>: <span class="regexp">/^\\([`*\[\]()#$+\-.!_&gt;])/</span>,</span><br></pre></td></tr></table></figure>
+<p>和20行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  em: /^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</span></span><br><span class="line"><span class="attr">em</span>: <span class="regexp">/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/</span>,</span><br></pre></td></tr></table></figure>
+<p>更改配置文件</p>
+<p>于 <font color="#c7254e">_config.yml</font>配置mathjax</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># MathJax Support</span></span><br><span class="line"><span class="attr">mathjax:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">per_page:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment">#cdn: //cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML</span></span><br><span class="line">  <span class="attr">cdn:</span> <span class="string">//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML</span></span><br></pre></td></tr></table></figure>
+<h2 id="hexo下LaTeX无法显示的解决方案"><a href="#hexo下LaTeX无法显示的解决方案" class="headerlink" title="hexo下LaTeX无法显示的解决方案"></a><strong>hexo下LaTeX无法显示的解决方案</strong></h2><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d95a4795f3a8"><strong>解决方法参考</strong></a></p>
+<p><strong>使用</strong></p>
+<p>每次写博客要在前面加上<font color="#c7254e">mathjax: true</font></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: index.html</span><br><span class="line">date: 2018-2-8 21:01:30</span><br><span class="line">tags:</span><br><span class="line"><span class="section">mathjax: true</span></span><br><span class="line"><span class="section">--</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>行内公式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$行内公式$</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>行间公式(自动居中)</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span><span class="symbol">$</span>行间公式<span class="symbol">$</span><span class="symbol">$</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="公式编辑的bug"><a href="#公式编辑的bug" class="headerlink" title="公式编辑的bug"></a><strong>公式编辑的bug</strong></h2><p>对于sum和min需要使用$$进行包裹，如果仅使用$包裹将无法解析</p>
+<h2 id="公式编号问题"><a href="#公式编号问题" class="headerlink" title="公式编号问题"></a><strong>公式编号问题</strong></h2><p>如果使用align对公式进行包裹</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">\begin&#123;align&#125;</span><br><span class="line">公式一\\</span><br><span class="line">公式二\\</span><br><span class="line">公式三\\</span><br><span class="line">\end&#123;align&#125;</span><br><span class="line">\tag&#123;1&#125;</span><br></pre></td></tr></table></figure>
+<p>在网页上渲染会出现多个公式编号：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+公式一\\
+公式二\\
+公式三\\
+\end{align}
+\tag{1}</script><p>正确的写法是</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">\begin&#123;align<span class="emphasis">*&#125;</span></span><br><span class="line"><span class="emphasis">公式一\\</span></span><br><span class="line"><span class="emphasis">公式二\\</span></span><br><span class="line"><span class="emphasis">公式三\\</span></span><br><span class="line"><span class="emphasis">\end&#123;align*</span>&#125;</span><br><span class="line">\tag&#123;1&#125;</span><br></pre></td></tr></table></figure>
+<p>渲染效果为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+公式一\\
+公式二\\
+公式三\\
+\end{align*}
+\tag{1}</script><h2 id="公式引用"><a href="#公式引用" class="headerlink" title="公式引用"></a>公式引用</h2><p>可以用<code>\tag&#123;tag&#125;</code>给原公式打Tag。如果在后面需要引用它，就在<code>\tag</code>后面加上<code>\label&#123;tag&#125;</code>，例子如下：</p>
+<p>先给原式子打上tag和label</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">a</span>:=x^<span class="number">2</span>-y^<span class="number">3</span>\tag&#123;<span class="number">52</span>&#125;\label&#123;<span class="number">52</span>&#125;</span><br></pre></td></tr></table></figure>
+<script type="math/tex; mode=display">
+a:=x^2-y^3\tag{52}\label{52}</script><p>如果需要引用改公式，则需要使用<code>\eqref&#123;tag&#125;</code></p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span><span class="symbol">$</span>a+y^<span class="number">3</span>\stackrel&#123;\eqref&#123;<span class="number">52</span>&#125;&#125;=x^<span class="number">2</span><span class="symbol">$</span><span class="symbol">$</span></span><br></pre></td></tr></table></figure>
+<script type="math/tex; mode=display">
+a+y^3\stackrel{\eqref{52}}=x^2</script><p>也可以使用<code>\ref&#123;tag&#125;</code>，这样引用没有括号，显示为：</p>
+<script type="math/tex; mode=display">
+a+y^3\stackrel{\ref{52}}=x^2</script>
+    </div>
+
+    
+    
+    
+      
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/markdown/" rel="tag"># markdown</a>
+              <a href="/tags/Latex/" rel="tag"># Latex</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/" rel="prev" title="前端页面性能优化小记">
+      <i class="fa fa-chevron-left"></i> 前端页面性能优化小记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/04/03/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%8F%8A%E5%AF%B9%E5%81%B6%E6%80%A7%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/" rel="next" title="SVM详细推导及拉格朗日对偶性思考">
+      SVM详细推导及拉格朗日对偶性思考 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hexo"><span class="nav-number">1.</span> <span class="nav-text">Hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.</span> <span class="nav-text">新的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Echart%E7%9A%84%E5%BC%95%E5%85%A5"><span class="nav-number">1.2.1.</span> <span class="nav-text">Echart的引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%9D%97%E9%AB%98%E4%BA%AE%E9%83%A8%E5%88%86"><span class="nav-number">1.2.2.</span> <span class="nav-text">代码块高亮部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0%E5%8A%A0%E5%AF%86"><span class="nav-number">1.2.3.</span> <span class="nav-text">博客文章加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E7%BD%AE%E9%A1%B6"><span class="nav-number">1.2.4.</span> <span class="nav-text">文章置顶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="nav-number">1.2.5.</span> <span class="nav-text">图片懒加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E8%BF%9B%E5%BA%A6%E6%9D%A1"><span class="nav-number">1.2.6.</span> <span class="nav-text">加载进度条</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%9D%97%E6%8A%98%E5%8F%A0%E5%8A%9F%E8%83%BD"><span class="nav-number">1.2.7.</span> <span class="nav-text">代码块折叠功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E5%AD%97%E6%95%B0%E5%92%8C%E9%98%85%E8%AF%BB%E6%97%B6%E9%95%BF"><span class="nav-number">1.2.8.</span> <span class="nav-text">文章字数和阅读时长</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LeanCloud%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.9.</span> <span class="nav-text">LeanCloud配置使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E5%BC%B9%E5%87%BA%E6%95%88%E6%9E%9C-fancybox"><span class="nav-number">1.2.10.</span> <span class="nav-text">图片弹出效果 - fancybox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0gitalk%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD"><span class="nav-number">1.2.11.</span> <span class="nav-text">添加gitalk评论功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E9%9F%B3%E4%B9%90"><span class="nav-number">1.2.12.</span> <span class="nav-text">添加音乐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E9%A1%B5%E9%9D%A2"><span class="nav-number">1.2.13.</span> <span class="nav-text">新增页面</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">1.2.13.1.</span> <span class="nav-text">通用操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E9%98%85%E8%AF%BB%E6%8E%92%E8%A1%8C%E9%A1%B5%E9%9D%A2"><span class="nav-number">1.2.13.2.</span> <span class="nav-text">新增阅读排行页面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E5%8F%8B%E9%93%BE%E9%A1%B5%E9%9D%A2"><span class="nav-number">1.2.13.3.</span> <span class="nav-text">新增友链页面</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tag-Plugin%E8%AF%AD%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">Tag Plugin语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E5%B1%85%E4%B8%AD%E5%BC%95%E7%94%A8"><span class="nav-number">1.3.1.</span> <span class="nav-text">文本居中引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%E5%9D%97"><span class="nav-number">1.3.2.</span> <span class="nav-text">提示块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E7%AD%BE"><span class="nav-number">1.3.3.</span> <span class="nav-text">标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E9%A1%B9%E5%8D%A1"><span class="nav-number">1.3.4.</span> <span class="nav-text">选项卡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E9%92%AE"><span class="nav-number">1.3.5.</span> <span class="nav-text">按钮</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Markdown"><span class="nav-number">2.</span> <span class="nav-text">Markdown</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Html"><span class="nav-number">2.1.</span> <span class="nav-text">Html</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Latex"><span class="nav-number">3.</span> <span class="nav-text">Latex</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Mathjax%E6%8F%92%E4%BB%B6"><span class="nav-number">3.1.</span> <span class="nav-text">安装Mathjax插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%8D%A2Hexo%E7%9A%84markdown%E6%B8%B2%E6%9F%93%E5%BC%95%E6%93%8E"><span class="nav-number">3.2.</span> <span class="nav-text">更换Hexo的markdown渲染引擎</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E8%AF%AD%E4%B9%89%E5%86%B2%E7%AA%81"><span class="nav-number">3.3.</span> <span class="nav-text">解决语义冲突</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo%E4%B8%8BLaTeX%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">3.4.</span> <span class="nav-text">hexo下LaTeX无法显示的解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AC%E5%BC%8F%E7%BC%96%E8%BE%91%E7%9A%84bug"><span class="nav-number">3.5.</span> <span class="nav-text">公式编辑的bug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AC%E5%BC%8F%E7%BC%96%E5%8F%B7%E9%97%AE%E9%A2%98"><span class="nav-number">3.6.</span> <span class="nav-text">公式编号问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AC%E5%BC%8F%E5%BC%95%E7%94%A8"><span class="nav-number">3.7.</span> <span class="nav-text">公式引用</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lifengjun"
+      src="https://avatars0.githubusercontent.com/u/25082467?v=4">
+  <p class="site-author-name" itemprop="name">lifengjun</p>
+  <div class="site-description" itemprop="description">个人学习笔记和日志</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/543877815" title="GitHub → https://github.com/543877815" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:543877815@qq.com" title="E-Mail → mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lifengjun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '970dc8fd856c3e17f9f0',
+      clientSecret: '7f6d29828dd1f4a02336c480ba1012f1851b0eb0',
+      repo        : '543877815.github.io',
+      owner       : '543877815',
+      admin       : ['543877815'],
+      id          : 'e5a83ce48351956e06d305a320a37cfd',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(a){a.imageLazyLoadSetting.processImages=t;var e=a.imageLazyLoadSetting.isSPA,i=a.imageLazyLoadSetting.preloadRatio||1,o=r();function r(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(o=r());for(var t,n=0;n<o.length;n++)0<=(t=(t=o[n]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(a.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var e=o[n];!function(t,e){if(t.hasAttribute("bg-lazy"))return t.removeAttribute("bg-lazy"),e&&e();var n=new Image,a=t.getAttribute("data-original");n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a)}(e,function(){o=o.filter(function(t){return e!==t}),a.imageLazyLoadSetting.onImageLoaded&&a.imageLazyLoadSetting.onImageLoaded(e)})}()}function n(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",n),a.addEventListener("resize",n),a.addEventListener("orientationchange",n)}(this);</script></body>
+</html>

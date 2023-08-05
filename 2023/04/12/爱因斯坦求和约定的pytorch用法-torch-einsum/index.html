@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Reference:   https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;361209187">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爱因斯坦求和约定的pytorch用法">
+<meta property="og:url" content="https://lifengjun.xin/2023/04/12/%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E6%B1%82%E5%92%8C%E7%BA%A6%E5%AE%9A%E7%9A%84pytorch%E7%94%A8%E6%B3%95-torch-einsum/index.html">
+<meta property="og:site_name" content="逗比学长的博客">
+<meta property="og:description" content="Reference:   https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;361209187">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-11T16:15:20.000Z">
+<meta property="article:modified_time" content="2023-04-15T03:22:45.796Z">
+<meta property="article:author" content="lifengjun">
+<meta property="article:tag" content="pytorch">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://lifengjun.xin/2023/04/12/%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E6%B1%82%E5%92%8C%E7%BA%A6%E5%AE%9A%E7%9A%84pytorch%E7%94%A8%E6%B3%95-torch-einsum/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+
+  <title>爱因斯坦求和约定的pytorch用法 | 逗比学长的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/543877815" class="github-corner" aria-label="View source on GitHub">
+    <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#000000; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+    <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">逗比学长的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">博客是写给我自己看的（叉腰）</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-quick-check">
+
+    <a href="/quick-check" rel="section"><i class="fa fa-calendar fa-fw"></i>速查</a>
+
+  </li>
+        <li class="menu-item menu-item-portal">
+
+    <a href="/portal" rel="section"><i class="fa fa-rocket fa-fw"></i>传送门</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2023/04/12/%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E6%B1%82%E5%92%8C%E7%BA%A6%E5%AE%9A%E7%9A%84pytorch%E7%94%A8%E6%B3%95-torch-einsum/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          爱因斯坦求和约定的pytorch用法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-04-12 00:15:20" itemprop="dateCreated datePublished" datetime="2023-04-12T00:15:20+08:00">2023-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-04-15 11:22:45" itemprop="dateModified" datetime="2023-04-15T11:22:45+08:00">2023-04-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pytorch/" itemprop="url" rel="index"><span itemprop="name">pytorch</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Reference: </p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/361209187">https://zhuanlan.zhihu.com/p/361209187</a></li>
+</ol>
+<span id="more"></span>
+<p>导入库</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+<h1 id="torch-einsum"><a href="#torch-einsum" class="headerlink" title="torch.einsum"></a>torch.einsum</h1><ol>
+<li><strong>提取矩阵对角线元素</strong></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">9</span>).reshape(<span class="number">3</span>, <span class="number">3</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ii-&gt;i&#x27;</span>, a)</span><br><span class="line"></span><br><span class="line">Out：</span><br><span class="line">tensor([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],      -&gt;     tensor([<span class="number">0</span>, <span class="number">4</span>, <span class="number">8</span>])</span><br><span class="line">        [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>],</span><br><span class="line">        [<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]])</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>矩阵转置</strong></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">6</span>).reshape(<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ij-&gt;ji&#x27;</span>, a)</span><br><span class="line"></span><br><span class="line">Out：</span><br><span class="line">tensor([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],     -&gt;     tensor([[<span class="number">0</span>, <span class="number">3</span>],</span><br><span class="line">        [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]])                   [<span class="number">1</span>, <span class="number">4</span>],</span><br><span class="line">                                      [<span class="number">2</span>, <span class="number">5</span>]])</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>permute 高维张量转置</strong></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">24</span>).reshape(<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)      <span class="comment"># torch.Size([2, 3, 4])</span></span><br><span class="line">torch.einsum(<span class="string">&#x27;...ij-&gt;...ji&#x27;</span>, a)          <span class="comment"># torch.Size([2, 4, 3])</span></span><br><span class="line"></span><br><span class="line">Out：</span><br><span class="line">tensor([[[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],       -&gt;     tensor([[[ <span class="number">0</span>,  <span class="number">4</span>,  <span class="number">8</span>],</span><br><span class="line">         [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],                       [ <span class="number">1</span>,  <span class="number">5</span>,  <span class="number">9</span>],</span><br><span class="line">         [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]],						 [ <span class="number">2</span>,  <span class="number">6</span>, <span class="number">10</span>],</span><br><span class="line">        [[<span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],                       [ <span class="number">3</span>,  <span class="number">7</span>, <span class="number">11</span>]],</span><br><span class="line">         [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>],                      [[<span class="number">12</span>, <span class="number">16</span>, <span class="number">20</span>],</span><br><span class="line">         [<span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>]]])                     [<span class="number">13</span>, <span class="number">17</span>, <span class="number">21</span>],</span><br><span class="line">                                                 [<span class="number">14</span>, <span class="number">18</span>, <span class="number">22</span>],</span><br><span class="line">                                                 [<span class="number">15</span>, <span class="number">19</span>, <span class="number">23</span>]]])</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>reduce sum</strong></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">6</span>).reshape(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ij-&gt;&#x27;</span>, a)</span><br><span class="line"></span><br><span class="line">Out: </span><br><span class="line">tensor([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],       -&gt;     tensor(<span class="number">15</span>)</span><br><span class="line">        [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>矩阵按列/按行求和</strong></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">6</span>).reshape(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ij-&gt;j&#x27;</span>, a)  <span class="comment"># 行没了</span></span><br><span class="line"></span><br><span class="line">Out:</span><br><span class="line">tensor([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],      -&gt;     tensor([<span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>])</span><br><span class="line">        [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]])</span><br><span class="line"></span><br><span class="line">a = torch.arange(<span class="number">6</span>).reshape(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ij-&gt;i&#x27;</span>, a)  <span class="comment"># 列没了</span></span><br><span class="line"></span><br><span class="line">Out:</span><br><span class="line">tensor([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],      -&gt;    tensor([ <span class="number">3</span>, <span class="number">12</span>])</span><br><span class="line">        [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]])</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>矩阵向量乘法</strong></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">6</span>).reshape(<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">b = torch.arange(<span class="number">3</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ik, k-&gt;i&#x27;</span>, a, b)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ik, k&#x27;</span>, a, b)  <span class="comment"># 等价形式</span></span><br><span class="line"></span><br><span class="line">Out:</span><br><span class="line">tensor([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],     *    tensor([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>])   -&gt;     tensor([ <span class="number">5</span>, <span class="number">14</span>])</span><br><span class="line">        [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]]) </span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>矩阵乘法</strong></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">6</span>).reshape(<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">b = torch.arange(<span class="number">12</span>).reshape(<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ij, jk -&gt; ik&#x27;</span>, a,b)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ij, jk&#x27;</span>, a, b)  <span class="comment"># 等价形式</span></span><br><span class="line"></span><br><span class="line">Out:</span><br><span class="line">tensor([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],   *  tensor([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],  -&gt;   tensor([[<span class="number">20</span>, <span class="number">23</span>, <span class="number">26</span>, <span class="number">29</span>],</span><br><span class="line">        [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]])             [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],               [<span class="number">56</span>, <span class="number">68</span>, <span class="number">80</span>, <span class="number">92</span>]])</span><br><span class="line">                                [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]])</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>向量内积</strong></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">3</span>)</span><br><span class="line">b = torch.arange(<span class="number">3</span>, <span class="number">6</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;i, i-&gt;&#x27;</span>, a, b)</span><br><span class="line">torch.einsum(<span class="string">&#x27;i, i&#x27;</span>, a, b) <span class="comment"># 等价形式</span></span><br><span class="line"></span><br><span class="line">Out:</span><br><span class="line">tensor([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>])  *  tensor([<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])  -&gt;  tensor(<span class="number">14</span>)</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>矩阵元素对应相乘并求reduce sum</strong></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">6</span>).reshape(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">b = torch.arange(<span class="number">6</span>, <span class="number">12</span>).reshape(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ij, ij-&gt;&#x27;</span>, a, b)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ij, ij&#x27;</span>, a, b) <span class="comment"># 等价形式</span></span><br><span class="line"></span><br><span class="line">Out:  </span><br><span class="line">tensor([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],    *   tensor([[ <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>],    -&gt;  tensor(<span class="number">145</span>)</span><br><span class="line">        [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]])               [ <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]])</span><br><span class="line"></span><br><span class="line">torch.einsum(<span class="string">&#x27;ij, ij-&gt;ij&#x27;</span>, a, b)  <span class="comment"># 对应相乘</span></span><br><span class="line">Out:  </span><br><span class="line">tensor([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],    *   tensor([[ <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>],    -&gt;  tensor([[ <span class="number">0</span>,  <span class="number">7</span>, <span class="number">16</span>],</span><br><span class="line">        [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]])               [ <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]])               [<span class="number">27</span>, <span class="number">40</span>, <span class="number">55</span>]])</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>向量外积</strong></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">3</span>)</span><br><span class="line">b = torch.arange(<span class="number">3</span>,<span class="number">7</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;i, j-&gt;ij&#x27;</span>, a, b)</span><br><span class="line"></span><br><span class="line">Out: </span><br><span class="line">tensor([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>])   *   tensor([<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>])   -&gt;  tensor([[ <span class="number">0</span>,  <span class="number">0</span>,  <span class="number">0</span>,  <span class="number">0</span>],</span><br><span class="line">                                                           [ <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>],</span><br><span class="line">                                                           [ <span class="number">6</span>,  <span class="number">8</span>, <span class="number">10</span>, <span class="number">12</span>]])</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>batch 矩阵乘法</strong></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">30</span>).view(<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>)</span><br><span class="line">b = torch.arange(<span class="number">40</span>).view(<span class="number">2</span>,<span class="number">5</span>,<span class="number">4</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ijk, ikl-&gt;ijl&#x27;</span>, a, b)  <span class="comment"># torch.Size([2, 3, 4])</span></span><br><span class="line"></span><br><span class="line">Out:</span><br><span class="line">a -&gt; tensor([[[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>],</span><br><span class="line">              [ <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>],</span><br><span class="line">              [<span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>]],</span><br><span class="line">             [[<span class="number">15</span>, <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>],</span><br><span class="line">              [<span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>],</span><br><span class="line">              [<span class="number">25</span>, <span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>]]]) </span><br><span class="line"></span><br><span class="line">b -&gt; tensor([[[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span><br><span class="line">              [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span><br><span class="line">              [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>],</span><br><span class="line">              [<span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">              [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>]],</span><br><span class="line">             [[<span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>],</span><br><span class="line">              [<span class="number">24</span>, <span class="number">25</span>, <span class="number">26</span>, <span class="number">27</span>],</span><br><span class="line">              [<span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">31</span>],</span><br><span class="line">              [<span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>],</span><br><span class="line">              [<span class="number">36</span>, <span class="number">37</span>, <span class="number">38</span>, <span class="number">39</span>]]])</span><br><span class="line"></span><br><span class="line">result -&gt; tensor([[[ <span class="number">120</span>,  <span class="number">130</span>,  <span class="number">140</span>,  <span class="number">150</span>],</span><br><span class="line">                   [ <span class="number">320</span>,  <span class="number">355</span>,  <span class="number">390</span>,  <span class="number">425</span>],</span><br><span class="line">                   [ <span class="number">520</span>,  <span class="number">580</span>,  <span class="number">640</span>,  <span class="number">700</span>]],</span><br><span class="line">                  [[<span class="number">2420</span>, <span class="number">2505</span>, <span class="number">2590</span>, <span class="number">2675</span>],</span><br><span class="line">                   [<span class="number">3120</span>, <span class="number">3230</span>, <span class="number">3340</span>, <span class="number">3450</span>],</span><br><span class="line">                   [<span class="number">3820</span>, <span class="number">3955</span>, <span class="number">4090</span>, <span class="number">4225</span>]]])</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>张量收缩</strong></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = torch.randn(<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>)</span><br><span class="line">b = torch.randn(<span class="number">11</span>,<span class="number">13</span>,<span class="number">3</span>,<span class="number">17</span>,<span class="number">5</span>)</span><br><span class="line"><span class="comment"># 对 r q 所在维度进行reduce sum，调整其他维度</span></span><br><span class="line">torch.einsum(<span class="string">&#x27;pqrs,tuqvr-&gt;pstuv&#x27;</span>, a, b)  <span class="comment"># torch.Size([2, 7, 11, 13, 17])</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>二次变换 (bilinear transformation)</strong></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = torch.randn(<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">b = torch.randn(<span class="number">5</span>,<span class="number">3</span>,<span class="number">7</span>)</span><br><span class="line">c = torch.randn(<span class="number">2</span>,<span class="number">7</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ik, jkl, il-&gt;ij&#x27;</span>, a, b, c)  <span class="comment"># torch.Size([2, 5])</span></span><br></pre></td></tr></table></figure>
+<h1 id="einops-rearrange"><a href="#einops-rearrange" class="headerlink" title="einops.rearrange"></a>einops.rearrange</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># suppose we have a set of 32 images in &quot;h w c&quot; format (height-width-channel)</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>images = [np.random.randn(<span class="number">30</span>, <span class="number">40</span>, <span class="number">3</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>)]</span><br><span class="line"><span class="comment"># stack along first (batch) axis, output is a single array</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>rearrange(images, <span class="string">&#x27;b h w c -&gt; b h w c&#x27;</span>).shape</span><br><span class="line">(<span class="number">32</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment"># concatenate images along height (vertical axis), 960 = 32 * 30</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>rearrange(images, <span class="string">&#x27;b h w c -&gt; (b h) w c&#x27;</span>).shape</span><br><span class="line">(<span class="number">960</span>, <span class="number">40</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment"># concatenated images along horizontal axis, 1280 = 32 * 40</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>rearrange(images, <span class="string">&#x27;b h w c -&gt; h (b w) c&#x27;</span>).shape</span><br><span class="line">(<span class="number">30</span>, <span class="number">1280</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment"># reordered axes to &quot;b c h w&quot; format for deep learning</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>rearrange(images, <span class="string">&#x27;b h w c -&gt; b c h w&#x27;</span>).shape</span><br><span class="line">(<span class="number">32</span>, <span class="number">3</span>, <span class="number">30</span>, <span class="number">40</span>)</span><br><span class="line"><span class="comment"># flattened each image into a vector, 3600 = 30 * 40 * 3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>rearrange(images, <span class="string">&#x27;b h w c -&gt; b (c h w)&#x27;</span>).shape</span><br><span class="line">(<span class="number">32</span>, <span class="number">3600</span>)</span><br><span class="line"><span class="comment"># split each image into 4 smaller (top-left, top-right, bottom-left, bottom-right), 128 = 32 * 2 * 2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>rearrange(images, <span class="string">&#x27;b (h1 h) (w1 w) c -&gt; (b h1 w1) h w c&#x27;</span>, h1=<span class="number">2</span>, w1=<span class="number">2</span>).shape</span><br><span class="line">(<span class="number">128</span>, <span class="number">15</span>, <span class="number">20</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment"># space-to-depth operation</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>rearrange(images, <span class="string">&#x27;b (h h1) (w w1) c -&gt; b h w (c h1 w1)&#x27;</span>, h1=<span class="number">2</span>, w1=<span class="number">2</span>).shape</span><br><span class="line">(<span class="number">32</span>, <span class="number">15</span>, <span class="number">20</span>, <span class="number">12</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="einops-repeat"><a href="#einops-repeat" class="headerlink" title="einops.repeat"></a>einops.repeat</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># a grayscale image (of shape height x width)</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>image = np.random.randn(<span class="number">30</span>, <span class="number">40</span>)</span><br><span class="line"><span class="comment"># change it to RGB format by repeating in each channel</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>repeat(image, <span class="string">&#x27;h w -&gt; h w c&#x27;</span>, c=<span class="number">3</span>).shape</span><br><span class="line">(<span class="number">30</span>, <span class="number">40</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment"># repeat image 2 times along height (vertical axis)</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>repeat(image, <span class="string">&#x27;h w -&gt; (repeat h) w&#x27;</span>, repeat=<span class="number">2</span>).shape</span><br><span class="line">(<span class="number">60</span>, <span class="number">40</span>)</span><br><span class="line"><span class="comment"># repeat image 2 time along height and 3 times along width</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>repeat(image, <span class="string">&#x27;h w -&gt; h (repeat w)&#x27;</span>, repeat=<span class="number">3</span>).shape</span><br><span class="line">(<span class="number">30</span>, <span class="number">120</span>)</span><br><span class="line"><span class="comment"># convert each pixel to a small square 2x2. Upsample image by 2x</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>repeat(image, <span class="string">&#x27;h w -&gt; (h h2) (w w2)&#x27;</span>, h2=<span class="number">2</span>, w2=<span class="number">2</span>).shape</span><br><span class="line">(<span class="number">60</span>, <span class="number">80</span>)</span><br><span class="line"><span class="comment"># pixelate image first by downsampling by 2x, then upsampling</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>downsampled = reduce(image, <span class="string">&#x27;(h h2) (w w2) -&gt; h w&#x27;</span>, <span class="string">&#x27;mean&#x27;</span>, h2=<span class="number">2</span>, w2=<span class="number">2</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>repeat(downsampled, <span class="string">&#x27;h w -&gt; (h h2) (w w2)&#x27;</span>, h2=<span class="number">2</span>, w2=<span class="number">2</span>).shape</span><br><span class="line">(<span class="number">30</span>, <span class="number">40</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="einops-reduce"><a href="#einops-reduce" class="headerlink" title="einops.reduce"></a>einops.reduce</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = np.random.randn(<span class="number">100</span>, <span class="number">32</span>, <span class="number">64</span>)</span><br><span class="line"><span class="comment"># perform max-reduction on the first axis</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = reduce(x, <span class="string">&#x27;t b c -&gt; b c&#x27;</span>, <span class="string">&#x27;max&#x27;</span>)</span><br><span class="line"><span class="comment"># same as previous, but with clearer axes meaning</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = reduce(x, <span class="string">&#x27;time batch channel -&gt; batch channel&#x27;</span>, <span class="string">&#x27;max&#x27;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = np.random.randn(<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>)</span><br><span class="line"><span class="comment"># 2d max-pooling with kernel size = 2 * 2 for image processing</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y1 = reduce(x, <span class="string">&#x27;b c (h1 h2) (w1 w2) -&gt; b c h1 w1&#x27;</span>, <span class="string">&#x27;max&#x27;</span>, h2=<span class="number">2</span>, w2=<span class="number">2</span>)</span><br><span class="line"><span class="comment"># if one wants to go back to the original height and width, depth-to-space trick can be applied</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y2 = rearrange(y1, <span class="string">&#x27;b (c h2 w2) h1 w1 -&gt; b c (h1 h2) (w1 w2)&#x27;</span>, h2=<span class="number">2</span>, w2=<span class="number">2</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">assert</span> parse_shape(x, <span class="string">&#x27;b _ h w&#x27;</span>) == parse_shape(y2, <span class="string">&#x27;b _ h w&#x27;</span>)</span><br><span class="line"><span class="comment"># Adaptive 2d max-pooling to 3 * 4 grid</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>reduce(x, <span class="string">&#x27;b c (h1 h2) (w1 w2) -&gt; b c h1 w1&#x27;</span>, <span class="string">&#x27;max&#x27;</span>, h1=<span class="number">3</span>, w1=<span class="number">4</span>).shape</span><br><span class="line">(<span class="number">10</span>, <span class="number">20</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"><span class="comment"># Global average pooling</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>reduce(x, <span class="string">&#x27;b c h w -&gt; b c&#x27;</span>, <span class="string">&#x27;mean&#x27;</span>).shape</span><br><span class="line">(<span class="number">10</span>, <span class="number">20</span>)</span><br><span class="line"><span class="comment"># Subtracting mean over batch for each channel</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = x - reduce(x, <span class="string">&#x27;b c h w -&gt; () c () ()&#x27;</span>, <span class="string">&#x27;mean&#x27;</span>)</span><br><span class="line"><span class="comment"># Subtracting per-image mean for each channel</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = x - reduce(x, <span class="string">&#x27;b c h w -&gt; b c () ()&#x27;</span>, <span class="string">&#x27;mean&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+      
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/pytorch/" rel="tag"># pytorch</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/09/29/yolo%E7%B3%BB%E5%88%97%E6%A0%B8%E5%BF%83%E8%AE%BE%E8%AE%A1%E6%80%BB%E7%BB%93%E4%B8%8E%E6%80%9D%E8%80%83/" rel="prev" title="yolo系列核心设计总结与思考">
+      <i class="fa fa-chevron-left"></i> yolo系列核心设计总结与思考
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/" rel="next" title="在stable-diffusion-webui中愉快地玩耍">
+      在stable-diffusion-webui中愉快地玩耍 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#torch-einsum"><span class="nav-number">1.</span> <span class="nav-text">torch.einsum</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#einops-rearrange"><span class="nav-number">2.</span> <span class="nav-text">einops.rearrange</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#einops-repeat"><span class="nav-number">3.</span> <span class="nav-text">einops.repeat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#einops-reduce"><span class="nav-number">4.</span> <span class="nav-text">einops.reduce</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lifengjun"
+      src="https://avatars0.githubusercontent.com/u/25082467?v=4">
+  <p class="site-author-name" itemprop="name">lifengjun</p>
+  <div class="site-description" itemprop="description">个人学习笔记和日志</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/543877815" title="GitHub → https://github.com/543877815" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:543877815@qq.com" title="E-Mail → mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lifengjun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '970dc8fd856c3e17f9f0',
+      clientSecret: '7f6d29828dd1f4a02336c480ba1012f1851b0eb0',
+      repo        : '543877815.github.io',
+      owner       : '543877815',
+      admin       : ['543877815'],
+      id          : 'cebb2a930424f6a2af57bfcfc8a98aff',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(a){a.imageLazyLoadSetting.processImages=t;var e=a.imageLazyLoadSetting.isSPA,i=a.imageLazyLoadSetting.preloadRatio||1,o=r();function r(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(o=r());for(var t,n=0;n<o.length;n++)0<=(t=(t=o[n]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(a.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var e=o[n];!function(t,e){if(t.hasAttribute("bg-lazy"))return t.removeAttribute("bg-lazy"),e&&e();var n=new Image,a=t.getAttribute("data-original");n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a)}(e,function(){o=o.filter(function(t){return e!==t}),a.imageLazyLoadSetting.onImageLoaded&&a.imageLazyLoadSetting.onImageLoaded(e)})}()}function n(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",n),a.addEventListener("resize",n),a.addEventListener("orientationchange",n)}(this);</script></body>
+</html>

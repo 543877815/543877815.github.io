@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="今天读了一下 Towards Evaluating the Robustness of Neural Networks，这是关于对抗样本(Adversarial Example)的paper，主要贡献是提出了Carlini &amp; Wagner Attack神经网络有目标攻击算法，打破了最近提出的神经网络防御性蒸馏(Defensive Distillation)，证明防御性蒸馏不会显著提高神经">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文笔记】 Towards Evaluating the Robustness of Neural Networks">
+<meta property="og:url" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/index.html">
+<meta property="og:site_name" content="逗比学长的博客">
+<meta property="og:description" content="今天读了一下 Towards Evaluating the Robustness of Neural Networks，这是关于对抗样本(Adversarial Example)的paper，主要贡献是提出了Carlini &amp; Wagner Attack神经网络有目标攻击算法，打破了最近提出的神经网络防御性蒸馏(Defensive Distillation)，证明防御性蒸馏不会显著提高神经">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="article:published_time" content="2020-03-14T11:04:57.000Z">
+<meta property="article:modified_time" content="2023-08-04T16:52:17.911Z">
+<meta property="article:author" content="lifengjun">
+<meta property="article:tag" content="Adversarial Example">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lifengjun.xin/images/loading.gif">
+
+<link rel="canonical" href="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+
+  <title>【论文笔记】 Towards Evaluating the Robustness of Neural Networks | 逗比学长的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/543877815" class="github-corner" aria-label="View source on GitHub">
+    <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#000000; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+    <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">逗比学长的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">博客是写给我自己看的（叉腰）</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-quick-check">
+
+    <a href="/quick-check" rel="section"><i class="fa fa-calendar fa-fw"></i>速查</a>
+
+  </li>
+        <li class="menu-item menu-item-portal">
+
+    <a href="/portal" rel="section"><i class="fa fa-rocket fa-fw"></i>传送门</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【论文笔记】 Towards Evaluating the Robustness of Neural Networks
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-14 19:04:57" itemprop="dateCreated datePublished" datetime="2020-03-14T19:04:57+08:00">2020-03-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-05 00:52:17" itemprop="dateModified" datetime="2023-08-05T00:52:17+08:00">2023-08-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/paper-record/" itemprop="url" rel="index"><span itemprop="name">paper record</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>今天读了一下 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1608.04644v2">Towards Evaluating the Robustness of Neural Networks</a>，这是关于对抗样本(Adversarial Example)的paper，主要贡献是提出了Carlini &amp; Wagner Attack神经网络有目标攻击算法，打破了最近提出的神经网络防御性蒸馏(Defensive Distillation)，证明防御性蒸馏不会显著提高神经网络的鲁棒性，论文的信息量还是比较大的。</p>
+<p>可能需要阅读的论文以获取前置知识：</p>
+<p>关于蒸馏网络：</p>
+<p>[1] <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1312.6184">Do Deep Nets Really Need to be Deep?</a></p>
+<p>[2] <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1503.02531">Distilling the Knowledge in a Neural Network</a></p>
+<p>[3] <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1511.04508">Distillation as a Defense to Adversarial Perturbations against Deep Neural Networks</a></p>
+<p>关于对抗样本：</p>
+<p>[4] <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1312.6199">Intriguing properties of neural networks</a>（L-BFGS Attack）</p>
+<p>[5] <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1510.05328">Exploring the Space of Adversarial Images</a>（FGSM）</p>
+<p>[6] <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1706.06083.pdf">Towards Deep Learning Models Resistant to Adversarial Attacks</a>（PGD, I-FGSM）</p>
+<p>[7] <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1511.07528">The Limitations of Deep Learning in Adversarial Settings</a> (JSMA)</p>
+<p>[8] <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1511.04599">DeepFool: a simple and accurate method to fool deep neural networks</a>（DeepFool）</p>
+<p>关于论文源码：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/carlini/nn_robust_attacks">carlini/nn_robust_attacks</a></p>
+<span id="more"></span>
+<h1 id="对抗样本-Adversarial-Example"><a href="#对抗样本-Adversarial-Example" class="headerlink" title="对抗样本 (Adversarial Example)"></a>对抗样本 (Adversarial Example)</h1><h2 id="Basic-Idea"><a href="#Basic-Idea" class="headerlink" title="Basic Idea"></a>Basic Idea</h2><p>通过故意对数据集中输入样例添加难以察觉的摄动使模型以高置信度给出一个错误的输出。即只需要在一张图片上做微小的扰动，(神经网络)分类器以很高的置信度将图片错误分类，甚至被分类成一个指定的标签（不是图片正确所属的标签）。<img src="/images/loading.gif" data-original="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/1.png" alt="A demonstration of fast adversarial example generation applied to GoogLeNet (Szegedy et al., 2014a) on ImageNet. By adding an imperceptibly small vector whose elements are equal to the sign of the elements of the gradient of the cost function with respect to the input, we can change GoogLeNet’s classification of the image. Here our epsilon of .007 corresponds to the magnitude of the smallest bit of an 8 bit image encoding after GoogLeNet’s conversion to real numbers."></p>
+<p>这类问题可以表述为一个约束最小化问题：</p>
+<script type="math/tex; mode=display">
+\text{minimize}\;\;D(x,x+\delta)\\
+\begin{align}
+\text{such that}\;\ & C(x+\delta)=t\\
+&x+\delta\in[0,1]^m
+\end{align}</script><p>其中：</p>
+<ul>
+<li>$x\in R^m$ 是干净图片向量。</li>
+<li>$\delta \in R^m$ 是被加入到图片的扰动。</li>
+<li>$D(.)$ 是距离度量。</li>
+<li>$t$ 是攻击的目标标签。</li>
+<li>$C(.)$是深度神经网络分类器。</li>
+<li><script type="math/tex">[0,1]^m</script> 用于限制扰动后值的范围。</li>
+</ul>
+<p>对于距离度量而言，<script type="math/tex">L_p</script> 距离常常被写作<script type="math/tex">||x-x'||_p</script>，其 $p$ 范数被定义为：</p>
+<script type="math/tex; mode=display">
+||v||_p=(\sum_{i=1}^n|v_i|^p)^{\frac{1}{p}}</script><p>具体而言：</p>
+<ul>
+<li><script type="math/tex">L_0</script> 距离度量的是 <script type="math/tex">x_i\ne x_i'</script> 的坐标 $i$ 的数量，其对应的是图像中被改变的像素的数量。</li>
+<li><script type="math/tex">L_2</script> 距离度量的是 <script type="math/tex">x_i</script> 和 <script type="math/tex">x_i'</script> 之间的欧式距离，当许多像素发生小变化时，<script type="math/tex">L_2</script> 依据可以保持较小。</li>
+<li><script type="math/tex">L_\infty</script> 距离度量的是 <script type="math/tex">x_i</script> 和 <script type="math/tex">x_i'</script> 之间最大的绝对距离即<script type="math/tex">||x-x'||\infty=max(|x_1-x_1'|,...,|x_n-x_n’|)</script>，每个像素可以被改变到这个极限。</li>
+</ul>
+<h3 id="Objective-Function"><a href="#Objective-Function" class="headerlink" title="Objective Function"></a>Objective Function</h3><p>由于该目标函数一个高度非线性的函数，现有算法很难直接求解上述公式，往往通过将其表述为一个适当的优化公式来解决，而这个优化公式可以通过现有的优化算法来解决。论文定义了新的目标函数$f$，使得  <script type="math/tex">f(x+\delta)\le0</script> 当且仅当 <script type="math/tex">C(x+\delta)=t</script> 成立，论文探索了公式的空间，并根据经验确定哪些公式可以导致最有效的攻击，提出了七个目标函数，公式如下（附上个人理解，所有的目标函数似乎都有大于等于0的约束）：</p>
+<ul>
+<li><script type="math/tex">f_1(x')=-loss_{F,t}(x')+1</script>，对目标标签的损失函数进行优化，这个目标函数和 L-BFGS Attack 相类似。</li>
+<li><script type="math/tex">f_2(x')=(\max_{i\ne t}(F(x')_i)-F(x')_t)^+</script>，对目标标签的置信度进行优化，希望其成为最后预测值。</li>
+<li><script type="math/tex">f_3(x')=\text{softplus}(\max_{i\ne t}(F(x')_i)-F(x')_t)-log(2)</script>， 也是对目标标签的置信度进行优化，形式不同。</li>
+<li><script type="math/tex">f_4(x')=(0.5-F(x')_t)^+</script>，也是对目标标签的置信度进行优化，希望其成为最大可能类。</li>
+<li><script type="math/tex">f_5(x')=-log(2F(x')_t-2)</script>，同  <script type="math/tex">f_4</script>。</li>
+<li><script type="math/tex">f_6(x')=(\max_{i\ne t}(Z(x')_i)-Z(x')_t)^+</script>，对目标标签的 logit 值进行优化。同 <script type="math/tex">f_2</script>.</li>
+<li><script type="math/tex">f_7(x')=\text{softplus}(\max_{i\ne t}(Z(x')_i)-Z(x')_t)-log(2)</script>，也对目标标签的 logit 值进行优化，同 <script type="math/tex">f_3</script>.</li>
+</ul>
+<p>其中：</p>
+<p>$s$ 是正确的分类，<script type="math/tex">(e)^+</script> 是 <script type="math/tex">\max(e,0)</script> 的缩写，<script type="math/tex">\text{suftplus}(x) = \text{log}(1+\text{exp}(x))</script>，<script type="math/tex">loss_{F,s}(x)</script>是关于$x$的交叉熵损失，<script type="math/tex">Z||.||</script> 是最后一个隐藏层的输出，即 logit 层，<script type="math/tex">F||.||</script> 是经过 softmax 后的输出，如图示：</p>
+<p><img src="/images/loading.gif" data-original="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2.png" alt="Overview of a DNN architecture: This architecture, suitable for classification tasks thanks to its softmax output layer, is used throughout the paper along with its notations."></p>
+<p>现在把原始问题表述为：</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+\text{minimize}\;\;&D(x,x+\delta)\\
+\text{such that}\;
+&C(x+\delta)=t\\
+&x+\delta\in[0,1]^m
+\end{cases}
+\Rightarrow 
+
+\begin{cases}
+\text{minimize}\;\;&D(x,x+\delta)+c \,·\,f(x+\delta) \\
+\text{such that}\;
+&x+\delta\in[0,1]^m \\
+
+\end{cases}</script><p>其中 $c\gt0$ 是一个惩罚因子，用于权衡目标和约束的重要性，有点像正则化，论文通过<strong>二分查找法</strong>来选择合适的 $c$，下图是 $c$ 的敏感度，可以看出在 <script type="math/tex">L_2</script> 约束和 <script type="math/tex">f_6</script> 目标函数的前提下，当 <script type="math/tex">c\lt 1</script>，攻击成功率很低。在 <script type="math/tex">c \gt 1</script> 之后，攻击效果提升不大，但成功率很高。</p>
+<p><img src="/images/loading.gif" data-original="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/4.png" alt></p>
+<h3 id="Box-constraints"><a href="#Box-constraints" class="headerlink" title="Box constraints"></a>Box constraints</h3><p>为了确保生成有效的图片，对于像素点的扰动 $\delta$ 存在着约束 <script type="math/tex">0\le x_i+\delta_i\le1</script>，在优化问题中，这个被称为“盒约束”。该论文研究了三种不同方法来解决这个问题：</p>
+<p>第一个方法是<strong>Projected gradient descent</strong>，在每次迭代中，执行一个单步标准梯度下降后，将所有坐标约束到 $[0,1]$ 的范围内，这个方法的性能不佳，原因在于它将剪辑后的图片作为下一次迭代的输入。（这个方法的具体表述不是很清楚，需要看看源码）</p>
+<p>第二个方法是<strong>Clipped gradient descent</strong>，上述方法存在一个问题就是算法可能会卡在一个平坦的点上，即当像素增加了一个比允许的最大值大得多的分量的时候，再将其约束到 1，那么偏导数就会变成 0。所以这个方法将盒约束整合到目标函数中，即目标函数从 <script type="math/tex">f(x+\delta)</script> 转化为 <script type="math/tex">f(\min{(\max{(x+\delta,0)},1)})</script>。</p>
+<p>第三个方式是<strong>Change of variables</strong>，该方法引入一个新的变量 $\omega$，将上述优化 $\delta$ 的问题转化为优化 $\omega$，通过定义：</p>
+<script type="math/tex; mode=display">
+\delta_i=\frac{1}{2}(tanh(\omega_i)+1)-x_i</script><p>因为<script type="math/tex">-1\le tanh(\omega_i) \le1</script>，所以<script type="math/tex">0\le x_i+\delta_i\le1</script> 是成立的，这样的转化允许我们使用其他不支持盒约束的算法进行优化，论文尝试了三种求解方法：标准梯度下降法、动量梯度下降法以及Adam算法，并且发现这三种算法都得到相同质量的解，然而<strong>Adam算法</strong>的收敛速度最快。</p>
+<h3 id="Evaluation-of-approach"><a href="#Evaluation-of-approach" class="headerlink" title="Evaluation of approach"></a>Evaluation of approach</h3><p>由于这是有目标攻击：论文考虑了三种不同的策略来选择目标类，分别是：</p>
+<ul>
+<li><strong>Average Case</strong>: 在不正确的标签中随机均匀地选择目标类。</li>
+<li><strong>Best Case</strong>: 对所有不正确的类执行攻击，并报告最易攻击的目标类。</li>
+<li><strong>Worst Case</strong>: 对所有不正确的类执行攻击，并报告最难攻击的目标类。</li>
+</ul>
+<p>下图图示为在不同目标类选择策略中，三个不同盒约束中，七个可能目标函数的前提下，<script type="math/tex">L_2</script> 的平均距离、标准偏差(where?)和攻击成功概率。另外，当攻击成功率不是100%时，平均距离仅计算了攻击成功的部分。</p>
+<p><img src="/images/loading.gif" data-original="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/3.png" alt></p>
+<p>从中可以发现看出<strong>Projected gradient descent</strong>在处理盒约束成功率是优于另外两种策略，而<strong>Change of variables</strong>往往能找到更小的扰动，对于目标函数而言，<script type="math/tex">f_6</script>表现的比其他的好，扰动最小，成功率最高。为什么有些损失函数比其他函数更好？论文认为原因在于当 $c=0$ 的时候，梯度下降法不会改变原始图像，但是如果 $c$ 较大的时候往往会导致梯度下降的初始步骤过于贪婪，只沿着最容易降低 $f$ 的方向移动，而忽略了 $D$ 的损失，从而导致梯度下降找到次优解。论文认为 <script type="math/tex">f_1</script> 和 <script type="math/tex">f_4</script> 的表现相对较差，找不到一个合适的 $c$，因为 $c$ 权衡了距离约束项和损失函数项的重要性，如果要找到一个固定的常数 $c$，那么这两项的值应该保持相对一致。对于 <script type="math/tex">f_4</script>，论文做了一个实验就是将 $x$ 和 $x’$ 进行线性组合构造 <script type="math/tex">y=\alpha x+(1-\alpha) x'\;，\alpha\in[0,1]'</script>，事实发现从干净样本到对抗样本（$\alpha$ 从 0 到 1）， <script type="math/tex">Z(.)_t</script>的值基本是线性的，因此 <script type="math/tex">F(.)_t</script> 应该是一个logistic函数，论文实验验证结果的皮尔斯相关系数 <script type="math/tex">r\gt 0.9</script> 证明<script type="math/tex">F(.)_t</script>服从该分布。那么，对于 <script type="math/tex">f_4(x')=(0.5-F(x')_t)^+</script>，其图像应该为</p>
+<p><img src="/images/loading.gif" data-original="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/5.jpg" alt="5"></p>
+<p>为了使梯度下降攻击在一开始发生变化，常数 $c$ 必须足够大</p>
+<script type="math/tex; mode=display">
+\epsilon\lt c(f_1(x+\epsilon)-f_1(x))</script><p>或者当攻击快结束时，即 <script type="math/tex">\epsilon \rightarrow 0</script>，有</p>
+<script type="math/tex; mode=display">
+\frac{1}{c}\lt|\nabla f_1(x)|</script><p>意味着 $c$ 一定要比梯度的倒数更大。</p>
+<p>以下为个人对论文的理解：对于 <script type="math/tex">f_1</script> 而言，交叉熵损失函数长得很像 softmax，所以攻击开始的时候呢，它的梯度很小，意味着 $c$ 非常的大，但是，当它逐渐增加的时候，梯度以指数的速度增加，这时候使得数值非常大且固定的 $c$ 表现得过度贪婪，即过度优化 <script type="math/tex">f_1</script> 而忽略了 $D$，最终导致优化效果不好，<script type="math/tex">f_4</script> 同理。那么对于 <script type="math/tex">f_6</script>，由于<script type="math/tex">Z(.)_t</script>的值基本是线性的，所以 <script type="math/tex">|\nabla f_6|</script> 是一个常数，所以可以很好的找到一个固定的 $c$，所以不难解释为什么 <script type="math/tex">f_6</script> 表现的比其他的好。</p>
+<h3 id="Discretization"><a href="#Discretization" class="headerlink" title="Discretization"></a>Discretization</h3><p>对于有的图片，其像素数值是整数，则需要对攻击后的图像数据取整，即进行离散化，论文用的是<strong>贪心网格搜索</strong>。</p>
+<h2 id="Three-Attacks"><a href="#Three-Attacks" class="headerlink" title="Three Attacks"></a>Three Attacks</h2><p>最后论文对<script type="math/tex">L_2</script>、<script type="math/tex">L_0</script>、<script type="math/tex">L_\infty</script>三种约束提出了三种攻击方法。</p>
+<h3 id="L-2-Attack"><a href="#L-2-Attack" class="headerlink" title="L_2 Attack"></a><script type="math/tex">L_2</script> Attack</h3><script type="math/tex; mode=display">
+\text{minimize}\;||\frac{1}{2}(tanh(\omega)+1)-x||^2_2+c\,·\,f(\frac{1}{2}(tanh(\omega)+1)\\
+f(x')=\text{max}(\max{\{Z(x')_i:i\ne t\}-Z(x')_t,-κ})</script><p>$f(x’)$ 这个函数用所有非目标标签的logit中最大值减去目标标签的logit，意味着，如果 $x’$ 被识别到目标标签，那么 <script type="math/tex">\max\{Z(x')_i:i\ne t\}-Z(x')_t</script> 是负的，假如 $κ=0$，则<script type="math/tex">f(x')=0</script>，意味着该函数将不会被惩罚，否则如果 $x’$ 被识别到非目标标签，该函数将会受到惩罚。通过改变 $κ$ 值可以得到设想的置信度。</p>
+<p><strong>多起点梯度下降</strong>。梯度下降算法的主要问题是贪心搜索不能保证找到最优解，陷入局部极小值。为了弥补这一点，论文选择多个随机起点接近原始图像和运行梯度下降从每个点为固定次数的迭代。论文从半径为 $r$ 的球上均匀地随机采样点，其中 $r$ 是迄今为止发现的最接近的反例。从多个起点开始降低了梯度下降陷入一个糟糕的局部最小值的可能性。同时这也意味着 <script type="math/tex">L_2</script> attack 可以并行化，从而可以提高攻击的速度。</p>
+<h3 id="L-0-Attack"><a href="#L-0-Attack" class="headerlink" title="L_0 Attack"></a><script type="math/tex">L_0</script> Attack</h3><p>由于 <script type="math/tex">L_0</script> 距离度量是不能微分的，所以不能用标准梯度下降方进行求解。所以，论文使用迭代算法，在每次迭代中，识别出一些对分类器输出没有太大影响的像素，然后修复这些像素，因此它们的值永远不会改变。固定像素集在每次迭代中增长，直到通过消除过程确定了像素的最小子集(但可能不是最小子集)，可以修改该子集以生成对抗性示例。在每次迭代中，使用 <script type="math/tex">L_2</script> attack 来识别哪些像素不重要。</p>
+<p>具体来说，在每次迭代中，先调用 <script type="math/tex">L_2</script> attack，只修改允许集中的像素，得到一个对抗样本，然后计算目标函数的梯度<script type="math/tex">g=\nabla f(x+\delta)</script>，选择这样的像素 <script type="math/tex">i=arg\,min_ig_i·\delta</script>，把它从允许集中剔除，原因是计算 <script type="math/tex">g_i·\delta_i</script> 可以让我们知道通过扰动损失函数减少了多少，直到 <script type="math/tex">L_2</script> attack 找不到对抗样本为止。</p>
+<p>另一个细节就是 $c$ 的选取，最初将 $c$ 设为一个非常低的值(例如，$10^{−4}$)。然后用这个 $c$ 值来产生对抗样本。如果失败了，则将 $c$ 加倍，然后再试一次，直到成功为止。如果 $c$ 超过一个固定的阈值(例如，$10^{10}$)，则中止搜索。</p>
+<p>整个算法与 <strong>JSMA</strong> 算法有些相似，<strong>JSMA</strong>增加了一组允许更改的像素(最初为空)，并设置像素以使总损失最大化。相反，<script type="math/tex">L_0</script> attack 缩小了允许更改的像素集(最初包含每个像素)。论文提到，在每次迭代中，其不是从初始图像开始梯度下降，而是从上一个迭代中找到的解决方案开始梯度下降，这相当于“暖启动”，这极大地减少了每次迭代所需的梯度下降轮数，因为 $k$ 像素保持不变的解决方案通常与 $k + 1$ 像素保持不变的解决方案非常相似。</p>
+<h3 id="L-infty-Attack"><a href="#L-infty-Attack" class="headerlink" title="L_{\infty} Attack"></a><script type="math/tex">L_{\infty}</script> Attack</h3><p>同样由于 <script type="math/tex">L_{\infty}</script> 距离度量是不能微分的，所以不能用标准梯度下降方进行求解。论文一开始直接对下式进行优化：</p>
+<script type="math/tex; mode=display">
+\text{minimize}\;c\,·\,f(x+\delta)+||\delta||_\infty</script><p>但是实验结果表明 <script type="math/tex">||\delta||_\infty</script> 项只对扰动最大的像素点进行惩罚，而对其他像素点没有影响。论文使用迭代攻击来解决这个问题，通过引入一个递减的阈值 <script type="math/tex">\tau</script>，如果扰动 <script type="math/tex">\delta_i</script> 大于该值则目标函数将会被惩罚，直到所有扰动都小于该阈值为止：</p>
+<script type="math/tex; mode=display">
+\text{minimize}\;c\,·\,f(x+\delta)+\sum_i[(\delta_i-\tau)^+]</script><p>在每次迭代中使用“暖启动”来进行梯度下降，该算法的速度大约与<script type="math/tex">L_2</script> attack算法一样快(只有一个起始点的时候)。另外 $c$ 值选取的策略和 <script type="math/tex">L_0</script> attack 一致。</p>
+<p><img src="/images/loading.gif" data-original="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/6.png" alt></p>
+<p>可以看到三种攻击方法的性能比前面做的还是有很大的提升。</p>
+<h2 id="Evaluating-Defensive-Distillation"><a href="#Evaluating-Defensive-Distillation" class="headerlink" title="Evaluating Defensive Distillation"></a>Evaluating Defensive Distillation</h2><p>蒸馏网络原来是神经网络压缩的一种方法，蒸馏网络的直觉是基于这样的一个事实，即在训练过程中DNN获得的知识不仅被编码为DNN学习的权重参数，而且还被编码为网络产生的概率向量。使用类别概率代替硬标签的好处是直观的，因为概率除了简单提供样本的正确类别外，还会编码有关每个类别的其他信息，可以从这个额外的熵推导出有关类的相对信息。</p>
+<p><img src="/images/loading.gif" data-original="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/10.jpg" alt></p>
+<p>蒸馏网络的训练步骤：</p>
+<ol>
+<li>训练大型模型：首先训练具有硬目标即正常标签(单标签)的大型模型。</li>
+<li>计算软目标：使用训练有素的大型模型来计算软目标。 也就是说，大型模型“软化”后，将通过softmax的输出。</li>
+<li>训练小模型，在小模型的基础上添加附加的软目标损失函数，并通过 $\lambda$ 调整两个损失函数的比例。</li>
+<li>进行预测时，以常规方式使用训练好的小模型（右图）。</li>
+</ol>
+<p><img src="/images/loading.gif" data-original="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/5.png" alt></p>
+<p>训练防御性蒸馏网络步骤如下：</p>
+<ol>
+<li><p>在硬标签的监督下训练教师模型。</p>
+</li>
+<li><p>训练完后，使用教师模型来计算得到软标签，具体而言：</p>
+<script type="math/tex; mode=display">
+q_i=\frac{exp(z_i/T)}{\sum_jexp(z_i/T)}</script></li>
+<li><p>在软标签的监督下训练学生模型，这个学生模型与教师模型有着相同的形状。</p>
+</li>
+<li><p>进行预测的时候，学生模型以常规方式进行预测，即 $T=1$。</p>
+</li>
+</ol>
+<p>两种训练的主要区别我认为一个是学生模型的规模，另一个是 $\lambda$ 的设置是否。</p>
+<p>在软标签的计算中，参数 $T$ 是一个超参数，$T$ 越大，曲线越平滑，这意味着教师模型以较大的 $T$ 来训练网络可以产生分布更加均匀的软标签，随后学生模型以同样的 $T$ 进行学习，可以更加容易学习到类之间的相对信息。在最终预测中，重新设置 $T=1$，这有利于正确类别以高置信度胜出，而错误类别输出的置信度很低，此时 softmax 层本质上输出了一个硬标签。<img src="/images/loading.gif" data-original="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/10.png" alt></p>
+<p>这篇论文提到，事实上，在大多数情况下错误类别输出的置信度太小，以至于32位浮点值四舍五入为0。出于类似的原因，梯度非常小，当用32位浮点值表示时，梯度就变成了0。这导致了依赖于以错误类别梯度进行攻击的算法（FGSM）和依赖梯度进行优化（L-BFGS）或迭代（JSMA-F）的攻击算法由于梯度消失而失效。（JSMA-Z）也会失效是因为改变目标分类所需要相对的差异在 $T= 1$  很大，比如当 logit 从 -100 到 -90，输出仍然是原来的分类，而当 logit 从 10 到 0，输出却变成了另一个类别。</p>
+<p>论文评估了本文提出的三种攻击在防御性蒸馏网络效果，如下图，可以看出成功率都为100%。</p>
+<p><img src="/images/loading.gif" data-original="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/7.png" alt></p>
+<p>另外在以往的工作中，提高蒸馏网络的温度 $T$ 会降低攻击的成功率，而实验显示，<script type="math/tex">L_2</script> attack 成功率与 $T$ 是不相关的，这意味着攻击方法是鲁棒的。</p>
+<p><img src="/images/loading.gif" data-original="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/8.png" alt></p>
+<p>一个模型的对抗样本往往也能对另一个模型攻击成功，即使它们在不同的训练数据集上训练，即使它们使用完全不同的算法(神经网络上的对抗样本攻击随机森林），这称为对抗样本攻击迁移性，论文分别在非蒸馏网络和防御性蒸馏网络中评估攻击的迁移性能。</p>
+<p><img src="/images/loading.gif" data-original="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/9.png" width="40%"><img src="/images/loading.gif" data-original="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/11.png" width="42%"></p>
+<p>在 <script type="math/tex">L_2</script> attack 中，<script type="math/tex">f(x')=\text{max}(\max{\{Z(x')_i:i\ne t\}-Z(x')_t,-κ})</script>，其中 $κ$ 值用于控制对抗样本的强度， $κ$ 值越大，对抗样本的置信度越高。从图中看出，高置信度的对抗样本迁移性越强。当然使用了防御性蒸馏的网络在一定程度上可以抵御对抗样本的迁移攻击。因此作者认为通过使更强的攻击算法和迁移攻击的成功率来评估神经网络防御的鲁棒性。</p>
+<p>[参考资料]</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/paper_reader/article/details/81080857">https://blog.csdn.net/paper_reader/article/details/81080857</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/nature553863/article/details/80568658">https://blog.csdn.net/nature553863/article/details/80568658</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv4009730">https://www.bilibili.com/read/cv4009730</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/jmh1996/article/details/101635216">https://blog.csdn.net/jmh1996/article/details/101635216</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av66382805/">https://www.bilibili.com/video/av66382805/</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/kearney1995/article/details/79904095">https://blog.csdn.net/kearney1995/article/details/79904095</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+      
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Adversarial-Example/" rel="tag"># Adversarial Example</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/02/Ensemble-Learning/" rel="prev" title="Ensemble Learning">
+      <i class="fa fa-chevron-left"></i> Ensemble Learning
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" rel="next" title="如何优雅地撰写中文（毕业）论文——word使用技巧">
+      如何优雅地撰写中文（毕业）论文——word使用技巧 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E6%8A%97%E6%A0%B7%E6%9C%AC-Adversarial-Example"><span class="nav-number">1.</span> <span class="nav-text">对抗样本 (Adversarial Example)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic-Idea"><span class="nav-number">1.1.</span> <span class="nav-text">Basic Idea</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Objective-Function"><span class="nav-number">1.1.1.</span> <span class="nav-text">Objective Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Box-constraints"><span class="nav-number">1.1.2.</span> <span class="nav-text">Box constraints</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Evaluation-of-approach"><span class="nav-number">1.1.3.</span> <span class="nav-text">Evaluation of approach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Discretization"><span class="nav-number">1.1.4.</span> <span class="nav-text">Discretization</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Three-Attacks"><span class="nav-number">1.2.</span> <span class="nav-text">Three Attacks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#L-2-Attack"><span class="nav-number">1.2.1.</span> <span class="nav-text">L_2 Attack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#L-0-Attack"><span class="nav-number">1.2.2.</span> <span class="nav-text">L_0 Attack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#L-infty-Attack"><span class="nav-number">1.2.3.</span> <span class="nav-text">L_{\infty} Attack</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Evaluating-Defensive-Distillation"><span class="nav-number">1.3.</span> <span class="nav-text">Evaluating Defensive Distillation</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lifengjun"
+      src="https://avatars0.githubusercontent.com/u/25082467?v=4">
+  <p class="site-author-name" itemprop="name">lifengjun</p>
+  <div class="site-description" itemprop="description">个人学习笔记和日志</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/543877815" title="GitHub → https://github.com/543877815" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:543877815@qq.com" title="E-Mail → mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lifengjun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '970dc8fd856c3e17f9f0',
+      clientSecret: '7f6d29828dd1f4a02336c480ba1012f1851b0eb0',
+      repo        : '543877815.github.io',
+      owner       : '543877815',
+      admin       : ['543877815'],
+      id          : 'b9cf13fb9bc81415ff856e4f9c452049',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(a){a.imageLazyLoadSetting.processImages=t;var e=a.imageLazyLoadSetting.isSPA,i=a.imageLazyLoadSetting.preloadRatio||1,o=r();function r(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(o=r());for(var t,n=0;n<o.length;n++)0<=(t=(t=o[n]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(a.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var e=o[n];!function(t,e){if(t.hasAttribute("bg-lazy"))return t.removeAttribute("bg-lazy"),e&&e();var n=new Image,a=t.getAttribute("data-original");n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a)}(e,function(){o=o.filter(function(t){return e!==t}),a.imageLazyLoadSetting.onImageLoaded&&a.imageLazyLoadSetting.onImageLoaded(e)})}()}function n(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",n),a.addEventListener("resize",n),a.addEventListener("orientationchange",n)}(this);</script></body>
+</html>

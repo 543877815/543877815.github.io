@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="文章概述 本来这篇文章写得是爬虫学习日志，但是后来发现前置工作也是虚拟环境的配置还是有待一提。日前在做cv的时候使用SIFT对图像的特征进行提取，当时没有手写SIFT函数，而是调用了opencv的一个函数，其中存在的一个问题是后来SIFT算法申请了专利，后续版本的opencv不再支持这个函数，于是当时搜索了很久找到支持该函数的旧版本，期间python版本还从3.7降到了3.68以支持这个函数的调用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从python开始的虚拟环境配置日志">
+<meta property="og:url" content="https://lifengjun.xin/2019/07/06/%E4%BB%8Epython%E5%BC%80%E5%A7%8B%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97/index.html">
+<meta property="og:site_name" content="逗比学长的博客">
+<meta property="og:description" content="文章概述 本来这篇文章写得是爬虫学习日志，但是后来发现前置工作也是虚拟环境的配置还是有待一提。日前在做cv的时候使用SIFT对图像的特征进行提取，当时没有手写SIFT函数，而是调用了opencv的一个函数，其中存在的一个问题是后来SIFT算法申请了专利，后续版本的opencv不再支持这个函数，于是当时搜索了很久找到支持该函数的旧版本，期间python版本还从3.7降到了3.68以支持这个函数的调用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="article:published_time" content="2019-07-06T03:21:13.000Z">
+<meta property="article:modified_time" content="2020-11-13T13:55:58.798Z">
+<meta property="article:author" content="lifengjun">
+<meta property="article:tag" content="jupyter notebook">
+<meta property="article:tag" content="virtualenv">
+<meta property="article:tag" content="conda environment">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lifengjun.xin/images/loading.gif">
+
+<link rel="canonical" href="https://lifengjun.xin/2019/07/06/%E4%BB%8Epython%E5%BC%80%E5%A7%8B%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+
+  <title>从python开始的虚拟环境配置日志 | 逗比学长的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/543877815" class="github-corner" aria-label="View source on GitHub">
+    <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#000000; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+    <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">逗比学长的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">博客是写给我自己看的（叉腰）</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-quick-check">
+
+    <a href="/quick-check" rel="section"><i class="fa fa-calendar fa-fw"></i>速查</a>
+
+  </li>
+        <li class="menu-item menu-item-portal">
+
+    <a href="/portal" rel="section"><i class="fa fa-rocket fa-fw"></i>传送门</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2019/07/06/%E4%BB%8Epython%E5%BC%80%E5%A7%8B%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          从python开始的虚拟环境配置日志
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-06 11:21:13" itemprop="dateCreated datePublished" datetime="2019-07-06T11:21:13+08:00">2019-07-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-13 21:55:58" itemprop="dateModified" datetime="2020-11-13T21:55:58+08:00">2020-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>文章概述</p>
+<p>本来这篇文章写得是爬虫学习日志，但是后来发现前置工作也是虚拟环境的配置还是有待一提。日前在做cv的时候使用SIFT对图像的特征进行提取，当时没有手写SIFT函数，而是调用了opencv的一个函数，其中存在的一个问题是后来SIFT算法申请了专利，后续版本的opencv不再支持这个函数，于是当时搜索了很久找到支持该函数的旧版本，期间python版本还从3.7降到了3.68以支持这个函数的调用，而命令行输入python —version的时候仍然显示版本是3.7，这就显得库和包的版本控制比较混乱，然而当时我并没有意识到这个问题。后来电脑重装了一次，也是最近在学习爬虫的时候以及后来学习深度学习的时候我才开始重视python的包管理问题，目前看到的几种虚拟环境配置方式有：</p>
+<ul>
+<li>virtualenv</li>
+<li>conda env</li>
+<li>docker</li>
+</ul>
+<p>目前我已经尝试了virtualenv和conda env，docker还没有尝试过。感觉virtualenv和conda env两种使用上差不多，但是我选择了conda env，个人不使用virtualenv的原因在于：</p>
+<ol>
+<li>virtualenv似乎不支持jupyter notebook的集成</li>
+<li>conda env似乎比virtualenv多了一个生成配置文件并能根据配置文件创建相同环境的功能，这使得环境的在不同设备上的share更加地方便</li>
+</ol>
+<p>但是最近在薅某<strong>IaaS</strong>提供商羊毛的时候，发现虽然有yml文件，但是将conda env从本地同步到远程仍然很麻烦，创建新的环境之后还要将该环境“注入”到jupyter notebook中，如果你没有某种快速部署的脚本的，这也是一个繁琐的步骤。</p>
+<p><del>因此决定学习一下docker进一步对虚拟环境进行配置（还没学完）。</del></p>
+<p>我学了一下docker，然后先用jupyter/tensorflow-notebook跑了一下，发现这种方式搭环境还是比较快的。然后我尝试了一下自己做一个docker jupyter notebook镜像用来做深度学习（因为我发现在自己的机器上写代码真的是心累，不禁拖慢的编码速度而且跑起来也很慢），我的思路是先pull一个ubuntu的镜像作为basic image，然后按照上面conda env的步骤创建虚拟环境，将kernel注入到jupyter notebook中，然后commit重新打包成新的镜像然后push到docker hub中。这样就可以在后续中pull下来试用啦。</p>
+<p>emmmm，但是我感觉我实现的并不是很好，原因如下：</p>
+<ol>
+<li>我理解这个images本质是一个ubuntu系统，run之后还需要进到里面启动jupyter notebook，过程感觉略有繁琐。</li>
+<li>而对比jupyter/tensorflow-notebook其只需要run命令就可以，而不需要进到里面启动，但目前为止我没有搞懂这是怎么实现了。</li>
+<li>做这个image的初衷是为了在远程服务器上使用自己习惯的环境，以及做开发环境的区分。但目前看来前者的目的貌似达到了，但是后者似乎可以通过run多个container来实现？？比如我一个image包含ts+opencv和ts+panda(虽然没冲突但我举不出来例子)，然后我可以通过run两个container（分别是ts+opencv的container和ts+panda的container）来实现开发环境区分的目的，这看来貌似我的做法有点多余？毕竟如果要配置新的环境又要进到容器进行配置，完了commit and push。</li>
+</ol>
+<span id="more"></span>
+<h1 id="虚拟环境"><a href="#虚拟环境" class="headerlink" title="虚拟环境"></a>虚拟环境</h1><h2 id="virtualenv"><a href="#virtualenv" class="headerlink" title="virtualenv"></a>virtualenv</h2><p><strong>安装</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install virtualenvwrapper-win</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install virtualenv</span><br></pre></td></tr></table></figure>
+<p><strong>修改默认虚拟环境存放位置</strong></p>
+<p><img src="/images/loading.gif" data-original="/2019/07/06/%E4%BB%8Epython%E5%BC%80%E5%A7%8B%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97/2.png" alt="2"></p>
+<p><strong>查看虚拟环境</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">workon</span><br></pre></td></tr></table></figure>
+<p><strong>创建虚拟环境</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkvirtualenv [env-name]</span><br></pre></td></tr></table></figure>
+<p><strong>进入虚拟环境</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">workon [env-name]</span><br></pre></td></tr></table></figure>
+<p><strong>退出虚拟环境</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deactive</span><br></pre></td></tr></table></figure>
+<h2 id="conda-env"><a href="#conda-env" class="headerlink" title="conda env"></a>conda env</h2><p><strong>查看虚拟环境</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda <span class="built_in">env</span> list</span><br><span class="line">conda info -e</span><br></pre></td></tr></table></figure>
+<p><strong>创建虚拟环境</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n [env-name] python=[version]</span><br></pre></td></tr></table></figure>
+<p><strong>进入虚拟环境</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda activate [env-name]</span><br><span class="line"><span class="built_in">source</span> activate [env-name]</span><br></pre></td></tr></table></figure>
+<p><strong>退出虚拟环境</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
+<p><strong>复制虚拟环境</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n [new-env-name] --<span class="built_in">clone</span> [old-env-name]</span><br></pre></td></tr></table></figure>
+<p><strong>删除虚拟环境</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda remove -n [env-name] --all</span><br></pre></td></tr></table></figure>
+<p><strong>生成环境yml文件</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda <span class="built_in">env</span> <span class="built_in">export</span> &gt; [<span class="built_in">env</span>].yml</span><br></pre></td></tr></table></figure>
+<p><strong>使用yml文件创建环境</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda <span class="built_in">env</span> create -f [<span class="built_in">env</span>].yml</span><br></pre></td></tr></table></figure>
+<p><strong>yml文件内容</strong></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">scrapy-env-clone</span></span><br><span class="line"><span class="attr">channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">defaults</span></span><br><span class="line"><span class="attr">dependencies:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ca-certificates=2019.5.15=0</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">certifi=2019.6.16=py37_0</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">openssl=1.1.1c=he774522_1</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">pip=19.1.1=py37_0</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">python=3.7.3=h8c8aaf0_1</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">setuptools=41.0.1=py37_0</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">sqlite=3.28.0=he774522_0</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">vc=14.1=h0510ff6_4</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">vs2015_runtime=14.15.26706=h3a45250_4</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">wheel=0.33.4=py37_0</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">wincertstore=0.2=py37_0</span></span><br><span class="line"><span class="attr">prefix:</span> <span class="string">D:\anaconda3\envs\scrapy-env</span></span><br></pre></td></tr></table></figure>
+<p><strong>将conda env注入到jupyter notebook</strong></p>
+<p>package install</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install ipykernel</span><br></pre></td></tr></table></figure>
+<p>激活虚拟环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> activate [<span class="built_in">env</span>]</span><br></pre></td></tr></table></figure>
+<p>安装ipykerneld</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="built_in">env</span>] pip install ipykernel</span><br></pre></td></tr></table></figure>
+<p>命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m ipykernel install --user --name [env-name] --display-name <span class="string">&quot;[jupyter-display-name]&quot;</span></span><br></pre></td></tr></table></figure>
+<p>e.g</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m ipykernel install --user --name deep_learning --display-name <span class="string">&quot;Python [conda env:deep_learning]&quot;</span></span><br></pre></td></tr></table></figure>
+<p>启动jupyter notebook</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook</span><br></pre></td></tr></table></figure>
+<p>为jupyter notebook 安装 “conda” 选项卡</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install nb_conda </span><br></pre></td></tr></table></figure>
+<p><img src="/images/loading.gif" data-original="/2019/07/06/%E4%BB%8Epython%E5%BC%80%E5%A7%8B%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97/8.png" alt="8"></p>
+<p><strong>显示注入的环境</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter kernelspec list</span><br></pre></td></tr></table></figure>
+<p><strong>删除注入的环境</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter kernelspec remove [env-name]</span><br></pre></td></tr></table></figure>
+<h2 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h2><h3 id="前置工作"><a href="#前置工作" class="headerlink" title="前置工作"></a>前置工作</h3><p>先安装docker，linux下安装docker见<a target="_blank" rel="noopener" href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">官网</a></p>
+<p>docker基本操作见我的<a target="_blank" rel="noopener" href="https://543877815.github.io/2019/07/21/docker%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97/#more">学习日志</a></p>
+<h3 id="快速搭建深度学习环境"><a href="#快速搭建深度学习环境" class="headerlink" title="快速搭建深度学习环境"></a>快速搭建深度学习环境</h3><p>如tensorflow，可以直接使用别人写好的镜像，如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 8888:8888 jupyter/tensorflow-notebook</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 8888:8888 tensorflow/tensorflow</span><br></pre></td></tr></table></figure>
+<p>通过将docker容器的8888端口映射到外部机器的8888端口，都是集成Anaconda和jupyter进行快速开发。注意远程服务器需要打开安全组8888端口，输入<a href="http://ip:8888即可，首次登陆需要输入token凭证">http://ip:8888即可，首次登陆需要输入token凭证</a></p>
+<p><img src="/images/loading.gif" data-original="/2019/07/06/%E4%BB%8Epython%E5%BC%80%E5%A7%8B%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97/4.png" alt="4"></p>
+<p>该验证的位置在命令行中，但是这种方式非常的不稳定，如果网络从服务器中断开，那么容器的运行也会关闭，并且数据也会丢失。</p>
+<p>所以更加安全稳定的方式是使用docker daemon守护进程来运行容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8888:8888 --name notebook jupyter/tensorflow-notebook</span><br></pre></td></tr></table></figure>
+<p><img src="/images/loading.gif" data-original="/2019/07/06/%E4%BB%8Epython%E5%BC%80%E5%A7%8B%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97/6.png" alt="6"></p>
+<p>输入这行命令之后命令行中仅仅输出了一个容器ID，那么要怎么才能够获取jupyter的token进行登录呢</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs --<span class="built_in">tail</span> 3 notebook</span><br></pre></td></tr></table></figure>
+<p><img src="/images/loading.gif" data-original="/2019/07/06/%E4%BB%8Epython%E5%BC%80%E5%A7%8B%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97/7.png" alt="7"></p>
+<p>防止下次登录服务器忘记了token，可以在jupyter notebook中reset你的密码。</p>
+<p>上传你的代码可以从浏览器端上传，也可以使用jupyter notebook暴露出去的Terminal进行git clone</p>
+<p>也可以使用下述命令进入到容器中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it notebook /bin/bash</span><br></pre></td></tr></table></figure>
+<p>并使用<code>exit</code>以退出</p>
+<h3 id="定制化自己的python容器环境"><a href="#定制化自己的python容器环境" class="headerlink" title="定制化自己的python容器环境"></a>定制化自己的python容器环境</h3><p>以anaconda集成jupyter notebook开发为例</p>
+<p>下载一个basic images</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull ubuntu:latest</span><br></pre></td></tr></table></figure>
+<p>运行并进入到容器中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run --name myEnv -it -d ubuntu /bin/bash</span><br><span class="line">docker <span class="built_in">exec</span> -it myEnv /bin/bash</span><br></pre></td></tr></table></figure>
+<p>更新库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+<p>安装wget</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install wget</span><br></pre></td></tr></table></figure>
+<p>按照之前写的<a target="_blank" rel="noopener" href="https://543877815.github.io/2019/04/10/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9B%86%E6%88%90anaconda%E5%AE%89%E8%A3%85jupyter-notebook/#more">文章</a>步骤安装anaconda及配置好jupyter，运行jupyter notebook，由于之前没有添加容器端口映射，所以容器内运行的jupyter notebook无法暴露出来，这时候可以先停止容器，并将其打包成镜像，然后在运行新的镜像时指定新的端口映射，命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#先停止容器</span></span><br><span class="line">docker stop [CONTAINER ID]</span><br><span class="line"><span class="comment">#将容器commit成为一个镜像，时间略久</span></span><br><span class="line">docker commit [CONTAINER ID]  my-env</span><br><span class="line"><span class="comment">#运行容器</span></span><br><span class="line">docker run -d -p 8888:8888 --name my-notebook my-env</span><br></pre></td></tr></table></figure>
+<p>进入容器，然后运行jupyter，此时发现<code>jupyter: command not found</code>，所以发现bash并没有更新进来，之前的操作并不是永久添加环境变量，只是临时，虽然容器并没有重启，但是重新<code>exec</code>也会丢失原本环境变量的配置，所以通过修改.bashrc文件来添加环境变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;<span class="variable">$PATH</span>:/root/anaconda3/bin&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>然后本文按照上面写的<a href="./#conda-env">conda env</a>配置创建环境以及将环境注入到jupyter notebook中</p>
+<p>完成之后<code>exit</code>退出</p>
+<p>将该容器停止并重新打包生成一个新的镜像</p>
+<p>登录docker账号</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker login</span><br><span class="line"><span class="comment"># docker ID</span></span><br><span class="line"><span class="comment"># docker password</span></span><br></pre></td></tr></table></figure>
+<p>上传到远程docker hub</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker push [IMAGE NAME]</span><br></pre></td></tr></table></figure>
+<p>我的docker image地址是<a target="_blank" rel="noopener" href="https://cloud.docker.com/repository/docker/543877815/jupyter">https://cloud.docker.com/repository/docker/543877815/jupyter</a></p>
+<p>使用方式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载容器</span></span><br><span class="line">docker run -p 8888:8888 -d -it 543877815/jupyter</span><br><span class="line">[CONTAINER ID]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入容器</span></span><br><span class="line">docker <span class="built_in">exec</span> -it [CONTAINER ID] /bin/bash</span><br><span class="line">jupyter notebook --ip 0.0.0.0 --allow-root &amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重写jupyter配置</span></span><br><span class="line">jupyter notebook --generate-config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 退出容器</span></span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+      
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/jupyter-notebook/" rel="tag"># jupyter notebook</a>
+              <a href="/tags/virtualenv/" rel="tag"># virtualenv</a>
+              <a href="/tags/conda-environment/" rel="tag"># conda environment</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/" rel="prev" title="ubuntu和windows下运行MPI做埃拉托色尼素数筛选法">
+      <i class="fa fa-chevron-left"></i> ubuntu和windows下运行MPI做埃拉托色尼素数筛选法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/07/21/docker%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97/" rel="next" title="docker学习日志">
+      docker学习日志 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">虚拟环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#virtualenv"><span class="nav-number">1.1.</span> <span class="nav-text">virtualenv</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conda-env"><span class="nav-number">1.2.</span> <span class="nav-text">conda env</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker"><span class="nav-number">1.3.</span> <span class="nav-text">docker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.3.1.</span> <span class="nav-text">前置工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83"><span class="nav-number">1.3.2.</span> <span class="nav-text">快速搭建深度学习环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6%E5%8C%96%E8%87%AA%E5%B7%B1%E7%9A%84python%E5%AE%B9%E5%99%A8%E7%8E%AF%E5%A2%83"><span class="nav-number">1.3.3.</span> <span class="nav-text">定制化自己的python容器环境</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lifengjun"
+      src="https://avatars0.githubusercontent.com/u/25082467?v=4">
+  <p class="site-author-name" itemprop="name">lifengjun</p>
+  <div class="site-description" itemprop="description">个人学习笔记和日志</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/543877815" title="GitHub → https://github.com/543877815" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:543877815@qq.com" title="E-Mail → mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lifengjun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '970dc8fd856c3e17f9f0',
+      clientSecret: '7f6d29828dd1f4a02336c480ba1012f1851b0eb0',
+      repo        : '543877815.github.io',
+      owner       : '543877815',
+      admin       : ['543877815'],
+      id          : 'fb1479fef1e313ffd2e975419090b60c',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(a){a.imageLazyLoadSetting.processImages=t;var e=a.imageLazyLoadSetting.isSPA,i=a.imageLazyLoadSetting.preloadRatio||1,o=r();function r(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(o=r());for(var t,n=0;n<o.length;n++)0<=(t=(t=o[n]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(a.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var e=o[n];!function(t,e){if(t.hasAttribute("bg-lazy"))return t.removeAttribute("bg-lazy"),e&&e();var n=new Image,a=t.getAttribute("data-original");n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a)}(e,function(){o=o.filter(function(t){return e!==t}),a.imageLazyLoadSetting.onImageLoaded&&a.imageLazyLoadSetting.onImageLoaded(e)})}()}function n(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",n),a.addEventListener("resize",n),a.addEventListener("orientationchange",n)}(this);</script></body>
+</html>

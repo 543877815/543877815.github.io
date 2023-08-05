@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="最近在阅读机器学习西瓜书SVM(Support Vector Mechine)部分的时候，其目标函数使用了拉格朗日乘子法并将其转化为拉格朗日对偶性问题进行求解，并且在后面引入软间隔的SVM也使用了同样的方法，因此自己在网上查阅了相关的资料对其原理进行探索，最后整理在下文。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SVM详细推导及拉格朗日对偶性思考">
+<meta property="og:url" content="https://lifengjun.xin/2019/04/03/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%8F%8A%E5%AF%B9%E5%81%B6%E6%80%A7%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/index.html">
+<meta property="og:site_name" content="逗比学长的博客">
+<meta property="og:description" content="最近在阅读机器学习西瓜书SVM(Support Vector Mechine)部分的时候，其目标函数使用了拉格朗日乘子法并将其转化为拉格朗日对偶性问题进行求解，并且在后面引入软间隔的SVM也使用了同样的方法，因此自己在网上查阅了相关的资料对其原理进行探索，最后整理在下文。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="article:published_time" content="2019-04-03T03:19:50.000Z">
+<meta property="article:modified_time" content="2023-08-04T16:52:02.764Z">
+<meta property="article:author" content="lifengjun">
+<meta property="article:tag" content="machine learning">
+<meta property="article:tag" content="deep learning">
+<meta property="article:tag" content="危机分">
+<meta property="article:tag" content="SVM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lifengjun.xin/images/loading.gif">
+
+<link rel="canonical" href="https://lifengjun.xin/2019/04/03/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%8F%8A%E5%AF%B9%E5%81%B6%E6%80%A7%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+
+  <title>SVM详细推导及拉格朗日对偶性思考 | 逗比学长的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/543877815" class="github-corner" aria-label="View source on GitHub">
+    <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#000000; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+    <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">逗比学长的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">博客是写给我自己看的（叉腰）</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-quick-check">
+
+    <a href="/quick-check" rel="section"><i class="fa fa-calendar fa-fw"></i>速查</a>
+
+  </li>
+        <li class="menu-item menu-item-portal">
+
+    <a href="/portal" rel="section"><i class="fa fa-rocket fa-fw"></i>传送门</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2019/04/03/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%8F%8A%E5%AF%B9%E5%81%B6%E6%80%A7%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SVM详细推导及拉格朗日对偶性思考
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-04-03 11:19:50" itemprop="dateCreated datePublished" datetime="2019-04-03T11:19:50+08:00">2019-04-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-05 00:52:02" itemprop="dateModified" datetime="2023-08-05T00:52:02+08:00">2023-08-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/maths/" itemprop="url" rel="index"><span itemprop="name">maths</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近在阅读机器学习西瓜书SVM(Support Vector Mechine)部分的时候，其目标函数使用了拉格朗日乘子法并将其转化为拉格朗日对偶性问题进行求解，并且在后面引入软间隔的SVM也使用了同样的方法，因此自己在网上查阅了相关的资料对其原理进行探索，最后整理在下文。</p>
+<span id="more"></span>
+<h1 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h1><p><img src="/images/loading.gif" data-original="/2019/04/03/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%8F%8A%E5%AF%B9%E5%81%B6%E6%80%A7%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/blog\source\_posts\2019-04-03-拉格朗日乘子法及对偶性问题思考\2.png" alt="2"></p>
+<h2 id="原始问题"><a href="#原始问题" class="headerlink" title="原始问题"></a>原始问题</h2><p>SVM尝试在给定样本集$D={(x_1, y_1),(x_2, y_2),…,(x_m, y_m)}, y_i\in${-1,+1}中找到一个划分超平面，将不同类别的样本分开，如下图：</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/03/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%8F%8A%E5%AF%B9%E5%81%B6%E6%80%A7%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/20180501210333567.jpg" alt="20180501210333567"></p>
+<p>​    根据结构风险最小化的原则，显然上图的红色的线是最好的划分超平面，因为该超平面所产生的分类是最鲁棒的，对未知样本的泛化能力最强。</p>
+<p>​    在样本空间中，划分超平面可通过如下线性方程来描述：</p>
+<script type="math/tex; mode=display">
+\omega^Tx+b=0 \tag{1}</script><p>在二维的情况下，超平面就是一条直线，令$w=[a,b]. x=[x,y], b=c$，因此线性方程为 $ax+by+c=0$ </p>
+<p>“其中$w=(w_1;w_2,;…;w_d)$为法向量，决定了超平面的方向；b为位移项，决定了超平面与原点之间的距离。显然，划分超平面可被法向量 $w$和 位移 $b$ 确定，下面我们将其记为$(w,b)$，样本空间中任意点 $x$ 到超平面 $(w,b)$ 的距离可写为:</p>
+<script type="math/tex; mode=display">
+r=\frac{\mid w^Tx+b \mid}{\parallel w \parallel}\tag{2}</script><p>在二维的情况下，$\parallel w \parallel =\sqrt{a^2+b^2} $。</p>
+<p>假设超平面$(w,b)$能将训练样本正确分类，即对任意$(x_i,y_i) \in D$，若$y_i=+1$则有$w^Tx_i+b&gt;0$；若$y_i=-1$，则有$w^Tx_i+b&lt;0$。令：</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+    w^Tx_i+b\ge+1,&y_i=+1 \\
+    w^Tx_i+b\le-1,&y_i=-1
+\end{cases}
+\tag{3}</script><p>换句话说，在分类正确的情况下，分类为 $+1$ 的样本$(x_i,y_i)$应该满足$w^Tx_i+b\ge+1$，分类为 $-1$ 的样本$(x_i,y_i)$应该满足$w^Tx_i+b\le-1$。如下图中距离超平面最近的几个训练样本 $\oplus$ 和 $\ominus$ 能使上式成立，它们被称为“支持向量”(support vector)，两个异类支持向量到超平面的距离之和为：</p>
+<script type="math/tex; mode=display">
+\gamma=\frac{2}{\parallel \omega \parallel} \tag{4}</script><p>它们被称为间隔(margin)。</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/03/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%8F%8A%E5%AF%B9%E5%81%B6%E6%80%A7%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/1.png" alt="1"></p>
+<p>为了找到具有“最大间隔”(maximum margin)的划分超平面，也就是要找到能满足式(3)中约束的参数 $\omega$ 和 $b$ ，使得 $\gamma$ 最大，即：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+&\max_{\omega,b} \frac{2}{\parallel \omega \parallel} \\
+&s.t \  \ \ \ y_i(\omega^Tx_i+b) \ge1, \ i=1,2,...,m
+\end{align*}
+\tag{5}</script><p>等价于：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+&\min_{\omega,b}\frac{1}{2} \parallel \omega \parallel^2 \\
+&s.t \  \ \ \ y_i(\omega^Tx_i+b) \ge1, \ i=1,2,...,m
+\end{align*}
+\tag{6}</script><p>这就是支持向量机(Support Vector Machine，SVM)的基本型。</p>
+<p>对于线性不可分的训练数据集，可以对每个样本点 <script type="math/tex">(x_i, y_i)</script> 引进一个松弛变量 <script type="math/tex">\xi_i</script>，使得原问题的目标函数变为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\min_{\omega,b,\xi}\;&\frac{1}{2}||\omega||^2+C\sum_{i=1}^n\xi_i\\
+s.t.\;\;&y_i(\omega x_i+b)\ge 1-\xi_i,\;\;i=1,2,...,n\\
+&\xi_i\ge0,\;\;i=1,2,...,n
+\end{align*}
+\tag{7}</script><p>其中，<script type="math/tex">C\gt0</script> 称为惩罚参数，<script type="math/tex">C</script> 值大时对误分类的惩罚增大，<script type="math/tex">C</script> 值小时对误分类的惩罚减小。用于调和两者的系数，我们希望求解<script type="math/tex">(7)</script>得到最大间隔划分超平面所对应的模型：</p>
+<script type="math/tex; mode=display">
+f(x)=\omega^Tx+b
+\tag{8}</script><p>其中 $\omega$ 和 $b$ 是模型的参数，虽然能够直接使用现成的优化计算包求解，但是我们可以使用更加高效的方法，就是使用拉格朗日乘子法得到其“对偶问题”。</p>
+<h2 id="对偶问题"><a href="#对偶问题" class="headerlink" title="对偶问题"></a>对偶问题</h2><p>对于式<script type="math/tex">(8)</script>每条约束添加拉格朗日乘子$\alpha_i\ge0, \mu_i\ge0$，那么该问题的拉格朗日函数可写为：</p>
+<script type="math/tex; mode=display">
+L(\omega,b,\xi,\alpha,\mu)=\frac{1}{2}\parallel\omega\parallel^2+C\sum_{i=1}^n\xi_i+ \sum_{i=1}^{n}\alpha_i(1-\xi_i-y_i(\omega^Tx_i+b))-\sum_{i=1}^n\mu_i\xi_i
+\tag{9}</script><p>考虑函数：</p>
+<script type="math/tex; mode=display">
+\theta_P(x)=\max_{\alpha\ge0,\mu\ge0}L(\omega,b,\xi,\alpha,\mu)\tag{10}</script><p>其中 $P$ 为原始问题，如果存在某个 <script type="math/tex">\xi_i\lt0</script>，那么可令其对应的 <script type="math/tex">\mu_i\rightarrow +\infty</script> 使得  <script type="math/tex">\theta_P(x)\rightarrow +\infty</script>，如果存在某个 <script type="math/tex">x_i</script> 和 <script type="math/tex">\xi_i</script> 使得 <script type="math/tex">1-\xi_i-y_i(\omega^Tx_i+b)\gt0</script>，那么可令其对应的 <script type="math/tex">\alpha_i\rightarrow +\infty</script> 使得 <script type="math/tex">\theta_P(x)\rightarrow +\infty</script>，此有：</p>
+<script type="math/tex; mode=display">
+\theta_P(x)=
+\begin{cases}
+f(x),\;\;x满足原始问题约束\\
++\infty,\;\;其他\tag{11}
+\end{cases}</script><p>上述式子说明了如果满足约束，最大化问题和原始问题是一致的。</p>
+<p>所以如果再考虑极小化问题</p>
+<script type="math/tex; mode=display">
+\min_{\omega,b,\xi}\theta_P(x)=\min_{\omega,b,\xi}\max_{\alpha\ge0,\mu\ge0}L(\omega,b,\xi,\alpha,\mu)\tag{12}</script><p>他与原始问题<script type="math/tex">(7)</script>是等价的。</p>
+<p>原命题将转化为一个$p$*的问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+    \min_{\omega,b,\xi}\;&\frac{1}{2} \parallel \omega \parallel^2+C\sum_{i=1}^n\xi_i\\
+    &=\min_{\omega,b,\xi}{\theta_P(x)},x满足原始问题约束\\
+    &=\min_{\omega,b,\xi}{\max_{\alpha\ge0,\mu\ge0}{L(\omega,b,\xi,\alpha,\mu)}} = p^*
+\end{align*}
+\tag{13}</script><p>但其实这仍然是一个很难解决的问题，因为我们要先解决含有不等式约束 $\alpha$ 的最大化问题，然后再在 $x$ 上求最小值。如果能将其转化为先求 $x$ 上的最小值，再解决关于 $\alpha$ 的不等式约束的最大化问题就比较简单，即 $d$*</p>
+<script type="math/tex; mode=display">
+\min_{\alpha\ge0,\mu\ge0}{\max_{\omega,b,\xi}{L(\omega,b,\xi,\alpha,\mu)}} = d^* \tag{14}</script><p>$d$* 就是 $p$* 的对偶性问题，但是常规情况下 $d$*$\le$$p$*，这叫弱对偶性质(Week Duality)，举个真实的栗子方便记忆：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+    if\ f(x,y)=sin(x+y) \\
+    \min_{y}{\max_{x}{f(x,y)}} &= -1 \\
+    \max_{x}{\min_{y}{f(x,y)}} &= 1 \\
+    if\ f(x,y)=sin(x)+sin(y) \\
+    \min_{y}{\max_{x}{f(x,y)}} &=\max_{x}{\min_{y}{f(x,y)}}= 0 \\
+    thus, we\ have\ d^*\le p^*
+\end{align*} \\\tag{15}</script><p>对偶间隙 $d$* $-$ $p$* 在满足$Slater$定理的时候间隙会消失，使$d$* $=$ $p$*，即强对偶性质(strong Duality)。根据<a target="_blank" rel="noopener" href="https://blog.csdn.net/feilong_csdn/article/details/62427148">这篇文章</a>即</p>
+<ol>
+<li>原始问题是凸函数</li>
+<li>约束条件是线性约束</li>
+<li>满足KKT条件</li>
+</ol>
+<p>是故原问题将转化为其对偶问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+    \min_{\omega,b,\xi}&\frac{1}{2} \parallel \omega \parallel^2+C\sum_{i=1}^n\xi_i\\
+    &=\min_{\omega,b}{\max_{\alpha}{L(\omega,b,\xi,\alpha,\mu)}} = p^* \\
+    &=\max_{\alpha}{\min_{\omega,b}{L(\omega,b,\xi,\alpha,\mu)}} = d^* \\
+    s.t\ &\sum_{i=1}^{n}a_iy_i=0 \\
+    & 0\le a_i\le C, \ i=1,2,..,n
+\end{align*}
+\tag{16}</script><p>首先优化内部的拉格朗日方程：</p>
+<script type="math/tex; mode=display">
+L(\omega,b,\xi,\alpha,\mu)=\frac{1}{2}\parallel\omega\parallel^2+C\sum_{i=1}^n\xi_i+ \sum_{i=1}^{n}\alpha_i(1-\xi_i-y_i(\omega^Tx_i+b))-\sum_{i=1}^n\mu_i\xi_i
+\tag{17}</script><p>令$L(\omega,b,\xi,\alpha,\mu)$对 $\omega$ 、 $b$ 和 <script type="math/tex">\xi</script> 的偏导为零可得到：</p>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial \omega}=\omega-\sum_{i=1}^{m}a_iy_ix_i=0
+\Rightarrow
+\omega=\sum_{i=1}^{m}a_iy_ix_i \\
+\tag{18}</script><script type="math/tex; mode=display">
+\frac{\partial L}{\partial b}=0
+\Rightarrow
+\sum_{i=1}^{m}a_iy_i=0
+\tag{19}</script><script type="math/tex; mode=display">
+\frac{\partial L}{\partial \xi}=0\Rightarrow C-\alpha_i-\mu_i=0\tag{20}</script><p>注意上式的 $m$ 是样本数量而不是特征维度，第 $i$ 个样本的 $x=(x_1;x_2,…,x_d)$，$d$ 才是样本特征的维度。</p>
+<p>将<script type="math/tex">(18)</script>、<script type="math/tex">(19)</script>和<script type="math/tex">(20)</script>代入<script type="math/tex">(17)</script>得</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+   \min_{\omega,b,\xi}{L(\omega,b,\xi,\alpha,\mu)}
+   =&\frac{1}{2}\parallel\omega\parallel^2+C\sum_{i=1}^n\xi_i+ \sum_{i=1}^{n}\alpha_i(1-\xi_i-y_i(\omega^Tx_i+b))-\sum_{i=1}^n\mu_i\xi_i\\
+   =&\frac{1}{2}\sum_{i=1}^{m}a_iy_ix_i\sum_{j=1}^{m}a_jy_jx_j+\sum_{i=1}^{m}\alpha_i(1-y_i(\sum_{j=1}^{m}a_jy_jx_j)^Tx_i+b)) \\ 
+   =&\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}a_ia_jy_iy_jx_i^Tx_j+\sum_{i=1}^{m}\alpha_i-\sum_{i=1}^{m}\sum_{j=1}^{m}a_ia_jy_iy_jx_i^Tx_j+\sum_{i=1}^{m}\alpha_iy_ib \\
+   =&\sum_{i=1}^{m}\alpha_i-\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}a_ia_jy_iy_jx_i^Tx_j
+\end{align*}
+\tag{21}</script><p>分析式$(15)$，其中<script type="math/tex">\alpha=(\alpha_1;\alpha_2;...;\alpha_m)\ge0</script>，而 <script type="math/tex">1-y_i(\omega^Tx_i+b))\le0</script>，所以对于后面这一项<script type="math/tex">\sum_{i=1}^{m}\alpha_i(1-y_i(\omega^Tx_i+b))</script>的最大值为 $0$，为了最小化该拉格朗日方程，因此要令<script type="math/tex">\alpha</script>尽可能地大，所以再对 <script type="math/tex">\min_{\omega,b,\xi}{L(\omega,b,\xi,\alpha,\mu)}</script> 求 <script type="math/tex">\alpha</script> 的极大，即得对偶问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\max_{\alpha}&\;L(\omega,b,\xi,\alpha,\mu)=\sum_{i=1}^{m}\alpha_i-\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}a_ia_jy_iy_jx_i^Tx_j \\
+s.t.&\;\sum_{i=1}^m\alpha_iy_i=0\\
+&C-\alpha_i-\mu_i=0\\
+&\alpha_i\ge0,\;\;\mu_i\ge0,\;\;i=1,2,...,n
+\end{align*}
+\tag{22}</script><p>利用约束等式消去 <script type="math/tex">\mu_i</script>，从而留下最终约束 <script type="math/tex">\alpha_i</script>，约束变为 <script type="math/tex">0\le\alpha_i\le C</script>。</p>
+<h2 id="SMO算法"><a href="#SMO算法" class="headerlink" title="SMO算法"></a>SMO算法</h2><p>上述问题为求解凸二次规划问题，这样的问题具有全局最优解，但是由于当训练样本容量很大时，现在的最优化算法往往非常低效，因此使用序列最小最优化算法(sequential minimal optimization, SMO)来求解这个问题，这是一种启发式的算法。SMO每次选择两个变量，固定其他变量，针对这两个变量构建一个二次规划问题。这个二次规划问题关于这两个变量的解应该更接近原始二次规划问题的解，因为这会使得原始二次规划问题的目标函数值变得更小。更重要的是，这是子问题可以通过解析方法求得，这样就可以大大提高整个算法的计算速度。子问题有两个变量，一个是违反KKT条件最严重的哪一个，另一个由约束条件自动确定。如此，SMO算法将原问题不断分解为子问题并对子问题求解，进而达到求解原问题的目的。其包括两个部分：求解两个变量二次规划的解析方法和选择变量的启发式方法。</p>
+<h3 id="两个变量二次规划的求解方法"><a href="#两个变量二次规划的求解方法" class="headerlink" title="两个变量二次规划的求解方法"></a>两个变量二次规划的求解方法</h3><p>对于SVM我们优化下述问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\min_{\alpha}&\;L(\omega,b,\alpha)=\frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}a_ia_jy_iy_jK(x_i,x_j) -\sum_{i=1}^{n}\alpha_i\\\
+s.t.&\;\sum_{i=1}^n\alpha_iy_i=0\\
+&\;0\le\alpha_i\le C,\;\;i=1,2,...,n
+\end{align*}
+\tag{23}</script><p>其中 <script type="math/tex">K(x_i,x_j)</script> 为核函数。</p>
+<p>那么SMO的最优化问题的子问题可以写成：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\min_{\alpha_1,\alpha_2}W(\alpha_1,\alpha_2)=
+\frac{1}{2}(\alpha_1y_1\alpha_1y_1K_{11}
++\alpha_2y_2\alpha_2y_2K_{22}
++2\alpha_1y_1\alpha_2y_2K_{12}\\
++2\sum_{i=3}^n \alpha_1y_1\alpha_iy_iK_{1i}
++2\sum_{i=3}^n \alpha_2y_2\alpha_iy_iK_{2i}
++\sum_{i=3}^n\sum_{j=3}^n\alpha_iy_i\alpha_jy_jK_{ij})-(\alpha_1+\alpha_2+\sum_{i=3}^n\alpha_i)  
+\end{align*}
+\tag{24}</script><p>其中 <script type="math/tex">\sum_{i=3}^n\sum_{j=3}^n\alpha_iy_i\alpha_jy_jK_{ij})</script> 和 <script type="math/tex">\sum_{i=3}^n\alpha_i</script> 为常数项，所以子问题可以简化为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\min_{\alpha_1,\alpha_2}W(\alpha_1,\alpha_2)=
+\frac{1}{2}\alpha_1^2y_1^2K_{11}
+&+\frac{1}{2}\alpha_2^2y_2^2K_{22}
++\alpha_1y_1\alpha_2y_2K_{12}
+\\
+&+\alpha_1y_1\sum_{i=3}^n \alpha_iy_iK_{1i}
++\alpha_2y_2\sum_{i=3}^n \alpha_iy_iK_{2i}
+-(\alpha_1+\alpha_2)\\
+s.t.\;\;&\alpha_1y_1+\alpha_2y_2=-\sum_{i=3}^ny_i\alpha_i=\zeta \\ 
+&0\le\alpha_i\le C,\;\;i=1,2
+\end{align*}
+ \tag{25}</script><p>因为 <script type="math/tex">y_1=1</script> 或 <script type="math/tex">-1</script>，由约束 <script type="math/tex">\alpha_1y_1+\alpha_2y_2=C</script> 得：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\alpha_1y_1=(\zeta-\alpha_2y_2)\\
+\alpha_1=y_1(\zeta-\alpha_2y_2) 
+\end{align*}
+\tag{26}</script><p>将该式带入式 <script type="math/tex">(21)</script>，并消去 <script type="math/tex">y_i^2</script>，得：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+W(\alpha_2)=
+\frac{1}{2}(\zeta-\alpha_2y_2)^2K_{11}
+&+\frac{1}{2}\alpha_2^2K_{22}
++(\zeta-\alpha_2y_2)\alpha_2y_2K_{12}
+\\
+&+(\zeta-\alpha_2y_2)\sum_{i=3}^n\alpha_iy_iK_{1i}
++\alpha_2y_2\sum_{i=3}^n\alpha_iy_iK_{2i}
+-y_1(\zeta-\alpha_2y_2)-\alpha_2
+\end{align*}
+\tag{27}</script><p>进行求导得：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\frac{\partial W}{\partial\alpha_2}
+=-y_2(\zeta-\alpha_2y_2)K_{11}
+&+\alpha_2K_{22}
++(\zeta-2\alpha_2y_2)y_2K_{12}
+\\
+&-y_2\sum_{i=3}^n\alpha_iy_kK_{1i}
++y_2\sum_{i=3}^n\alpha_iy_iK_{2i}+y_1y_2-1=0
+\end{align*}
+\tag{25}</script><p>整理上式得：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\alpha_2(K_{11}+K_{22}-2K_{12})
+&=\zeta y_2K_{11}
+-\zeta y_2K_{12}
++y_2\sum_{i=3}^n\alpha_iy_kK_{1i}
+-y_2\sum_{i=3}^n\alpha_iy_iK_{2i}
++1-y_1y_2\\
+&=y_2(\zeta K_{11}-\zeta K_{12}+\sum_{i=3}^n\alpha_iy_kK_{1i}-\sum_{i=3}^n\alpha_iy_iK_{2i}+y_2-y_1)
+\end{align*}\tag{26}</script><p>因为 <script type="math/tex">\alpha_i</script> 更新前后都要满足约束<script type="math/tex">\varsigma=\alpha_1y_1+\alpha_2y_2</script>，所以将<script type="math/tex">\varsigma=\alpha^{old}_1y_1+\alpha_2^{old}y_2</script> 代入式 <script type="math/tex">(26)</script> 得：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\alpha_2^{new,unc}(K_{11}+K_{22}-2K_{12})
+&=y_2(\zeta K_{11}-\zeta K_{12}+\sum_{i=3}^n\alpha_iy_iK_{1i}-\sum_{i=3}^n\alpha_iy_iK_{2i}+y_2-y_1)\\
+&=y_2(\alpha^{old}_1y_1K_{11}+\alpha_2^{old}y_2K_{11}-\alpha^{old}_1y_1K_{12}-\alpha_2^{old}y_2K_{12}\\
+&\;\;\;\;\;\;\;\;\;\;\;\;\;+(\sum_{i=1}^n\alpha_iy_iK_{1i}-y_1-\alpha_1^{old}y_1K_{11}-\alpha_2^{old}y_2K_{12})\\
+&\;\;\;\;\;\;\;\;\;\;\;\;\;-(\sum_{i=1}^n\alpha_iy_iK_{2i}-y_2-\alpha_1^{old}y_1K_{12}-\alpha_2^{old}y_2K_{22}))\\
+&=y_2((K_{11}+K_{22}-2K_{12})\alpha_2^{old}y_2
++(\sum_{i=1}^n\alpha_iy_iK_{1i}-y_1)
+-(\sum_{i=1}^n\alpha_iy_iK_{2i}-y_2))
+\end{align*}
+\tag{28}</script><p>令<script type="math/tex">\mu=K_{11}+K_{22}-2K_{12}=||\Phi(x_1)-\Phi(x_2)||,\;E_j=\sum_{i=1}^n\alpha_iy_iK_{1i}-y_j</script> ，其中<script type="math/tex">\Phi(x)</script> 是输入空间到特征空间的映射，得：</p>
+<script type="math/tex; mode=display">
+\alpha_2^{new,unc}=\alpha_2^{old}+\frac{y_2(E_1-E_2)}{\mu}
+\tag{29}</script><p>上式是最优化问题 <script type="math/tex">(21)</script> 沿着约束方向未经剪辑即未考虑不等式约束时 <script type="math/tex">\alpha_2</script> 的最优解 <script type="math/tex">\alpha_2^{new,unc}</script>；然后再求剪辑后 <script type="math/tex">\alpha_2</script> 的解 <script type="math/tex">\alpha_2^{new}</script>：</p>
+<script type="math/tex; mode=display">
+a_2^{new}=
+\begin{cases}
+H,&a_2^{new,unc}\gt H\\
+a_2^{new,unc},&L\le\alpha_2^{new,unc}\le H\\
+L,&\alpha_2^{new,unc}\lt L
+\end{cases}
+\\
+\tag{30}
+\begin{align*}
+&L=\max{(0,\alpha_2^{old}-\alpha_1^{old})},\;\;&&H=\min{(C,C+\alpha_2^{old}-\alpha_1^{old})}\;\;&if\;y_1\ne y_2\\
+&L=\max(0,\alpha_2^{old}+\alpha_1^{old}-C),\;\;&&H=\min(C,\alpha_2^{old}+\alpha_1^{old})\;\;&if\;y_1=y_2\\
+或者写成：\\
+&L=\max(0,-k)\;\;&&H=\min(C,C-k)\;\;&if\;y_1\ne y_2\\
+&L=\max(0,k-C)\;\;&&H=\min(C,k)\;\;&if\;y_1=y_2
+\end{align*}</script><p><img src="/images/loading.gif" data-original="/2019/04/03/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%8F%8A%E5%AF%B9%E5%81%B6%E6%80%A7%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/1042406-20161128221540099-1580490663.png" alt="1042406-20161128221540099-1580490663"></p>
+<p>由 <script type="math/tex">\alpha_2^{new}</script> 求得 <script type="math/tex">\alpha_1^{new}</script> 的解为</p>
+<script type="math/tex; mode=display">
+\alpha_1^{new}=\alpha_1^{old}+y_1y_2(\alpha_2^{old}-\alpha_2^{new})\tag{31}</script><h3 id="变量的选择方法"><a href="#变量的选择方法" class="headerlink" title="变量的选择方法"></a>变量的选择方法</h3><p>令 <script type="math/tex">g(x)</script>为分离超平面</p>
+<script type="math/tex; mode=display">
+g(x)=\sum_{i=1}^n\alpha_iy_iK(x_i,x)+b
+\tag{32}</script><p>检验训练样本点 <script type="math/tex">(x_i, y_i)</script> 是否满足 KKT 对偶互补条件，即：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\alpha_i(y_i(\omega x_i+b)-1+\xi_i)=0\\
+
+\end{align*}
+\tag{33}</script><p>已知的约束有：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+C-\alpha_i-\mu_i=0\\
+\mu_i\xi_i=0\\
+y_i(\omega x_i+b)-1+\xi_i\ge0
+\end{align*}
+\tag{34}</script><ul>
+<li>如果 <script type="math/tex">\alpha_i=0</script> ，则有 <script type="math/tex">\mu_i=C,\;\xi_i=0,g(x_i)\ge1</script>，即样本在支持向量上或者已经被正确分类。</li>
+<li>如果 <script type="math/tex">0\lt\alpha_i\lt C</script>，则有 <script type="math/tex">0\lt\mu_i\lt C,\;\xi_i=0,\;g(x_i)=1</script> ，此时样本在支持向量上。</li>
+<li>如果<script type="math/tex">\alpha_i=C</script>，则有<script type="math/tex">\mu_i=0,\;\xi_i\ge0,\;g(x_i)\le1</script>，此时样本在支持向量与分类边界之间。</li>
+</ul>
+<p>SMO算法称选择第一个变量为<strong>外层循环</strong>，这个变量需要选择在训练集中违反KKT条件最严重的样本点。具体地，检验训练样本点 <script type="math/tex">(x_i,y_i)</script>是否满足KKT条件，即：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\alpha_i^*=0 \Leftrightarrow y_ig(x_i)\ge1\\
+0\lt\alpha_i^*\lt C\Leftrightarrow y_ig(x_i)=1\\
+\alpha_i^*=C\Leftrightarrow y_ig(x_i)\le1
+\end{align*}
+\tag{35}</script><p>一般来说，首先选择违反 <script type="math/tex">0\lt\alpha_i^*\lt C\Leftrightarrow y_ig(x_i)=1</script> 这个条件的点。如果这些支持向量都满足KKT条件，再选择违反 <script type="math/tex">\alpha_i^*=0 \Leftrightarrow y_ig(x_i)\ge1</script> 和 <script type="math/tex">\alpha_i^*=C\Leftrightarrow y_ig(x_i)\le1</script> 的点。</p>
+<p>SMO算法称选择第二个变量为<strong>内层循环</strong>，假设在外层循环中已经找到第一个变量 <script type="math/tex">\alpha_1</script>，现在要在内层循环中找到第二个变量 <script type="math/tex">\alpha_2</script>。第二个变量选择的标准是希望能使 <script type="math/tex">\alpha_2</script> 有足够大的变化。由 <script type="math/tex">(29)</script> 知，<script type="math/tex">a_2^{new}</script> 是依赖 <script type="math/tex">|E_1-E_2|</script> 的，为了加快计算速度，一种简单的做法是选择 <script type="math/tex">\alpha_2</script>，使其对应的<script type="math/tex">|E_1-E_2|</script>最大。因为，<script type="math/tex">\alpha_1</script> 和 <script type="math/tex">E_1</script> 已经确定。如果 <script type="math/tex">E_1</script> 是正的，那么选择最小的 <script type="math/tex">E_i</script> 作为 <script type="math/tex">E_2</script>；如果 <script type="math/tex">E_1</script> 是负的，那么选择最大的 <script type="math/tex">E_1</script> 作为 <script type="math/tex">E_2</script>。为了节省计算时间，将所有 <script type="math/tex">E_i</script> 值保存在一个列表中。</p>
+<p>在特殊情况下，如果内层循环通过以上方法选择的 <script type="math/tex">\alpha_2</script> 不能使目标函数有足够的下降，那么采用以下启发式规则继续选择 <script type="math/tex">\alpha_2</script>。遍历在间隔边界上的支持向量，依次将其对应的变量作为 <script type="math/tex">\alpha_2</script> 试用，知道目标函数有足够的下降。若找不到合适的 <script type="math/tex">\alpha_2</script>，那么遍历训练数据集；若仍找不到合适的 <script type="math/tex">\alpha_2</script>，则放弃第一个 <script type="math/tex">\alpha_1</script>， 再通过外层循环寻求另外的 <script type="math/tex">\alpha_1</script>。</p>
+<p>对于阈值 $b$ 和差值 <script type="math/tex">E_i</script>，在每次完成两个变量的优化后，都要重新计算阈值 $b$。当 <script type="math/tex">0\lt\alpha_1^{new}\lt C</script>，由KKT条件<script type="math/tex">(35)</script>可知：</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^n\alpha_iy_iK_{i1}+b=y_1
+\tag{36}</script><p>于是</p>
+<script type="math/tex; mode=display">
+b_1^{new}=y_i-\sum_{i=3}^n\alpha_iy_iK_{i1}-\alpha_1^{new}y_1K_{11}-\alpha_2^{new}y_2K_{21}
+\tag{37}</script><p>由 <script type="math/tex">E_1</script> 的定义式有</p>
+<script type="math/tex; mode=display">
+E_1=\sum_{i=3}^n\alpha_iy_iK_{i1}+\alpha_1^{old}y_1K_{11}+\alpha_2^{old}y_2K_{21}+b^{old}-y_1
+\tag{38}</script><p>用 <script type="math/tex">(38)</script> 式的</p>
+<script type="math/tex; mode=display">
+y_1-\sum_{i=3}^n\alpha_iy_iK_{i1}=-E_i+\alpha_1^{old}y_1K_{11}+\alpha_2^{old}y_2K_{21}+b^{old}\tag{39}</script><p>消去 <script type="math/tex">(37)</script> 式的前两项得：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+b_1^{new}&=-E_i+\alpha_1^{old}y_1K_{11}+\alpha_2^{old}y_2K_{21}+b^{old}-\alpha_1^{new}y_1K_{11}-\alpha_2^{new}y_2K_{21}\\
+&=-E_1-y_1K_{11}(\alpha_1^{new}-\alpha_1^{old})-y_2K_{21}(\alpha_2^{new}-\alpha_2^{old})+b^{old}
+\end{align*}
+\tag{40}</script><p>同样，如果 <script type="math/tex">0\lt\alpha_2^{new}\lt C</script>，那么</p>
+<script type="math/tex; mode=display">
+b_2^{new}=-E_2-y_1K_{12}(\alpha_2^{new}-\alpha_2^{old})-y_2K_{22}(\alpha_2^{new}-\alpha_2^{old})+b^{old}
+\tag{41}</script><p>最终的 <script type="math/tex">b^{new}</script> 为：</p>
+<script type="math/tex; mode=display">
+b^{new}=\frac{b_1^{new}+b_2^{new}}{2}
+\tag{42}</script><p>在每次完成两个变量的优化后，还必须更新其对应的 <script type="math/tex">E_i</script> 值，并将它们保存在列表中。 <script type="math/tex">E_i</script> 值的更新要用到 <script type="math/tex">b^{new}</script> 以及所有支持向量对应的 <script type="math/tex">\alpha_j</script>：</p>
+<script type="math/tex; mode=display">
+E_i^{new}=\sum_Sy_j\alpha_jK(x_i,x_j)+b^{new}-y_i</script><p>其中 <script type="math/tex">S</script> 是所有支持向量的集合。</p>
+<p>总的来说SMO算法流程如下：</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/03/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%8F%8A%E5%AF%B9%E5%81%B6%E6%80%A7%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/`Q`86Y6D][12ROW4{N6}{J6.png" alt></p>
+<h1 id="拉格朗日乘子法"><a href="#拉格朗日乘子法" class="headerlink" title="拉格朗日乘子法"></a>拉格朗日乘子法</h1><p>拉格朗日对偶性相关知识是李航《统计机器学习》的内容，而对于拉格朗日乘子法几何意义，主要是网上的解释，我认为解释的比较生动的是<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/38586401">马同学</a>的解释，总结的比较精炼的是<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/38586401">卢健龙</a>的回答，当然两篇都是来自同一个<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/38586401">知乎的帖子</a>。</p>
+<h2 id="原始问题-1"><a href="#原始问题-1" class="headerlink" title="原始问题"></a>原始问题</h2><p>假设<script type="math/tex">f(x), c_i(x), h_j(x)</script>是定义在 <script type="math/tex">\text{R}^n</script> 上的连续可微函数。考虑约束最优化问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\min_{x\in \text{R}^n}&\;f(x)\\
+s.t.\;\;&c_i(x)\le0,\;\;i=1,2...,k\\
+&h_j(x)=0,\;\;j=1,2,...,l
+\end{align*}
+\tag{*1}</script><p>将此称为最优化问题为原始最优化问题或原始问题。</p>
+<p>首先，引入广义拉格朗日函数</p>
+<script type="math/tex; mode=display">
+L(x,\alpha,\beta)=f(x)+\sum_{i=1}^k\alpha_ic_i(x)+\sum_{j=1}^l\beta_jh_j(x)
+\tag{*2}</script><p>这里，<script type="math/tex">x=(x^{(1)},x^{(1)},...x^{(n)})^T\in\text{R}^n,\alpha_i,\beta_j</script>是拉格朗日乘子，<script type="math/tex">\alpha_i\ge0</script>。考虑 $x$ 的函数：</p>
+<script type="math/tex; mode=display">
+\theta_P(x)=\max_{\alpha,\beta;\alpha_i\ge0}L(x,\alpha,\beta)
+\tag{*3}</script><p>这里，下标 $P$ 表示原始问题。</p>
+<p>假设给定某个 $x$。如果 $x$ 违反原始问题的约束条件，即存在某个 $i$ 使得 <script type="math/tex">c_i(x)\gt0</script> 或者存在某个 $j$ 使得 <script type="math/tex">h_j(x) \ne 0</script>，那么有</p>
+<script type="math/tex; mode=display">
+\theta_P(x)=\max_{\alpha,\beta;\alpha_i\ge0}[f(x)+\sum_{i=1}^k\alpha_ic_i(x)+\sum_{j=1}^j\beta_jh_j(x)]=+\infty
+\tag{*4}</script><p>因为若某个 $i$ 使得约束 <script type="math/tex">c_i(x)\gt0</script> ，则可令 <script type="math/tex">\alpha_i\rightarrow+\infty</script> 使得 <script type="math/tex">\alpha_ic_i(x)\rightarrow +\infty</script>；若某个 $j$ 使 <script type="math/tex">h_j(x)\ne0</script>, 则可令  <script type="math/tex">\beta_j</script> 使 <script type="math/tex">\beta_j h_j(x) \rightarrow +\infty</script>，而将其余各 <script type="math/tex">\alpha_i,\beta_j</script> 均取为0。</p>
+<p>相反地，如果 $x$ 满足约束条件，则有</p>
+<script type="math/tex; mode=display">
+\theta_P(x)=\begin{cases}
+f(x),\;x满足原始问题约束\\
++\infty,\;其他
+\end{cases}
+\tag{*5}</script><p>所以如果考虑极小化问题</p>
+<script type="math/tex; mode=display">
+\min_x\theta_P(x)=\min_x\max_{\alpha,\beta;\alpha_i\ge0}L(x,\alpha,\beta)
+\tag{*6}</script><p>它是与原始最优化问题等价的，即它们有相同的解。</p>
+<p>该问题称为广义拉格朗日函数的极小极大问题。这样一来，就把原始最优化问题表示为广义拉格朗日函数的极小极大问题。为了方便，定义原始问题的最优值</p>
+<script type="math/tex; mode=display">
+p^*=\min_x\theta_P(x)
+\tag{*7}</script><p>称为原始问题的值。</p>
+<h2 id="对偶问题-1"><a href="#对偶问题-1" class="headerlink" title="对偶问题"></a>对偶问题</h2><p>定义</p>
+<script type="math/tex; mode=display">
+\theta_D(\alpha, \beta)=\min_xL(x,\alpha,\beta)
+\tag{*8}</script><p>再考虑极大化 <script type="math/tex">\theta_D(\alpha, \beta)=\min_xL(x,\alpha,\beta)</script>, 即</p>
+<script type="math/tex; mode=display">
+\max_{\alpha,\beta;\alpha\ge0}\theta_D(\alpha,\beta)=\max_{\alpha,\beta;\alpha_i\ge0}\min_xL(x,\alpha,\beta)
+\tag{*9}</script><p>问题 <script type="math/tex">\max_{\alpha,\beta;\alpha_i\ge0}\min_xL(x,\alpha,\beta)</script> 称为广义拉格朗日函数的极大极小问题。</p>
+<p>可以将广义拉格朗日函数的极大极小问题表示为约束最优化问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\max_{\alpha,\beta}\theta_D(\alpha,\beta)=\max_{\alpha,\beta}\min_xL(x,\alpha,\beta)\\
+s.t.\;\alpha_i\ge0,\;\;i=1,2,...,k
+\end{align*}
+\tag{*10}</script><p>称为原始问题的对偶问题。定义对偶问题的最优值</p>
+<script type="math/tex; mode=display">
+d^*=\max_{\alpha,\beta;\alpha_i\ge0}\theta_D(\alpha,\beta)
+\tag{*11}</script><p>称为对偶问题的值。</p>
+<h2 id="原始问题和对偶问题的关系"><a href="#原始问题和对偶问题的关系" class="headerlink" title="原始问题和对偶问题的关系"></a>原始问题和对偶问题的关系</h2><p>定理：若原始问题和对偶问题都有最优值，则</p>
+<script type="math/tex; mode=display">
+d^*=\max_{\alpha,\beta;\alpha_i\ge0}\min_xL(x,\alpha,\beta)\le\min_x\max_{\alpha,\beta;\alpha_i\ge0}L(x,\alpha,\beta)=p^*
+\tag{*12}</script><p>推论：假设函数 <script type="math/tex">f(x)</script> 和 <script type="math/tex">c_i(x)</script> 是凸函数（不等式约束），<script type="math/tex">h_j(x)</script> 是仿射函数（等式约束）；并且假设不等式约束 <script type="math/tex">c_i(x)</script> 是严格可行的，即存在 $x$ 对所有 $i$ 又 <script type="math/tex">c_i(x)\lt0</script>，则存在 <script type="math/tex">x^*, \alpha^*, \beta^*</script> 使<script type="math/tex">x^*</script> 是原始问题的解，<script type="math/tex">\alpha^*,\beta^*</script> 是对偶问题的解，并且：</p>
+<script type="math/tex; mode=display">
+p^*=d^*=L(x^*,\alpha^*,\beta^*)
+\tag{*13}</script><p>且其充分必要条件是<script type="math/tex">x^*, \alpha^*, \beta^*</script>满足KKT条件：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\nabla_xL(x^*, \alpha^*, \beta^*)=0\\
+a^*_ic_i^*(x^*)=0\;\;i=1,2,...,k\\
+c_i(x^*)\le0,\;\;i=1,2,...,k\\
+a_i^*\ge0,\;\;i=1,2,...,k\\
+h_j(x^*)=0\;\;j=1,2,...,l
+\end{align*}
+\tag{*14}</script><h2 id="几何意义"><a href="#几何意义" class="headerlink" title="几何意义"></a>几何意义</h2><p>拉格朗日乘子法具有很直观的几何意义。</p>
+<h3 id="单约束情况"><a href="#单约束情况" class="headerlink" title="单约束情况"></a>单约束情况</h3><p>比如在给定函数$f(x,y)=x^2y-3$找到曲线上距离原点最近的点，其可以转化为</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+    &\min_{x,y}x^2+y^2 \\
+    &s.t. \  \ \ \ x^2y-3=0
+\end{align*}\tag{*15}</script><p>（图来自马同学)可以看成一个圆心为原点半径逐渐增大的圆上寻找一个与曲线$f(x,y)=x^2y-3的$交点，不难发现圆上通过该交点的切线也将相切于曲线$f(x,y)=x^2y-3$</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/03/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%8F%8A%E5%AF%B9%E5%81%B6%E6%80%A7%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/v2-0ca0c5ef4e43e02ac37886894da84daf_hd.gif" alt="v2-0ca0c5ef4e43e02ac37886894da84daf_hd"></p>
+<p>从另一个角度来看，目标函数在取得极值的时候，其极值点的梯度向量的方向与约束函数的在该极值点的梯度方向是一致（平行）的，也就是</p>
+<script type="math/tex; mode=display">
+\nabla g= \lambda \nabla f \tag{*16}</script><p>其中$ g(x,y)=x^2y-3，f(x,y)=x^2+y^2$，<script type="math/tex">\nabla g=\binom{\frac{\partial g}{\partial x}}{\frac{\partial g}{\partial y}}=\binom{2xy}{x^2}</script> ，$\nabla f=\binom{\frac{\partial f}{\partial x}}{\frac{\partial g}{\partial y}}=\binom{2x}{2y}$为了求取目标函数极值点，因此联立方程组</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+    \nabla g= \lambda \nabla f  \\
+    x^2y-3=0
+\end{cases}
+\Rightarrow
+\begin{cases}
+    \binom{2x}{2y}=\lambda \binom{2xy}{x^2}  \\
+    x^2y-3=0
+\end{cases}
+\Rightarrow
+\begin{cases}
+    x\approx\pm1.61  \\
+    y\approx1.1  \\
+    \lambda\approx0.87
+\end{cases}
+\tag{*17}</script><p><img src="/images/loading.gif" data-original="/2019/04/03/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%8F%8A%E5%AF%B9%E5%81%B6%E6%80%A7%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/v2-b59fd83680cc736a4bde6b7714013915_hd.gif" alt="v2-b59fd83680cc736a4bde6b7714013915_hd"></p>
+<h3 id="多约束情况"><a href="#多约束情况" class="headerlink" title="多约束情况"></a>多约束情况</h3><p>上面说的是单约束的情况下，而在多约束的情况下</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+    \min_{x,y}x^2+y^2 \\
+    s.t 
+    \begin{cases}
+    x^2y-3=0  \\
+    x-y-3=0
+\end{cases}
+\end{align*}
+\tag{*18}</script><p>那么情况就会变成下图</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/03/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%8F%8A%E5%AF%B9%E5%81%B6%E6%80%A7%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/v2-9611b135439c71afe097bfdcf8d3248c_hd.jpg" alt="v2-9611b135439c71afe097bfdcf8d3248c_hd"></p>
+<p>即$x^2 + y^2$的法线是是$x^2y-3$和$x-y-3$的法线的线性组合：</p>
+<p>如果</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+    f(x,y)=x^2+y^2  \\
+    g(x,y)=x^2y-3    \\
+    h(x,y)=x-y-3
+\end{cases}
+\tag{*19}</script><p>那么线性组合</p>
+<script type="math/tex; mode=display">
+\nabla f= \lambda \nabla g+\mu \nabla h
+\tag{*20}</script><p>联立方程</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+    \nabla f= \lambda \nabla g+\mu \nabla h \\
+    g(x,y)=0    \\
+    h(x,y)=0
+\end{cases}
+\tag{*21}</script><p>即可进行求解.</p>
+<p>也就是说在等式约束的优化问题中，假定$x$为$d$维向量，给定目标函数$f(x)$以及约束$g(x)=0,h(x)$，寻找$x$的某个取值$x$*使得目标函数最小化（最大化问题可以通过倒数转化为最小化问题），在最优点$x$*处，梯度$\nabla f(x)$和梯度$\nabla g(x)$和$\nabla h(x)$的线性组合的方向必定相同或相反，即存在$\lambda\ne0, \mu\ne0$使得</p>
+<script type="math/tex; mode=display">
+\nabla f(x^*) + \lambda \nabla g(x^*)+\mu\nabla h(x^*) = 0
+\tag{*22}</script><p>$\lambda,\mu$称为拉格朗日乘子，定义拉格朗日函数</p>
+<script type="math/tex; mode=display">
+L(x, \lambda, \mu)=f(x)+\lambda g(x)+\mu h(x)
+\tag{*23}</script><p>将其对$x$的偏导数$\frac{\partial L}{\partial x}=0$可以得到式$(*9)$，将其对$\lambda$的偏导数$\frac{\partial L}{\partial \lambda}=0$即能得到约束条件$g(x)=0$，其对$\mu$的偏导数<script type="math/tex">\frac{\partial L}{\partial\lambda}=0</script>即能得到约束条件<script type="math/tex">h(x)=0</script>，从而将原约束优化问题转化为对拉格朗日函数$L(x,\lambda)$的无约束优化问题。</p>
+<h3 id="KKT条件"><a href="#KKT条件" class="headerlink" title="KKT条件"></a>KKT条件</h3><p>考虑下述不等式约束问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\min_x f(x)\\
+s.t.\;\;g(x)\le 0
+\end{align*}
+\tag{*24}</script><p>对应的拉格朗日函数为：</p>
+<script type="math/tex; mode=display">
+L(x,\lambda)=f(x)+\lambda g(x) \tag{*25}</script><p>此时最优点 $x$*或在$ g(x)&lt;0 $的区域中，或在边界$g(x)=0$上。对于$g(x)\lt0$的情形，约束$g(x)\le0$不起作用，可直接通过条件$\nabla f(x)=0$来获得最优点；这等价于将$\lambda$置零后$L(x, \lambda)$对x求偏导得到最优点，$g(x)=0$得到情形类似于上面等式约束的分析，但值得注意的是，此时$\nabla f(x$*$)$的方向必定与$\nabla g(x$*$)$的方向相反，即存在$\lambda\gt0$使得<script type="math/tex">\nabla f(x^*)+\lambda \nabla (x^*)=0</script>。</p>
+<p>虽然这段话我抄自西瓜书的附录，但是它给出的图片解释非常有限，因此我又查阅的<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ooon/p/5721119.html">相关资料</a>，考虑这种情况：</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/03/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%8F%8A%E5%AF%B9%E5%81%B6%E6%80%A7%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/743682-20160731133814716-619658263.png" alt="743682-20160731133814716-619658263"></p>
+<p>其红色区域代表着约束区域，蓝色是目标函数的等高线，强调这是不等式约束，即要求可行解必须落在约束区域 <script type="math/tex">g(x)</script> 之内，那么由图可见可行解 $x$ 只能在 <script type="math/tex">g(x)\lt0</script> 或者 <script type="math/tex">g(x)=0</script> 的区域内取得，那么会有以下两种情况：</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/03/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%8F%8A%E5%AF%B9%E5%81%B6%E6%80%A7%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/743682-20160731162221497-1767754781.png" alt="743682-20160731162221497-1767754781"></p>
+<p>这时候再读上面那句话就可以理解最优点取值的两种情况：</p>
+<ol>
+<li>目标函数最优点与约束区域重叠的时候，即极值点 $x$ 落在 <script type="math/tex">g(x)\lt0</script> 的区域内，可以看成将$\lambda$置零后$L(x, \lambda)$对 $x$ 求偏导得到最优点，即直接极小化 <script type="math/tex">f(x)</script> 即可。</li>
+<li>目标函数最优点在约束区域之外的时候，即极值点 $x$ 落在 <script type="math/tex">g(x)=0</script> 即边界上，此时等价于等式约束优化问题，那么最优点将在约束边界产生，这将转化为上述等式约束的情况。</li>
+</ol>
+<p>用公式表达就是意思就是：</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+    \begin{cases}
+        g(x)<0    \\
+        \lambda=0 
+    \end{cases} \\
+    \begin{cases}
+        g(x)=0    \\
+        \lambda>0 
+    \end{cases}
+\end{cases} 
+\Rightarrow
+\begin{cases}
+    g(x)\le0    \\
+    \lambda\ge0 \\
+    \lambda g(x)=0, \lambda和g(x)必有一为零
+\end{cases} \\
+\tag{*26}</script><p>上述公式的右边称为Karush-Kuhn-Tucker(简称KKT)条件。</p>
+<p>还有一个问题是 <script type="math/tex">\lambda</script> 的取值，在等式约束优化中，约束函数与目标函数的梯度只要满足平行即可；而在不等式约束中则不然，若 <script type="math/tex">\lambda\ne0</script>，这说明可行解 $x$ 是落在约束区域的边界上的，这是可行解应尽量靠近无约束时的解，所以在约束边界上，目标函数的负梯度方向应该远离约束区域朝向无约束时的解，此时正好可得约束函数的梯度方向与目标函数的负梯度方向应该相同，即$\nabla f(x$*$)$的方向必定与$\nabla g(x$*$)$的方向相反，即存在$\lambda\gt0$使得：</p>
+<script type="math/tex; mode=display">
+\nabla f(x^*)+\lambda\nabla g(x^*)=0
+\tag{*27}</script><p>这个问题可以举一个形象的例子，假设你去爬山，目标是山顶，但有一个障碍挡住了通向山顶的路，所以只能沿着障碍爬到尽可能靠近山顶的位置，然后望着山顶叹叹气，这里山顶便是目标函数的可行解，障碍便是约束函数的边界，此时的梯度方向一定是指向山顶的，与障碍的梯度同向，下图描述了这种情况：”</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/03/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E5%8F%8A%E5%AF%B9%E5%81%B6%E6%80%A7%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83/743682-20160731135042997-1216295518.png" alt="743682-20160731135042997-1216295518"></p>
+<p>对于不等式约束，只要满足KKT条件，依然可以使用拉格朗日乘子法解决，这个条件便是KKT条件。</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
+<li>《机器学习》-周志华</li>
+<li>《统计学习方法》-李航</li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xxrxxr/p/7538430.html">https://www.cnblogs.com/xxrxxr/p/7538430.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ooon/p/5721119.html">https://www.cnblogs.com/ooon/p/5721119.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/38586401">https://www.zhihu.com/question/38586401</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/28804123">https://zhuanlan.zhihu.com/p/28804123</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/feilong_csdn/article/details/62427148">https://blog.csdn.net/feilong_csdn/article/details/62427148</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+      
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+              <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
+              <a href="/tags/%E5%8D%B1%E6%9C%BA%E5%88%86/" rel="tag"># 危机分</a>
+              <a href="/tags/SVM/" rel="tag"># SVM</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/04/03/hexo%E5%91%BD%E4%BB%A4%E5%92%8Cmarkdown%E8%AF%AD%E6%B3%95%E8%AE%B0%E5%BD%95/" rel="prev" title="hexo命令和markdown语法记录">
+      <i class="fa fa-chevron-left"></i> hexo命令和markdown语法记录
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/04/08/echarts%E4%BD%BF%E7%94%A8%E7%9B%B8%E5%85%B3/" rel="next" title="echarts使用相关">
+      echarts使用相关 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SVM"><span class="nav-number">1.</span> <span class="nav-text">SVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%A7%8B%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">原始问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E5%81%B6%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">对偶问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SMO%E7%AE%97%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">SMO算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E5%8F%98%E9%87%8F%E4%BA%8C%E6%AC%A1%E8%A7%84%E5%88%92%E7%9A%84%E6%B1%82%E8%A7%A3%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.1.</span> <span class="nav-text">两个变量二次规划的求解方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E7%9A%84%E9%80%89%E6%8B%A9%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.2.</span> <span class="nav-text">变量的选择方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">拉格朗日乘子法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%A7%8B%E9%97%AE%E9%A2%98-1"><span class="nav-number">2.1.</span> <span class="nav-text">原始问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E5%81%B6%E9%97%AE%E9%A2%98-1"><span class="nav-number">2.2.</span> <span class="nav-text">对偶问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%A7%8B%E9%97%AE%E9%A2%98%E5%92%8C%E5%AF%B9%E5%81%B6%E9%97%AE%E9%A2%98%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">2.3.</span> <span class="nav-text">原始问题和对偶问题的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E6%84%8F%E4%B9%89"><span class="nav-number">2.4.</span> <span class="nav-text">几何意义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E7%BA%A6%E6%9D%9F%E6%83%85%E5%86%B5"><span class="nav-number">2.4.1.</span> <span class="nav-text">单约束情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%A6%E6%9D%9F%E6%83%85%E5%86%B5"><span class="nav-number">2.4.2.</span> <span class="nav-text">多约束情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KKT%E6%9D%A1%E4%BB%B6"><span class="nav-number">2.4.3.</span> <span class="nav-text">KKT条件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">3.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lifengjun"
+      src="https://avatars0.githubusercontent.com/u/25082467?v=4">
+  <p class="site-author-name" itemprop="name">lifengjun</p>
+  <div class="site-description" itemprop="description">个人学习笔记和日志</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/543877815" title="GitHub → https://github.com/543877815" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:543877815@qq.com" title="E-Mail → mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lifengjun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '970dc8fd856c3e17f9f0',
+      clientSecret: '7f6d29828dd1f4a02336c480ba1012f1851b0eb0',
+      repo        : '543877815.github.io',
+      owner       : '543877815',
+      admin       : ['543877815'],
+      id          : '235f309bd219d244094110e1103fa6f3',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(a){a.imageLazyLoadSetting.processImages=t;var e=a.imageLazyLoadSetting.isSPA,i=a.imageLazyLoadSetting.preloadRatio||1,o=r();function r(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(o=r());for(var t,n=0;n<o.length;n++)0<=(t=(t=o[n]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(a.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var e=o[n];!function(t,e){if(t.hasAttribute("bg-lazy"))return t.removeAttribute("bg-lazy"),e&&e();var n=new Image,a=t.getAttribute("data-original");n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a)}(e,function(){o=o.filter(function(t){return e!==t}),a.imageLazyLoadSetting.onImageLoaded&&a.imageLazyLoadSetting.onImageLoaded(e)})}()}function n(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",n),a.addEventListener("resize",n),a.addEventListener("orientationchange",n)}(this);</script></body>
+</html>

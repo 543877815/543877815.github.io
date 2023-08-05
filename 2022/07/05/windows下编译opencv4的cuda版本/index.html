@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="之前在学习cuda和使用opencv来加速图像处理，同时由于用惯了jetbrain系列，所以不想用vs来写代码，于是在配环境的时候看了很多网上的教程踩了很多坑，大概弄了3天才弄好，不过最近又手贱重装了cuda，所以之前编译的包不能用了，重新配置的时候感觉又忘了很多东西，于是决定写一篇博客来记录下之前操作，可能不是很全，重装电脑的时候再补充。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows下编译opencv4的cuda版本，结合clion的食用方法">
+<meta property="og:url" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/index.html">
+<meta property="og:site_name" content="逗比学长的博客">
+<meta property="og:description" content="之前在学习cuda和使用opencv来加速图像处理，同时由于用惯了jetbrain系列，所以不想用vs来写代码，于是在配环境的时候看了很多网上的教程踩了很多坑，大概弄了3天才弄好，不过最近又手贱重装了cuda，所以之前编译的包不能用了，重新配置的时候感觉又忘了很多东西，于是决定写一篇博客来记录下之前操作，可能不是很全，重装电脑的时候再补充。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="article:published_time" content="2022-07-05T11:04:04.000Z">
+<meta property="article:modified_time" content="2023-08-05T14:25:12.890Z">
+<meta property="article:author" content="lifengjun">
+<meta property="article:tag" content="clion">
+<meta property="article:tag" content="opencv4">
+<meta property="article:tag" content="cuda">
+<meta property="article:tag" content="c++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lifengjun.xin/images/loading.gif">
+
+<link rel="canonical" href="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+
+  <title>windows下编译opencv4的cuda版本，结合clion的食用方法 | 逗比学长的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/543877815" class="github-corner" aria-label="View source on GitHub">
+    <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#000000; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+    <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">逗比学长的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">博客是写给我自己看的（叉腰）</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-quick-check">
+
+    <a href="/quick-check" rel="section"><i class="fa fa-calendar fa-fw"></i>速查</a>
+
+  </li>
+        <li class="menu-item menu-item-portal">
+
+    <a href="/portal" rel="section"><i class="fa fa-rocket fa-fw"></i>传送门</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          windows下编译opencv4的cuda版本，结合clion的食用方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-05 19:04:04" itemprop="dateCreated datePublished" datetime="2022-07-05T19:04:04+08:00">2022-07-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-05 22:25:12" itemprop="dateModified" datetime="2023-08-05T22:25:12+08:00">2023-08-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>之前在学习cuda和使用opencv来加速图像处理，同时由于用惯了jetbrain系列，所以不想用vs来写代码，于是在配环境的时候看了很多网上的教程踩了很多坑，大概弄了3天才弄好，不过最近又手贱重装了cuda，所以之前编译的包不能用了，重新配置的时候感觉又忘了很多东西，于是决定写一篇博客来记录下之前操作，可能不是很全，重装电脑的时候再补充。</p>
+<span id="more"></span>
+<h1 id="基础环境"><a href="#基础环境" class="headerlink" title="基础环境"></a>基础环境</h1><p>我主机使用的是操作系统x64，GPU是RTX 3080，有的环境太高了反而不好使，因此是如下环境：</p>
+<ul>
+<li>cuda-toolkit：11.4，下载地址：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-toolkit-archive">https://developer.nvidia.com/cuda-toolkit-archive</a></li>
+<li>cudnn：8.4.1，下载地址：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/rdp/cudnn-download">https://developer.nvidia.com/rdp/cudnn-download</a></li>
+<li>opencv：4.5.5，下载地址：<a target="_blank" rel="noopener" href="https://opencv.org/releases/，这里得下载源码">https://opencv.org/releases/，这里得下载源码</a> source</li>
+<li>opencv_contrib：4.5.5，下载地址：<a target="_blank" rel="noopener" href="https://github.com/opencv/opencv_contrib/tags，该版本要与opencv一致">https://github.com/opencv/opencv_contrib/tags，该版本要与opencv一致</a></li>
+<li>cmake：3.19.1，下载地址：<a target="_blank" rel="noopener" href="https://cmake.org/download/">https://cmake.org/download/</a></li>
+<li>visual Studio build tool：2019，下载地址：<a target="_blank" rel="noopener" href="https://visualstudio.microsoft.com/downloads/">https://visualstudio.microsoft.com/downloads/</a></li>
+<li>clion：2022.1，下载地址：<a target="_blank" rel="noopener" href="https://www.jetbrains.com/zh-cn/clion/download/#section=windows，该编译器要比较新才行，否则无法debug">https://www.jetbrains.com/zh-cn/clion/download/#section=windows，该编译器要比较新才行，否则无法debug</a></li>
+</ul>
+<h1 id="CUDA-toolkit-amp-amp-cudnn"><a href="#CUDA-toolkit-amp-amp-cudnn" class="headerlink" title="CUDA-toolkit &amp;&amp; cudnn"></a>CUDA-toolkit &amp;&amp; cudnn</h1><h2 id="CUDA安装配置"><a href="#CUDA安装配置" class="headerlink" title="CUDA安装配置"></a>CUDA安装配置</h2><p>CUDA下载安装包后正常安装，安装完毕后重启电脑，随后加一下系统变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.4\bin</span><br><span class="line">C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.4\libnvvp(不是必须，是解决bug后加的)</span><br><span class="line">C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.4\extras\CUPTI\lib64(不是必须，是解决bug后加的)</span><br></pre></td></tr></table></figure>
+<p>能够使用<code>nvidia-smi</code>进行环境则证明安装成功</p>
+<h2 id="CUDNN安装配置"><a href="#CUDNN安装配置" class="headerlink" title="CUDNN安装配置"></a>CUDNN安装配置</h2><p>将下载的文件如<code>cudnn-11.4-windows-x64-v8.1.1.33.zip</code>解压后将内容</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[path]<span class="regexp">/cudnn-windows-x86_64-8.4.1.50_cuda11.6-archive/</span>bin/</span><br><span class="line">[path]<span class="regexp">/cudnn-windows-x86_64-8.4.1.50_cuda11.6-archive/i</span>nclude/</span><br><span class="line">[path]<span class="regexp">/cudnn-windows-x86_64-8.4.1.50_cuda11.6-archive/</span>lib/</span><br></pre></td></tr></table></figure>
+<p>分别复制于进行合并</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:<span class="string">\Program</span> Files<span class="string">\NVIDIA</span> GPU Computing Toolkit<span class="string">\CUDA\v11.4\bin</span></span><br><span class="line">C:<span class="string">\Program</span> Files<span class="string">\NVIDIA</span> GPU Computing Toolkit<span class="string">\CUDA\v11.4\include</span></span><br><span class="line">C:<span class="string">\Program</span> Files<span class="string">\NVIDIA</span> GPU Computing Toolkit<span class="string">\CUDA\v11.4\lib</span></span><br></pre></td></tr></table></figure>
+<p>于 <code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.4\extras\demo_suite</code> 中执行 <code>deviceQuery.exe</code> 若Result显示为PASS则证明安装成功：</p>
+<p><img src="/images/loading.gif" data-original="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/1.png" alt="1"></p>
+<h1 id="opencv编译"><a href="#opencv编译" class="headerlink" title="opencv编译"></a>opencv编译</h1><p>可以把opencv_contrib的代码解压到opencv的源码中，并创建一个 <code>vs2019-cuda11-build</code>  文件夹用于存放编译后库，我的目录如下：</p>
+<figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="string">opencv4.5.5</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">vs2019-cuda11-build</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">source</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">3rdparty</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">apps</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">cmake</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">data</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">doc</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">include</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">modules</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">opencv_contrib</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">platforms</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">samples</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">... (other files)</span></span><br></pre></td></tr></table></figure>
+<h2 id="第一次configure"><a href="#第一次configure" class="headerlink" title="第一次configure"></a>第一次configure</h2><p>使用 <code>[cmake_path]\path\bin</code> 下的 <code>cmake-gui.exe</code> 的图形化界面进行编译配置，首先选择 <code>source code</code> 和 <code>Where to build the binaries</code> ：</p>
+<p><img src="/images/loading.gif" data-original="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2.png" alt="2"></p>
+<p>点击 <code>configure</code> 后弹出以下窗口，根据自己主机的环境配置进行选择：</p>
+<p><img src="/images/loading.gif" data-original="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/3.png"></p>
+<p>点击 <code>Finish</code> 后，第一次 <code>configure</code> 完成之后，过程中会有很多文件大概率下载失败，比如：<code>opencv_videoio_ffmpeg.dll</code> ，窗口有红字提示。</p>
+<p>打开 <code>D:/opencv4.5.5/vs2019-cuda11-build/CMakeDownloadLog.txt</code> 看里面的日志</p>
+<p><img src="/images/loading.gif" data-original="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/4.png"></p>
+<p>分析推断下载地址为：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/opencv/opencv_3rdparty/4d348507d156ec797a88a887cfa7f9129a35afac/ffmpeg/opencv_videoio_ffmpeg_64.dll，实验检验后，发现下载文件">https://raw.githubusercontent.com/opencv/opencv_3rdparty/4d348507d156ec797a88a887cfa7f9129a35afac/ffmpeg/opencv_videoio_ffmpeg_64.dll，实验检验后，发现下载文件</a> <code>opencv_videoio_ffmpeg_64.dll</code> 后不能直接放入<code>D:\opencv4.5.5\source\3rdparty\ffmpeg</code> 中，需要将其重命名为 <code>20deefbfe023c8b8d11a52e5a6527c6a-opencv_videoio_ffmpeg_64.dll</code> 并放入 <code>D:\opencv4.5.5\source\.cache\ffmpeg</code> 中，让编译程序检验 md5 和自动重命名拷贝。<strong>对后续下载失败的文件皆是如此操作，不再赘述。</strong></p>
+<h2 id="第二次configure"><a href="#第二次configure" class="headerlink" title="第二次configure"></a>第二次configure</h2><p>添加 </p>
+<p>下面要进行进一步的 <code>configure</code> 配置，在 search 中输入 <code>cuda</code> 并勾选相关选项以支持 cuda：</p>
+<p><img src="/images/loading.gif" data-original="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/5.png"></p>
+<p><code>OPENCV_EXTRA_MODULES_PATH</code> 选择 <code>opencv_contrib\modules</code> 所在目录：</p>
+<p><img src="/images/loading.gif" data-original="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/6.png"></p>
+<p><code>World</code> 勾选相关选项以支持包的集成。</p>
+<p><img src="/images/loading.gif" data-original="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/7.png"></p>
+<p>再次点击 <code>configure</code> 。</p>
+<h2 id="第三次configure"><a href="#第三次configure" class="headerlink" title="第三次configure"></a>第三次configure</h2><p><code>fast</code> 勾选相关选项以支持快速数学运算</p>
+<p><img src="/images/loading.gif" data-original="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/8.png"></p>
+<p><code>CUDA_ARCH_BIN</code> 中可以删除无关的配置加快编译速度，可以从 <code>deviceQuery.exe</code> 的结果中查询到，本机的架构为 <code>8.6</code> 。更多请查看<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-gpus#collapseOne">英伟达官网</a>的 <code>CUDA-Enabled GeForce and TITAN Products</code> 中配置详解。</p>
+<p><img src="/images/loading.gif" data-original="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/9.png"></p>
+<p>最后点击 <code>Generate</code> 。</p>
+<h1 id="vs-构建"><a href="#vs-构建" class="headerlink" title="vs 构建"></a>vs 构建</h1><p>visual studio在安装时需要勾选 <code>使用c++的桌面开发</code>，安装结束后将 <code>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64</code> 加入环境变量</p>
+<h2 id="Release"><a href="#Release" class="headerlink" title="Release"></a>Release</h2><p>于 <code>D:/opencv4.5.5/vs2019-cuda11-build</code> 中用visual studio打开 <code>OpenCV.sln</code> ，于“解决方案资源管理器中”分别找到 <code>CMakeTargets\ALL_BUILD</code> 和 <code>CMakeTargets\INSTALL</code>，选择 <code>Release</code> 下的 <code>x64</code> 模式进行构建。构建成功后会在 <code>D:\opencv4.5.5\vs2019-cuda11-build\install\x64\vc16\bin</code> 下生成 <code>opencv_world455.dll</code> 等文件：</p>
+<p><img src="/images/loading.gif" data-original="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/10.png"></p>
+<h2 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h2><p>同样如果选择 <code>Debug</code> 下的 <code>x64</code> 模型进行构建。构建成功后会在 <code>D:\opencv4.5.5\vs2019-cuda11-build\install\x64\vc16\bin</code> 下生成 <code>opencv_world455d.dll</code> 等文件：</p>
+<p><img src="/images/loading.gif" data-original="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/11.png"></p>
+<h1 id="Clion中使用"><a href="#Clion中使用" class="headerlink" title="Clion中使用"></a>Clion中使用</h1><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="Toolchains"><a href="#Toolchains" class="headerlink" title="Toolchains"></a>Toolchains</h3><p>创建新的 <code>Visual Studio</code> 的环境，<code>Toolset</code> 选择刚刚用于编译 opencv 的 Visual Studio 2019 的位置 <code>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community</code></p>
+<p><img src="/images/loading.gif" data-original="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/12.png"></p>
+<h3 id="Cmake"><a href="#Cmake" class="headerlink" title="Cmake"></a>Cmake</h3><p>分别配置 <code>Release</code> 和 <code>Debug</code> 中的两种 build type：</p>
+<p><img src="/images/loading.gif" data-original="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/13.png"></p>
+<p><img src="/images/loading.gif" data-original="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/14.png"></p>
+<h3 id="CMakeLists-txt"><a href="#CMakeLists-txt" class="headerlink" title="CMakeLists.txt"></a>CMakeLists.txt</h3><p>参考的 CMakeLists.txt 编写如下：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Project(CUDA_Freshman CXX C CUDA)</span><br><span class="line"></span><br><span class="line">cmake_minimum_required(VERSION 3.17 FATAL_ERROR)</span><br><span class="line"></span><br><span class="line">set(CMAKE_CUDA_STANDARD 14)</span><br><span class="line">set(CUDA_NVCC_FLAGS -gencode arch=compute_86,code=sm_86;-G;-g)</span><br><span class="line">set(CMAKE_NVCC_FLAGS &quot;CMAKE_NVCC_FLAGS -std=c++11&quot;)</span><br><span class="line"></span><br><span class="line">set(OpenCV_DIR E:\\opencv4.5.5\\vs2019-cuda11-build)</span><br><span class="line">set(CUDA_DIR C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v11.2)</span><br><span class="line"></span><br><span class="line">find_package(CUDA REQUIRED)</span><br><span class="line">find_package(OpenCV REQUIRED)</span><br><span class="line"></span><br><span class="line">include_directories(&quot;$&#123;CUDA_INCLUDE_DIRS&#125;&quot;)</span><br><span class="line">include_directories($&#123;OpenCV_INCLUDE_DIRS&#125;)</span><br><span class="line"></span><br><span class="line">file(GLOB_RECURSE CURRENT_HEADERS *.h *.hpp *.cuh)</span><br><span class="line">file(GLOB CURRENT_SOURCES *.cpp *.cu)</span><br><span class="line"></span><br><span class="line">add_executable(matrix_mult $&#123;CURRENT_HEADERS&#125; $&#123;CURRENT_SOURCES&#125;)</span><br><span class="line"></span><br><span class="line">target_link_libraries(matrix_mult $&#123;CUDA_LIBRARIES&#125;)</span><br><span class="line">target_link_libraries(matrix_mult $&#123;OpenCV_LIBRARIES&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>测试代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/core/cuda.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cuda;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printCudaDeviceInfo</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出以下信息则证明配置成功</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">*** CUDA Device Query (Runtime API) version (CUDART static linking) ***</span><br><span class="line"></span><br><span class="line">Device count: 1</span><br><span class="line"></span><br><span class="line">Device 0: &quot;NVIDIA GeForce RTX 3080&quot;</span><br><span class="line">  CUDA Driver Version / Runtime Version          11.40 / 11.40</span><br><span class="line">  CUDA Capability Major/Minor version number:    8.6</span><br><span class="line">  Total amount of global memory:                 10240 MBytes (10737418240 bytes)</span><br><span class="line">  GPU Clock Speed:                               1.74 GHz</span><br><span class="line">  Max Texture Dimension Size (x,y,z)             1D=(131072), 2D=(131072,65536), 3D=(16384,16384,16384)</span><br><span class="line">  Max Layered Texture Size (dim) x layers        1D=(32768) x 2048, 2D=(32768,32768) x 2048</span><br><span class="line">  Total amount of constant memory:               65536 bytes</span><br><span class="line">  Total amount of shared memory per block:       49152 bytes</span><br><span class="line">  Total number of registers available per block: 65536</span><br><span class="line">  Warp size:                                     32</span><br><span class="line">  Maximum number of threads per block:           1024</span><br><span class="line">  Maximum sizes of each dimension of a block:    1024 x 1024 x 64</span><br><span class="line">  Maximum sizes of each dimension of a grid:     2147483647 x 65535 x 65535</span><br><span class="line">  Maximum memory pitch:                          2147483647 bytes</span><br><span class="line">  Texture alignment:                             512 bytes</span><br><span class="line">  Concurrent copy and execution:                 Yes with 5 copy engine(s)</span><br><span class="line">  Run time limit on kernels:                     Yes</span><br><span class="line">  Integrated GPU sharing Host Memory:            No</span><br><span class="line">  Support host page-locked memory mapping:       Yes</span><br><span class="line">  Concurrent kernel execution:                   Yes</span><br><span class="line">  Alignment requirement for Surfaces:            Yes</span><br><span class="line">  Device has ECC support enabled:                No</span><br><span class="line">  Device is using TCC driver mode:               No</span><br><span class="line">  Device supports Unified Addressing (UVA):      Yes</span><br><span class="line">  Device PCI Bus ID / PCI location ID:           1 / 0</span><br><span class="line">  Compute Mode:</span><br><span class="line">      Default (multiple host threads can use ::cudaSetDevice() with device simultaneously)</span><br><span class="line"></span><br><span class="line">deviceQuery, CUDA Driver = CUDART, CUDA Driver Version  = 11.40, CUDA Runtime Version = 11.40, NumDevs = 1</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+      
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/clion/" rel="tag"># clion</a>
+              <a href="/tags/opencv4/" rel="tag"># opencv4</a>
+              <a href="/tags/cuda/" rel="tag"># cuda</a>
+              <a href="/tags/c/" rel="tag"># c++</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/01/leetcode%E7%9A%84%E5%A5%87%E6%80%AA%E6%93%8D%E4%BD%9C/" rel="prev" title="leetcode的奇怪操作">
+      <i class="fa fa-chevron-left"></i> leetcode的奇怪操作
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/14/Study-of-optical-flow/" rel="next" title="Study of optical flow">
+      Study of optical flow <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">基础环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CUDA-toolkit-amp-amp-cudnn"><span class="nav-number">2.</span> <span class="nav-text">CUDA-toolkit &amp;&amp; cudnn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CUDA%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">CUDA安装配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CUDNN%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">CUDNN安装配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#opencv%E7%BC%96%E8%AF%91"><span class="nav-number">3.</span> <span class="nav-text">opencv编译</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1configure"><span class="nav-number">3.1.</span> <span class="nav-text">第一次configure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1configure"><span class="nav-number">3.2.</span> <span class="nav-text">第二次configure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AC%A1configure"><span class="nav-number">3.3.</span> <span class="nav-text">第三次configure</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vs-%E6%9E%84%E5%BB%BA"><span class="nav-number">4.</span> <span class="nav-text">vs 构建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Release"><span class="nav-number">4.1.</span> <span class="nav-text">Release</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debug"><span class="nav-number">4.2.</span> <span class="nav-text">Debug</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Clion%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">Clion中使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">5.1.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Toolchains"><span class="nav-number">5.1.1.</span> <span class="nav-text">Toolchains</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cmake"><span class="nav-number">5.1.2.</span> <span class="nav-text">Cmake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CMakeLists-txt"><span class="nav-number">5.1.3.</span> <span class="nav-text">CMakeLists.txt</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">5.2.</span> <span class="nav-text">测试</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lifengjun"
+      src="https://avatars0.githubusercontent.com/u/25082467?v=4">
+  <p class="site-author-name" itemprop="name">lifengjun</p>
+  <div class="site-description" itemprop="description">个人学习笔记和日志</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/543877815" title="GitHub → https://github.com/543877815" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:543877815@qq.com" title="E-Mail → mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lifengjun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '970dc8fd856c3e17f9f0',
+      clientSecret: '7f6d29828dd1f4a02336c480ba1012f1851b0eb0',
+      repo        : '543877815.github.io',
+      owner       : '543877815',
+      admin       : ['543877815'],
+      id          : '6f24ee996189ccc43e1f7692c862ee45',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(a){a.imageLazyLoadSetting.processImages=t;var e=a.imageLazyLoadSetting.isSPA,i=a.imageLazyLoadSetting.preloadRatio||1,o=r();function r(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(o=r());for(var t,n=0;n<o.length;n++)0<=(t=(t=o[n]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(a.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var e=o[n];!function(t,e){if(t.hasAttribute("bg-lazy"))return t.removeAttribute("bg-lazy"),e&&e();var n=new Image,a=t.getAttribute("data-original");n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a)}(e,function(){o=o.filter(function(t){return e!==t}),a.imageLazyLoadSetting.onImageLoaded&&a.imageLazyLoadSetting.onImageLoaded(e)})}()}function n(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",n),a.addEventListener("resize",n),a.addEventListener("orientationchange",n)}(this);</script></body>
+</html>

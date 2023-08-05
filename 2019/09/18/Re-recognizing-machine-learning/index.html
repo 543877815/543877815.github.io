@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="这篇文章是我在网易云上学习吴恩达机器学习做的一些总结，虽然之前有学习过，但是感觉还是没有很好地吸收总结。另外有的不知道怎么组织语言的就参考了黄广海博士的翻译和笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Re-recognizing Machine Learning">
+<meta property="og:url" content="https://lifengjun.xin/2019/09/18/Re-recognizing-machine-learning/index.html">
+<meta property="og:site_name" content="逗比学长的博客">
+<meta property="og:description" content="这篇文章是我在网易云上学习吴恩达机器学习做的一些总结，虽然之前有学习过，但是感觉还是没有很好地吸收总结。另外有的不知道怎么组织语言的就参考了黄广海博士的翻译和笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="article:published_time" content="2019-09-18T13:09:55.000Z">
+<meta property="article:modified_time" content="2020-11-13T13:55:58.805Z">
+<meta property="article:author" content="lifengjun">
+<meta property="article:tag" content="machine learning">
+<meta property="article:tag" content="deep learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lifengjun.xin/images/loading.gif">
+
+<link rel="canonical" href="https://lifengjun.xin/2019/09/18/Re-recognizing-machine-learning/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+
+  <title>Re-recognizing Machine Learning | 逗比学长的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/543877815" class="github-corner" aria-label="View source on GitHub">
+    <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#000000; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+    <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">逗比学长的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">博客是写给我自己看的（叉腰）</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-quick-check">
+
+    <a href="/quick-check" rel="section"><i class="fa fa-calendar fa-fw"></i>速查</a>
+
+  </li>
+        <li class="menu-item menu-item-portal">
+
+    <a href="/portal" rel="section"><i class="fa fa-rocket fa-fw"></i>传送门</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2019/09/18/Re-recognizing-machine-learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Re-recognizing Machine Learning
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-09-18 21:09:55" itemprop="dateCreated datePublished" datetime="2019-09-18T21:09:55+08:00">2019-09-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-13 21:55:58" itemprop="dateModified" datetime="2020-11-13T21:55:58+08:00">2020-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>这篇文章是我在网易云上学习吴恩达机器学习做的一些总结，虽然之前有学习过，但是感觉还是没有很好地吸收总结。另外有的不知道怎么组织语言的就参考了黄广海博士的翻译和笔记。</p>
+<span id="more"></span>
+<p><strong>Resource</strong></p>
+<p>course:</p>
+<p>网易云课堂：<a target="_blank" rel="noopener" href="https://study.163.com/course/courseMain.htm?courseId=1004570029">吴恩达机器学习</a></p>
+<p>PPT：<a target="_blank" rel="noopener" href="https://github.com/fengdu78/Coursera-ML-AndrewNg-Notes">https://github.com/fengdu78/Coursera-ML-AndrewNg-Notes</a></p>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="机器学习解决的问题"><a href="#机器学习解决的问题" class="headerlink" title="机器学习解决的问题?"></a><strong>机器学习解决的问题?</strong></h2><p>不只是AI，也为其他计算机任务赋能，比如：</p>
+<ul>
+<li><p>数据库挖掘：点击流数据，医疗记录，计算生物学，工程领域</p>
+</li>
+<li><p><strong>简单编程无法完成的任务</strong>：自动驾驶，手写识别，自然语言处理，计算机视觉</p>
+</li>
+<li>自定义的任务：产品（Amazon，Netflix，iTunes Genius)推荐系统</li>
+<li>理解人类的学习和了解大脑</li>
+</ul>
+<h2 id="机器学习的定义？"><a href="#机器学习的定义？" class="headerlink" title="机器学习的定义？"></a><strong>机器学习的定义？</strong></h2><p>TomMitchell (1998) Well-posed Learning Problem: A computer program is said to <em>learn</em> from experience E with respect to some task T and some performance measure P, if its performance on T, as measured by P, improves with experience E. (一个程序被认为能从经验 E 中学习，解决任务 T，达到性能度量值P，当且仅当，有了经验 E 后，经过 P 评判，程序在处理 T 时的性能有所提升。)</p>
+<h1 id="符号表示"><a href="#符号表示" class="headerlink" title="符号表示"></a>符号表示</h1><ul>
+<li><p>大写字母$A$：一般表示矩阵</p>
+</li>
+<li><p>小写字母$a$：一般表示向量，向量一般为列向量，故$\theta^{T}x$为标量</p>
+</li>
+<li><p>$x_i$：第i个样本</p>
+</li>
+<li><p>$x_i^{(j)}$：第i个样本的第j个特征</p>
+</li>
+<li><p>$\mathbb R$$^n$：n维向量</p>
+</li>
+</ul>
+<p>神经网络中：</p>
+<ul>
+<li><p>$x^i$: 第i个训练样本</p>
+</li>
+<li><p>$z^{l}$: 第l层的Z值</p>
+</li>
+<li><p>$X^$: mini-batch gradient descent的抽样</p>
+</li>
+</ul>
+<h1 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h1><h2 id="算法框架"><a href="#算法框架" class="headerlink" title="算法框架"></a>算法框架</h2><p>Hypothesis、Parameters、Cost Function、Goal</p>
+<p>给定假设函数与参数，构造损失函数进行优化</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&Hpyothesis: \;h_\theta(x)=\theta_0+\theta_1x\\
+&Parameters: \;\theta_0,\theta_1\\
+&Cost\;Function: \;J(\theta_0,\theta_1)=\frac{1}{2m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2+\frac{\lambda}{2m}(\sum^n_{j=1}\theta_j^2)\\
+&Goal: \;\min_{\theta_0,\theta_1}\;J(\theta_0,\theta_1)
+\end{align}</script><p>假设函数与损失函数的直观表示</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/2.png" width="75%" height="75%"></p>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h3 id="Batch-梯度下降法"><a href="#Batch-梯度下降法" class="headerlink" title="(Batch)梯度下降法"></a><strong>(Batch)梯度下降法</strong></h3><h4 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h4><p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/3.png" width="50%" height="50%"></p>
+<h4 id="直观表现"><a href="#直观表现" class="headerlink" title="直观表现"></a>直观表现</h4><p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/4.png" width="75%" height="75%"></p>
+<p>有点类似使用贪心算法下山</p>
+<h4 id="实现描述"><a href="#实现描述" class="headerlink" title="实现描述"></a>实现描述</h4><ul>
+<li>关键：同步更新</li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/5.png" width="75%"></p>
+<h4 id="几何意义"><a href="#几何意义" class="headerlink" title="几何意义"></a>几何意义</h4><ul>
+<li><p>后一时刻的可以用$\theta$前一时刻的$\theta$进行递推</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/6.png" width="75%"></p>
+</li>
+<li><p>偏导数：斜率，作用是使参数朝着损失函数（局部/全局）最优解推进</p>
+</li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/7.png" width="75%"></p>
+<ul>
+<li>偏导数推导</li>
+</ul>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial}{\partial \theta_j}J(\theta_0,\theta_1)
+&=\frac{\partial}{\partial \theta_j}*\frac{1}{2m}\sum_{i=1}^n(h_\theta(x^{(i)})-y^{(i)})^2 \\
+&=\frac{\partial}{\partial \theta_j}*\frac{1}{2m}\sum_{i=1}^n(\theta_0+\theta_1x^{(i)}-y^{(i)})^2\\
+j = 0: \frac{\partial}{\partial \theta_j}J(\theta_0,\theta_1)
+&=\frac{1}{m}\sum_{i=1}^n(h_\theta(x^{(i)})-y^{(i)}) \\
+\theta_0&=\theta_0-\alpha\frac{1}{m}\sum_{i=1}^n(h_\theta(x^{(i)})-y^{(i)}) \\
+j = 1: \frac{\partial}{\partial \theta_j}J(\theta_0,\theta_1)
+&=\frac{1}{m}\sum_{i=1}^n(h_\theta(x^{(i)})-y^{(i)})x_1^{(i)}\\
+\theta_1&=\theta_1-\alpha\frac{1}{m}\sum_{i=1}^n(h_\theta(x^{(i)})-y^{(i)})x_1^{(i)} \\
+\end{align}</script><ul>
+<li>学习率：参数改变的幅度。太小，梯度下降速度慢；太大，收敛甚至发散</li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/8.png" width="75%"></p>
+<h4 id="梯度下降法的问题"><a href="#梯度下降法的问题" class="headerlink" title="梯度下降法的问题"></a>梯度下降法的问题</h4><ul>
+<li>容易到达局部最优解</li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/9.png" width="75%"></p>
+<ul>
+<li>如果学习率不变，收敛速度将越来越慢</li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/10.png" width="75%"></p>
+<ul>
+<li><p>学习率太小：收敛太慢；学习率太大，可能不收敛甚至发散</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/14.png" width="75%"></p>
+</li>
+<li><p>“Batch”: 每次迭代需要遍历所有训练样本，若样本过大，速度会比较慢</p>
+</li>
+</ul>
+<h4 id="梯度下降的技巧"><a href="#梯度下降的技巧" class="headerlink" title="梯度下降的技巧"></a>梯度下降的技巧</h4><ul>
+<li><p>加快梯度下降收敛</p>
+<p><strong>Feature Scaling</strong></p>
+<p>$x_i=\frac{x_i}{max-min}$</p>
+</li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/11.png" width="75%"></p>
+<p>​    <strong>Mean normalization</strong></p>
+<p>​    $x_i=\frac{x_i-\bar{x}}{max-min}$</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/12.png" width="75%"></p>
+<ul>
+<li>学习率的选择：每10倍或者每3倍进行改变，直到选择到一个不太大也不太小的学习率，能使函数收敛并且运行速度较快</li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/16.png" width="75%"></p>
+<ul>
+<li><p>自动收敛检验，如果前后两次损失函数小于$\epsilon$则认为计算收敛</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/17.png" width="75%"></p>
+</li>
+</ul>
+<h3 id="正规方程"><a href="#正规方程" class="headerlink" title="正规方程"></a>正规方程</h3><h4 id="构造"><a href="#构造" class="headerlink" title="构造"></a>构造</h4><ul>
+<li>直观形式</li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/18.png" width="75%"></p>
+<ul>
+<li><p>符号形式</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/19.png" width="75%"></p>
+</li>
+</ul>
+<h4 id="X-TX-为非可逆矩阵的原因"><a href="#X-TX-为非可逆矩阵的原因" class="headerlink" title="$X^TX$为非可逆矩阵的原因"></a>$X^TX$为非可逆矩阵的原因</h4><p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/20.png" width="75%"></p>
+<h3 id="梯度下降法和正规方程取舍"><a href="#梯度下降法和正规方程取舍" class="headerlink" title="梯度下降法和正规方程取舍"></a>梯度下降法和正规方程取舍</h3><ul>
+<li>当特征数小于10000时更加倾向于使用正规方程求解参数$\theta$，当特征数大于10000时使用梯度下降直接迭代会更好</li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/21.png" width="60%"></p>
+<h1 id="logistic回归"><a href="#logistic回归" class="headerlink" title="logistic回归"></a>logistic回归</h1><h2 id="算法框架-1"><a href="#算法框架-1" class="headerlink" title="算法框架"></a>算法框架</h2><script type="math/tex; mode=display">
+\begin{align}
+Hypothesis&: h_\theta(x)=g(\theta^TX)\\
+&\quad\;\ g(z)=\frac{1}{1+e^{-z}}\\
+Parameters&:\theta\\
+Cost\;Function&:J(\theta)=-\frac{1}{m}[\sum_{i=1}^ny^{(i)}log(h_\theta(x^{(i)}))+(1-y^{(i)})log(1-h_\theta(x^{(i)}))]\\
+goal&:\min_\theta J(\theta)
+\end{align}</script><h2 id="问题引入"><a href="#问题引入" class="headerlink" title="问题引入"></a>问题引入</h2><p>在分类问题中，我们希望输出$y$的取值为0或者1，如果使用线性回归，那么假设函数的输出值可能远大于1，或者远小于0。因此我们需要一个函数能够将输出值永远在0到1之间，即当假设函数大于等于0.5，预测$y=1$，当假设函数小于0.5，预测$y=0$。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/23.png" width="75%"></p>
+<p>为此引入logistic回归<script type="math/tex">g(z)=\frac{1}{1+e^{-z}}\\</script></p>
+<h2 id="决策界限"><a href="#决策界限" class="headerlink" title="决策界限"></a>决策界限</h2><p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/24.png" width="75%"></p>
+<p>在逻辑斯蒂回归中，我们预测：</p>
+<p>当$h_\theta(x)\ge0.5$时，预测 $y=1$。</p>
+<p>当$h_\theta(x)\lt0.5$时，预测 $y=0$。</p>
+<p>根据上面绘制出的 <strong>S</strong> 形函数图像，我们知道当</p>
+<p>$z=0$时$g(z)=0.5$ </p>
+<p>$z\gt0$ 时$g(z)\gt0.5$</p>
+<p>$z\lt0$ 时$g(z)\lt0.5$</p>
+<p>又$z=\theta^Tx$，即：$\theta^Tx\ge0$时，预测$y=1$；$\theta^Tx\lt0$时，预测$y=0$</p>
+<p>现在假设我们有一个模型：</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/25.png" width="70%"></p>
+<p>当参数$\theta$是向量$[-3\;1\;1]$，则当$\theta_0+\theta_1x_1+\theta_2 x_2\ge0$，模型将预测$y=1$。我们可以绘制直线$x_1+x_2=3$，将预测为1的区域和预测为0的区域分隔开。</p>
+<p>现在假设我们有另一个模型：</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/26.png" width="75%"></p>
+<p>当参数$\theta$是向量$[-1\;0\;0\;1\;1]$，则当$\theta_0+\theta_1x_1+\theta_2x_2+\theta_3x_1^2+\theta_4x_2^{2}\ge0$，模型将预测$y=1$。我们可以绘制圆形$x_1^2+x_2^2=1$，将预测为1的区域和预测为0的区域分隔开。</p>
+<p><strong>注意：决策界限不是训练集的属性，而是假设本身及其参数的属性，只要给定参数向量$\theta$，决策界限就确定了。</strong></p>
+<h2 id="代价函数"><a href="#代价函数" class="headerlink" title="代价函数"></a>代价函数</h2><p>对于线性回归模型，我们定义的代价函数是所有模型误差的平方和<script type="math/tex">J(\theta)=\frac{1}{m}\sum_{i=1}^m\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})</script>。理论上来说，我们也可以对逻辑回归模型沿用这个定义，但是问题在于，当我们将<script type="math/tex">h_\theta(x)=\frac{1}{1+e^{-\theta^Tx}}</script>带入到这样定义了的代价函数中时，我们得到的代价函数将是一个非凸函数（<strong>non-convexfunction</strong>）。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/27.png" width="75%"></p>
+<p>这意味着我们的代价函数有许多局部最小值，这将影响梯度下降算法寻找全局最小值。因此我们需要重新定义逻辑回归的代价函数为</p>
+<script type="math/tex; mode=display">
+\begin{align}
+J(\theta)&=\frac{1}{m}\sum_{i=1}^mCost(h_\theta(x^{(i)}),y^{(i)})\\
+Cost(h_\theta(x^{(i)}),y^{(i)})&=
+\begin{cases}
+-log(h_\theta(x))&  if\;y=1 \\
+-log(1-h_\theta(x))&  if\;y=0
+\end{cases} \\
+&=-[log(h_\theta(x^{(i)}))+(1-y^{(i)})log(1-h_\theta(x^{(i)}))]\\
+J(\theta)&=-\frac{1}{m}[\sum_{i=1}^ny^{(i)}log(h_\theta(x^{(i)}))+(1-y^{(i)})log(1-h_\theta(x^{(i)}))]\\
+\end{align}</script><p>这样做的意义就是希望当$y=1$的时候$h<em>\theta(x)$越接近1代价函数越小，越接近0代价函数越大；反之当$y=0$的时候$h</em>\theta(x)$越接近0代价函数越小，越接近1代价函数越大</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/28.png" width="75%"></p>
+<p>在得到这样一个代价函数以后，我们便可以用梯度下降算法来求得能使代价函数最小的参数了。算法为</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/29.png" width="75%"></p>
+<ul>
+<li>偏导数推导</li>
+</ul>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial}{\partial\theta_j}J(\theta_0,\theta_1)
+&=\frac{\partial}{\partial\theta_j}-\frac{1}{m}\sum_{i=1}^n[y^{(i)}log(h_\theta(x^{(i)}))+(1-y^{(i)})log(1-h_\theta(x^{(i)}))]\\
+&=\frac{\partial}{\partial \theta_j}-\frac{1}{m}\sum_{i=1}^n[y^{(i)}log(\frac{1}{1+e^{-\theta^Tx}})+(1-y^{(i)})log(1-\frac{1}{1+e^{-\theta^Tx}})]\\
+&=\frac{\partial}{\partial \theta_j}-\frac{1}{m}\sum_{i=1}^n[-y^{(i)}log({1+e^{-\theta^Tx}})-(1-y^{(i)})log({1+e^{\theta^Tx}})]\\
+&=-\frac{1}{m}\sum_{i=1}^n[-y^{(i)}\frac{-x_j^{(i)}e^{-\theta^Tx}}{1+e^{-\theta^Tx}}-(1-y^{(i)})\frac{x_j^{(i)}e^{\theta^Tx}}{1+e^{\theta^Tx}}]\\
+&=-\frac{1}{m}\sum_{i=1}^n[y^{(i)}\frac{x_j^{(i)}}{1+e^{\theta^Tx}}-(1-y^{(i)})\frac{x_j^{(i)}e^{\theta^Tx}}{1+e^{\theta^Tx}}]\\
+&=-\frac{1}{m}\sum_{i=1}^n[\frac{y^{(i)}{x_j^{(i)}-x_j^{(i)}e^{\theta^Tx}+y^{(i)}x_j^{(i)}e^{\theta^Tx}}}{1+e^{\theta^Tx}}]\\
+&=-\frac{1}{m}\sum_{i=1}^n[\frac{y^{(i)}{-e^{\theta^Tx}+y^{(i)}e^{\theta^Tx}}}{1+e^{\theta^Tx}}x_j^{(i)}]\\
+&=-\frac{1}{m}\sum_{i=1}^n[(y^{(i)}-\frac{e^{\theta^Tx}}{1+e^{\theta^Tx}})x_j^{(i)}]\\
+&=-\frac{1}{m}\sum_{i=1}^n[(y^{(i)}-\frac{1}{1+e^{-\theta^Tx}})x_j^{(i)}]\\
+&=\frac{1}{m}\sum_{i=1}^n[h_\theta(x^{(i)})-y^{(i)})x_j^{(i)}]
+\end{align}</script><h2 id="高级优化"><a href="#高级优化" class="headerlink" title="高级优化"></a>高级优化</h2><ul>
+<li><p>Gradient descent</p>
+</li>
+<li><p>Conjugate gradient（共轭梯度-fminunc）</p>
+<ul>
+<li>一般函数</li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/38.png" width="60%"></p>
+<ul>
+<li><p>加入了正则项</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/39.png" width="75%"></p>
+</li>
+</ul>
+</li>
+<li><p>BFGS</p>
+</li>
+<li><p>L-BFGS</p>
+</li>
+</ul>
+<h2 id="多分类：一对多"><a href="#多分类：一对多" class="headerlink" title="多分类：一对多"></a>多分类：一对多</h2><p>一对多的思想就是构造一个伪数据集，将多个类的中一个类标记为正向类$(y=1)$，将其他所有类都标记为负向类，这个模型记作<script type="math/tex">h_\theta^{(1)}(x)</script>。然后选择另一个类标记为正向类$(y=2)$，再将其他类都标记为正向类，这个模型记作<script type="math/tex">h_\theta^{(2)}(x)</script>，以此类推。最后得到一系列分类器记为：<script type="math/tex">h_\theta^{(i)}(x)=p(y=i|x;\theta), i=(1,2,3...k)</script></p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/31.png" width="75%"></p>
+<p>在做预测的时候，将所有分类器都运行一遍，然后对于每个输出变量，都选择可能性最高的作为输出，即$\max<em>ih</em>\theta^{(i)}(x)$。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/30.png" width="75%"></p>
+<h1 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h1><h2 id="过拟合问题"><a href="#过拟合问题" class="headerlink" title="过拟合问题"></a>过拟合问题</h2><p>由于<strong>特征维度过多，模型假设过于复杂，参数过多，训练数据过少，噪声过多</strong>，导致拟合的函数完美的预测训练集，但对新数据的测试集预测结果差。 过度的拟合了训练数据，而没有考虑到泛化能力。</p>
+<ul>
+<li>回归例子：</li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/32.png" width="75%"></p>
+<ul>
+<li>分类例子：</li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/33.png" width="75%"></p>
+<p>解决过拟合的方法：</p>
+<ol>
+<li>丢弃一些不能帮助我们正确预测的特征。可以是手工选择保留哪些特征，或者使用一些模型选择的算法来帮忙（例如<strong>PCA</strong>）</li>
+<li>正则化。 保留所有的特征，但是减少参数的大小（<strong>magnitude</strong>）。</li>
+</ol>
+<h2 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h2><p>在下面的右图中高次项的出现导致了过拟合的产生，所以如果我们能让这些高次项的系数接近于0的话，我们就能很好的拟合了。 所以我们要做的就是在一定程度上减小这些参数$\theta$的值，这就是正则化的基本方法。因此我们要做的就是修改代价函数，在$\theta_3$和$\theta_4$设置一点惩罚。这样的话，我们在尝试最小化代价函数的时候也需要将这个惩罚纳入考虑中，并最终导致选择较小一些的$\theta_3$和$\theta_4$。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/34.png" width="75%"></p>
+<h2 id="引入正则项"><a href="#引入正则项" class="headerlink" title="引入正则项"></a>引入正则项</h2><p>但是在实际的问题中，我们并不知道哪些系数是相关性较低的，或者是高次项的需要选择出来进行惩罚，所以需要为所有的参数都设置惩罚进行优化，于是加上正则项后的优化目标就是</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/35.png" width="75%"></p>
+<p>虽然这个函数并不是严格的二次函数，但是它相比原来的高次项函数更加地平滑。</p>
+<p>对于$\lambda$的选择，如果$\lambda$选择过大，相当于对所有参数都进行了惩罚，那么最终优化的结果将会导致所有参数趋向于0，而假设函数就只剩下一个常数项，这将会导致欠拟合。以对于正则化，我们要取一个合理的  的值，这样才能更好的应用正则化。</p>
+<h3 id="线性回归-1"><a href="#线性回归-1" class="headerlink" title="线性回归"></a>线性回归</h3><h4 id="梯度更新"><a href="#梯度更新" class="headerlink" title="梯度更新"></a>梯度更新</h4><script type="math/tex; mode=display">
+\begin{align}
+J(\theta)=\frac{1}{2m}\sum_{i=1}^{m}[((h_\theta(x^{(i)})-&y^{(i)})^{2})+\lambda\sum_{j=1}^{n}\theta_j^2)]\\
+Repeat\;until\;convergence&\{\\
+&\;\;\;\;\;\;\theta_0:={\theta_0}-a\frac{1}{m}\sum_{i=1}^{m}(({h_\theta}({x}^{(i)})-y^{(i)})x_0^{(i)}) \\
+&\;\;\;\;\;\;\theta_j:={\theta_j}-a[\frac{1}{m}\sum_{i=1}^{m}({h_\theta}({x}^{(i)})-y^{(i)})x_{j}^{(i)}+\frac{\lambda }{m}\theta_j]\\
+&\;\;\;\;\;\;for\;j=1,2,...n\\
+&\}
+\end{align}</script><h4 id="正规方程-1"><a href="#正规方程-1" class="headerlink" title="正规方程"></a>正规方程</h4><p>加入正则项后的矩阵一定是可逆的</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/37.png" width="75%"></p>
+<p>如果特征数量是$n$那么方阵是一个$(n+1)*(n+1)$维的，并且对角元上除了第一个元素是0，其他元素都是1。</p>
+<h3 id="logistic回归-1"><a href="#logistic回归-1" class="headerlink" title="logistic回归"></a>logistic回归</h3><h4 id="梯度更新-1"><a href="#梯度更新-1" class="headerlink" title="梯度更新"></a>梯度更新</h4><script type="math/tex; mode=display">
+\begin{align}
+J(\theta)=-\frac{1}{m}[\sum_{i=1}^ny^{(i)}log(h_\theta(x^{(i)}))&+(1-y^{(i)})log(1-h_\theta(x^{(i)}))]+\frac{\lambda}{2m}\sum_{j=1}^{n}\theta_j^2\\
+Repeat\;until\;convergence\{\\
+&\;\;\;\;\;\;\theta_0:=\theta_0-a\frac{1}{m}\sum_{i=1}^{m}({h_\theta}(x^{(i)})-y^{(i)})x_{0}^{(i)}\\
+&\;\;\;\;\;\;\theta_j:=\theta_j-a[\frac{1}{m}\sum_{i=1}^{m}({h_\theta}(x^{(i)})-y^{(i)})x_{j}^{(i)}+\frac{\lambda }{m}{\theta_j}] \\
+&\;\;\;\;\;\;for\;j=1,2,...n\\
+&\}
+\end{align}</script><h1 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h1><h2 id="动机-1"><a href="#动机-1" class="headerlink" title="动机"></a>动机</h2><ul>
+<li>无论是线性回归和逻辑回归，当特征太多时，计算的负荷会非常大。</li>
+<li>使用非线性的多项式项，能够建立更好的分类模型。</li>
+<li>如果希望用特征构建非线性多项式模型，即便是两两特征组合，也会特征膨胀。</li>
+</ul>
+<h2 id="前向传播网络"><a href="#前向传播网络" class="headerlink" title="前向传播网络"></a>前向传播网络</h2><h3 id="算法框架-2"><a href="#算法框架-2" class="headerlink" title="算法框架"></a>算法框架</h3><p>前向传播网络的计算实质是函数优化</p>
+<script type="math/tex; mode=display">
+\begin{align}
+Hypothesis&: h_\theta(x)=activation\; function\\
+Parameters&:\Theta\\
+Cost\;Function&:J(\Theta)=-\frac{1}{m}[\sum_{i=1}^m\sum_{K=1}^ky_k^{(i)}log(h_\Theta(x^{(i)}))_k+(1-y_k^{(i)})log(1-(h_\Theta(x^{(i)}))_k)]\\
+&\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;+\frac{\lambda}{2m}\sum_{l=1}^{L-1}\sum_{i=1}^{s_l}\sum_{j=1}^{s_l+1}(\Theta_{ji}^{(l)})^2\\
+goal&:\min_\Theta J(\Theta)\\
+Need\;code\;to\;compute&:-J(\Theta)\\
+&\;\;-\frac{\partial}{\partial\Theta_{ij}^{(l)}}J(\Theta)
+\end{align}</script><h3 id="模型建立"><a href="#模型建立" class="headerlink" title="模型建立"></a>模型建立</h3><p>神经网络模型建立在很多神经元之上，每一个神经元又是一个个学习模型。这些神经元（也叫激活单元，<strong>activation unit</strong>）采纳一些特征作为输出，并且根据本身的模型提供一个输出。下图是一个以逻辑回归模型作为自身学习模型的神经元示例，在神经网络中，参数又可被成为权重（<strong>weight</strong>）。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/40.png" width="75%"></p>
+<p>于是设计出了类似于神经元的神经网络，效果如下：</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/42.png" width="75%"></p>
+<p>其中<script type="math/tex">x_1,x_2,x_3</script> 是输入单元（<strong>input units</strong>），我们将原始数据输入给它们。<script type="math/tex">a_1,a_2,a_3</script>是中间单元，它们负责将数据进行处理，然后呈递到下一层。 最后是输出单元，它负责计算<script type="math/tex">h_\theta(x)</script>。</p>
+<p>神经网络模型是许多逻辑单元按照不同层级组织起来的网络，每一层的输出变量都是下一层的输入变量。下图为一个3层的神经网络，第一层成为输入层（<strong>Input Layer</strong>），最后一层称为输出层（<strong>Output Layer</strong>），中间一层成为隐藏层（<strong>Hidden Layers</strong>）。我们为每一层都增加一个偏差单位（<strong>bias unit</strong>），值永远为1：</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/41.png" width="75%"></p>
+<p>下面引入一些标记法来帮助描述模型：</p>
+<ul>
+<li><script type="math/tex">a_i^{(j)}</script>代表第$j$层的第$i$个激活单元。</li>
+<li><script type="math/tex">\Theta^{(j)}</script>代表从第$j$层映射到第$j+1$层时的权重的矩阵，例如<script type="math/tex">\Theta^{(1)}</script>代表从第一层映射到第二层的权重的矩阵。其尺寸为：以第$j+1$层的激活单元数量为行数，以第$j$层的激活单元数加一为列数的矩阵。例如：上图所示的神经网络中<script type="math/tex">\Theta^{(1)}</script>的尺寸为 3*4。</li>
+</ul>
+<p>对于上图所示的模型，激活单元和输出分别表达为：</p>
+<script type="math/tex; mode=display">
+a_1^{(2)}=g(\Theta_{10}^{(1)}x_0+\Theta_{11}^{(1)}x_1+\Theta_{12}^{(1)}x_2+\Theta_{13}^{(1)}x_3)\\
+a_2^{(2)}=g(\Theta_{20}^{(1)}x_0+\Theta_{21}^{(1)}x_1+\Theta_{22}^{(1)}x_2+\Theta_{23}^{(1)}x_3)\\
+a_3^{(2)}=g(\Theta_{30}^{(1)}x_0+\Theta_{31}^{(1)}x_1+\Theta_{32}^{(1)}x_2+\Theta_{33}^{(1)}x_3)\\
+h_\Theta(x)=g(\Theta_{10}^{(2)}a_0^{(2)}+\Theta_{11}^{(2)}a_1^{(2)}+\Theta_{12}^{(2)}a_2^{(2)}+\Theta_{13}^{(2)}a_3^{(2)})</script><p>上面进行的讨论中只是将特征矩阵中的一行（一个训练实例）喂给了神经网络，我们需要将整个训练集都喂给我们的神经网络算法来学习模型。我们可以知道：每一个$a$都是由上一层所有$x$的和每一个$x$所对应的决定的。我们把这样从左到右的算法称为前向传播算法( <strong>FORWARD PROPAGATION</strong> )，把$x$,$\Theta$,$a$ 分别用矩阵表示：</p>
+<script type="math/tex; mode=display">
+X=
+\begin{bmatrix}
+x_1 \\ 
+x_2 \\ 
+x_3 \\ 
+x_4 \\ 
+\end{bmatrix},\;
+\Theta=
+\begin{bmatrix}
+\theta_{10} & \theta_{11} & \theta_{12} & \theta_{13}\\ 
+\theta_{20} & \theta_{21} & \theta_{22} & \theta_{23}\\
+\theta_{30} & \theta_{31} & \theta_{32} & \theta_{33}\\
+\end{bmatrix},\;
+a=
+\begin{bmatrix}
+a_1 \\ 
+a_2 \\ 
+a_3 \\ 
+\end{bmatrix},\;</script><p>我们可以得到$g(\Theta*X)=a$。相对于使用循环来编码，利用向量化的方法会使得计算更为简便。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/50.png" width="75%"></p>
+<h3 id="使用神经网络的计算来表示逻辑运算"><a href="#使用神经网络的计算来表示逻辑运算" class="headerlink" title="使用神经网络的计算来表示逻辑运算"></a>使用神经网络的计算来表示逻辑运算</h3><ul>
+<li>与运算<strong>AND</strong></li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/43.png" width="75%"></p>
+<ul>
+<li>或运算<strong>OR</strong></li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/44.png" width="75%"></p>
+<ul>
+<li>非运算<strong>NOT</strong></li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/45.png" width="75%"></p>
+<ul>
+<li>异或运算<script type="math/tex">XNOR=(x_1ANDx_2)OR((NOTx_1)AND(NOTx_2))</script></li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/46.png" width="75%"></p>
+<h3 id="多分类问题"><a href="#多分类问题" class="headerlink" title="多分类问题"></a>多分类问题</h3><p>网络结构如下：</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/47.png" width="75%"></p>
+<p>神经网络算法的输出结果为四种可能情形之一。</p>
+<h3 id="代价函数-1"><a href="#代价函数-1" class="headerlink" title="代价函数"></a>代价函数</h3><p>首先引入一些便于稍后讨论的新标记方法：</p>
+<p>假设神经网络的训练样本有$m$个，每个包含一组输入$x$和一组输出信号$y$，$L$表示神经网络层数，<script type="math/tex">S_I</script>表示每层的<strong>neuron</strong>个数(<script type="math/tex">S_l</script>表示输出层神经元个数)，<script type="math/tex">S_L</script>代表最后一层中处理单元的个数。</p>
+<p>将神经网络的分类定义为两种情况：二类分类和多类分类，</p>
+<p>二类分类：$S_L=1,y=0\;or\;1$表示哪一类；</p>
+<p>$K$类分类：$S_L=k,y_i=1$表示分到第$i$类$(k&gt;2)$；</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/48.png" width="75%"></p>
+<p>我们回顾逻辑回归问题中我们的代价函数为：</p>
+<script type="math/tex; mode=display">
+J(\theta)=-\frac{1}{m}[\sum_{i=1}^ny^{(i)}log(h_\theta(x^{(i)}))+(1-y^{(i)})log(1-h_\theta(x^{(i)}))]+\frac{\lambda}{2m}\sum_{j=1}^{n}\theta_j^2\\</script><p>在逻辑回归中，我们只有一个输出变量，又称标量（<strong>scalar</strong>），也只有一个因变量$y$，但是在神经网络中，我们可以有很多输出变量，我们的<script type="math/tex">h_\theta(x)</script>是一个维度为$K$的向量，并且我们训练集中的因变量也是同样维度的一个向量，因此我们的代价函数会比逻辑回归更加复杂一些，为：  </p>
+<script type="math/tex; mode=display">
+\begin{align}
+&h_\theta(x)\in\mathbb R^K\\
+&h_\theta(x)_i=i^{th}output\\
+J(\Theta)=-\frac{1}{m}[\sum_{i=1}^m\sum_{K=1}^ky_k^{(i)}&log(h_\Theta(x^{(i)}))_k+(1-y_k^{(i)})log(1-(h_\Theta(x^{(i)}))_k)]+\frac{\lambda}{2m}\sum_{l=1}^{L-1}\sum_{i=1}^{s_l}\sum_{j=1}^{s_l+1}(\Theta_{ji}^{(l)})^2
+\end{align}</script><p>这个看起来复杂很多的代价函数背后的思想还是一样的，我们希望通过代价函数来观察算法预测的结果与真实情况的误差有多大，唯一不同的是，对于每一行特征，我们都会给出$K$个预测，基本上我们可以利用循环，对每一行特征都预测$K$个不同结果，然后在利用循环在$K$个预测中选择可能性最高的一个，将其与$y$中的实际数据进行比较。</p>
+<p>正则化的那一项只是排除了每一层<script type="math/tex">\Theta_0</script>后，每一层的$\Theta$矩阵的和。最里层的循环$j$循环所有的行（由<script type="math/tex">s_l+1</script>层的激活单元数决定），循环则循环所有的列，由该层（<script type="math/tex">s_l</script>层）的激活单元数所决定。</p>
+<p>总的来说，损失函数包括两项：</p>
+<ul>
+<li><script type="math/tex">h_\theta(x)</script>与真实值之间的距离为每个样本-每个类输出的加和。</li>
+<li>对参数进行<strong>regularization</strong>的非<strong>bias</strong>项所有参数的平方和。</li>
+</ul>
+<h2 id="反向传播网络"><a href="#反向传播网络" class="headerlink" title="反向传播网络"></a>反向传播网络</h2><h3 id="算法步骤"><a href="#算法步骤" class="headerlink" title="算法步骤"></a>算法步骤</h3><script type="math/tex; mode=display">
+\begin{align}
+&Traning\;set\{(x^{(i)},y^{(i)}),...,(x^{(m)},y^{(m)}\}\\
+&set\;\Delta_{ij}^{(l)}=0\;(for\;all\;l,i,j).\\
+&for\;i=1\;to\;m\\
+&\;\;\;\;\;\;\;\;set\;a^{(i)}=x^{(i)}\\
+&\;\;\;\;\;\;\;\;perform\;forward\;propagation\;to\;compute\;all\;previous\;layer\;error\;vector\\
+&\;\;\;\;\;\;\;\;using\;y^{(i)},compute\;\delta^{(L)}=a^{(L)}-y^{(i)}\\
+&\;\;\;\;\;\;\;\;compute\;\delta^{(L-1)},\delta^{(L-2)},...,\delta^{(2)}\\
+&\;\;\;\;\;\;\;\;\Delta_{ij}^{(l)}:=\Delta_{ij}^{l}+a_J^{(l)}\delta_i^{(l+1)}\\
+&assume:\;\frac{\partial}{\partial\Theta_{ij}^{(l)}}J(\Theta)=D_{ij}^{(l)}\\
+&D_{ij}^{(l)}:=\frac{1}{m}\Delta_{ij}^{(l)}+\lambda\Theta_ij^{(l)}\;\;if\;j\ne0\\
+&D_{ij}^{(l)}:=\frac{1}{m}\Delta_{ij}^{(l)}\;\;if\;j=0
+\end{align}</script><h3 id="模型建立-1"><a href="#模型建立-1" class="headerlink" title="模型建立"></a>模型建立</h3><p>回顾前向传播算法：</p>
+<ul>
+<li>$z^{(l)}$是第$l$层没通过激活函数的值</li>
+<li>$a^{(l)}$是第$l$层通过激活函数后的值</li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/50.png" width="75%"></p>
+<p>后向传播算法：</p>
+<ul>
+<li>$l$代表目前所计算的是第几层。</li>
+<li>$j$代表目前计算层中的激活单元的下标，也将是下一层的第个输入变量的下标。</li>
+<li>$i$ 代表下一层中误差单元的下标，是受到权重矩阵中第行影响的下一层中的误差单元的下标。</li>
+<li><script type="math/tex">\delta_j^{(l)}</script>是第$l$层结点$j$ 的误差</li>
+</ul>
+<p>我们从最后一层的误差开始计算，误差是激活单元的预测（<script type="math/tex">a^{(4)}</script>）与实际值（$y^k$）之间的误差，（$k=1:k$）。 我们用来表示误差，则： <script type="math/tex">\delta^{(4)}=a^{(4)}-y</script>，我们利用这个误差值来计算前一层的误差：<script type="math/tex">\delta^{(3)}=(\Theta^{(3)})^T\delta^{(4)}*g'(z^{(3)})</script> 其中<script type="math/tex">g'(z^{(3)})</script>是$S$形函数的导数，<script type="math/tex">g'(z^{(3)})=a^{(3)}*(1-a^{(3)})</script>（这里需要推导证明）。而<script type="math/tex">(\Theta^{(3)})^T\delta^{(4)}</script>则是权重导致的误差的和。下一步是继续计算第二层的误差：<script type="math/tex">\delta^{(2)}=(\Theta^{(2)})^T\delta^{(3)}*g'(z^{(2)})</script>因为第一层是输入变量，不存在误差。我们有了所有的误差的表达式后，便可以计算代价函数的偏导数了，假设$\lambda=0$，即我们不做任何正则化处理时有<script type="math/tex">\frac{\partial}{\partial\Theta_{ij}^{(l)}}J(\Theta)=a_j^{(l)}\delta_i^{(l+1)}</script>。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/51.png" width="75%"></p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/53.png" width="75%"></p>
+<h2 id="梯度检测"><a href="#梯度检测" class="headerlink" title="梯度检测"></a>梯度检测</h2><h3 id="启发"><a href="#启发" class="headerlink" title="启发"></a>启发</h3><p>导数可以由双侧差分来近似</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/54.png" width="75%"></p>
+<h3 id="推广"><a href="#推广" class="headerlink" title="推广"></a>推广</h3><p>推广到偏导数也可以计算得到一个双侧差分矩阵</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/55.png" width="75%"></p>
+<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><p>最终将上述得到的近似梯度矩阵与反向传播得到的偏导数矩阵<script type="math/tex">D_{ij}^{(l)}</script>进行比较</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/56.png" width="75%"></p>
+<h3 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h3><p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/57.png" width="75%"></p>
+<h2 id="随机初始化"><a href="#随机初始化" class="headerlink" title="随机初始化"></a>随机初始化</h2><h3 id="对称权重问题"><a href="#对称权重问题" class="headerlink" title="对称权重问题"></a>对称权重问题</h3><p>到目前为止我们都是初始所有参数为0，这样的初始方法对于逻辑回归来说是可行的，但是对于神经网络来说是不可行的。如果我们令所有的初始参数都为0，这将意味着我们第二层的所有激活单元都会有相同的值。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/58.png" width="75%"></p>
+<h3 id="更好的初始化"><a href="#更好的初始化" class="headerlink" title="更好的初始化"></a>更好的初始化</h3><p>将初始值设置为<script type="math/tex">[-\epsilon,\,\epsilon]</script></p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/59.png" width="75%"></p>
+<h2 id="神经网络的训练"><a href="#神经网络的训练" class="headerlink" title="神经网络的训练"></a>神经网络的训练</h2><h3 id="网络架构"><a href="#网络架构" class="headerlink" title="网络架构"></a>网络架构</h3><p>第一层的单元数即我们训练集的特征数量。</p>
+<p>最后一层的单元数是我们训练集的结果的类的数量。</p>
+<p>如果隐藏层数大于1，确保每个隐藏层的单元个数相同，通常情况下隐藏层单元的个数越多越好。</p>
+<p>我们真正要决定的是隐藏层的层数和每个中间层的单元数。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/60.png" width="75%"></p>
+<h3 id="训练步骤"><a href="#训练步骤" class="headerlink" title="训练步骤"></a>训练步骤</h3><ol>
+<li>参数的随机初始化</li>
+<li>利用正向传播方法计算所有的$h_\theta(x)$</li>
+<li>编写计算代价函数$J$的代码</li>
+<li>利用反向传播方法计算所有偏导数</li>
+<li>利用数值检验方法检验这些偏导数</li>
+<li>使用优化算法来最小化代价函数</li>
+</ol>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/61.png" width="75%"></p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/62.png" width="75%"></p>
+<h1 id="算法性能优化"><a href="#算法性能优化" class="headerlink" title="算法性能优化"></a>算法性能优化</h1><h2 id="错误的方向"><a href="#错误的方向" class="headerlink" title="错误的方向"></a>错误的方向</h2><p>我们不应该随机选择下述的某种方法来改进我们的算法，而是运用一些机器学习诊断法来帮助我们知道上面哪些方法对我们的算法是有效的。</p>
+<ol>
+<li>获得更多的训练样本——通常是有效的，但代价较大，下面的方法也可能有效，可考虑先采用下面的几种方法。</li>
+<li>尝试减少特征的数量</li>
+<li>尝试获得更多的特征</li>
+<li>尝试增加多项式特征</li>
+<li>尝试减少正则化程度$\lambda$</li>
+<li>尝试增加正则化程度$\lambda$</li>
+</ol>
+<h2 id="正确的建议"><a href="#正确的建议" class="headerlink" title="正确的建议"></a>正确的建议</h2><ol>
+<li><p><strong>评估一个假设</strong>：将数据分成训练集和测试集，通过训练集让我们的模型学习得出其参数后，计算得到误差最小的，对测试集运用该模型。</p>
+</li>
+<li><p><strong>模型选择和交叉验证集</strong>：将数据分成训练集、测试集和交叉验证集，通过训练集让我们的不同模型学习得出其参数后，使用交叉验证集运用这些模型，计算得到误差最小的，对测试集使用该模型。</p>
+</li>
+<li><p><strong>诊断偏差和方差</strong></p>
+<p>偏差：是指一个模型的在不同训练集上的平均性能和最优模型的差异。偏差可以用来衡量一个模型的拟合能力。偏差越大，预测值平均性能越偏离最优模型。</p>
+<p>方差：描述的是 一个模型在不同训练集上的差异，描述的是一个模型在不同训练集之间的差异，表示模型的泛化能力，方差越小，模型的泛化能力越强。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/70.png" width="75%"></p>
+<p>高偏差：欠拟合</p>
+<p>高方差：过拟合</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/63.png" width="75%"></p>
+<p>高偏差，验证集和训练集的损失函数很接近</p>
+<p>高方差，验证集的损失函数远远大于训练集</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/64.png" width="75%"></p>
+</li>
+<li><p><strong>正则化和偏差/方差</strong></p>
+<p>选择$\lambda$的方法为：</p>
+<ol>
+<li>使用训练集训练出n个不同程度正则化的模型</li>
+<li>用n个模型分别对交叉验证集计算的出交叉验证误差</li>
+<li>选择得出交叉验证误差<strong>最小</strong>的模型</li>
+<li>运用步骤3中选出模型对测试集计算得出推广误差，我们也可以同时将训练集和交叉验证集模型的代价函数误差与λ的值绘制在一张图表上：</li>
+</ol>
+</li>
+</ol>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/65.png" width="75%"></p>
+<ol>
+<li><p><strong>学习曲线</strong></p>
+<p>学习曲线就是一种很好的工具，我经常使用学习曲线来判断某一个学习算法是否处于偏差、方差问题。学习曲线是学习算法的一个很好的<strong>合理检验</strong>（<strong>sanity check</strong>）。学习曲线是将训练集误差和交叉验证集误差作为训练集样本数量（$m$）的函数绘制的图表。</p>
+</li>
+</ol>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/66.png" width="75%"></p>
+<p>​    在高偏差/欠拟合的情况下，增加数据到训练集不一定能有帮助。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/67.png" width="75%"></p>
+<p>​    在高方差/过拟合的情况下，增加更多数据到训练集可能可以提高算法效果。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/68.png" width="75%"></p>
+<ol>
+<li><p><strong>有针对的做法</strong></p>
+<ol>
+<li><p>获得更多的训练样本——解决高方差</p>
+</li>
+<li><p>尝试减少特征的数量——解决高方差</p>
+</li>
+<li><p>尝试获得更多的特征——解决高偏差</p>
+</li>
+<li><p>尝试增加多项式特征——解决高偏差</p>
+</li>
+<li><p>尝试减少正则化程度λ——解决高偏差</p>
+</li>
+<li><p>尝试增加正则化程度λ——解决高方差</p>
+<p>对于神经网络：</p>
+<p>使用较小的神经网络，类似于参数较少的情况，容易导致高偏差和欠拟合，但计算代价较小；使用较大的神经网络，类似于参数较多的情况，容易导致高方差和过拟合，虽然计算代价比较大，但是可以通过正则化手段来调整而更加适应数据。</p>
+<p>对于神经网络中的隐藏层的层数的选择，通常从一层开始逐渐增加层数，为了更好地作选择，可以把数据分为训练集、交叉验证集和测试集，针对不同隐藏层层数的神经网络训练神经网络，然后选择交叉验证集代价最小的神经网络。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/69.png" width="75%"></p>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="机器学习系统设计"><a href="#机器学习系统设计" class="headerlink" title="机器学习系统设计"></a>机器学习系统设计</h1><ul>
+<li><p>给定机器学习任务，首先要做什么？</p>
+<p>以一个垃圾邮件分类器算法为例进行讨论为了构建这个分类器算法，我们可以做很多事，例如：</p>
+<ol>
+<li><p>收集更多的数据，让我们有更多的垃圾邮件和非垃圾邮件的样本</p>
+</li>
+<li><p>基于邮件的路由信息开发一系列复杂的特征</p>
+</li>
+<li><p>基于邮件的正文信息开发一系列复杂的特征，包括考虑截词的处理</p>
+</li>
+<li><p>为探测刻意的拼写错误（把<strong>watch</strong> 写成<strong>w4tch</strong>）开发复杂的算法</p>
+</li>
+</ol>
+<p>总结一下就是：</p>
+<ol>
+<li><p>数据获取</p>
+</li>
+<li><p>特征提取</p>
+</li>
+</ol>
+</li>
+<li><p>其次，构建一个学习算法的推荐方法为：</p>
+<ol>
+<li><p>从一个简单的能快速实现的算法开始，实现该算法并用交叉验证集数据测试这个算法</p>
+</li>
+<li><p>绘制学习曲线，决定是增加更多数据，或者添加更多特征，还是其他选择</p>
+</li>
+<li><p>进行误差分析：人工检查交叉验证集中我们算法中产生预测误差的样本，看看这些样本是否有某种系统化的趋势</p>
+</li>
+</ol>
+<p>总结一下就是：</p>
+<p>快速实现一个较为简单快速、即便不是那么完美的算法。看看算法造成的错误，通过误差分析，来看看他犯了什么错，提出新的想法，快速地发现你尝试的这些想法是否能够提高算法的表现，从而你会更快地做出决定，在算法中放弃什么，吸收什么误差分析可以帮助我们系统化地选择该做什么。</p>
+</li>
+<li><p>既然我们要做误差分析就需要构建评价指标，但在构建之前我们需要解决类偏斜(skewed classes)问题，即样本分布极度不均衡。</p>
+<p><strong>查准率</strong>（<strong>Precision</strong>）和<strong>查全率</strong>（<strong>Recall</strong>） 我们将算法预测的结果分成四种情况：</p>
+<ol>
+<li><p><strong>正确肯定</strong>（<strong>True Positive,TP</strong>）：预测为真，实际为真</p>
+</li>
+<li><p><strong>正确否定</strong>（<strong>True Negative,TN</strong>）：预测为假，实际为假</p>
+</li>
+<li><p><strong>错误肯定</strong>（<strong>False Positive,FP</strong>）：预测为真，实际为假</p>
+</li>
+<li><p><strong>错误否定</strong>（<strong>False Negative,FN</strong>）：预测为假，实际为真</p>
+</li>
+</ol>
+<p>查准率(精确率)=<script type="math/tex">\frac{TP}{(TP+FP)}</script>。例，在所有我们预测有恶性肿瘤的病人中，实际上有恶性肿瘤的病人的百分比，越高越好。</p>
+<p>查全率(召回率)=<script type="math/tex">\frac{TP}{(TP+FN)}</script>。例，在所有实际上有恶性肿瘤的病人中，成功预测有恶性肿瘤的病人的百分比，越高越好。</p>
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th><strong>预测值</strong></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td><strong>Positive</strong></td>
+<td><strong>Negtive</strong></td>
+</tr>
+<tr>
+<td><strong>实际值</strong></td>
+<td><strong>Positive</strong></td>
+<td><strong>TP</strong></td>
+<td><strong>FN</strong></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Negtive</strong></td>
+<td><strong>FP</strong></td>
+<td><strong>TN</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><p>查准率和查全率之间的权衡</p>
+<p>如果我们希望更高的查准率，我们可以使用比0.5更大的阀值，如0.7，0.9。这样做我们会减少错误预测病人为恶性肿瘤的情况，同时却会增加未能成功预测肿瘤为恶性的情况。</p>
+<p>如果我们希望提高查全率，尽可能地让所有有可能是恶性肿瘤的病人都得到进一步地检查、诊断，我们可以使用比0.5更小的阀值，如0.3,0.1。</p>
+<p>我们可以将不同阀值情况下，查全率与查准率的关系绘制成图表，曲线的形状根据数据的不同而不同：</p>
+</li>
+</ul>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/71.png" width="75%"></p>
+<ul>
+<li><p>得到<strong>大量的数据</strong>并在某种类型的学习算法中进行训练，可以是一种有效的方法来获得一个具有良好性能的学习算法。大部分算法，都具有相似的性能，其次，随着训练数据集的增大，算法的性能也都对应地增强了。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/72.png" width="50%"></p>
+<p>这些结果表明，许多不同的学习算法有时倾向于表现出非常相似的表现，这还取决于一些细节，但是真正能提高性能的，是你能够给一个算法大量的训练数据。像这样的结果，引起了一种在机器学习中的普遍共识：”取得成功的人不是拥有最好算法的人，而是拥有最多数据的人”。</p>
+<p>在训练参数较多的模型时，如果训练集比参数的数量还大，甚至是更多，那么这些算法就不太可能会过度拟合。也就是说<strong>训练误差有希望接近测试误差</strong>。因此偏差问题，我么将通过确保有一个具有很多参数的学习算法来解决，以便我们能够得到一个较低偏差的算法，并且通过用非常大的训练集来保证。在此没有方差问题，我们的算法将没有方差，并且通过将这两个值放在一起，我们最终可以得到一个<strong>低误差和低方差</strong>的学习算法。</p>
+</li>
+</ul>
+<h1 id="支持向量机"><a href="#支持向量机" class="headerlink" title="支持向量机"></a>支持向量机</h1><h2 id="算法框架-3"><a href="#算法框架-3" class="headerlink" title="算法框架"></a>算法框架</h2><p>SVM without Kernels</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&Hpyothesis: Given\;x
+\begin{cases}
+Predict\;"y^{(i)}=1", & if\;\theta^Tx^{(i)}\ge1  \\
+Predict\;"y^{(i)}=0", & if\;\theta^Tx^{(i)}\le-1
+\end{cases}\\
+
+&Parameters: \;\theta\\
+&Cost\;Function: \;J(\theta)=C\sum^m_{i=1}y^{(i)}cost_1(\theta^Tx^{(i)})+(1-y^{(i)})cost_0(\theta^Tx^{(i)})+\frac{1}{2}\sum_{j=1}^n\theta^2_j\\
+&Goal: \;\min_{\theta}\;J(\theta)
+\end{align}</script><p>SVM with Kernels</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&Hpyothesis: Given\;x,compute\;features\;f\in {\mathbb R}^{(m+1)}
+\begin{cases}
+Predict\;"y^{(i)}=1", & if\;\theta^Tf\ge1  \\
+Predict\;"y^{(i)}=0", & if\;\theta^Tf\le-1
+\end{cases}\\
+
+&Parameters: \;\theta\\
+&Cost\;Function: \;J(\theta)=C\sum^m_{i=1}y^{(i)}cost_1(\theta^Tf^{(i)})+(1-y^{(i)})cost_0(\theta^Tf^{(i)})+\frac{1}{2}\sum_{j=1}^n\theta^2_j\\
+&Goal: \;\min_{\theta}\;J(\theta)
+\end{align}</script><h2 id="模型建立-2"><a href="#模型建立-2" class="headerlink" title="模型建立"></a>模型建立</h2><p>从logistic回归出发进行修改得到本质上的SVM。</p>
+<p>如果有一个 $y=1$的样本，现在我们希望$h<em>\theta(x)$ 趋近1。因为我们想要正确地将此样本分类，这就意味着当 $h</em>\theta(x)$趋近于1时，$\theta^Tx$ 应当远大于0。相反地，如果我们有另一个样本，即$y=0$。我们希望假设函数的输出值将趋近于0，这对应于$\theta^Tx$则希望其远小于0，</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/85.png" width="75%"></p>
+<p>假如将损失函数近似为一个线性函数，简化的同时也更加有利于求解速度</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/73.png" width="75%"></p>
+<p>因此优化目标从</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/74.png" width="70%"></p>
+<p>变成了（注意$\lambda(C)$和$m$的变化，可以理解为同除某数优化结果不变）上图左边的函数为$cost_1$，右图为$cost_2$。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/75.png" width="70%"></p>
+<h2 id="安全距离"><a href="#安全距离" class="headerlink" title="安全距离"></a>安全距离</h2><p>事实上，如果有一个正样本$y=1$，则其实仅仅要求$\theta^Tx$大于等于0，就能将该样本恰当分出，这是因为如果$\theta^Tx$>1的话，我们的模型代价函数值为0，类似地，如果你有一个负样本，则仅需要$\theta^Tx$\&lt;=0就会将负例正确分离，但是，支持向量机的要求更高，不仅仅要能正确分开输入的样本，即不仅仅要求$\theta^Tx$>0，我们需要的是比0值大很多，比如大于等于1，我也想这个比0小很多，比如我希望它小于等于-1，这就相当于在支持向量机中嵌入了一个额外的安全因子，或者说安全的间距因子。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/76.png" width="75%"></p>
+<p>另外，如果 $C$非常大，则最小化代价函数的时候，将会很希望找到一个使第一项为0的最优解。因此对这样的一个数据集，也许我们将选择这样的决策界，从而最大间距地分离开正样本和负样本。那么在让代价函数最小化的过程中，我们希望找出在$y=1$和$y=0$两种情况下都使得代价函数中左边的这一项尽量为零的参数。如果我们找到了这样的参数，则我们的最小化问题便转变成：</p>
+<script type="math/tex; mode=display">
+\min\frac{1}{2}\sum_{j=1}^{n}\theta_j^2\;\;s.t\;
+\begin{cases}
+\theta^Tx^{(l)}\ge1, & if\;y^{(l)}=1\\
+\theta^Tx^{(l)}\le-1, & if\;y^{(l)}=0\\
+\end{cases}</script><h2 id="决策边界"><a href="#决策边界" class="headerlink" title="决策边界"></a>决策边界</h2><p>事实上，支持向量机现在要比这个大间距分类器所体现得更成熟，尤其是当你使用大间距分类器的时候，你的学习算法会受异常点(outlier) 的影响。比如我们加入一个额外的正样本。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/77.png" width="75%"></p>
+<p>在这里，如果加了这个样本，为了将样本用最大间距分开，也许最终会得到一条类似这样的决策界，对么？就是这条粉色的线，仅仅基于一个异常值，仅仅基于一个样本，就将我决策界从这条黑线变到这条粉线，这实在是不明智的。而如果正则化参数$C$，设置的非常大，这事实上正是支持向量机将会做的。它将决策界，从黑线变到了粉线，但是如果$C$ 设置的小一点，<strong>如果将C设置的不要太大，则最终会得到这条黑线，</strong>当然数据如果不是线性可分的，如果你在这里有一些正样本或者你在这里有一些负样本，则支持向量机也会将它们恰当分开。因此，大间距分类器的描述，仅仅是从直观上给出了正则化参数$C$非常大的情形，同时，要提醒你$C$的作用类似于$\frac{1}{\lambda}$，$\lambda$是我们之前使用过的正则化参数。这只是$C$非常大的情形，或者等价地 $\lambda$ 非常小的情形。你最终会得到类似粉线这样的决策界，但是实际上应用支持向量机的时候，<strong>当$C$不是非常非常大的时候，它可以忽略掉一些异常点的影响，得到更好的决策界。</strong>甚至当数据不是线性可分的时候，支持向量机也可以给出好的结果。</p>
+<p>回顾 $C=\frac{1}{\lambda}$，因此：</p>
+<p>$C$ 较大时，相当于 $\lambda$ 较小，可能会导致过拟合，高方差。</p>
+<p>$C$ 较小时，相当于$\lambda$较大，可能会导致低拟合，高偏差。</p>
+<h2 id="数学含义"><a href="#数学含义" class="headerlink" title="数学含义"></a>数学含义</h2><p>向量内积的含义：一个向量在另一个向量上投影的长度。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/78.png" width="75%"></p>
+<p>而支持向量机做的全部事情，就是极小化参数向量 <script type="math/tex">{\theta}</script> 范数的平方，或者说长度的平方。这相当于最大化<script type="math/tex">x^{(i)}</script>在向量<script type="math/tex">\theta</script>上的投影<script type="math/tex">(p^{(i)})</script>，即最大化间距（margin）,如图所示。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/79.png" width="75%"></p>
+<h2 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h2><p>对于无法用直线进行分隔的分类问题，可以使用高级数的多项式模型来解决</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/80.png" width="30%"></p>
+<h3 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h3><p>为了获得上图所示的判定边界，我们的模型可能是<script type="math/tex">{\theta }_{0}+{\theta }_{1}{x}_{1}+{\theta }_{2}{x}_{2}+{\theta }_{3}{x}_{1}{x}_{2}+{\theta }_{4}x_{1}^{2}+{\theta }_{5}x_{2}^{2}+\cdots</script>的形式。我们可以用一系列的新的特征$f$来替换模型中的每一项。例如令：<script type="math/tex">{f}_{1}={x}_{1},{f}_{2}={x}_{2},{f}_{3}={x}_{1}{x}_{2},{f}_{4}=x_{1}^{2},{f}_{5}=x_{2}^{2}...</script>得到 <script type="math/tex">h_θ(x)={\theta }_{1}f_1+{\theta }_{2}f_2+...+{\theta }_{n}f_n</script>。然而，除了对原有的特征进行组合以外，有没有更好的方法来构造<script type="math/tex">f_1,f_2,f_3</script>？我们可以利用核函数来计算出新的特征。</p>
+<p>给定一个训练样本，我们利用的各个特征与我们预先选定的<strong>地标</strong>(<strong>landmarks</strong>)的近似程度来选取新的特征。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/81.png" width="30%"></p>
+<p>例如：${f}_{1}=similarity(x,{l}^{(1)})=e(-\frac{\begin{Vmatrix}x-l^{(l)}\end{Vmatrix}^2}{2{\sigma }^2})$</p>
+<p>其中：$\begin{Vmatrix}x-l^{(l)}\end{Vmatrix}^2=\sum_{j=1}^n(x_j-l_j^{(l)})^2$，为实例$x$中所有特征与地标$l^{(1)}$之间的距离的和。上例中的$similarity(x,{l}^{(1)})$就是核函数，具体而言，这里是一个<strong>高斯核函数</strong>(<strong>Gaussian Kernel</strong>)。</p>
+<p>这些地标的作用在于：如果一个训练样本与地标之间的距离近似于0，则新特征$f$近似于$e^{-0}=1$，如果训练样本$x$与地标$l$之间距离较远，则$f$近似于$e^{-(一个较大的数)}=0$。</p>
+<h3 id="参数含义"><a href="#参数含义" class="headerlink" title="参数含义"></a>参数含义</h3><p>假设我们的训练样本含有两个特征[$x_{1}$ $x{_2}$]，给定地标$l^{(1)}$与不同的$\sigma$值，见下图：</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/82.png" width="75%"></p>
+<p>图中水平面的坐标为 <script type="math/tex">x_{1}</script>，<script type="math/tex">x_{2}</script>而垂直坐标轴代表$f$。可以看出，只有当$x$与<script type="math/tex">l^{(1)}</script><strong>重合</strong>时$f$才具有最大值。随着$x$的改变$f$值<strong>改变的速率</strong>受到$\sigma^2$的控制。</p>
+<p>在下图中，当样本处于洋红色的点位置处，因为其离更近，但是离和较远，因此接近1，而,接近0。因此，因此预测。同理可以求出，对于离较近的绿色点，也预测，但是对于蓝绿色的点，因为其离三个地标都较远，预测。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/83.png" width="75%"></p>
+<p>这样，图中红色的封闭曲线所表示的范围，便是我们依据一个单一的训练样本和我们选取的地标所得出的判定边界，在预测时，我们采用的特征不是训练样本本身的特征，而是通过核函数计算出的新特征$f_1,f_2,f_3$。</p>
+<h3 id="构建核函数SVM"><a href="#构建核函数SVM" class="headerlink" title="构建核函数SVM"></a>构建核函数SVM</h3><p>对于地标的选择，通常是根据训练集的数量选择地标的数量，即如果训练集中有个样本，则我们选取个地标，并且令:$l^{(1)}=x^{(1)},l^{(2)}=x^{(2)},…..,l^{(m)}=x^{(m)}$。这样做的好处在于：现在我们得到的新特征是建立在原有特征与训练集中所有其他特征之间距离的基础之上的，即：</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/84.png"></p>
+<p>下面我们将核函数运用到支持向量机中，修改我们的支持向量机假设为：</p>
+<p>• 给定$x$，计算新特征$f$，当$θ^Tf\ge0$ 时，预测 $y=1$，否则反之。 </p>
+<p>相应地修改代价函数为：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+
+&\sum_{j=1}^{n=m}\theta_j^2=\theta^T\theta\\
+&\;\min_\theta C\sum^m_{i=1}y^{(i)}cost_1(\theta^Tf^{(i)})+(1-y^{(i)})cost_0(\theta^Tf^{(i)})+\frac{1}{2}\sum_{j=1}^n\theta^2_j\\
+\end{align}</script><p>在具体实施过程中，还需要对最后的正则化项进行些微调整，在计算<script type="math/tex">\sum_{j=1}^{n=m}\theta_{j}^{2}={\theta}^{T}\theta</script>时，我们用$θ^TMθ$代替$θ^Tθ$，其中$M$是根据选择的核函数而不同的一个矩阵。这样做的原因是为了简化计算。</p>
+<p>理论上讲，可以在逻辑回归中使用核函数，但是上面使用 $M$来简化计算的方法不适用与逻辑回归，因此计算将非常耗费时间。</p>
+<p>在此，使用现有的软件包（如<strong>liblinear</strong>,<strong>libsvm</strong>等）。在使用这些软件包最小化我们的代价函数之前，通常需要编写核函数，并且如果使用高斯核函数，那么在使用之前进行<strong>特征缩放</strong>是非常必要的。</p>
+<p>另外，支持向量机也可以不使用核函数，不使用核函数又称为<strong>线性核函数</strong>(<strong>linear kernel</strong>)，当不采用非常复杂的函数，或者训练集特征非常多而样本非常少的时候，可以采用这种不带核函数的支持向量机。</p>
+<h3 id="SVM参数-结合参数含义"><a href="#SVM参数-结合参数含义" class="headerlink" title="SVM参数(结合参数含义)"></a>SVM参数(结合参数含义)</h3><p>下面是支持向量机的两个参数$C$和$\sigma$的影响：</p>
+<p>$C=\frac{1}{\lambda}$</p>
+<p>$C$ 较大时，相当于$\lambda$较小，可能会导致过拟合，高方差；</p>
+<p>$C$ 较小时，相当于$\lambda$较大，可能会导致低拟合，高偏差；</p>
+<p>$\sigma$较大时，可能会导致低方差，高偏差；</p>
+<p>$\sigma$较小时，可能会导致低偏差，高方差。</p>
+<h2 id="使用支持向量机"><a href="#使用支持向量机" class="headerlink" title="使用支持向量机"></a>使用支持向量机</h2><h3 id="其他核函数"><a href="#其他核函数" class="headerlink" title="其他核函数"></a>其他核函数</h3><p>不是所有的相似函数都能成为核函数，其还必须满足默塞尔定理(Mercer’s<br>Theorem)</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/86.png" width="75%"></p>
+<p>在高斯核函数之外我们还有其他一些选择，如：</p>
+<p>多项式核函数（<strong>Polynomial Kerne</strong>l）</p>
+<p>字符串核函数（<strong>String kernel</strong>）</p>
+<p>卡方核函数（ <strong>chi-square kernel</strong>）</p>
+<p>直方图交集核函数（<strong>histogram intersection kernel</strong>）</p>
+<p>等等…</p>
+<p>这些核函数的目标也都是根据训练集和地标之间的距离来构建新特征，这些核函数需要满足Mercer’s定理，才能被支持向量机的优化软件正确处理。</p>
+<h3 id="多类分类问题"><a href="#多类分类问题" class="headerlink" title="多类分类问题"></a>多类分类问题</h3><p>假设我们利用之前介绍的一对多方法来解决一个多类分类问题。如果一共有$k$个类，则我们需要$k$个模型，以及$k$个参数向量${\theta}$。我们同样也可以训练$k$个支持向量机来解决多类分类问题。但是大多数支持向量机软件包都有内置的多类分类功能，我们只要直接使用即可。</p>
+<h3 id="经验"><a href="#经验" class="headerlink" title="经验"></a>经验</h3><p>尽管你不去写你自己的<strong>SVM</strong>的优化软件，但是你也需要做几件事：</p>
+<p>1、是提出参数$C$的选择。我们在之前的视频中讨论过误差/方差在这方面的性质。</p>
+<p>2、你也需要选择内核参数或你想要使用的相似函数，其中一个选择是：我们选择不需要任何内核参数，没有内核参数的理念，也叫线性核函数。因此，如果有人说他使用了线性核的<strong>SVM</strong>（支持向量机），这就意味这他使用了不带有核函数的<strong>SVM</strong>（支持向量机）。</p>
+<h3 id="SVM-v-s-logistic-regression"><a href="#SVM-v-s-logistic-regression" class="headerlink" title="SVM v.s logistic regression"></a>SVM v.s logistic regression</h3><p>从逻辑回归模型，我们得到了支持向量机模型，在两者之间，我们应该如何选择呢？</p>
+<p><strong>下面是一些普遍使用的准则：</strong></p>
+<p>$n$为特征数，$m$为训练样本数。</p>
+<p>(1)如果相较于$m$而言，$n$要大许多，即训练集数据量不够支持我们训练一个复杂的非线性模型，我们选用逻辑回归模型或者不带核函数的支持向量机。</p>
+<p>(2)如果$n$较小，而且$m$大小中等，例如$n$在 1-1000 之间，而$m$在10-10000之间，使用高斯核函数的支持向量机。</p>
+<p>(3)如果$n$较小，而$m$较大，例如$n$在1-1000之间，而$m$大于50000，则使用支持向量机会非常慢，解决方案是创造、增加更多的特征，然后使用逻辑回归或不带核函数的支持向量机。</p>
+<p>值得一提的是，神经网络在以上三种情况下都可能会有较好的表现，但是训练神经网络可能非常慢，选择支持向量机的原因主要在于它的代价函数是凸函数，不存在局部最小值。</p>
+<h1 id="K-means"><a href="#K-means" class="headerlink" title="K-means"></a>K-means</h1><h2 id="算法框架-4"><a href="#算法框架-4" class="headerlink" title="算法框架"></a>算法框架</h2><script type="math/tex; mode=display">
+\begin{align}&c^{(i)}=index\;of\;cluster\;(1,2,...,K)\;to\;which\;example\;x^{(i)}\;is\;currently\;assigned\\&\mu_k=cluster\;centroid\;k\;(\mu_k\in\mathbb {R}^n)\\&\mu_c^{(i)}=cluster\;centroid\;of\;cluster\;to\;which\;example\;x^{(i)}\;has\;been\;assigned\\&Optimization\;objective:\\&\;\;\;\;J(c^{(1)},...,c^{(m)},\mu_1,...,\mu_K)=\frac{1}{m}\sum^m_{i=1}\begin{Vmatrix}x^{(i)}-\mu_c(i)\end{Vmatrix}^2\\&\;\;\;\;min_{c^{(i)},...,c^{(m)}\\\mu_1,...,\mu_K}J(c^{(1)},...,c^{(m)},\mu_1,...,\mu_K)\end{align}</script><p>注：$K$是指簇中心数量，$k$是指簇中心索引</p>
+<h2 id="算法步骤-1"><a href="#算法步骤-1" class="headerlink" title="算法步骤"></a>算法步骤</h2><script type="math/tex; mode=display">
+\begin{align}&Input: \\&\;\;-\;K(number\;of\;clusters)\\&\;\;-\;Training\;set\;\{x^{(1)},x^{(2)},...,x^{(m)}\}\\&\;\;x^{(i)}\in {\mathbb R}^n\;(drop\;x_0=1\;convention)\\&Randomly\;initialize\;K\;cluster\;centorids\;\mu_1,\mu_2,...,\mu_K\in{\mathbb R}^n\\&Repeat:\{\\&\;\;\;\;\;for\;i=1\;to\;m \\&\;\;\;\;\;\;\;\;\;\;\;c^{(i)}:=index(from\;1\;to\;K)\;of\;cluster\;centroid\;closest\;to\;x{(i)}\\&\;\;\;\;\;for\;k=1\;to\;K \\&\;\;\;\;\;\;\;\;\;\;\;\mu_k:=average\;(mean)\;of\;points\;assigned\;to\;cluster\;k\\&\}\end{align}</script><p>算法分为两个步骤，第一个<strong>for</strong>循环是赋值步骤，即：对于每一个样例$i$，计算其应该属于的类。第二个<strong>for</strong>循环是聚类中心的移动，即：对于每一个类$K$，重新计算该类的质心。</p>
+<h2 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h2><p>迭代1次</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/87.png"></p>
+<p>迭代3次</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/88.png"></p>
+<p>迭代10次</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/89.png"></p>
+<h2 id="随机初始化-1"><a href="#随机初始化-1" class="headerlink" title="随机初始化"></a>随机初始化</h2><p>随机选择$k$个样本点作为初始簇中心</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/90.png" width="75%"></p>
+<p>局部最优问题，解决方法是多次随机初始化，选择cost最低的结果</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/91.png" width="75%"></p>
+<p>算法步骤</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/92.png" width="75%"></p>
+<h2 id="K的选择"><a href="#K的选择" class="headerlink" title="K的选择"></a>K的选择</h2><p>“Elbow method”</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/93.png" width="75%"></p>
+<p>later purpose</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/94.png" width="75%"></p>
+<h1 id="主成分分析PCA"><a href="#主成分分析PCA" class="headerlink" title="主成分分析PCA"></a>主成分分析PCA</h1><h2 id="动机-2"><a href="#动机-2" class="headerlink" title="动机"></a>动机</h2><ul>
+<li>数据压缩</li>
+<li>数据可视化</li>
+</ul>
+<h2 id="问题概述"><a href="#问题概述" class="headerlink" title="问题概述"></a>问题概述</h2><p>在<strong>PCA</strong>中，我们要做的是找到一个方向向量（<strong>Vector direction</strong>），当我们把所有的数据都投射到该向量上时，我们希望投射平均均方误差能尽可能地小。方向向量是一个经过原点的向量，而投射误差是从特征向量向该方向向量作垂线的长度。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/95.png" width="75%"></p>
+<p>主成分分析与线性回归是两种不同的算法。主成分分析最小化的是投射误差（<strong>Projected Error</strong>），而线性回归尝试的是最小化预测误差。线性回归的目的是预测结果，而主成分分析不作任何预测。</p>
+<h2 id="算法特点"><a href="#算法特点" class="headerlink" title="算法特点"></a>算法特点</h2><p><strong>PCA</strong>将$n$个特征降维到$k$个，可以用来进行数据压缩，如果100维的向量最后可以用10维来表示，那么压缩率为90%。同样图像处理领域的<strong>KL变换</strong>使用<strong>PCA</strong>做图像压缩。但<strong>PCA</strong> 要保证降维后，还要保证数据的特性损失最小。</p>
+<p><strong>PCA</strong>技术的一大好处是对数据进行降维的处理。我们可以对新求出的“主元”向量的重要性进行排序，根据需要取前面最重要的部分，将后面的维数省去，可以达到降维从而简化模型或是对数据进行压缩的效果。同时最大程度的保持了原有数据的信息。</p>
+<p><strong>PCA</strong>技术的一个很大的优点是，它是完全无参数限制的。在<strong>PCA</strong>的计算过程中完全不需要人为的设定参数或是根据任何经验模型对计算进行干预，最后的结果只与数据相关，与用户是独立的。</p>
+<p>但是，这一点同时也可以看作是缺点。如果用户对观测对象有一定的先验知识，掌握了数据的一些特征，却无法通过参数化等方法对处理过程进行干预，可能会得不到预期的效果，效率也不高。</p>
+<h2 id="算法步骤-2"><a href="#算法步骤-2" class="headerlink" title="算法步骤"></a>算法步骤</h2><script type="math/tex; mode=display">
+\begin{align}
+&Reduce\;data\;from\;n-dimensions\;to\;k-dimensions\\
+&1. Data\;preprocessing\\
+&\;\;\;\;\;\;\;\;Training\;set:\;x^{(1)},x^{(2)},...,x^{(m)}\\
+&\;\;\;\;\;\;\;\;Preprocessing(feature\;scaling/mean\;normalization)\\
+&\;\;\;\;\;\;\;\;x^{(i)}_j=x^{(i)}_j-\frac{1}{m}\sum_{i=1}^mx_j^{(i)}\\
+&\;\;\;\;\;\;\;\;If\;different\;feature\;on\;different\;scales\\
+&\;\;\;\;\;\;\;\;scale\;features\;to\;have\;comparable\;range\;of\;values.\\
+&\;\;\;\;\;\;\;\;x^{(i)}=\frac{x_j^{(i)}}{s_j}\\
+&2. Compute\;"convariance\;matrix":\\
+&\;\;\;\;\;\;\;\;\Sigma=\frac{1}{m}\sum_{i=1}^n(x^{(i)})(x^{(i)})^T\\
+&3. Compute\;"eigenvectors"\;of\;matrix\;\Sigma:\\
+&\;\;\;\;\;\;\;\;[U,S,V]=svd(\Sigma):\\
+&4. Selecting\;the\;first\;k\;vectors\;from\;U\\
+&\;\;\;\;\;\;\;\;U_{reduce}=U(:,1:k);\\
+&5. Compute\;k-dimensions\;data\\
+&\;\;\;\;\;\;\;\;z=U_{reduce}^T*x
+\end{align}</script><p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/96.png" width="75%"></p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/97.png" width="75%"></p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/98.png" width="75%"></p>
+<p>对于一个 $n×n$维度的矩阵，上式中的$U$是一个具有与数据之间最小投射误差的方向向量构成的矩阵。如果我们希望将数据从$n$维降至$k$维，我们只需要从$U$中选取前$k$个向量，获得一个$n×k$维度的矩阵，我们用<script type="math/tex">U_{reduce}</script>表示，然后通过如下计算获得要求的新特征向量$z^{(i)}$:<script type="math/tex">z^{(i)}=U^{T}_{reduce}*x^{(i)}</script>，其中$x$是$n×1$维的，因此结果为$k×1$维度。注，我们不对方差特征进行处理。</p>
+<h2 id="选择主成分的数量"><a href="#选择主成分的数量" class="headerlink" title="选择主成分的数量"></a>选择主成分的数量</h2><p>主要成分分析是减少投射的平均均方误差：</p>
+<p>训练集的方差为：$\frac{1}{m}\sum_{i=1}^m\begin{Vmatrix}x^{(i)}\end{Vmatrix}^2$</p>
+<p>我们希望在平均均方误差与训练集方差的比例尽可能小的情况下选择尽可能小的$k$值。</p>
+<p>如果我们希望这个比例小于1%，就意味着原本数据的偏差有99%都保留下来了，如果我们选择保留95%的偏差，便能非常显著地降低模型中特征的维度了。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/99.png" width="75%"></p>
+<p>我们可以先令$k=1$，然后进行主要成分分析，获得$U_{reduce}$和$z$，然后计算比例是否小于1%。如果不是的话再令$k=2$，如此类推，直到找到可以使得比例小于1%的最小$k$ 值（原因是各个特征之间通常情况存在某种相关性）。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/100.png" width="75%"></p>
+<p>还有一些更好的方式来选择$k$，当我们在<strong>Octave</strong>中调用“<strong>svd</strong>”函数的时候，我们获得三个参数：<code>[U, S, V] = svd(sigma)</code>。</p>
+<p>其中的$S$是一个$n×n$的矩阵，只有对角线上有值，而其它单元都是0，我们可以使用这个矩阵来计算平均均方误差与训练集方差的比例：</p>
+<script type="math/tex; mode=display">
+\frac{\frac{1}{m}\sum^m_{i=1}\begin{Vmatrix}x^{(i)}-x_{approve}^{(i)}\end{Vmatrix}^2}{\frac{1}{m}\sum^m_{i=1}\begin{Vmatrix}x^{(i)}\end{Vmatrix}^2}=1-\frac{\sum_{i=1}^kS_{ii}}{\sum_{i=1}^mS_{ii}}\le1\%</script><p>也就是</p>
+<script type="math/tex; mode=display">
+\frac{\sum_{i=1}^kS_{ii}}{\sum_{i=1}^mS_{ii}}\ge0.99</script><p>在压缩过数据后，我们可以采用如下方法来近似地获得原有的特征：$x<em>{appox}^{(i)}=U</em>{reduce}z^{(i)}$</p>
+<h2 id="重建的压缩表示"><a href="#重建的压缩表示" class="headerlink" title="重建的压缩表示"></a>重建的压缩表示</h2><p>在以前的视频中，我们谈论<strong>PCA</strong>作为压缩算法。在那里你可能需要把1000维的数据压缩100维特征，或具有三维数据压缩到一二维表示。所以，如果这是一个压缩算法，应该能回到这个压缩表示，回到你原有的高维数据的一种近似。</p>
+<p>我们知道<script type="math/tex">z=U^{T}_{reduce}x</script>，相反的方程为：<script type="math/tex">x_{appox}=U_{reduce}\cdot z</script>,<script type="math/tex">x_{appox}\approx x</script>。如图：</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/101.png" width="75%"></p>
+<h2 id="PCA的应用建议"><a href="#PCA的应用建议" class="headerlink" title="PCA的应用建议"></a>PCA的应用建议</h2><ol>
+<li>当训练集特征维数较大时使用PCA将数据压缩至较少特征，然后对训练集运行学习算法。在预测时，采用之前学习而来的$U_{reduce}$将输入的特征$x$转换成特征向量$z$，然后再进行预测。</li>
+</ol>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/102.png" width="75%"></p>
+<ol>
+<li>错误使用PCA的情况：将其用于减少过拟合（减少了特征的数量）。这样做非常不好，还不如尝试正则化处理。原因在于PCA只是近似地丢弃一些特征，其并不考虑任何与结果变量有关的信息，因此可能会丢失非常重要的特征。然而我们进行正则化处理时，会考虑到结果变量，不会丢掉重要的数据。</li>
+</ol>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/103.png" width="75%"></p>
+<ol>
+<li>另一个常见的错误是，默认地将主成分分析作为学习过程中的一部分，这虽然很多时候有效果。但是最好还是从所有原始特征开始，只有在必要的时候（算法运行太慢或者占用太多内存）才考虑采用PCA。</li>
+</ol>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/104.png" width="75%"></p>
+<h1 id="异常检测"><a href="#异常检测" class="headerlink" title="异常检测"></a>异常检测</h1><h2 id="基于高斯分布"><a href="#基于高斯分布" class="headerlink" title="基于高斯分布"></a>基于高斯分布</h2><h3 id="算法-1"><a href="#算法-1" class="headerlink" title="算法"></a>算法</h3><p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/105.png" width="75%"></p>
+<p>我们选择一个$\varepsilon$，将$p(x) = \varepsilon$作为我们的判定边界，当$p(x) &gt; \varepsilon$时预测数据为正常数据，否则为异常。</p>
+<h3 id="开发和评价一个异常检测系统"><a href="#开发和评价一个异常检测系统" class="headerlink" title="开发和评价一个异常检测系统"></a>开发和评价一个异常检测系统</h3><p>异常检测算法是一个非监督学习算法，意味着我们无法根据结果变量 $ y$ 的值来告诉我们数据是否真的是异常的。我们需要另一种方法来帮助检验算法是否有效。当我们开发一个异常检测系统时，我们从带标记（异常或正常）的数据着手，我们从其中选择一部分正常数据用于构建训练集，然后用剩下的正常数据和异常数据混合的数据构成交叉检验集和测试集。下图中60%，20%，20%是推荐的方法，而后者不推荐。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/106.png" width="75%"></p>
+<p>具体的评价方法如下：</p>
+<ol>
+<li>根据测试集数据，我们估计特征的平均值和方差并构建$p(x)$函数</li>
+<li>对交叉检验集，我们尝试使用不同的$\varepsilon$值作为阀值，并预测数据是否异常，根据$F1$值或者查准率与查全率的比例来选择 $\varepsilon$</li>
+<li>选出 $\varepsilon$ 后，针对测试集进行预测，计算异常检验系统的$F1$值，或者查准率与查全率之比</li>
+</ol>
+<h3 id="异常检测与监督学习对比"><a href="#异常检测与监督学习对比" class="headerlink" title="异常检测与监督学习对比"></a>异常检测与监督学习对比</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>异常检测</th>
+<th>监督学习</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据特征</td>
+<td>非常少量的正向类（异常数据 $y=1$）, 大量的负向类（$y=0$）</td>
+<td>时有大量的正向类和负向类</td>
+</tr>
+<tr>
+<td>异常特征提取的难易程度</td>
+<td>有许多不同种类的异常，对于任何算法都比较难去从正样本中学习异常的状况。未来遇到的异常可能与已掌握的异常、非常的不同。</td>
+<td>有足够多的正向类实例，足够用于训练算法，未来遇到的正向类实例可能与训练集中的非常近似。</td>
+</tr>
+<tr>
+<td>例子</td>
+<td>欺诈行为检测、生产（例如飞机引擎）、检测数据中心的计算机运行状况</td>
+<td>邮件过滤器、天气预报、肿瘤分类</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="特征选择和处理"><a href="#特征选择和处理" class="headerlink" title="特征选择和处理"></a>特征选择和处理</h3><p>异常检测假设特征分布符合高斯分布，如果数据的分布不是高斯分布，异常检测算法也能够工作，但是最好还是将数据转化成高斯分布，例如使用对数函数：$x= log(x+c)$，其中 $c$ 为非负常数； 或者 $x=x^c$，$c$为 0-1 之间的一个分数，等方法。(在<strong>python</strong>中，通常用<code>np.log1p()</code>函数，$log1p$就是 $log(x+1)$，可以避免出现负数结果，反向函数就是<code>np.expm1()</code>)</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/107.png" width="75%"></p>
+<h3 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h3><p>一个常见的问题只分析异常的数据的单一特征可能也会有较高的$p(x)$值，因而被算法认为是正常的。这种情况下误差分析能够帮助我们，我们也许能从问题中发现我们需要增加一些新的特征，增加这些新特征后获得的新算法能够帮助我们更好地进行异常检测。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/108.png" width="75%"></p>
+<p>我们通常可以通过将一些相关的特征进行组合，来获得一些新的更好的特征（异常数据的该特征值异常地大或小），例如，在检测数据中心的计算机状况的例子中，我们可以用<strong>CPU</strong>负载与网络通信量的比例作为一个新的特征，如果该值异常地大，便有可能意味着该服务器是陷入了一些问题中。</p>
+<h2 id="基于多元高斯分布"><a href="#基于多元高斯分布" class="headerlink" title="基于多元高斯分布"></a>基于多元高斯分布</h2><h3 id="算法-2"><a href="#算法-2" class="headerlink" title="算法"></a>算法</h3><p>在一般的高斯分布模型中，计算 $p(x)$ 的方法是：通过分别计算每个特征对应的几率然后将其累乘起来，在多元高斯分布模型中，将构建特征的协方差矩阵，用所有的特征一起来计算 $p(x)$。</p>
+<p>有一组样本$x^{(1)},x^{(2)},…,x^{(m)}$是一个$n$维向量，假设样本来自一个多元高斯分布。如何尝试估计参数 $\mu$ 和 $\Sigma$ 以及标准公式？如何把所有这一切共同开发一个异常检测算法？</p>
+<p>首先计算所有特征的平均值，然后再计算协方差矩阵：</p>
+<script type="math/tex; mode=display">
+\mu=\frac{1}{m}\sum_{i=1}^mx^i\\
+\Sigma=\frac{1}{m}\sum_{i=1}^m(x^{(i)}-\mu)(x^{(i)}-\mu)^T=\frac{1}{m}(X-\mu)^T(X-\mu)</script><p>注:其中$\mu $ 是一个向量，其每一个单元都是原特征矩阵中一行数据的均值。最后我们计算多元高斯分布的$p\left( x \right)$:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&p(x)=\prod_{j=1}^np(x_j;\mu,\sigma^2_j)=\prod_{j=1}^n\frac{1}{\sqrt{2\pi}\sigma^2}exp(-\frac{(x_j-\mu_j)^2}{2\sigma^j})\\
+&p(x)=\frac{1}{(2\pi)^\frac{n}{2}|\Sigma|^\frac{1}{2}}exp(-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu))
+\end{align}</script><p>其中：</p>
+<ul>
+<li>$|\Sigma|$是定矩阵，在 <strong>Octave</strong> 中用 <code>det(sigma)</code>计算</li>
+<li>$\Sigma^{-1}$ 是逆矩阵</li>
+</ul>
+<p>最后见上述<strong>开发和评价一个异常检测系统</strong>内容开发一个异常检测算法</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/111.png" width="75%"></p>
+<h3 id="参数可视化"><a href="#参数可视化" class="headerlink" title="参数可视化"></a>参数可视化</h3><p>下面我们来看看协方差矩阵是如何影响模型的：</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/109.jpg"></p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/110.png" width="40%"></p>
+<p>上图是6个不同的模型，从左往右依次分析：</p>
+<ol>
+<li>是一个一般的高斯分布模型</li>
+<li>通过协方差矩阵，令特征1拥有较小的偏差，同时保持特征2的偏差</li>
+<li>通过协方差矩阵，令特征2拥有较大的偏差，同时保持特征1的偏差</li>
+<li>通过协方差矩阵，在不改变两个特征的原有偏差的基础上，增加两者之间的正相关性</li>
+<li>通过协方差矩阵，在不改变两个特征的原有偏差的基础上，增加两者之间的负相关性</li>
+<li>通过$\mu$，在不改变两个特征的原有偏差的基础上，改变特征1和特征2的均值</li>
+</ol>
+<h2 id="模型对比"><a href="#模型对比" class="headerlink" title="模型对比"></a>模型对比</h2><p>多元高斯分布模型与原高斯分布模型的关系：</p>
+<p>可以证明的是，原本的高斯分布模型是多元高斯分布模型的一个子集，如果协方差矩阵只在对角线的单位上有非零的值时，即为原本的高斯分布模型了。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/112.png" width="75%"></p>
+<p>原高斯分布模型和多元高斯分布模型的比较：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>原高斯分布模型</th>
+<th>多元高斯分布模型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不能捕捉特征之间的相关性 但可以通过将特征进行组合的方法来解决</td>
+<td>自动捕捉特征之间的相关性</td>
+</tr>
+<tr>
+<td>计算代价低，能适应大规模的特征</td>
+<td>计算代价较高，训练集较小时比较适用</td>
+</tr>
+<tr>
+<td>即使训练样本$m$较小也能很好地运作</td>
+<td>必须要有 $m&gt;n$，不然的话协方差矩阵$\Sigma$不可逆的，通常需要 $m&gt;10n$ 另外特征冗余也会导致协方差矩阵不可逆</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>原高斯分布模型被广泛使用着，如果特征之间在某种程度上存在相互关联的情况，我们可以通过构造新新特征的方法来捕捉这些相关性。</p>
+<p>如果训练集不是太大，并且没有太多的特征，我们可以使用多元高斯分布模型。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/113.png" width="75%"></p>
+<h1 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h1><h2 id="基于内容的推荐算法"><a href="#基于内容的推荐算法" class="headerlink" title="基于内容的推荐算法"></a>基于内容的推荐算法</h2><p>在一个基于内容的推荐系统算法中，我们假设对于我们希望推荐的东西有一些数据，这些数据是有关这些东西的特征。在我们的例子中，我们可以假设每部电影都有两个特征，如<script type="math/tex">x_1</script>代表电影的浪漫程度，<script type="math/tex">x_2</script>代表电影的动作程度。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/114.png" width="75%"></p>
+<p>则每部电影都有一个特征向量，如<script type="math/tex">x^{(1)}</script>是第一部电影的特征向量为[0.9 0]。</p>
+<p>下面我们要基于这些特征来构建一个推荐系统算法。<br>假设我们采用线性回归模型，我们可以针对每一个用户都训练一个线性回归模型，如<script type="math/tex">{\theta }^{(1)}</script>是第一个用户的模型的参数。<br>于是，我们有：</p>
+<script type="math/tex; mode=display">\theta^{(j)}$$用户 $j$ 的参数向量
+
+$$x^{(i)}$$电影 $i$ 的特征向量
+
+对于用户 $j$ 和电影 $i$，我们预测评分为：$$(\theta^{(j)})^T x^{(i)}</script><p>代价函数</p>
+<p>针对用户 $j$，该线性回归模型的代价为预测误差的平方和，加上正则化项：</p>
+<script type="math/tex; mode=display">
+\min_{\theta_(j)}\frac{1}{2}\sum_{i:r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})^2+\frac{\lambda}{2}(\theta_k^{(j)})^2</script><p>其中 $i:r(i,j)$表示我们只计算那些用户 $j$ 评过分的电影。在一般的线性回归模型中，误差项和正则项应该都是乘以$\frac{1}{2m}$，在这里我们将$m$去掉。并且我们不对方差项$\theta_0$进行正则化处理。</p>
+<p>上面的代价函数只是针对一个用户的，为了学习所有用户，我们将所有用户的代价函数求和：</p>
+<script type="math/tex; mode=display">
+\min_{\theta^{(1)},...,\theta^{n_u}}\frac{1}{2}\sum^{n_u}_{j=1}\sum_{i:r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,,j)})^2+\frac{\lambda}{2}\sum^{n_u}_{j=1}\sum^n_{k=1}(\theta^{(j)}_k)^2</script><p>如果我们要用梯度下降法来求解最优解，我们计算代价函数的偏导数后得到梯度下降的更新公式为：</p>
+<script type="math/tex; mode=display">
+\theta_k^{(j)}:=\theta_k^{(j)}-\alpha\sum_{i:r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,,j)})x_k^{(i)}\;(for\;k=0)\\
+\theta_k^{(j)}:=\theta^{(j)}_k-\alpha(\sum_{i:r(i,j)=1}((\theta^{(i)})^Tx^{(i)}-y^{(i,j)}x_k^{(i)}+\lambda\theta_k^{(i)})\;(for\;k\ne0)</script><h2 id="协同过滤"><a href="#协同过滤" class="headerlink" title="协同过滤"></a>协同过滤</h2><p>在之前的基于内容的推荐系统中，对于每一部电影，我们都掌握了可用的特征，使用这些特征训练出了每一个用户的参数。相反地，如果我们拥有用户的参数，我们可以学习得出电影的特征。</p>
+<script type="math/tex; mode=display">
+\min_{x^{(1)},...,x^{n_m}}\frac{1}{2}\sum^{n_u}_{i=1}\sum_{j:r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,,j)})^2+\frac{\lambda}{2}\sum^{n_m}_{j=1}\sum^n_{k=1}(x^{(i)}_k)^2</script><p>但是如果我们既没有用户的参数，也没有电影的特征，这两种方法都不可行了。协同过滤算法可以同时学习这两者。我们的优化目标便改为同时针对$x$和$\theta$进行。</p>
+<script type="math/tex; mode=display">
+J(x^{(1)},...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)})=\frac{1}{2}\sum_{(i,j):r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})^2+\frac{\lambda}{2}\sum^{n_m}_{j=1}\sum^n_{k=1}(x^{(j)}_k)^2+\frac{\lambda}{2}\sum^{n_u}_{j=1}\sum^n_{k=1}(\theta^{(j)}_k)^2</script><p>对代价函数求偏导数的结果如下：</p>
+<script type="math/tex; mode=display">
+x_k^{(j)}:=x^{(j)}_k-\alpha(\sum_{j:r(i,j)=1}((\theta^{(i)})^Tx^{(i)}-y^{(i,j)}\theta_k^{(i)}+\lambda\theta_k^{(i)})\\
+\theta_k^{(j)}:=\theta^{(j)}_k-\alpha(\sum_{i:r(i,j)=1}((\theta^{(i)})^Tx^{(i)}-y^{(i,j)}x_k^{(i)}+\lambda\theta_k^{(j)})</script><p>注：在协同过滤从算法中，我们通常不使用方差项，如果需要的话，算法会自动学得。<br>协同过滤算法使用步骤如下：</p>
+<ol>
+<li>初始 <script type="math/tex">x^{(1)},x^{(1)},...x^{(nm)},\ \theta^{(1)},\theta^{(2)},...,\theta^{(n_u)}</script>为一些随机小值</li>
+<li>使用梯度下降算法最小化代价函数</li>
+<li>在训练完算法后，我们预测<script type="math/tex">(\theta^{(j)})^Tx^{(i)}</script>为用户 $j$ 给电影 $i$ 的评分</li>
+</ol>
+<p>通过这个学习过程获得的特征矩阵包含了有关电影的重要数据，这些数据不总是人能读懂的，但是我们可以用这些数据作为给用户推荐电影的依据。</p>
+<p>例如，如果一位用户正在观看电影 $x^{(i)}$，我们可以寻找另一部电影$x^{(j)}$，依据两部电影的特征向量之间的距离<script type="math/tex">||x^{(i)}-x^{(j)}||</script>的大小。</p>
+<h2 id="协同过滤算法"><a href="#协同过滤算法" class="headerlink" title="协同过滤算法"></a>协同过滤算法</h2><h3 id="优化目标"><a href="#优化目标" class="headerlink" title="优化目标"></a>优化目标</h3><p>给定$x^{(1)},…,x^{(n_m)}$，估计$\theta^{(1)},…,\theta^{(n_u)}$：</p>
+<script type="math/tex; mode=display">
+\min_{\theta^{(1)},...,\theta^{(n_u)}}\frac{1}{2}\sum_{j=1}^{n_u}\sum_{i:r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})^2+\frac{\lambda}{2}\sum_{j=1}^{n_u}\sum_{k=1}^{n}(\theta_k^{(j)})^2</script><p>给定$\theta^{(1)},…,\theta^{(n_u)}$，估计$x^{(1)},…,x^{(n_m)}$：</p>
+<p>同时最小化$x^{(1)},…,x^{(n_m)}$和$\theta^{(1)},…,\theta^{(n_u)}$：</p>
+<script type="math/tex; mode=display">
+J(x^{(1)},...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)})=\frac{1}{2}\sum_{(i,j):r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})^2+\frac{\lambda}{2}\sum_{i=1}^{n_m}\sum_{k=1}^{n}(x_k^{(i)})^2+\frac{\lambda}{2}\sum_{j=1}^{n_u}\sum_{k=1}^{n}(\theta_k^{(j)})^2\\
+\min_{x^{(1)},...,x^{(n_m)} \\\ \theta^{(1)},...,\theta^{(n_u)}}J(x^{(1)},...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)}</script><h3 id="算法步骤-3"><a href="#算法步骤-3" class="headerlink" title="算法步骤"></a>算法步骤</h3><script type="math/tex; mode=display">
+\begin{align}
+&1.Initialze\;x^{(1)},...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)}\;to\;small\;random\;values.\\
+&2.Minimize\;J(x^{(1)}),...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)})\;using\;gradien\\
+\;\;\;\;&descent\;(or\;an\;advanced\;optimization\;algorithm).\;E.g.\;for\\
+&every\;j=1,...,n_u,i,...,n_m:\\
+&\;\;\;\;\;\;\;\;x_k^{(i)}:=x_k^{(i)}-\alpha(\sum_{j:r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})\theta_k^{(j)}+\lambda x_k^{(i)})\\
+&\;\;\;\;\;\;\;\;\theta^{(j)}_k:=\theta^{(j)}_k-\alpha(\sum_{i:r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})x_k^{(i)}+\lambda \theta_k^{(j)})\\
+&3.For\;a\;user\;with\;parameters\;\theta\;and\;a\;movie\;with\;(learned)\;\\
+&feature\;x,\;predict\;a\;star\;rating\;of\;\theta^Tx.
+\end{align}</script><h2 id="向量化：低秩矩阵分解"><a href="#向量化：低秩矩阵分解" class="headerlink" title="向量化：低秩矩阵分解"></a>向量化：低秩矩阵分解</h2><p>在上几节视频中，我们谈到了协同过滤算法，本节视频中我将会讲到有关该算法的向量化实现，以及说说有关该算法你可以做的其他事情。</p>
+<p>举例子：</p>
+<ol>
+<li>当给出一件产品时，你能否找到与之相关的其它产品。</li>
+<li>一位用户最近看上一件产品，有没有其它相关的产品，你可以推荐给他。</li>
+</ol>
+<p>我将要做的是：实现一种选择的方法，写出协同过滤算法的预测情况。</p>
+<p>我们有关于五部电影的数据集，我将要做的是，将这些用户的电影评分，进行分组并存到一个矩阵中。</p>
+<p>我们有五部电影，以及四位用户，那么 这个矩阵 $Y$ 就是一个5行4列的矩阵，它将这些电影的用户评分数据都存在矩阵里：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Movie</strong></th>
+<th><strong>Alice (1)</strong></th>
+<th><strong>Bob (2)</strong></th>
+<th><strong>Carol (3)</strong></th>
+<th><strong>Dave (4)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Love at last</td>
+<td>5</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Romance forever</td>
+<td>5</td>
+<td>?</td>
+<td>?</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Cute puppies of love</td>
+<td>?</td>
+<td>4</td>
+<td>0</td>
+<td>?</td>
+</tr>
+<tr>
+<td>Nonstop car chases</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Swords vs. karate</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>?</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>推出评分：</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/117.png" width="75%"></p>
+<p>通过最小距离找到相关影片：</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/118.png" width="75%"></p>
+<h2 id="推行工作上的细节：均值归一化"><a href="#推行工作上的细节：均值归一化" class="headerlink" title="推行工作上的细节：均值归一化"></a>推行工作上的细节：均值归一化</h2><p>让我们来看下面的用户评分数据：</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/119.png" width="75%"></p>
+<p>如果我们新增一个用户 <strong>Eve</strong>，并且 <strong>Eve</strong> 没有为任何电影评分，那么我们以什么为依据为<strong>Eve</strong>推荐电影呢？</p>
+<p>我们首先需要对结果 $Y $矩阵进行均值归一化处理，将每一个用户对某一部电影的评分减去所有用户对该电影评分的平均值：</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/120.png" width="75%"></p>
+<p>然后我们利用这个新的 $Y$ 矩阵来训练算法。<br>如果我们要用新训练出的算法来预测评分，则需要将平均值重新加回去，预测<script type="math/tex">(\theta^{(j)})^T x^{(i)}+\mu_i</script>，对于<strong>Eve</strong>，我们的新模型会认为她给每部电影的评分都是该电影的平均分。</p>
+<h1 id="大规模机器学习"><a href="#大规模机器学习" class="headerlink" title="大规模机器学习"></a>大规模机器学习</h1><h2 id="大型数据集的学习"><a href="#大型数据集的学习" class="headerlink" title="大型数据集的学习"></a>大型数据集的学习</h2><p>如果我们有一个低方差的模型，增加数据集的规模可以帮助你获得更好的结果。我们应该怎样应对一个有100万条记录的训练集？</p>
+<p>以线性回归模型为例，每一次梯度下降迭代，我们都需要计算训练集的误差的平方和，如果我们的学习算法需要有20次迭代，这便已经是非常大的计算代价。</p>
+<p>首先应该做的事是去检查一个这么大规模的训练集是否真的必要，也许我们只用1000个训练集也能获得较好的效果，我们可以绘制学习曲线来帮助判断。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/121.png" width="75%"></p>
+<h2 id="随机梯度下降法-Stochastic-Gradient-Descent"><a href="#随机梯度下降法-Stochastic-Gradient-Descent" class="headerlink" title="随机梯度下降法(Stochastic Gradient Descent)"></a>随机梯度下降法(Stochastic Gradient Descent)</h2><p>如果我们一定需要一个大规模的训练集，我们可以尝试使用随机梯度下降法来代替批量梯度下降法。</p>
+<p>在随机梯度下降法中，我们定义代价函数为一个单一训练实例的代价：</p>
+<script type="math/tex; mode=display">
+cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script><p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/122.png" width="75%"></p>
+<p>随机梯度下降算法在每一次计算之后便更新参数 $$ ，而不需要首先将所有的训练集求和，在梯度下降算法还没有完成一次迭代时，随机梯度下降算法便已经走出了很远。但是这样的算法存在的问题是，不是每一步都是朝着”正确”的方向迈出的。因此算法虽然会逐渐走向全局最小值的位置，但是可能无法站到那个最小值的那一点，而是在最小值点附近徘徊。</p>
+<h2 id="小批量梯度下降-Mini-Batch-Gradient-Descent"><a href="#小批量梯度下降-Mini-Batch-Gradient-Descent" class="headerlink" title="小批量梯度下降(Mini-Batch Gradient Descent)"></a>小批量梯度下降(Mini-Batch Gradient Descent)</h2><p>小批量梯度下降算法是介于批量梯度下降算法和随机梯度下降算法之间的算法，每计算常数$b$次训练实例，便更新一次参数  $$ 。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/123.png" width="40%"></p>
+<p>通常我们会令 $b$ 在 2-100 之间。这样做的好处在于，我们可以用向量化的方式来循环 $b$个训练实例，如果我们用的线性代数函数库比较好，能够支持平行处理，那么算法的总体表现将不受影响（与随机梯度下降相同）。</p>
+<h2 id="随机梯度下降收敛"><a href="#随机梯度下降收敛" class="headerlink" title="随机梯度下降收敛"></a>随机梯度下降收敛</h2><h3 id="SGD调试"><a href="#SGD调试" class="headerlink" title="SGD调试"></a>SGD调试</h3><p>在批量梯度下降中，我们可以令代价函数$J$为迭代次数的函数，绘制图表，根据图表来判断梯度下降是否收敛。但是，在大规模的训练集的情况下，这是不现实的，因为计算代价太大了。</p>
+<p>在随机梯度下降中，我们在每一次更新 $$ 之前都计算一次代价，然后每$x$次迭代后，求出这$x$次对训练实例计算代价的平均值，然后绘制这些平均值与$x$次迭代的次数之间的函数图表。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/124.png" width="75%"></p>
+<p>当我们绘制这样的图表时，可能会得到一个颠簸不平但是不会明显减少的函数图像（如左下图中蓝线所示）。我们可以增加$α$来使得函数更加平缓，也许便能看出下降的趋势了（如左下图中红线所示）；或者可能函数图表仍然是颠簸不平且不下降的（如洋红色线所示），那么我们的模型本身可能存在一些错误。</p>
+<h2 id="学习率调整"><a href="#学习率调整" class="headerlink" title="学习率调整"></a>学习率调整</h2><p>如果我们得到的曲线如上面右下方所示，不断地上升，那么我们可能会需要选择一个较小的学习率$α$。</p>
+<p>我们也可以令学习率随着迭代次数的增加而减小，例如令：</p>
+<script type="math/tex; mode=display">
+\alpha = \frac{const1}{iterationNumber + const2}</script><p>随着我们不断地靠近全局最小值，通过减小学习率，我们迫使算法收敛而非在最小值附近徘徊。<br>但是通常我们不需要这样做便能有非常好的效果了，对$α$进行调整所耗费的计算通常不值得</p>
+<p>总结下，这段视频中，我们介绍了一种方法，近似地监测出随机梯度下降算法在最优化代价函数中的表现，这种方法不需要定时地扫描整个训练集，来算出整个样本集的代价函数，而是只需要每次对最后1000个，或者多少个样本，求一下平均值。应用这种方法，你既可以保证随机梯度下降法正在正常运转和收敛，也可以用它来调整学习速率$α$的大小。</p>
+<h2 id="在线学习"><a href="#在线学习" class="headerlink" title="在线学习"></a>在线学习</h2><p>在线学习的算法与随机梯度下降算法有些类似，我们对单一的实例进行学习，而非对一个提前定义的训练集进行循环。</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&Repeat\;forever\;(as\;long\;as\;the\;website\;is\;running) \{ \\
+&\;\;\;\;\;\;\;Get\;(x,y)\;corresponding\;to\;the\;current\;user \\
+&\;\;\;\;\;\;\;\theta:={\theta}_{j}-\alpha({h}_{\theta}({x})-{y}){x}_{j}\;(j=0:n) \\
+&\}\\
+\end{align}</script><p>一旦对一个数据的学习完成了，我们便可以丢弃该数据，不需要再存储它了。这种方式的好处在于，我们的算法可以很好的适应用户的倾向性，算法可以针对用户的当前行为不断地更新模型以适应该用户。在线学习的一个优点就是，如果你有一个变化的用户群，又或者你在尝试预测的事情，在缓慢变化，就像你的用户的品味在缓慢变化，这个在线学习算法，可以慢慢地调试你所学习到的假设，将其调节更新到最新的用户行为。</p>
+<h2 id="减少映射与数据并行"><a href="#减少映射与数据并行" class="headerlink" title="减少映射与数据并行"></a>减少映射与数据并行</h2><p>映射化简和数据并行对于大规模机器学习问题而言是非常重要的概念。之前提到，如果我们用批量梯度下降算法来求解大规模数据集的最优解，我们需要对整个训练集进行循环，计算偏导数和代价，再求和，计算代价非常大。如果我们能够将我们的数据集分配给不多台计算机，让每一台计算机处理数据集的一个子集，然后我们将计所的结果汇总在求和。这样的方法叫做<strong>映射简化</strong>。</p>
+<p>具体而言，如果任何学习算法能够表达为，对训练集的函数的求和，那么便能将这个任务分配给多台计算机（或者同一台计算机的不同<strong>CPU</strong> 核心），以达到加速处理的目的。</p>
+<p>例如，我们有400个训练实例，我们可以将批量梯度下降的求和任务分配给4台计算机进行处理：</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/125.jpg"></p>
+<p>很多高级的线性代数函数库已经能够利用多核<strong>CPU</strong>的多个核心来并行地处理矩阵运算，这也是算法的向量化实现如此重要的缘故（比调用循环快）。</p>
+<h1 id="应用实例：图片文字识别"><a href="#应用实例：图片文字识别" class="headerlink" title="应用实例：图片文字识别"></a>应用实例：图片文字识别</h1><h2 id="OCR-pipeline"><a href="#OCR-pipeline" class="headerlink" title="OCR pipeline"></a>OCR pipeline</h2><p>图像文字识别应用所作的事是，从一张给定的图片中识别文字。</p>
+<p>为了完成这样的工作，需要采取如下步骤：</p>
+<ol>
+<li>文字侦测（<strong>Text detection</strong>）——将图片上的文字与其他环境对象分离开来</li>
+<li>字符切分（<strong>Character segmentation</strong>）——将文字分割成一个个单一的字符</li>
+<li>字符分类（<strong>Character classification</strong>）——确定每一个字符是什么</li>
+</ol>
+<p>可以用流水线来表示这个问题，每一项任务可以由一个单独的部门来负责解决：</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/126.png"></p>
+<h2 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h2><p>滑动窗口是一项用来从图像中抽取对象的技术。假使我们需要在一张图片中识别行人，首先要做的是用许多固定尺寸的图片来训练一个能够准确识别行人的模型。然后我们用之前训练识别行人的模型时所采用的图片尺寸在我们要进行行人识别的图片上进行剪裁，然后将剪裁得到的切片交给模型，让模型判断是否为行人，然后在图片上滑动剪裁区域重新进行剪裁，将新剪裁的切片也交给模型进行判断，如此循环直至将图片全部检测完。</p>
+<p>一旦完成后，我们按比例放大剪裁的区域，再以新的尺寸对图片进行剪裁，将新剪裁的切片按比例缩小至模型所采纳的尺寸，交给模型进行判断，如此循环。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/127.jpg"></p>
+<p>滑动窗口技术也被用于文字识别，首先训练模型能够区分字符与非字符，然后，运用滑动窗口技术识别字符，一旦完成了字符的识别，我们将识别得出的区域进行一些扩展，然后将重叠的区域进行合并。接着我们以宽高比作为过滤条件，过滤掉高度比宽度更大的区域（认为单词的长度通常比高度要大）。下图中绿色的区域是经过这些步骤后被认为是文字的区域，而红色的区域是被忽略的。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/128.jpg"></p>
+<p>以上便是文字侦测阶段。下一步是训练一个模型来完成将文字分割成一个个字符的任务，需要的训练集由单个字符的图片和两个相连字符之间的图片来训练模型。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/129.jpg"></p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/130.jpg"></p>
+<p>模型训练完后，我们仍然是使用滑动窗口技术来进行字符识别。</p>
+<p>以上便是字符切分阶段。最后一个阶段是字符分类阶段，利用神经网络、支持向量机或者逻辑回归算法训练一个分类器即可。</p>
+<h2 id="获取大量数据和人工数据"><a href="#获取大量数据和人工数据" class="headerlink" title="获取大量数据和人工数据"></a>获取大量数据和人工数据</h2><p>如果我们的模型是低方差的，那么获得更多的数据用于训练模型，是能够有更好的效果的。问题在于，我们怎样获得数据，数据不总是可以直接获得的，我们有可能需要人工地创造一些数据。</p>
+<p>以我们的文字识别应用为例，我们可以字体网站下载各种字体，然后利用这些不同的字体配上各种不同的随机背景图片创造出一些用于训练的实例，这让我们能够获得一个无限大的训练集。这是从零开始创造实例。</p>
+<p>另一种方法是，利用已有的数据，然后对其进行修改，例如将已有的字符图片进行一些扭曲、旋转、模糊处理。只要我们认为实际数据有可能和经过这样处理后的数据类似，我们便可以用这样的方法来创造大量的数据。</p>
+<p>有关获得更多数据的几种方法：</p>
+<ol>
+<li>人工数据合成</li>
+<li>手动收集、标记数据</li>
+<li>众包</li>
+</ol>
+<h2 id="天花板分析：下一步的pipeline"><a href="#天花板分析：下一步的pipeline" class="headerlink" title="天花板分析：下一步的pipeline"></a>天花板分析：下一步的pipeline</h2><p>在机器学习的应用中，我们通常需要通过几个步骤才能进行最终的预测，我们如何能够知道哪一部分最值得我们花时间和精力去改善呢？这个问题可以通过上限分析来回答。</p>
+<p>回到我们的文字识别应用中，我们的流程图如下：</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/126.png"></p>
+<p>流程图中每一部分的输出都是下一部分的输入，上限分析中，我们选取一部分，手工提供100%正确的输出结果，然后看应用的整体效果提升了多少。假使我们的例子中总体效果为72%的正确率。</p>
+<p>如果我们令文字侦测部分输出的结果100%正确，发现系统的总体效果从72%提高到了89%。这意味着我们很可能会希望投入时间精力来提高我们的文字侦测部分。</p>
+<p>接着我们手动选择数据，让字符切分输出的结果100%正确，发现系统的总体效果只提升了1%，这意味着，我们的字符切分部分可能已经足够好了。</p>
+<p>最后我们手工选择数据，让字符分类输出的结果100%正确，系统的总体效果又提升了10%，这意味着我们可能也会应该投入更多的时间和精力来提高应用的总体表现。</p>
+<p><img src="/images/loading.gif" data-original="/2019/09/18/Re-recognizing-machine-learning/131.jpg"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>又又又看了一次机器学习的视频，最大的收获应该是对神经网络的本质有了更深的认识，另外感觉吴恩达对知识点的讲述方式和以往自己听到方式有很多不一样，仿佛打开了新世界…另外后面几章似乎有点水啊，感觉只是点到为止，没有涉及很深的内容，也可能是因为之前接触过才这么觉得吧…除了看视频做笔记之外，我还用python3基本复现了课程作业，指导书上用的是octave，一种很像matlab的语言，不过似乎有点老了，所以还是选择用比较流行的语言来写吧。容易实现的算法自己就从头开始写，当然没有做太多优化，然后自己写完了也要学会调用库来完成，因为库的实现有更多的优化速度更快以及更高的容错能力，如果是真实的项目一般会调用库函数来完成；当然也有很多比较难以实现的算法部分，比如复杂优化算法，那就只能先调包了。刚开始写的时候真的是很痛苦很难受，虽然之前有看一本叫《machine learning in action》的书，以及看了<a target="_blank" rel="noopener" href="https://github.com/liuyubobobo">@liuyubobobo</a>在慕课上的视频《Python3入门机器学习经典算法与应用》复现算法，但是很多代码还是不怎么会写，有种编码无力的感觉，所以也参考了很多别人的代码。复现代码地址在<a target="_blank" rel="noopener" href="https://github.com/543877815/machine-learning-ex">我的github</a> 上。</p>
+<h1 id="实现难点"><a href="#实现难点" class="headerlink" title="实现难点"></a>实现难点</h1><ul>
+<li>逻辑斯蒂回归需要用到scipy的牛顿截断法进行参数优化</li>
+<li>神经网络本质上也是参数优化问题，若想调用参数优化包，实现的时候需要将所有参数整合到一个变量才能作为参数传递进入参数优化的函数中</li>
+<li>调用opt.minimize的时候theta的传递会转化成为行向量，注意前面的算法设计</li>
+<li>非线性决策边界的绘制用plt.coutour绘制等高线</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+              <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/08/28/AWS-EKK%E6%9E%B6%E6%9E%84%E5%AE%9E%E8%B7%B5/" rel="prev" title="AWS EKK架构实践——日志收集分析解决方案">
+      <i class="fa fa-chevron-left"></i> AWS EKK架构实践——日志收集分析解决方案
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/10/03/Recognize-Deeplearning.ai/" rel="next" title="Recognize Deeplearning.ai">
+      Recognize Deeplearning.ai <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">机器学习解决的问题?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%AE%9A%E4%B9%89%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">机器学习的定义？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%A4%BA"><span class="nav-number">2.</span> <span class="nav-text">符号表示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="nav-number">3.</span> <span class="nav-text">线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6"><span class="nav-number">3.1.</span> <span class="nav-text">算法框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Batch-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95"><span class="nav-number">3.2.1.</span> <span class="nav-text">(Batch)梯度下降法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%8F%8F%E8%BF%B0"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">算法描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B4%E8%A7%82%E8%A1%A8%E7%8E%B0"><span class="nav-number">3.2.1.2.</span> <span class="nav-text">直观表现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%8F%8F%E8%BF%B0"><span class="nav-number">3.2.1.3.</span> <span class="nav-text">实现描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E6%84%8F%E4%B9%89"><span class="nav-number">3.2.1.4.</span> <span class="nav-text">几何意义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.2.1.5.</span> <span class="nav-text">梯度下降法的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="nav-number">3.2.1.6.</span> <span class="nav-text">梯度下降的技巧</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E8%A7%84%E6%96%B9%E7%A8%8B"><span class="nav-number">3.2.2.</span> <span class="nav-text">正规方程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E9%80%A0"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">构造</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#X-TX-%E4%B8%BA%E9%9D%9E%E5%8F%AF%E9%80%86%E7%9F%A9%E9%98%B5%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">3.2.2.2.</span> <span class="nav-text">$X^TX$为非可逆矩阵的原因</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E5%92%8C%E6%AD%A3%E8%A7%84%E6%96%B9%E7%A8%8B%E5%8F%96%E8%88%8D"><span class="nav-number">3.2.3.</span> <span class="nav-text">梯度下降法和正规方程取舍</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#logistic%E5%9B%9E%E5%BD%92"><span class="nav-number">4.</span> <span class="nav-text">logistic回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6-1"><span class="nav-number">4.1.</span> <span class="nav-text">算法框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%BC%95%E5%85%A5"><span class="nav-number">4.2.</span> <span class="nav-text">问题引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%B3%E7%AD%96%E7%95%8C%E9%99%90"><span class="nav-number">4.3.</span> <span class="nav-text">决策界限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0"><span class="nav-number">4.4.</span> <span class="nav-text">代价函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E4%BC%98%E5%8C%96"><span class="nav-number">4.5.</span> <span class="nav-text">高级优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%88%86%E7%B1%BB%EF%BC%9A%E4%B8%80%E5%AF%B9%E5%A4%9A"><span class="nav-number">4.6.</span> <span class="nav-text">多分类：一对多</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E5%8C%96"><span class="nav-number">5.</span> <span class="nav-text">正则化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E6%8B%9F%E5%90%88%E9%97%AE%E9%A2%98"><span class="nav-number">5.1.</span> <span class="nav-text">过拟合问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%9C%BA"><span class="nav-number">5.2.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E5%85%A5%E6%AD%A3%E5%88%99%E9%A1%B9"><span class="nav-number">5.3.</span> <span class="nav-text">引入正则项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92-1"><span class="nav-number">5.3.1.</span> <span class="nav-text">线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E6%9B%B4%E6%96%B0"><span class="nav-number">5.3.1.1.</span> <span class="nav-text">梯度更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E8%A7%84%E6%96%B9%E7%A8%8B-1"><span class="nav-number">5.3.1.2.</span> <span class="nav-text">正规方程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logistic%E5%9B%9E%E5%BD%92-1"><span class="nav-number">5.3.2.</span> <span class="nav-text">logistic回归</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E6%9B%B4%E6%96%B0-1"><span class="nav-number">5.3.2.1.</span> <span class="nav-text">梯度更新</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">6.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%9C%BA-1"><span class="nav-number">6.1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%BD%91%E7%BB%9C"><span class="nav-number">6.2.</span> <span class="nav-text">前向传播网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6-2"><span class="nav-number">6.2.1.</span> <span class="nav-text">算法框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%BB%BA%E7%AB%8B"><span class="nav-number">6.2.2.</span> <span class="nav-text">模型建立</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E8%AE%A1%E7%AE%97%E6%9D%A5%E8%A1%A8%E7%A4%BA%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97"><span class="nav-number">6.2.3.</span> <span class="nav-text">使用神经网络的计算来表示逻辑运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="nav-number">6.2.4.</span> <span class="nav-text">多分类问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0-1"><span class="nav-number">6.2.5.</span> <span class="nav-text">代价函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%BD%91%E7%BB%9C"><span class="nav-number">6.3.</span> <span class="nav-text">反向传播网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">6.3.1.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%BB%BA%E7%AB%8B-1"><span class="nav-number">6.3.2.</span> <span class="nav-text">模型建立</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%B5%8B"><span class="nav-number">6.4.</span> <span class="nav-text">梯度检测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8F%91"><span class="nav-number">6.4.1.</span> <span class="nav-text">启发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E5%B9%BF"><span class="nav-number">6.4.2.</span> <span class="nav-text">推广</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%94%E8%BE%83"><span class="nav-number">6.4.3.</span> <span class="nav-text">比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E6%AD%A5%E9%AA%A4"><span class="nav-number">6.4.4.</span> <span class="nav-text">具体步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">6.5.</span> <span class="nav-text">随机初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E7%A7%B0%E6%9D%83%E9%87%8D%E9%97%AE%E9%A2%98"><span class="nav-number">6.5.1.</span> <span class="nav-text">对称权重问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E5%A5%BD%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">6.5.2.</span> <span class="nav-text">更好的初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E8%AE%AD%E7%BB%83"><span class="nav-number">6.6.</span> <span class="nav-text">神经网络的训练</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84"><span class="nav-number">6.6.1.</span> <span class="nav-text">网络架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E6%AD%A5%E9%AA%A4"><span class="nav-number">6.6.2.</span> <span class="nav-text">训练步骤</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">7.</span> <span class="nav-text">算法性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E7%9A%84%E6%96%B9%E5%90%91"><span class="nav-number">7.1.</span> <span class="nav-text">错误的方向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E7%9A%84%E5%BB%BA%E8%AE%AE"><span class="nav-number">7.2.</span> <span class="nav-text">正确的建议</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="nav-number">8.</span> <span class="nav-text">机器学习系统设计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA"><span class="nav-number">9.</span> <span class="nav-text">支持向量机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6-3"><span class="nav-number">9.1.</span> <span class="nav-text">算法框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%BB%BA%E7%AB%8B-2"><span class="nav-number">9.2.</span> <span class="nav-text">模型建立</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E8%B7%9D%E7%A6%BB"><span class="nav-number">9.3.</span> <span class="nav-text">安全距离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%B3%E7%AD%96%E8%BE%B9%E7%95%8C"><span class="nav-number">9.4.</span> <span class="nav-text">决策边界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E5%90%AB%E4%B9%89"><span class="nav-number">9.5.</span> <span class="nav-text">数学含义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%87%BD%E6%95%B0"><span class="nav-number">9.6.</span> <span class="nav-text">核函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%85%A5"><span class="nav-number">9.6.1.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E5%90%AB%E4%B9%89"><span class="nav-number">9.6.2.</span> <span class="nav-text">参数含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E6%A0%B8%E5%87%BD%E6%95%B0SVM"><span class="nav-number">9.6.3.</span> <span class="nav-text">构建核函数SVM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVM%E5%8F%82%E6%95%B0-%E7%BB%93%E5%90%88%E5%8F%82%E6%95%B0%E5%90%AB%E4%B9%89"><span class="nav-number">9.6.4.</span> <span class="nav-text">SVM参数(结合参数含义)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA"><span class="nav-number">9.7.</span> <span class="nav-text">使用支持向量机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%A0%B8%E5%87%BD%E6%95%B0"><span class="nav-number">9.7.1.</span> <span class="nav-text">其他核函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%B1%BB%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="nav-number">9.7.2.</span> <span class="nav-text">多类分类问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%8F%E9%AA%8C"><span class="nav-number">9.7.3.</span> <span class="nav-text">经验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVM-v-s-logistic-regression"><span class="nav-number">9.7.4.</span> <span class="nav-text">SVM v.s logistic regression</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#K-means"><span class="nav-number">10.</span> <span class="nav-text">K-means</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6-4"><span class="nav-number">10.1.</span> <span class="nav-text">算法框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4-1"><span class="nav-number">10.2.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="nav-number">10.3.</span> <span class="nav-text">可视化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E5%88%9D%E5%A7%8B%E5%8C%96-1"><span class="nav-number">10.4.</span> <span class="nav-text">随机初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-number">10.5.</span> <span class="nav-text">K的选择</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90PCA"><span class="nav-number">11.</span> <span class="nav-text">主成分分析PCA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%9C%BA-2"><span class="nav-number">11.1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%A6%82%E8%BF%B0"><span class="nav-number">11.2.</span> <span class="nav-text">问题概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E7%89%B9%E7%82%B9"><span class="nav-number">11.3.</span> <span class="nav-text">算法特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4-2"><span class="nav-number">11.4.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E4%B8%BB%E6%88%90%E5%88%86%E7%9A%84%E6%95%B0%E9%87%8F"><span class="nav-number">11.5.</span> <span class="nav-text">选择主成分的数量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E5%BB%BA%E7%9A%84%E5%8E%8B%E7%BC%A9%E8%A1%A8%E7%A4%BA"><span class="nav-number">11.6.</span> <span class="nav-text">重建的压缩表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PCA%E7%9A%84%E5%BA%94%E7%94%A8%E5%BB%BA%E8%AE%AE"><span class="nav-number">11.7.</span> <span class="nav-text">PCA的应用建议</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B"><span class="nav-number">12.</span> <span class="nav-text">异常检测</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83"><span class="nav-number">12.1.</span> <span class="nav-text">基于高斯分布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95-1"><span class="nav-number">12.1.1.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%92%8C%E8%AF%84%E4%BB%B7%E4%B8%80%E4%B8%AA%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E7%B3%BB%E7%BB%9F"><span class="nav-number">12.1.2.</span> <span class="nav-text">开发和评价一个异常检测系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E4%B8%8E%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E5%AF%B9%E6%AF%94"><span class="nav-number">12.1.3.</span> <span class="nav-text">异常检测与监督学习对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9%E5%92%8C%E5%A4%84%E7%90%86"><span class="nav-number">12.1.4.</span> <span class="nav-text">特征选择和处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90"><span class="nav-number">12.1.5.</span> <span class="nav-text">误差分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%A4%9A%E5%85%83%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83"><span class="nav-number">12.2.</span> <span class="nav-text">基于多元高斯分布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95-2"><span class="nav-number">12.2.1.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="nav-number">12.2.2.</span> <span class="nav-text">参数可视化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94"><span class="nav-number">12.3.</span> <span class="nav-text">模型对比</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F"><span class="nav-number">13.</span> <span class="nav-text">推荐系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%86%85%E5%AE%B9%E7%9A%84%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95"><span class="nav-number">13.1.</span> <span class="nav-text">基于内容的推荐算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8F%E5%90%8C%E8%BF%87%E6%BB%A4"><span class="nav-number">13.2.</span> <span class="nav-text">协同过滤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8F%E5%90%8C%E8%BF%87%E6%BB%A4%E7%AE%97%E6%B3%95"><span class="nav-number">13.3.</span> <span class="nav-text">协同过滤算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E7%9B%AE%E6%A0%87"><span class="nav-number">13.3.1.</span> <span class="nav-text">优化目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4-3"><span class="nav-number">13.3.2.</span> <span class="nav-text">算法步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%91%E9%87%8F%E5%8C%96%EF%BC%9A%E4%BD%8E%E7%A7%A9%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3"><span class="nav-number">13.4.</span> <span class="nav-text">向量化：低秩矩阵分解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%A1%8C%E5%B7%A5%E4%BD%9C%E4%B8%8A%E7%9A%84%E7%BB%86%E8%8A%82%EF%BC%9A%E5%9D%87%E5%80%BC%E5%BD%92%E4%B8%80%E5%8C%96"><span class="nav-number">13.5.</span> <span class="nav-text">推行工作上的细节：均值归一化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="nav-number">14.</span> <span class="nav-text">大规模机器学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E5%9E%8B%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%AD%A6%E4%B9%A0"><span class="nav-number">14.1.</span> <span class="nav-text">大型数据集的学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95-Stochastic-Gradient-Descent"><span class="nav-number">14.2.</span> <span class="nav-text">随机梯度下降法(Stochastic Gradient Descent)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E6%89%B9%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D-Mini-Batch-Gradient-Descent"><span class="nav-number">14.3.</span> <span class="nav-text">小批量梯度下降(Mini-Batch Gradient Descent)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%94%B6%E6%95%9B"><span class="nav-number">14.4.</span> <span class="nav-text">随机梯度下降收敛</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SGD%E8%B0%83%E8%AF%95"><span class="nav-number">14.4.1.</span> <span class="nav-text">SGD调试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%8E%87%E8%B0%83%E6%95%B4"><span class="nav-number">14.5.</span> <span class="nav-text">学习率调整</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E7%BA%BF%E5%AD%A6%E4%B9%A0"><span class="nav-number">14.6.</span> <span class="nav-text">在线学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%8F%E5%B0%91%E6%98%A0%E5%B0%84%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%B9%B6%E8%A1%8C"><span class="nav-number">14.7.</span> <span class="nav-text">减少映射与数据并行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%AE%9E%E4%BE%8B%EF%BC%9A%E5%9B%BE%E7%89%87%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB"><span class="nav-number">15.</span> <span class="nav-text">应用实例：图片文字识别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OCR-pipeline"><span class="nav-number">15.1.</span> <span class="nav-text">OCR pipeline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3"><span class="nav-number">15.2.</span> <span class="nav-text">滑动窗口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%A4%A7%E9%87%8F%E6%95%B0%E6%8D%AE%E5%92%8C%E4%BA%BA%E5%B7%A5%E6%95%B0%E6%8D%AE"><span class="nav-number">15.3.</span> <span class="nav-text">获取大量数据和人工数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A9%E8%8A%B1%E6%9D%BF%E5%88%86%E6%9E%90%EF%BC%9A%E4%B8%8B%E4%B8%80%E6%AD%A5%E7%9A%84pipeline"><span class="nav-number">15.4.</span> <span class="nav-text">天花板分析：下一步的pipeline</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">16.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E9%9A%BE%E7%82%B9"><span class="nav-number">17.</span> <span class="nav-text">实现难点</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lifengjun"
+      src="https://avatars0.githubusercontent.com/u/25082467?v=4">
+  <p class="site-author-name" itemprop="name">lifengjun</p>
+  <div class="site-description" itemprop="description">个人学习笔记和日志</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/543877815" title="GitHub → https://github.com/543877815" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:543877815@qq.com" title="E-Mail → mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lifengjun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '970dc8fd856c3e17f9f0',
+      clientSecret: '7f6d29828dd1f4a02336c480ba1012f1851b0eb0',
+      repo        : '543877815.github.io',
+      owner       : '543877815',
+      admin       : ['543877815'],
+      id          : '10cfe8b9765a99b39b038f94da0551a9',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(a){a.imageLazyLoadSetting.processImages=t;var e=a.imageLazyLoadSetting.isSPA,i=a.imageLazyLoadSetting.preloadRatio||1,o=r();function r(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(o=r());for(var t,n=0;n<o.length;n++)0<=(t=(t=o[n]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(a.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var e=o[n];!function(t,e){if(t.hasAttribute("bg-lazy"))return t.removeAttribute("bg-lazy"),e&&e();var n=new Image,a=t.getAttribute("data-original");n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a)}(e,function(){o=o.filter(function(t){return e!==t}),a.imageLazyLoadSetting.onImageLoaded&&a.imageLazyLoadSetting.onImageLoaded(e)})}()}function n(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",n),a.addEventListener("resize",n),a.addEventListener("orientationchange",n)}(this);</script></body>
+</html>

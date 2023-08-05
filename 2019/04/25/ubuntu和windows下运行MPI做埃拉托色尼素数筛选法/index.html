@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="说说最近踩的坑，为了在windows的电脑下做并行程序设计作业埃拉托色尼素数筛选法，用的是MPI，然后发现这类库对于windows的用户非常不友好，比如说MPICH2后续已经不支持windows，OpenMPI貌似只支持linux，而微软维护的MS-MPI能够支持windows，但是我在使用clion(cmake)进行包引入的时候出了很多问题，可能的原因是windows下没有mpicc&#x2F;mpicx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu和windows下运行MPI做埃拉托色尼素数筛选法">
+<meta property="og:url" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/index.html">
+<meta property="og:site_name" content="逗比学长的博客">
+<meta property="og:description" content="说说最近踩的坑，为了在windows的电脑下做并行程序设计作业埃拉托色尼素数筛选法，用的是MPI，然后发现这类库对于windows的用户非常不友好，比如说MPICH2后续已经不支持windows，OpenMPI貌似只支持linux，而微软维护的MS-MPI能够支持windows，但是我在使用clion(cmake)进行包引入的时候出了很多问题，可能的原因是windows下没有mpicc&#x2F;mpicx">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="article:published_time" content="2019-04-25T02:41:32.000Z">
+<meta property="article:modified_time" content="2022-09-12T02:42:43.464Z">
+<meta property="article:author" content="lifengjun">
+<meta property="article:tag" content="the Sieve of Eratosthenes">
+<meta property="article:tag" content="clion">
+<meta property="article:tag" content="ubuntu">
+<meta property="article:tag" content="windows">
+<meta property="article:tag" content="vs">
+<meta property="article:tag" content="msmpi">
+<meta property="article:tag" content="mpich">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lifengjun.xin/images/loading.gif">
+
+<link rel="canonical" href="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+
+  <title>ubuntu和windows下运行MPI做埃拉托色尼素数筛选法 | 逗比学长的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/543877815" class="github-corner" aria-label="View source on GitHub">
+    <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#000000; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+    <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">逗比学长的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">博客是写给我自己看的（叉腰）</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-quick-check">
+
+    <a href="/quick-check" rel="section"><i class="fa fa-calendar fa-fw"></i>速查</a>
+
+  </li>
+        <li class="menu-item menu-item-portal">
+
+    <a href="/portal" rel="section"><i class="fa fa-rocket fa-fw"></i>传送门</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ubuntu和windows下运行MPI做埃拉托色尼素数筛选法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-04-25 10:41:32" itemprop="dateCreated datePublished" datetime="2019-04-25T10:41:32+08:00">2019-04-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-12 10:42:43" itemprop="dateModified" datetime="2022-09-12T10:42:43+08:00">2022-09-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MPI/" itemprop="url" rel="index"><span itemprop="name">MPI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>说说最近踩的坑，为了在windows的电脑下做并行程序设计作业埃拉托色尼素数筛选法，用的是MPI，然后发现这类库对于windows的用户非常不友好，比如说MPICH2后续已经不支持windows，OpenMPI貌似只支持linux，而微软维护的MS-MPI能够支持windows，但是我在使用clion(cmake)进行包引入的时候出了很多问题，可能的原因是windows下没有mpicc/mpicxx，可能的解决方案是使用微软自家的VS去做，但是我觉得VS太过臃肿而不想下载，最终我得出来的结论是：windows + clion + MPI 暂时无法实现，即使翻阅了很多网上的资料也没有响应的解决方案，无奈之下只能在远程的linux下编程，使用的是ubuntu 16.04这个系统，然后思路是因为要编程所以配置一个ubuntu GUI，然后装上lion，把之前写的代码从git下clone下来，然后由于我的服务器是在华为云上的一个7天体验卷，也就只有2核4G，所以我打算后续在工作室一台比较老的服务器上写代码，然后比较坑的是那个玩意儿没有公网IP，因此我想看看能否通过teamviewer来从远程连接，虽然感觉可能性不大hhh。</p>
+<p>2019-05-19续——</p>
+<p>后来我测试了一下teamviewer连接服务器，但是这个被归为了商业用途就是要收费的（就很烦），算了算了…只能老老实实用windows的远程连接8。后续在linux服务器上写完了几个优化之后（见后）,在测试阶段发现优化后的时间反而边长了，虽然后来用了增加cache命中率来提升性能，但是我认为加速还是受到了干扰，于是只能去专业的实验室用里面的电脑搞事情，所以我又把windows上mpi的配置搞了一边，还生成了一下不同优化的exe，然后再拿回自己的电脑测试，现在想一想，之前无法在自己的电脑的windows上用clion编译可能是和cmake建立动态链接失败有关，但是自己对这方面不熟，网上资料不全，所以搞着搞着就放弃了。但是安装了mpi还是能够执行编译生成的exe文件滴。</p>
+<span id="more"></span>
+<h1 id="Linux环境配置"><a href="#Linux环境配置" class="headerlink" title="Linux环境配置"></a>Linux环境配置</h1><h2 id="图形界面"><a href="#图形界面" class="headerlink" title="图形界面"></a>图形界面</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>我借鉴了<a target="_blank" rel="noopener" href="https://blog.csdn.net/lengconglin/article/details/77894636">这篇博客</a>上的流程</p>
+<p>更新软件列表和软件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
+<p>安装xrdp</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install xrdp </span><br></pre></td></tr></table></figure>
+<p>安装vn4server</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install vnc4server </span><br></pre></td></tr></table></figure>
+<p>安装xubuntu-desktop，这个有点久</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install xubuntu-desktop </span><br></pre></td></tr></table></figure>
+<p>向xsession中写入xfce4-session</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> “xfce4-session” &gt;~/.xsession</span><br></pre></td></tr></table></figure>
+<p>开启xrdp服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service xrdp restart</span><br></pre></td></tr></table></figure>
+<h3 id="远程登录"><a href="#远程登录" class="headerlink" title="远程登录"></a>远程登录</h3><p>使用windows下的远程桌面连接，输入IP，用户名</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/1.png" alt="1"></p>
+<p>输入密码</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2.png" alt="2"></p>
+<p>使用默认设置</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/3.png" alt="3"></p>
+<h2 id="clion"><a href="#clion" class="headerlink" title="clion"></a>clion</h2><h3 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h3><p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/clion/download/download-thanks.html?platform=linux">下载网站</a>找到direct link，将里面的url复制过来下载</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://download.jetbrains.com/cpp/CLion-2019.1.2.tar.gz</span><br></pre></td></tr></table></figure>
+<p>解压</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf CLion-2019.1.2.tar.gz</span><br></pre></td></tr></table></figure>
+<p>安装(图形界面下)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> clion-2019.1.2/bin/</span><br><span class="line">./clion.sh</span><br></pre></td></tr></table></figure>
+<p>安装完成后进行相关配置即可</p>
+<p>缺少c/c++编译器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install gcc g++</span><br></pre></td></tr></table></figure>
+<h2 id="teamviewer"><a href="#teamviewer" class="headerlink" title="teamviewer"></a>teamviewer</h2><h3 id="安装-2"><a href="#安装-2" class="headerlink" title="安装"></a>安装</h3><p><a target="_blank" rel="noopener" href="https://www.teamviewer.com/cn/download/linux/">下载网站</a>找到TeamViewer Host的ubuntu 64x地址复制过来下载</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://download.teamviewer.com/download/linux/teamviewer-host_amd64.deb</span><br></pre></td></tr></table></figure>
+<p>安装deb软件包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i teamviewer-host_amd64.deb</span><br></pre></td></tr></table></figure>
+<p>修复安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get -f install</span><br></pre></td></tr></table></figure>
+<p>直接执行teamviewer应该是会报错的，报的是Aborted (core dumped)，正确的做法应该是</p>
+<p>查看配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">teamviewer info</span><br></pre></td></tr></table></figure>
+<p>其将打印出TeamViewer ID</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/4.png" alt="4"></p>
+<p>通过下属命令设置登录密码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">teamviewer --passwd NEWPASSWORD</span><br></pre></td></tr></table></figure>
+<p>打印 ok，在其他电脑上下载TeamViewer客户端，即可进行远程控制，若不行可以进行服务器重启再试试。</p>
+<p>然鹅，这样貌似会触碰到TeamViewer的商业用途，奥</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/5.png" alt="5"></p>
+<h2 id="MPICH"><a href="#MPICH" class="headerlink" title="MPICH"></a>MPICH</h2><p>安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install mpich</span><br></pre></td></tr></table></figure>
+<p>CMakeLists.txt下配置</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required(VERSION 3.13)</span><br><span class="line">project(MPI)</span><br><span class="line"></span><br><span class="line">set(CMAKE_CXX_STANDARD 17)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">find_package(MPI REQUIRED)</span><br><span class="line"></span><br><span class="line">include_directories($&#123;MPI_INCLUDE_PATH&#125;)</span><br><span class="line"></span><br><span class="line">set(CMAKE_CXX_COMPILER mpicxx)</span><br><span class="line">set(CMAKE_C_COMPILER mpicc)</span><br><span class="line"></span><br><span class="line">add_executable(MPI main.cpp)</span><br></pre></td></tr></table></figure>
+<h3 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h3><p>来自<a target="_blank" rel="noopener" href="http://www.pianshen.com/article/9286287401/">这个博客</a></p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;mpi_hello.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;cstdio&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;cstring&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;mpi.h&quot;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MAX_STRING = <span class="number">100</span>;</span><br><span class="line"> </span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">char</span> greeting[MAX_STRING];</span><br><span class="line">    <span class="type">int</span> comm_sz;</span><br><span class="line">    <span class="type">int</span> my_rank;</span><br><span class="line"> </span><br><span class="line">    MPI_Init(<span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;comm_sz);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;my_rank);</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> (my_rank != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">sprintf</span>(greeting, <span class="string">&quot;Greeting from process %d of %d!&quot;</span>, my_rank, comm_sz);</span><br><span class="line">        MPI_Send(greeting, <span class="built_in">strlen</span>(greeting) + <span class="number">1</span>, MPI_CHAR, <span class="number">0</span>, <span class="number">0</span>, MPI_COMM_WORLD);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Greetings from process %d of %d!\n&quot;</span>, my_rank, comm_sz);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> q = <span class="number">1</span>; q &lt; comm_sz; ++q) &#123;</span><br><span class="line">            MPI_Recv(greeting, MAX_STRING, MPI_CHAR, q, <span class="number">0</span>, MPI_COMM_WORLD, MPI_STATUS_IGNORE);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, greeting);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    MPI_Finalize();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果为：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/usr/</span>bin<span class="regexp">/mpirun -np 4 ./m</span>pi_spmv</span><br><span class="line">Greetings from process <span class="number">0</span> of <span class="number">4</span>!</span><br><span class="line">Greeting from process <span class="number">1</span> of <span class="number">4</span>!</span><br><span class="line">Greeting from process <span class="number">2</span> of <span class="number">4</span>!</span><br><span class="line">Greeting from process <span class="number">3</span> of <span class="number">4</span>!</span><br><span class="line"> </span><br><span class="line">Process finished with <span class="keyword">exit</span> code <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h1 id="windows环境配置"><a href="#windows环境配置" class="headerlink" title="windows环境配置"></a>windows环境配置</h1><p>windows下运行mpi首推微软的msmpi，因为其配置较mpich更加简单，下载地址为<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/message-passing-interface/microsoft-mpi">https://docs.microsoft.com/en-us/message-passing-interface/microsoft-mpi</a></p>
+<p>将两个安装包msmpisdk.msi和msmpisetup.exe分别下载然后安装完成后即可。</p>
+<p>为啥不按照实验指导书使用mpich，因为用起来太麻烦了！！还要windows的用户和密码，如果没有密码还不行，完了没密码的用户还要创建一个新的用户，而我是在实验室的电脑做的实验，它还不允许我创建新用户，让我心里直呼辣鸡windows，幸好还有MS维护的msmpi，实验才得以进行下去。</p>
+<p>关于msmpi的引入我参考了<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011514451/article/details/50675222">这篇文章</a>，前面说了，仅限于VS，毕竟都是自家的玩意儿引入起来更加方便。</p>
+<h2 id="MSMPI配置步骤"><a href="#MSMPI配置步骤" class="headerlink" title="MSMPI配置步骤"></a>MSMPI配置步骤</h2><ol>
+<li>在VS中新建C++win32空项目，将项目编译改为x64（vs总是将这个默认为win32，就很烦)</li>
+</ol>
+<p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/6.png" alt="6"></p>
+<ol>
+<li>去安装的SDK目录，找到include与lib文件夹右键<font color="#c7254e">项目 — 属性 — vc++ 目录</font>中<font color="#c7254e">包含目录</font>添加 include 文件夹路径，<font color="#c7254e">库目录</font>中添加 lib 文件夹路径。</li>
+</ol>
+<p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/7.png" alt="7"></p>
+<ol>
+<li><font color="#c7254e">属性 — 链接器 — 输入 — 附加依赖项</font>中添加<font color="#c7254e">msmpi.lib;msmpifec.lib;msmpifmc.lib</font> ;</li>
+</ol>
+<p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/8.png" alt="8"></p>
+<ol>
+<li>新建cpp文件，键入测试代码如下：</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;mpi.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> rank;</span><br><span class="line">    <span class="type">int</span> size;</span><br><span class="line">    MPI_Init(<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;size);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;Hello world from process &quot;</span>&lt;&lt;rank&lt;&lt;<span class="string">&quot; of &quot;</span>&lt;&lt;size&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    MPI_Finalize();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>跳到编译生成exe文件下的目录，执行下列命令，mpiexec刚刚安装bin下的一个执行mpi用的文件，默认配置了系统全局变量，如果没有的话可自行配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mpiexec -n 4 main.exe</span><br></pre></td></tr></table></figure>
+<p>得到运行结果如下</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Hello</span> world from process <span class="number">1</span> of <span class="number">4</span></span><br><span class="line"><span class="attribute">Hello</span> world from process <span class="number">0</span> of <span class="number">4</span></span><br><span class="line"><span class="attribute">Hello</span> world from process <span class="number">3</span> of <span class="number">4</span></span><br><span class="line"><span class="attribute">Hello</span> world from process <span class="number">2</span> of <span class="number">4</span></span><br></pre></td></tr></table></figure>
+<p>至此，windows下的mpi环境配置成功了</p>
+<h1 id="埃拉托色尼素数筛选法"><a href="#埃拉托色尼素数筛选法" class="headerlink" title="埃拉托色尼素数筛选法"></a>埃拉托色尼素数筛选法</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>根据<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%AD%9B%E9%80%89%E6%B3%95/4524938?fr=aladdin">百度百科</a>介绍，埃拉托色尼筛选法是针对自然数列中的自然数而实施的，用于求一定范围内的质数。</p>
+<p>在寻找整数Ｎ以内的素数时，埃拉托斯特尼采用了一种与众不同的方法：先将２－Ｎ的各数写在纸上：</p>
+<p>在２的上面画一个圆圈，然后划去２的其他倍数；第一个既未画圈又没有被划去的数是３，将它画圈，再划去３的其他倍数；现在既未画圈又没有被划去的第一个数是５，将它画圈，并划去５的其他倍数……依此类推，一直到所有小于或等于Ｎ的各数都画了圈或划去为止。这时，画了圈的以及未划去的那些数正好就是小于Ｎ的素数。</p>
+<p>其伪代码如下所示：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Create</span> list of unmarked natural numbers <span class="number">2</span>, <span class="number">3</span>, …, n</span><br><span class="line"><span class="attribute">k</span> &lt;- <span class="number">2</span></span><br><span class="line"><span class="attribute">Repeat</span></span><br><span class="line">   <span class="attribute">Mark</span> <span class="literal">all</span> multiples of k between k^<span class="number">2</span> and n</span><br><span class="line">   <span class="attribute">k</span>&lt;- smallest unmarked number &gt; k</span><br><span class="line"><span class="attribute">until</span> k^<span class="number">2</span> &gt; n</span><br><span class="line"><span class="attribute">The</span> unmarked numbers are primes</span><br></pre></td></tr></table></figure>
+<h3 id="初始版并行代码代码说明"><a href="#初始版并行代码代码说明" class="headerlink" title="初始版并行代码代码说明"></a>初始版并行代码代码说明</h3><p>定义一个数组marked, 每一个元素的下标对应一个整数，它的值表示这个整数是否为素数,值为1是素数，值为0不是素数。</p>
+<p>先假定所有的数都是素数，将marked数组置0。</p>
+<p>选定第一个整数２，从它对应的数组元素2*2=4开始依次标记2的倍数，一直标记到最后一个数为止。</p>
+<p>接下来选定下一个未标记的数，它一定是素数，在使用广播的形式通知各进程筛选出这个素数的倍数。</p>
+<p>这样循环到最后，所有进程中未标记的数之和就是1-n中的所有素数了。</p>
+<p>代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;mpi.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;math.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stdio.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stdlib.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;string.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;error.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">/************************************************</span></span><br><span class="line"><span class="comment">MPI_BCAST(buffer,count,datatype,root,comm)</span></span><br><span class="line"><span class="comment">    IN/OUT　buffer　　  通信消息缓冲区的起始地址(可变)</span></span><br><span class="line"><span class="comment">    IN　　　 count　  　 通信消息缓冲区中的数据个数(整型)</span></span><br><span class="line"><span class="comment">    IN 　　　datatype 　通信消息缓冲区中的数据类型(句柄)</span></span><br><span class="line"><span class="comment">    IN　　　 root　  　　发送广播的根的序列号(整型)</span></span><br><span class="line"><span class="comment">    IN 　　　comm   　　通信子(句柄)</span></span><br><span class="line"><span class="comment">int MPI_Bcast(void* buffer,int count,MPI_Datatype datatype,int root, MPI_Comm comm)</span></span><br><span class="line"><span class="comment">MPI_BCAST是从一个序列号为root的进程将一条消息广播发送到组内的所有进程,</span></span><br><span class="line"><span class="comment">包括它本身在内.调用时组内所有成员都使用同一个comm和root,</span></span><br><span class="line"><span class="comment">其结果是将根的通信消息缓冲区中的消息拷贝到其他所有进程中去.</span></span><br><span class="line"><span class="comment">规约函数 MPI_Reduce()，将通信子内各进程的同一个变量参与规约计算，并向指定的进程输出计算结果</span></span><br><span class="line"><span class="comment">MPI_METHOD MPI_Reduce(</span></span><br><span class="line"><span class="comment">   _In_range_(!= , recvbuf) _In_opt_ const void* sendbuf,  // 指向输入数据的指针</span></span><br><span class="line"><span class="comment">   _When_(root != MPI_PROC_NULL, _Out_opt_) void* recvbuf, // 指向输出数据的指针，即计算结果存放的地方</span></span><br><span class="line"><span class="comment">   _In_range_(&gt;= , 0) int count,                           // 数据尺寸，可以进行多个标量或多个向量的规约</span></span><br><span class="line"><span class="comment">   _In_ MPI_Datatype datatype,                             // 数据类型</span></span><br><span class="line"><span class="comment">   _In_ MPI_Op op,                                         // 规约操作类型</span></span><br><span class="line"><span class="comment">   _mpi_coll_rank_(root) int root,                         // 目标进程号，存放计算结果的进程</span></span><br><span class="line"><span class="comment">   _In_ MPI_Comm comm                                      // 通信子</span></span><br><span class="line"><span class="comment">);</span></span><br><span class="line"><span class="comment">**********************************************/</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MIN(a, b) ((a)&lt;(b)?(a):(b))</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> count;              <span class="comment">/* Local prime count */</span></span><br><span class="line">    <span class="type">double</span> elapsed_time;    <span class="comment">/* Parallel execution time */</span></span><br><span class="line">    <span class="type">int</span> first;              <span class="comment">/* Index of first multiple */</span></span><br><span class="line">    <span class="type">int</span> global_count;       <span class="comment">/* Global prime count */</span></span><br><span class="line">    <span class="type">int</span> high_value;         <span class="comment">/* Highest value on this proc */</span></span><br><span class="line">    <span class="type">int</span> id;                 <span class="comment">/* Process ID number */</span></span><br><span class="line">    <span class="type">int</span> index;              <span class="comment">/* Index of current prime */</span></span><br><span class="line">    <span class="type">int</span> low_value;          <span class="comment">/* Lowest value on this proc */</span></span><br><span class="line">    <span class="type">char</span> *marked;           <span class="comment">/* Portion of 2,...,&#x27;n&#x27; */</span></span><br><span class="line">    <span class="type">int</span> n;                  <span class="comment">/* Sieving from 2, ..., &#x27;n&#x27; */</span></span><br><span class="line">    <span class="type">int</span> p;                  <span class="comment">/* Number of processes */</span></span><br><span class="line">    <span class="type">int</span> proc0_size;         <span class="comment">/* Size of proc 0&#x27;s subarray */</span></span><br><span class="line">    <span class="type">int</span> prime;              <span class="comment">/* Current prime */</span></span><br><span class="line">    <span class="type">int</span> size;               <span class="comment">/* Elements in &#x27;marked&#x27; */</span></span><br><span class="line">    <span class="type">int</span> low_index;          <span class="comment">/* Lowest index on this proc */</span></span><br><span class="line">    <span class="type">int</span> high_index;         <span class="comment">/* Highest index on this proc */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始化</span></span><br><span class="line">    <span class="comment">// MPI程序启动时“自动”建立两个通信器：</span></span><br><span class="line">    <span class="comment">// MPI_COMM_WORLD:包含程序中所有MPI进程</span></span><br><span class="line">    <span class="comment">// MPI_COMM_SELF：有单个进程独自构成，仅包含自己</span></span><br><span class="line">    <span class="built_in">MPI_Init</span>(&amp;argc, &amp;argv);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// MPI_COMM_RANK 得到本进程的进程号，进程号取值范围为 0, …, np-1</span></span><br><span class="line">    <span class="built_in">MPI_Comm_rank</span>(MPI_COMM_WORLD, &amp;id);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// MPI_COMM_SIZE 得到所有参加运算的进程的个数</span></span><br><span class="line">    <span class="built_in">MPI_Comm_size</span>(MPI_COMM_WORLD, &amp;p);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// MPI_Barrier是MPI中的一个函数接口</span></span><br><span class="line">    <span class="comment">// 表示阻止调用直到communicator中所有进程完成调用</span></span><br><span class="line">    <span class="built_in">MPI_Barrier</span>(MPI_COMM_WORLD);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// MPI_WTIME返回一个用浮点数表示的秒数</span></span><br><span class="line">    <span class="comment">// 它表示从过去某一时刻到调用时刻所经历的时间</span></span><br><span class="line"></span><br><span class="line">    elapsed_time = -<span class="built_in">MPI_Wtime</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 参数个数为2：文件名以及问题规模n</span></span><br><span class="line">    <span class="keyword">if</span> (argc != <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!id) <span class="built_in">printf</span>(<span class="string">&quot;Command line: %s &lt;m&gt; \n&quot;</span>, argv[<span class="number">0</span>]);</span><br><span class="line">        <span class="comment">// 结束MPI系统</span></span><br><span class="line">        <span class="built_in">MPI_Finalize</span>();</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 表示找 &lt;= n的素数</span></span><br><span class="line">    n = <span class="built_in">atoi</span>(argv[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> N = n - <span class="number">1</span>;</span><br><span class="line">    low_index = id * (N / p) + <span class="built_in">MIN</span>(id, N % p); <span class="comment">// 进程的第一个数的索引</span></span><br><span class="line">    high_index = (id + <span class="number">1</span>) * (N / p) + <span class="built_in">MIN</span>(id + <span class="number">1</span>, N % p) - <span class="number">1</span>; <span class="comment">// 进程的最后一个数的索引</span></span><br><span class="line">    low_value = <span class="number">2</span> + low_index; <span class="comment">//进程的第一个数</span></span><br><span class="line">    high_value = <span class="number">2</span> + high_index;<span class="comment">//进程的最后一个数</span></span><br><span class="line">    size = high_value - low_value + <span class="number">1</span>;    <span class="comment">//进程处理的数组大小</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Bail out if all the primes used for sieving are not all held by process 0</span></span><br><span class="line">    proc0_size = (n - <span class="number">1</span>) / p;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果有太多进程</span></span><br><span class="line">    <span class="keyword">if</span> ((<span class="number">2</span> + proc0_size) &lt; (<span class="type">int</span>) <span class="built_in">sqrt</span>((<span class="type">double</span>) n)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!id) <span class="built_in">printf</span>(<span class="string">&quot;Too many processes \n&quot;</span>);</span><br><span class="line">        <span class="built_in">MPI_Finalize</span>();</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// allocate this process &#x27;s share of the array</span></span><br><span class="line">    marked = (<span class="type">char</span> *) <span class="built_in">malloc</span>(size);</span><br><span class="line">    <span class="keyword">if</span> (marked == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Cannot allocate enough memory \n&quot;</span>);</span><br><span class="line">        <span class="built_in">MPI_Finalize</span>();</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 先假定所有的整数都是素数</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; i++) marked[i] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 索引初始化为0</span></span><br><span class="line">    <span class="keyword">if</span> (!id) index = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从2开始搜寻</span></span><br><span class="line">    prime = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="comment">/*确定该进程中素数的第一个倍数的下标 */</span></span><br><span class="line">        <span class="comment">// 如果该素数n*n&gt;low_value，n*(n-i)都被标记了</span></span><br><span class="line">        <span class="comment">// 即n*n为该进程中的第一个素数</span></span><br><span class="line">        <span class="comment">// 其下标为n*n-low_value</span></span><br><span class="line">        <span class="keyword">if</span> (prime * prime &gt; low_value) &#123;</span><br><span class="line">            first = prime * prime - low_value;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 若最小值low_value为该素数的倍数</span></span><br><span class="line">            <span class="comment">// 则第一个倍数为low_value，即其下标为0</span></span><br><span class="line">            <span class="keyword">if</span> (!(low_value % prime)) first = <span class="number">0</span>;</span><br><span class="line">                <span class="comment">// 若最小值low_value不是该素数的倍数</span></span><br><span class="line">                <span class="comment">// 那么第一个倍数的下标为该素数减去余数的值</span></span><br><span class="line">            <span class="keyword">else</span> first = prime - (low_value % prime);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 从第一个素数开始，标记该素数的倍数为非素数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = first; i &lt; size; i += prime) marked[i] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 只有id=0的进程才调用，用于找到下一素数的位置</span></span><br><span class="line">        <span class="keyword">if</span> (!id) &#123;</span><br><span class="line">            <span class="keyword">while</span> (marked[++index]); <span class="comment">// 先自加再执行</span></span><br><span class="line">            prime = index + <span class="number">2</span>; <span class="comment">// 起始加偏移</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 只有id=0的进程才调用，用于将下一个素数广播出去</span></span><br><span class="line">        <span class="keyword">if</span> (p &gt; <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="built_in">MPI_Bcast</span>(&amp;prime, <span class="number">1</span>, MPI_INT, <span class="number">0</span>, MPI_COMM_WORLD);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">while</span> (prime * prime &lt;= n);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将标记结果发给0号进程</span></span><br><span class="line">    count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; i++)</span><br><span class="line">        <span class="keyword">if</span> (marked[i] == <span class="number">0</span>) &#123;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="built_in">MPI_Reduce</span>(&amp;count, &amp;global_count, <span class="number">1</span>, MPI_INT, MPI_SUM, <span class="number">0</span>, MPI_COMM_WORLD);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// stop the timer</span></span><br><span class="line">    elapsed_time += <span class="built_in">MPI_Wtime</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// print the results</span></span><br><span class="line">    <span class="keyword">if</span> (!id) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d primes are less than or equal to %d \n&quot;</span>, global_count, n);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Total elapsed time: %10.6f\n&quot;</span>, elapsed_time);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">MPI_Finalize</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!id)&#123;</span><br><span class="line">        <span class="comment">// 以追加的方式打开文件</span></span><br><span class="line"><span class="comment">//        char str1[30] = &quot;../output/record.init.&quot;;</span></span><br><span class="line"><span class="comment">//        char str2[10] = &quot;.txt&quot;;</span></span><br><span class="line"><span class="comment">//        char filename[50];</span></span><br><span class="line"><span class="comment">//        sprintf(filename, &quot;%s%d%s&quot;, str1, p, str2);</span></span><br><span class="line"><span class="comment">//        FILE *fp;</span></span><br><span class="line"><span class="comment">//        if ((fp = fopen(filename,&quot;a+&quot;)) == nullptr)&#123;</span></span><br><span class="line"><span class="comment">//            printf(&quot;fail to open file&quot;);</span></span><br><span class="line"><span class="comment">//            exit(0);</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line"><span class="comment">//        fprintf(fp, &quot;%d %d %10.6f\n&quot;, p, n, elapsed_time);</span></span><br><span class="line"><span class="comment">//        fclose(fp);</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="优化一：去掉偶数"><a href="#优化一：去掉偶数" class="headerlink" title="优化一：去掉偶数"></a>优化一：去掉偶数</h2><p>利用已知除2以外的所有偶数都不是素数的常识，可以将待筛选数字总量减半，从而提高筛选效率。</p>
+<p>关键代码在于数组减半，找到新的索引映射，以及首个倍数（非素数）的位置</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> N = (n - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">low_index = id * (N / p) + <span class="built_in">MIN</span>(id, N % p); <span class="comment">// 进程的第一个数的索引</span></span><br><span class="line">high_index = (id + <span class="number">1</span>) * (N / p) + <span class="built_in">MIN</span>(id + <span class="number">1</span>, N % p) - <span class="number">1</span>; <span class="comment">// 进程的最后一个数的索引</span></span><br><span class="line">low_value = low_index * <span class="number">2</span> + <span class="number">3</span>; <span class="comment">//进程的第一个数</span></span><br><span class="line">high_value = (high_index + <span class="number">1</span>) * <span class="number">2</span> + <span class="number">1</span>;<span class="comment">//进程的最后一个数</span></span><br><span class="line">size = (high_value - low_value) / <span class="number">2</span> + <span class="number">1</span>;    <span class="comment">//进程处理的数组大小</span></span><br><span class="line">   </span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">   <span class="comment">/*确定该进程中素数的第一个倍数的下标 */</span></span><br><span class="line">   <span class="comment">// 如果该素数n*n&gt;low_value，n*(n-i)都被标记了</span></span><br><span class="line">   <span class="comment">// 即n*n为该进程中的第一个素数</span></span><br><span class="line">   <span class="comment">// 其下标为n*n-low_value，并且由于数组大小减半所以除以2</span></span><br><span class="line">   <span class="keyword">if</span> (prime * prime &gt; low_value) &#123;</span><br><span class="line">   	   first = (prime * prime - low_value) / <span class="number">2</span>;</span><br><span class="line">   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">       <span class="comment">// 若最小值low_value为该素数的倍数</span></span><br><span class="line">       <span class="comment">// 则第一个倍数为low_value，即其下标为0</span></span><br><span class="line">       <span class="keyword">if</span> (!(low_value % prime)) first = <span class="number">0</span>;</span><br><span class="line">       <span class="comment">// 若最小值low_value不是该素数的倍数</span></span><br><span class="line">       <span class="comment">// 但是其余数为偶数，那么第一个非素数的索引为该素数剪去求余除以2</span></span><br><span class="line">       <span class="keyword">else</span> <span class="keyword">if</span> (low_value % prime % <span class="number">2</span> == <span class="number">0</span>) first = prime - ((low_value % prime) / <span class="number">2</span>);</span><br><span class="line">       <span class="comment">// 若最小值low_value不是该素数的倍数</span></span><br><span class="line">       <span class="comment">// 那么第一个倍数的下标为该素数减去余数的值，并且由于数组大小减半所以除以2</span></span><br><span class="line">       <span class="keyword">else</span> first = (prime - (low_value % prime)) / <span class="number">2</span>;</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="comment">// 从第一个素数开始，标记该素数的倍数为非素数</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = first; i &lt; size; i += prime) marked[i] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 只有id=0的进程才调用，用于找到下一素数的位置</span></span><br><span class="line">    <span class="keyword">if</span> (!id) &#123;</span><br><span class="line">        <span class="keyword">while</span> (marked[++index]);</span><br><span class="line">        prime = index * <span class="number">2</span> + <span class="number">3</span>; <span class="comment">// 起始加偏移</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 只有id=0的进程才调用，用于将下一个素数广播出去</span></span><br><span class="line">    <span class="keyword">if</span> (p &gt; <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">MPI_Bcast</span>(&amp;prime, <span class="number">1</span>, MPI_INT, <span class="number">0</span>, MPI_COMM_WORLD);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">while</span> (prime * prime &lt;= n);</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>当prime = 3，考虑序列 15 17 19 21 23，则满足<code>low_value % prime == 0</code>，所以索引 0 即第一个数 15 就是 prime的倍数，这个很好理解</p>
+</li>
+<li><p>当prime = 3，考虑序列 3 5 7 9 11 13，则满足<code>prime * prime &gt; low_value</code>，那么<code>first = (prime * prime - low_value) / 2</code>  即第一个非素数索引为 3 即值为 9，这个和前面的一样，主要是减去一个偏移，不难理解</p>
+<p>比较难以理解的是后面两个判断</p>
+</li>
+<li><p>当prime = 3，考虑序列 17 19 21 23 25，则满足<code>prime * prime &lt;= low_value</code>，并且满足<code>low_value % prime % 2 == 0</code>，那么<code>first = prime - ((low_value % prime) / 2)</code>，即第一个非素数的位置为 0，即值为·15</p>
+</li>
+<li><p>当prime = 3，考虑序列 11 13 15 17 19，则满足<code>prime * prime &lt;= low_value</code>，并且满足<code>low_value % prime % 2 != 0</code>，那么 <code>first = (prime - (low_value % prime)) / 2</code>，即第一个非素数索引为 2，即值为15</p>
+</li>
+</ol>
+<p>我理解了很久，我认为主要是由于每次遇到 prime 与 2 的公倍数的时候性质会发生改变，当prime = 3，考虑原有序列7 8 9 10 11 12 13 14 15 16 17，其中 12 为 2 和 3 的公倍数，排除除 12 以外的其他偶数，该序列为 7 9 11 12 13 15 17，再排除 3 的倍数，该序列为 7 11 12 13 17，问题的本质在于小于等于该数（7,11,13,17）最近的并且为 prime （3）和 2 的公倍数 A 是否为偶数。</p>
+<p>对于 11，17而言，即满足条件 3，A为 9，15为奇数，偏差bias（求余）为2，所以可以更进一步判断bias是否为偶数，由于其下一个 prime 倍数的位置只能取[0, prime - 1]，故而 prime 下一个倍数所在的位置为 prime - bias /  2；</p>
+<p>对于 7，13 而言，即满足条件 4，A 为 6，12为偶数，偏差bias（求余）为1，同样由于其下一个 prime 倍数的位置只能取[0, prime - 1]，故而 prime 下一个倍数所在的位置为 (prime - bias) / 2。</p>
+<p>所有代码见<a target="_blank" rel="noopener" href="https://github.com/543877815/uestc_Internet_plus_course_project/blob/master/parallel_programming/MPI/main1.cpp">这里</a></p>
+<h2 id="优化二：去掉广播通信"><a href="#优化二：去掉广播通信" class="headerlink" title="优化二：去掉广播通信"></a>优化二：去掉广播通信</h2><p>原理：初始的代码是通过进程0广播下一个筛选倍数的素数。进程之间需要通过MPI_Bcast函数进行通信。通信就一定会有开销，特别是在分布式计算机架构上，因此我们让每个进程都各自找出它们的前sqrt(n)个数中的素数，在通过这些素数筛选剩下的素数，这样一来进程之间就不需要每个循环广播素数了，性能得到提高。</p>
+<p>核心代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 小数组 */</span></span><br><span class="line"><span class="type">char</span> *sub_marked;       <span class="comment">/* sub_mark array */</span></span><br><span class="line"><span class="type">int</span> sub_low_index;      <span class="comment">/* Lowest index on sub_array */</span></span><br><span class="line"><span class="type">int</span> sub_low_value;      <span class="comment">/* Lowest array on sub_array */</span></span><br><span class="line"><span class="type">int</span> sub_high_index;     <span class="comment">/* Highest index on sub_array */</span></span><br><span class="line"><span class="type">int</span> sub_high_value;     <span class="comment">/* Highest index on sub_array */</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> sub_n = (<span class="type">int</span>) <span class="built_in">sqrt</span>((<span class="type">double</span>) n);</span><br><span class="line"><span class="type">int</span> sub_N = (sub_n - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">sub_low_index = <span class="number">0</span> * (sub_N / p) + <span class="built_in">MIN</span>(<span class="number">0</span>, sub_N % p); <span class="comment">// 进程的第一个数的索引</span></span><br><span class="line">sub_high_index = <span class="number">1</span> * (sub_N / p) + <span class="built_in">MIN</span>(<span class="number">1</span>, sub_N % p) - <span class="number">1</span>; <span class="comment">// 进程的最后一个数的索引</span></span><br><span class="line">sub_low_value = sub_low_index * <span class="number">2</span> + <span class="number">3</span>; <span class="comment">//进程的第一个数</span></span><br><span class="line">sub_high_value = (sub_high_index + <span class="number">1</span>) * <span class="number">2</span> + <span class="number">1</span>;<span class="comment">//进程的最后一个数</span></span><br><span class="line"></span><br><span class="line">sub_marked = (<span class="type">char</span> *) <span class="built_in">malloc</span>(sub_n);</span><br><span class="line"><span class="keyword">if</span> (sub_marked == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Cannot allocate enough memory \n&quot;</span>);</span><br><span class="line">    <span class="built_in">MPI_Finalize</span>();</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先假定所有的整数都是素数</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; sub_n; i++) sub_marked[i] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 索引初始化为0</span></span><br><span class="line">index = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">prime = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    <span class="comment">// 从小数组开始标只会命中第一个条件</span></span><br><span class="line">    first = (prime * prime - sub_low_value) / <span class="number">2</span>;</span><br><span class="line">    <span class="comment">// 从第一个素数开始，标记该素数的倍数为非素数</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = first; i &lt; sub_n; i += prime) &#123;</span><br><span class="line">    	sub_marked[i] = <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="keyword">while</span> (sub_marked[++index]);</span><br><span class="line">    prime = index * <span class="number">2</span> + <span class="number">3</span>; <span class="comment">// 起始加偏移</span></span><br><span class="line">&#125; <span class="keyword">while</span> (prime * prime &lt;= sub_n);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 大数组 */</span></span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    </span><br><span class="line">	...</span><br><span class="line">    <span class="keyword">while</span> (sub_marked[++index]);</span><br><span class="line">    ...</span><br><span class="line">        </span><br><span class="line">    <span class="comment">// if (p &gt; 1) &#123;</span></span><br><span class="line">    <span class="comment">//     MPI_Bcast(&amp;prime, 1, MPI_INT, 0, MPI_COMM_WORLD);</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">&#125; <span class="keyword">while</span> (prime * prime &lt;= n);</span><br></pre></td></tr></table></figure>
+<p>此优化所有代码<a target="_blank" rel="noopener" href="https://github.com/543877815/uestc_Internet_plus_course_project/blob/master/parallel_programming/MPI/main2.cpp">见此</a></p>
+<h2 id="优化三：分块筛选，提高cache命中率"><a href="#优化三：分块筛选，提高cache命中率" class="headerlink" title="优化三：分块筛选，提高cache命中率"></a>优化三：分块筛选，提高cache命中率</h2><p>在做这个之前我参考了<a target="_blank" rel="noopener" href="http://www.360doc.com/content/14/1015/13/10249440_417146850.shtml">这篇文章</a>，以及这篇文章介绍的<a target="_blank" rel="noopener" href="http://igoro.com/archive/gallery-of-processor-cache-effects/">原版论文</a>，对于第三个有两个优化思路，第一个是基于cache_linesize的优化，另外一个是基于cache_size的优化，现在来介绍一下如何获取cache的相关信息吧。</p>
+<h3 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h3><p>在命令行中输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getconf -a | grep CACHE</span><br></pre></td></tr></table></figure>
+<p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/10.png" alt="10"></p>
+<p>可以看到不同级别的cache的相关信息，包括cache的大小size，cache每行的大小linesize，cache的链接形式n路组相连。</p>
+<h3 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h3><p>在任务管理栏的性能中</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/11.png" alt="11"></p>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>对于大规模的数组来说cache_line的优化效果并不是很明显，所以下面只针对cache做优化，本优化方法需每个进程都各计算出前sqrt(n)个数中的素数，(对应优化思路2)。由于从cache读取的速度远高于从内存中处理，所以cache_size优化的思路在于每次处理cache大小的数组，之前我们已经将n内分成大小约为n/p的块给每个进程处理，然后在在每个进程中将n/p大小块按照cache_size进行分块，在此之前我们需要对cache的大小从byte转化为int，32位系统即除以4，以上图windows为例，L1，L2，L3缓存分别可以存64KB，0.25MB，1.5MB个int，而单机（注意是单机，如果是分布式计算机理论上可以占满所有的cache）中每个进程又将划分其中的cache，如果对于L3而言如果分配 2 个进程则每个进程能够得到 0.75 MB个int进程处理，而实际中由于计算机中有其他进程也会使用cache，所以在实际中这个数还要小。另外根据测试的时候n大小进行选择cache的级别，比如我测试的是亿级的数据，远超过cache的大小，所以直接对L3级别的cache进行分块，当然选择L3并不一定是最优策略，需要多次实证才能知道。</p>
+<p>故基于此关键代码在于进程内分块：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> LEVEL1_CACHE_size = <span class="number">32768</span>;      <span class="comment">// default 32768</span></span><br><span class="line"><span class="type">int</span> LEVEL2_CACHE_size = <span class="number">262144</span>;     <span class="comment">// default 262144</span></span><br><span class="line"><span class="type">int</span> LEVEL3_CACHE_size = <span class="number">9485760</span>;    <span class="comment">// default 10485760</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> LEVEL1_CACHE_int = LEVEL1_CACHE_size / <span class="number">4</span>;</span><br><span class="line"><span class="type">int</span> LEVEL2_CACHE_int = LEVEL2_CACHE_size / <span class="number">4</span>;</span><br><span class="line"><span class="type">int</span> LEVEL3_CACHE_int = LEVEL3_CACHE_size / <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> Block_size = LEVEL3_CACHE_int / p ;</span><br><span class="line"><span class="type">int</span> Block_num = size / Block_size;</span><br><span class="line"><span class="type">int</span> Block_remain = size % Block_size;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> Block_id = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> Block_N = Block_size - <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> Block_low_index = Block_id * Block_N + <span class="built_in">MIN</span>(Block_id, Block_remain) + low_index;</span><br><span class="line"><span class="type">int</span> Block_high_index = (Block_id + <span class="number">1</span>) * Block_N + <span class="built_in">MIN</span>(Block_id + <span class="number">1</span>, Block_remain) - <span class="number">1</span> + low_index;</span><br><span class="line"><span class="type">int</span> Block_low_value = Block_low_index * <span class="number">2</span> + <span class="number">3</span>;</span><br><span class="line"><span class="type">int</span> Block_high_value = (Block_high_index + <span class="number">1</span>) * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> Block_count;</span><br><span class="line"></span><br><span class="line"><span class="comment">// allocate this process &#x27;s share of the array</span></span><br><span class="line">marked = (<span class="type">char</span> *) <span class="built_in">malloc</span>(Block_size);</span><br><span class="line"><span class="keyword">if</span> (marked == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Cannot allocate enough memory \n&quot;</span>);</span><br><span class="line">    <span class="built_in">MPI_Finalize</span>();</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 总计数</span></span><br><span class="line">count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (Block_id &lt;= Block_num) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 索引初始化为0</span></span><br><span class="line">    index = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从3开始搜寻，first为第一个不是素数的位置</span></span><br><span class="line">    prime = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 块计数</span></span><br><span class="line">    Block_count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 先假定块中的整数都是素数</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; Block_size; i++) marked[i] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在块内找素数</span></span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="comment">/*确定该进程中素数的第一个倍数的下标 */</span></span><br><span class="line">        <span class="comment">// 如果该素数n*n&gt;low_value，n*(n-i)都被标记了</span></span><br><span class="line">        <span class="comment">// 即n*n为该进程中的第一个素数</span></span><br><span class="line">        <span class="comment">// 其下标为n*n-low_value，并且由于数组大小减半所以除以2</span></span><br><span class="line">        <span class="keyword">if</span> (prime * prime &gt; Block_low_value) &#123;</span><br><span class="line">            first = (prime * prime - Block_low_value) / <span class="number">2</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 若最小值low_value为该素数的倍数</span></span><br><span class="line">            <span class="comment">// 则第一个倍数为low_value，即其下标为0</span></span><br><span class="line">            <span class="keyword">if</span> (!(Block_low_value % prime)) first = <span class="number">0</span>;</span><br><span class="line">                <span class="comment">// 若最小值low_value不是该素数的倍数</span></span><br><span class="line">                <span class="comment">// 但是其余数为偶数，那么第一个非素数的索引为该素数剪去求余除以2</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (Block_low_value % prime % <span class="number">2</span> == <span class="number">0</span>) first = prime - ((Block_low_value % prime) / <span class="number">2</span>);</span><br><span class="line">                <span class="comment">// 若最小值low_value不是该素数的倍数</span></span><br><span class="line">                <span class="comment">// 那么第一个倍数的下标为该素数减去余数的值，并且由于数组大小减半所以除以2</span></span><br><span class="line">            <span class="keyword">else</span> first = (prime - (Block_low_value % prime)) / <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 从第一个素数开始，标记该素数的倍数为非素数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = first; i &lt; Block_size; i += prime) &#123;</span><br><span class="line">            marked[i] = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 用于找到下一素数的位置</span></span><br><span class="line">        <span class="keyword">while</span> (sub_marked[++index]);</span><br><span class="line"></span><br><span class="line">        prime = index * <span class="number">2</span> + <span class="number">3</span>; <span class="comment">// 起始加偏移</span></span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">while</span> (prime * prime &lt;= Block_high_value);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 统计块内计数</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; Block_size; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (marked[i] == <span class="number">0</span>) &#123;</span><br><span class="line">            Block_count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 汇总总体计数</span></span><br><span class="line">    count += Block_count;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理下一个块</span></span><br><span class="line">    Block_id++;</span><br><span class="line">    Block_low_index = Block_id * Block_N + <span class="built_in">MIN</span>(Block_id, Block_remain) + low_index;</span><br><span class="line">    Block_high_index = (Block_id + <span class="number">1</span>) * Block_N + <span class="built_in">MIN</span>(Block_id + <span class="number">1</span>, Block_remain) - <span class="number">1</span> + low_index;</span><br><span class="line">    Block_low_value = Block_low_index * <span class="number">2</span> + <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">if</span> (Block_id == Block_num) &#123;</span><br><span class="line">        Block_high_value = high_value;</span><br><span class="line">        Block_high_index = high_index;</span><br><span class="line">        Block_size = (Block_high_value - Block_low_value) / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        Block_high_value = (Block_high_index + <span class="number">1</span>) * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此优化所有代码<a target="_blank" rel="noopener" href="https://github.com/543877815/uestc_Internet_plus_course_project/blob/master/parallel_programming/MPI/main3.cpp">见此</a></p>
+<h1 id="项目"><a href="#项目" class="headerlink" title="项目"></a>项目</h1><h2 id="地址"><a href="#地址" class="headerlink" title="地址"></a>地址</h2><p>项目地址为<a target="_blank" rel="noopener" href="https://github.com/543877815/uestc_Internet_plus_course_project/tree/master/parallel_programming">https://github.com/543877815/uestc_Internet_plus_course_project/tree/master/parallel_programming</a></p>
+<h2 id="目录说明"><a href="#目录说明" class="headerlink" title="目录说明"></a>目录说明</h2><h3 id="linux-1"><a href="#linux-1" class="headerlink" title="linux"></a>linux</h3><p>本项目原本是在linux环境下使用clion基于mpich进行开发，相关目录及文件说明如下：</p>
+<ul>
+<li>main.cpp为原版代码</li>
+<li>main1.cpp为去掉偶数优化代码</li>
+<li>main2.cpp为去掉通信代码</li>
+<li>main3.cpp为初步提升cache命中率代码</li>
+<li>MPItest.cpp为起初测试linux下mpi环境代码</li>
+<li>base.cpp为原版代码副本</li>
+<li>cache.test.cpp为阅读<a target="_blank" rel="noopener" href="http://www.360doc.com/content/14/1015/13/10249440_417146850.shtml">本文</a>的测试代码</li>
+<li>output为输出结果（输出已在代码中注释需要手动取消）。</li>
+</ul>
+<h3 id="windows-1"><a href="#windows-1" class="headerlink" title="windows"></a>windows</h3><p>后来在windows上进行测试，使用VS对代码进行部分修改以兼容windows版本并进行了编译，其中</p>
+<ul>
+<li>srcForWindows为存放了windows下运行源码目录</li>
+<li><p>execForWindows为编译生成的可执行文件</p>
+<ul>
+<li>需要安装<code>msmpisetup.exe</code></li>
+<li>执行命令为<code>mpiexec -n 8 main.exe 10000000</code></li>
+<li>main3.exe需要传入cache_size的参数 <code>mpiexec -n 8 main.exe 10000000  10240000</code></li>
+<li>生成数据文件需要手动在该目录下创建名为output的文件夹</li>
+</ul>
+</li>
+<li><p>你可能需要的<a href="2019/04/25/ubuntu和windows下运行MPI做埃拉托色尼素数筛选法/msvcp120d +msvcr120d.rar">文件</a></p>
+</li>
+</ul>
+<h1 id="优化效果及加速比"><a href="#优化效果及加速比" class="headerlink" title="优化效果及加速比"></a>优化效果及加速比</h1><p>我跑的是找1亿以内的素数，结果为5761455个，在我的电脑上运行时间如下图</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/12.png" alt="12"></p>
+<ul>
+<li><p>横向对比可以看出通过优化一去掉偶数可以使待处理数组减半，故而时间减半；通过优化二去掉通信在单机上进程数量较少的时候优化效果不明显，随着进程数量增加，优化效果有所提升，如果考虑分布式计算机，优化效果会更加明显；通过优化三增加cache命中率可以显著提升优化效果。</p>
+</li>
+<li><p>而纵向对比可以发现随着处理器的增加使得运行时间有所减少。</p>
+</li>
+</ul>
+<h2 id="加速比"><a href="#加速比" class="headerlink" title="加速比"></a>加速比</h2><p>加速比的定义为</p>
+<script type="math/tex; mode=display">S_p=\frac{T_1}{T_p}</script><p>其中：</p>
+<ul>
+<li>$p$指CPU数量</li>
+<li>$T_1$指顺序执行算法的执行时间</li>
+<li>$T_p$指当有p个处理器时，并行算法的执行时间</li>
+</ul>
+<p>规模为1,0000,0000的时候绘制的加速比 – 处理器曲线如下</p>
+<div id="echarts1076" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('echarts1076'));
+
+        // 指定图表的配置项和数据
+        var option = 
+{
+    title: {
+        text: '加速比-处理器曲线'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['无优化','优化一', '优化二', '优化三']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        data: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+    	{
+    		name:'无优化',
+            type:'line',
+            smooth:true,
+            data:[1,1.417697956,1.519842126,1.640081315,1.7711876,1.85808183,1.883650875,1.891356009,1.901146018,1.87170806,1.905406966,1.938012995,1.94553853,1.941417512,1.95437113,1.962340372,1.955113781,1.973029897,1.967850397,2.011961258]
+    	},
+        {
+            name:'优化一',
+            type:'line',
+            smooth:true,
+            data:[2.125561962,2.972632769,3.263280251,3.462611522,3.645447427,3.879800488,4.003649421,4.005353982,4.041037538,4.108872982,4.1539338,4.192676888,4.27061851,4.319784287,4.413608488,4.504320139,4.560286916,4.619739411,4.571220084,4.719871359]
+        },
+        {
+            name:'优化二',
+            type:'line',
+            smooth:true,
+            data:[2.166195751,3.145577123,3.388569418,3.54928344,3.616854747,3.869726157,3.998655378,4.034086294,4.082361441,4.175539477,4.207624355,4.50617318,4.406106025,4.53904061,4.614407013,4.999396314,4.867954483,5.160878471,5.051372605,5.540664213]
+        },
+        {
+            name:'优化三',
+            type:'line',
+            smooth:true,
+            data:[3.68152582,7.24280982,10.82401146,14.61256181,18.26323316,21.55677519,24.67597555,28.11833963,25.97695228,29.90704128,24.29202355,29.77648743,28.79235981,39.63674678,33.32698137,40.37005607,30.22276067,44.27793207,32.44453641,47.86206526]
+        }
+    ]
+};
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+</script>
+<p>可以发现通过优化一去除偶数使得运行时间减半，加速比表现为原始版本的两倍，而通过优化二去掉通信在单机上优化效果不太明显，但在进程较多的时候还是有所体现，因此，加速比比优化一还是有所提升。当Sp=p时，Sp便可以称为“线性加速比”，即当某一并行算法的加速比为理想加速比时，若将处理器数量加倍，执行速度也会加倍，但是在规模1,0000,0000的情况下除cache优化外其他三种代码并没有表现出这种趋势，初步分析认为这是由于i/o而不是计算占程序的主要部分导致的。</p>
+<p>因此为了让计算占据更多程序运行的更大部分，我将规模增加为10,0000,0000后再进行对比：</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/13.png" alt="13"></p>
+<p>可以发现情况依然如此，因此我姑且得出的结论是前三种代码并不是能够产生理想加速比的代码，当然这存在的着通信开销以及一些其他的系统运行开销的影响。 </p>
+<p>而通过cache缓冲后加速比，在前8核加速比按照处理器核数线性增加，达到8核以后有加速比有上升的趋势但是也有所波动并且不再呈现线性的趋势，因为处理器有限不能同时处理多个任务，这与之前查看windows系统CPU配置的4核8处理器相符。另外有Sp&gt;p，即产生了超线性加速比，通过维基百科得知，超线性加速比有几种可能的成因，如现代计算机的存储层次不同所带来的“高速缓存效应”；具体来说，较之顺序计算，在并行计算中，不仅参与计算的处理器数量更多，不同处理器的高速缓存也集合使用。而有鉴于此，集合的缓存便足以提供计算所需的存储量，算法执行时便不必使用速度较慢的内存，因而存储器读些时间便能大幅降低，这便对实际计算产生了额外的加速效果。</p>
+<h2 id="并行效率"><a href="#并行效率" class="headerlink" title="并行效率"></a>并行效率</h2><p>由加速比派生出的效率（英语：efficiency）则是量度性能的指标，并如下定义：</p>
+<script type="math/tex; mode=display">E_p=\frac{S_p}{p}=\frac{T_1}{pT_p}</script><p>绘制的并行效率与执行进程数的曲线如下：</p>
+<div id="echarts9216" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('echarts9216'));
+
+        // 指定图表的配置项和数据
+        var option = 
+ {
+    title: {
+        text: '并行化效率与进程数关系曲线'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['无优化','优化一', '优化二', '优化三']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+    	{
+            name:'无优化',
+            type:'line',
+            smooth:true,
+            data:[1,0.708848978,0.506614042,0.410020329,0.35423752,0.309680305,0.269092982,0.236419501,0.211238446,0.187170806,0.173218815,0.161501083,0.14965681,0.138672679,0.130291409,0.122646273,0.115006693,0.109612772,0.103571074,0.100598063]
+        },     
+   {
+            name:'优化一',
+            type:'line',
+            smooth:true,
+            data:[2.125561962,1.486316384,1.087760084,0.865652881,0.729089485,0.646633415,0.571949917,0.500669248,0.449004171,0.410887298,0.377630345,0.349389741,0.328509116,0.30855602,0.294240566,0.281520009,0.268252172,0.256652189,0.240590531,0.235993568]
+        },
+        {
+            name:'优化二',
+            type:'line',
+            smooth:true,
+            data:[2.166195751,1.572788562,1.129523139,0.88732086,0.723370949,0.64495436,0.571236483,0.504260787,0.453595716,0.417553948,0.382511305,0.375514432,0.338931233,0.324217186,0.307627134,0.31246227,0.286350264,0.286715471,0.265861716,0.277033211]
+        },
+        {
+            name:'优化三',
+            type:'line',
+            smooth:true,
+            data:[3.68152582,3.62140491,3.60800382,3.653140452,3.652646632,3.592795864,3.525139364,3.514792454,2.886328031,2.990704128,2.208365777,2.481373952,2.214796908,2.831196198,2.221798758,2.523128504,1.777809451,2.459885115,1.707607179,2.393103263]
+        }
+    ]
+}
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+</script>
+<p>可以看到没有使用cache优化的时候并行效率一般介于0~1之间，通过cache命中优化使得产生超线性加速比并且并行效率大于1。</p>
+<h2 id="其他规模"><a href="#其他规模" class="headerlink" title="其他规模"></a>其他规模</h2><p>规模为10,000,000，则素数有664579个，运行时间如下</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/14.png" alt="14"></p>
+<div id="echarts8447" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('echarts8447'));
+
+        // 指定图表的配置项和数据
+        var option = 
+{
+    title: {
+        text: '加速比-处理器曲线'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['无优化','优化一', '优化二', '优化三']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        data: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+    	{
+    		name:'无优化',
+            type:'line',
+            smooth:true,
+            data:[1,1.415228146,1.631347915,1.742213495,1.856755783,1.928096981,1.999927382,2.037232597,2.03537017,2.03873492,2.041143622,2.064923984,2.075174297,2.068590853,2.080006484,2.079629119,2.069165991,2.082867513,2.089131281,2.09100337]
+    	},
+        {
+            name:'优化一',
+            type:'line',
+            smooth:true,
+            data:[1.87988915,2.829404697,3.363092811,3.601079127,3.814889679,3.988800917,4.056270369,4.155204995,4.168371395,4.193461151,4.205384218,4.209615636,4.219954793,4.21926823,4.257670547,4.258841396,4.241735018,4.246120459,4.250589534,4.266117779]
+        },
+        {
+            name:'优化二',
+            type:'line',
+            smooth:true,
+            data:[1.927223182,2.949503829,3.382333867,3.640090434,3.856035494,3.985780234,4.103597062,4.169252827,4.179240312,4.193534474,4.191862071,4.231639213,4.235638866,4.270972497,4.257505305,4.277833012,4.276406178,4.273573273,4.288371328,4.32337422]
+        },
+        {
+            name:'优化三',
+            type:'line',
+            smooth:true,
+            data:[3.996886942,8.196905157,12.88768068,17.35464409,21.79716459,26.32231136,30.1718199,33.42472043,33.68355437,35.41933627,36.21496439,35.56293916,33.89388148,35.47939819,34.87658334,36.95788192,37.35952947,36.83328688,36.90336097,37.10185611]
+        }
+    ]
+};
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+</script>
+<div id="echarts3137" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('echarts3137'));
+
+        // 指定图表的配置项和数据
+        var option = 
+ {
+    title: {
+        text: '并行化效率与进程数关系曲线'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['无优化','优化一', '优化二', '优化三']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+    	{
+            name:'无优化',
+            type:'line',
+            smooth:true,
+            data:[1,0.707614073,0.543782638,0.435553374,0.371351157,0.321349497,0.285703912,0.254654075,0.226152241,0.203873492,0.185558511,0.172076999,0.159628792,0.14775649,0.138667099,0.12997682,0.121715647,0.115714862,0.109954278,0.104550169]
+        },     
+   {
+            name:'优化一',
+            type:'line',
+            smooth:true,
+            data:[1.87988915,1.414702348,1.121030937,0.900269782,0.762977936,0.664800153,0.579467196,0.519400624,0.463152377,0.419346115,0.382307656,0.350801303,0.324611907,0.301376302,0.283844703,0.266177587,0.249513825,0.235895581,0.223715239,0.213305889]
+        },
+        {
+            name:'优化二',
+            type:'line',
+            smooth:true,
+            data:[1.927223182,1.474751915,1.127444622,0.910022608,0.771207099,0.664296706,0.586228152,0.521156603,0.464360035,0.419353447,0.38107837,0.352636601,0.325818374,0.305069464,0.283833687,0.267364563,0.251553305,0.237420737,0.225703754,0.216168711]
+        },
+        {
+            name:'优化三',
+            type:'line',
+            smooth:true,
+            data:[3.996886942,4.098452578,4.29589356,4.338661023,4.359432917,4.387051893,4.310259986,4.178090054,3.742617152,3.541933627,3.29226949,2.963578263,2.607221652,2.534242728,2.325105556,2.30986762,2.19761938,2.046293716,1.942282156,1.855092806]
+        }
+    ]
+}
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+</script>
+<p>规模为10,0000,0000，则素数有50847533个，运行时间如下</p>
+<p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/15.png" alt="15"></p>
+<div id="echarts9598" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('echarts9598'));
+
+        // 指定图表的配置项和数据
+        var option = 
+{
+    title: {
+        text: '加速比-处理器曲线'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['无优化','优化一', '优化二', '优化三']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        data: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+    	{
+    		name:'无优化',
+            type:'line',
+            smooth:true,
+            data:[1,1.551082889,1.877413999,1.977090936,2.268993481,2.28975484,2.373245531,2.950368658,3.432897355,4.023507129,4.625603618,5.124839676,4.985428597,5.108538549,6.108853918,5.345862334,4.634006168,5.53673989,5.784780784,5.413430125]
+    	},
+        {
+            name:'优化一',
+            type:'line',
+            smooth:true,
+            data:[2.50206012,4.478441359,6.29939258,7.656998531,7.957338397,9.106485547,10.39614686,11.44646918,11.90219701,12.15837953,10.64830958,12.61279874,11.55895062,13.56546674,13.76901368,13.28669287,13.25596953,12.76448995,9.976436323,12.98903302]
+        },
+        {
+            name:'优化二',
+            type:'line',
+            smooth:true,
+            data:[2.530847135,4.493893171,6.557476304,7.751196702,8.576586779,9.954733354,11.2023509,12.64746564,11.90635132,12.83769804,15.25107523,15.19655316,15.76905826,17.27702759,17.62201198,14.4466452,16.12204954,17.49377395,15.85671698,16.66310465]
+        },
+        {
+            name:'优化三',
+            type:'line',
+            smooth:true,
+            data:[2.809572236,5.493300984,8.040015505,9.711496246,12.175954,14.50217486,12.77515692,14.12891643,14.01673838,16.40006119,17.51559941,20.76295562,19.5794839,21.20814814,22.96017689,19.90553008,18.49766737,17.67059675,16.55828927,20.0654873]
+        }
+    ]
+};
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+</script>
+<div id="echarts39" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('echarts39'));
+
+        // 指定图表的配置项和数据
+        var option = 
+ {
+    title: {
+        text: '并行化效率与进程数关系曲线'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['无优化','优化一', '优化二', '优化三']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+    	{
+            name:'无优化',
+            type:'line',
+            smooth:true,
+            data:[1,0.775541444,0.625804666,0.494272734,0.453798696,0.381625807,0.339035076,0.368796082,0.381433039,0.402350713,0.42050942,0.427069973,0.383494507,0.364895611,0.407256928,0.334116396,0.272588598,0.307596661,0.304462147,0.270671506]
+        },     
+   {
+            name:'优化一',
+            type:'line',
+            smooth:true,
+            data:[2.50206012,2.239220679,2.099797527,1.914249633,1.591467679,1.517747591,1.485163837,1.430808647,1.322466335,1.215837953,0.968028143,1.051066562,0.889150048,0.96896191,0.917934245,0.830418304,0.779762913,0.709138331,0.525075596,0.649451651]
+        },
+        {
+            name:'优化二',
+            type:'line',
+            smooth:true,
+            data:[2.530847135,2.246946586,2.185825435,1.937799176,1.715317356,1.659122226,1.600335843,1.580933204,1.322927925,1.283769804,1.386461384,1.26637943,1.213004482,1.234073399,1.174800799,0.902915325,0.948355855,0.97187633,0.834564052,0.833155232]
+        },
+        {
+            name:'优化三',
+            type:'line',
+            smooth:true,
+            data:[2.809572236,2.746650492,2.680005168,2.427874062,2.435190801,2.417029143,1.825022417,1.766114553,1.557415375,1.640006119,1.592327219,1.730246302,1.506114146,1.514867725,1.53067846,1.24409563,1.088098081,0.981699819,0.871488909,1.003274365]
+        }
+    ]
+}
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+</script>
+    </div>
+
+    
+    
+    
+      
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/the-Sieve-of-Eratosthenes/" rel="tag"># the Sieve of Eratosthenes</a>
+              <a href="/tags/clion/" rel="tag"># clion</a>
+              <a href="/tags/ubuntu/" rel="tag"># ubuntu</a>
+              <a href="/tags/windows/" rel="tag"># windows</a>
+              <a href="/tags/vs/" rel="tag"># vs</a>
+              <a href="/tags/msmpi/" rel="tag"># msmpi</a>
+              <a href="/tags/mpich/" rel="tag"># mpich</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/04/10/%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84front-end-cli/" rel="prev" title="构建自己的front-end-cli">
+      <i class="fa fa-chevron-left"></i> 构建自己的front-end-cli
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/07/06/%E4%BB%8Epython%E5%BC%80%E5%A7%8B%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97/" rel="next" title="从python开始的虚拟环境配置日志">
+      从python开始的虚拟环境配置日志 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">Linux环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2"><span class="nav-number">1.1.</span> <span class="nav-text">图形界面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95"><span class="nav-number">1.1.2.</span> <span class="nav-text">远程登录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clion"><span class="nav-number">1.2.</span> <span class="nav-text">clion</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#teamviewer"><span class="nav-number">1.3.</span> <span class="nav-text">teamviewer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-2"><span class="nav-number">1.3.1.</span> <span class="nav-text">安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPICH"><span class="nav-number">1.4.</span> <span class="nav-text">MPICH</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81"><span class="nav-number">1.4.1.</span> <span class="nav-text">测试代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#windows%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">windows环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MSMPI%E9%85%8D%E7%BD%AE%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.1.</span> <span class="nav-text">MSMPI配置步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">埃拉托色尼素数筛选法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">3.1.</span> <span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E7%89%88%E5%B9%B6%E8%A1%8C%E4%BB%A3%E7%A0%81%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E"><span class="nav-number">3.1.1.</span> <span class="nav-text">初始版并行代码代码说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E4%B8%80%EF%BC%9A%E5%8E%BB%E6%8E%89%E5%81%B6%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">优化一：去掉偶数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E4%BA%8C%EF%BC%9A%E5%8E%BB%E6%8E%89%E5%B9%BF%E6%92%AD%E9%80%9A%E4%BF%A1"><span class="nav-number">3.3.</span> <span class="nav-text">优化二：去掉广播通信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E4%B8%89%EF%BC%9A%E5%88%86%E5%9D%97%E7%AD%9B%E9%80%89%EF%BC%8C%E6%8F%90%E9%AB%98cache%E5%91%BD%E4%B8%AD%E7%8E%87"><span class="nav-number">3.4.</span> <span class="nav-text">优化三：分块筛选，提高cache命中率</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#linux"><span class="nav-number">3.4.1.</span> <span class="nav-text">linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#windows"><span class="nav-number">3.4.2.</span> <span class="nav-text">windows</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96"><span class="nav-number">3.4.3.</span> <span class="nav-text">优化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE"><span class="nav-number">4.</span> <span class="nav-text">项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%B0%E5%9D%80"><span class="nav-number">4.1.</span> <span class="nav-text">地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E8%AF%B4%E6%98%8E"><span class="nav-number">4.2.</span> <span class="nav-text">目录说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#linux-1"><span class="nav-number">4.2.1.</span> <span class="nav-text">linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#windows-1"><span class="nav-number">4.2.2.</span> <span class="nav-text">windows</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C%E5%8F%8A%E5%8A%A0%E9%80%9F%E6%AF%94"><span class="nav-number">5.</span> <span class="nav-text">优化效果及加速比</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E9%80%9F%E6%AF%94"><span class="nav-number">5.1.</span> <span class="nav-text">加速比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C%E6%95%88%E7%8E%87"><span class="nav-number">5.2.</span> <span class="nav-text">并行效率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%A7%84%E6%A8%A1"><span class="nav-number">5.3.</span> <span class="nav-text">其他规模</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lifengjun"
+      src="https://avatars0.githubusercontent.com/u/25082467?v=4">
+  <p class="site-author-name" itemprop="name">lifengjun</p>
+  <div class="site-description" itemprop="description">个人学习笔记和日志</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/543877815" title="GitHub → https://github.com/543877815" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:543877815@qq.com" title="E-Mail → mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lifengjun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '970dc8fd856c3e17f9f0',
+      clientSecret: '7f6d29828dd1f4a02336c480ba1012f1851b0eb0',
+      repo        : '543877815.github.io',
+      owner       : '543877815',
+      admin       : ['543877815'],
+      id          : '697dc7b07b5db7c7470f0d5c856d0cbc',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(a){a.imageLazyLoadSetting.processImages=t;var e=a.imageLazyLoadSetting.isSPA,i=a.imageLazyLoadSetting.preloadRatio||1,o=r();function r(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(o=r());for(var t,n=0;n<o.length;n++)0<=(t=(t=o[n]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(a.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var e=o[n];!function(t,e){if(t.hasAttribute("bg-lazy"))return t.removeAttribute("bg-lazy"),e&&e();var n=new Image,a=t.getAttribute("data-original");n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a)}(e,function(){o=o.filter(function(t){return e!==t}),a.imageLazyLoadSetting.onImageLoaded&&a.imageLazyLoadSetting.onImageLoaded(e)})}()}function n(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",n),a.addEventListener("resize",n),a.addEventListener("orientationchange",n)}(this);</script></body>
+</html>
