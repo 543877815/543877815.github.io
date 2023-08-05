@@ -182,7 +182,7 @@
   </url>
   
   <url>
-    <loc>https://lifengjun.xin/tags/index.html</loc>
+    <loc>https://lifengjun.xin/portal/index.html</loc>
     
     <lastmod>2020-11-13</lastmod>
     
@@ -191,7 +191,7 @@
   </url>
   
   <url>
-    <loc>https://lifengjun.xin/portal/index.html</loc>
+    <loc>https://lifengjun.xin/tags/index.html</loc>
     
     <lastmod>2020-11-13</lastmod>
     
@@ -336,20 +336,6 @@
   </url>
   
   <url>
-    <loc>https://lifengjun.xin/tags/chrome/</loc>
-    <lastmod>2023-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://lifengjun.xin/tags/extension/</loc>
-    <lastmod>2023-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://lifengjun.xin/tags/LMNP/</loc>
     <lastmod>2023-08-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -358,6 +344,20 @@
   
   <url>
     <loc>https://lifengjun.xin/tags/Ubuntu/</loc>
+    <lastmod>2023-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://lifengjun.xin/tags/chrome/</loc>
+    <lastmod>2023-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://lifengjun.xin/tags/extension/</loc>
     <lastmod>2023-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -427,6 +427,34 @@
   </url>
   
   <url>
+    <loc>https://lifengjun.xin/tags/jupyter-notebook/</loc>
+    <lastmod>2023-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://lifengjun.xin/tags/anaconda/</loc>
+    <lastmod>2023-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://lifengjun.xin/tags/ml/</loc>
+    <lastmod>2023-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://lifengjun.xin/tags/dm/</loc>
+    <lastmod>2023-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://lifengjun.xin/tags/echarts/</loc>
     <lastmod>2023-08-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -456,55 +484,6 @@
   
   <url>
     <loc>https://lifengjun.xin/tags/node/</loc>
-    <lastmod>2023-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://lifengjun.xin/tags/jupyter-notebook/</loc>
-    <lastmod>2023-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://lifengjun.xin/tags/anaconda/</loc>
-    <lastmod>2023-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://lifengjun.xin/tags/ml/</loc>
-    <lastmod>2023-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://lifengjun.xin/tags/dm/</loc>
-    <lastmod>2023-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://lifengjun.xin/tags/virtualenv/</loc>
-    <lastmod>2023-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://lifengjun.xin/tags/conda-environment/</loc>
-    <lastmod>2023-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://lifengjun.xin/tags/docker/</loc>
     <lastmod>2023-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -560,6 +539,27 @@
   </url>
   
   <url>
+    <loc>https://lifengjun.xin/tags/virtualenv/</loc>
+    <lastmod>2023-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://lifengjun.xin/tags/conda-environment/</loc>
+    <lastmod>2023-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://lifengjun.xin/tags/docker/</loc>
+    <lastmod>2023-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://lifengjun.xin/tags/Amazon-Elasticsearch-Service/</loc>
     <lastmod>2023-08-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -595,6 +595,20 @@
   </url>
   
   <url>
+    <loc>https://lifengjun.xin/tags/optical-flow/</loc>
+    <lastmod>2023-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://lifengjun.xin/tags/video/</loc>
+    <lastmod>2023-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://lifengjun.xin/tags/opencv4/</loc>
     <lastmod>2023-08-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -623,14 +637,14 @@
   </url>
   
   <url>
-    <loc>https://lifengjun.xin/tags/optical-flow/</loc>
+    <loc>https://lifengjun.xin/tags/image-detection/</loc>
     <lastmod>2023-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://lifengjun.xin/tags/video/</loc>
+    <loc>https://lifengjun.xin/tags/yolo/</loc>
     <lastmod>2023-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -652,20 +666,6 @@
   
   <url>
     <loc>https://lifengjun.xin/tags/stable-diffusion/</loc>
-    <lastmod>2023-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://lifengjun.xin/tags/image-detection/</loc>
-    <lastmod>2023-08-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://lifengjun.xin/tags/yolo/</loc>
     <lastmod>2023-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -744,14 +744,14 @@
   </url>
   
   <url>
-    <loc>https://lifengjun.xin/categories/docker/</loc>
+    <loc>https://lifengjun.xin/categories/MPI/</loc>
     <lastmod>2023-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://lifengjun.xin/categories/MPI/</loc>
+    <loc>https://lifengjun.xin/categories/docker/</loc>
     <lastmod>2023-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -772,14 +772,14 @@
   </url>
   
   <url>
-    <loc>https://lifengjun.xin/categories/leetcode/</loc>
+    <loc>https://lifengjun.xin/categories/computer-vision/</loc>
     <lastmod>2023-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://lifengjun.xin/categories/computer-vision/</loc>
+    <loc>https://lifengjun.xin/categories/leetcode/</loc>
     <lastmod>2023-08-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
