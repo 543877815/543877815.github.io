@@ -24,4 +24,9 @@
 {"title":"如何优雅地撰写中文（毕业）论文——word使用技巧","url":"/2020/05/15/如何优雅地撰写中文（毕业）论文——word使用技巧/"},
 {"title":"leetcode的奇怪操作","url":"/2020/08/01/leetcode的奇怪操作/"},
 {"title":"Hello World","url":"/2020/11/13/TEST/"},
+{"title":"windows下编译opencv4的cuda版本，结合clion的食用方法","url":"/2022/07/05/windows下编译opencv4的cuda版本/"},
+{"title":"Study of optical flow","url":"/2022/07/14/Study-of-optical-flow/"},
+{"title":"yolo系列核心设计总结与思考","url":"/2022/09/29/yolo系列核心设计总结与思考/"},
+{"title":"爱因斯坦求和约定的pytorch用法","url":"/2023/04/12/爱因斯坦求和约定的pytorch用法-torch-einsum/"},
+{"title":"在stable-diffusion-webui中愉快地玩耍","url":"/2023/08/04/在stable-diffusion-webui中愉快地玩耍/"},
 ]

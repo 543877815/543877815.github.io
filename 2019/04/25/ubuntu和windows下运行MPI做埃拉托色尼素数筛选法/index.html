@@ -67,6 +67,7 @@
   };
 </script>
 
+<script src="/js/src/echarts.common.min.js"></script>
 
   <title>ubuntu和windows下运行MPI做埃拉托色尼素数筛选法 | 逗比学长的博客</title>
   
@@ -280,6 +281,13 @@
             </span>
 
           
+            <span id="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="ubuntu和windows下运行MPI做埃拉托色尼素数筛选法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
 
         </div>
       </header>
@@ -458,10 +466,10 @@
 <li>$T_p$指当有p个处理器时，并行算法的执行时间</li>
 </ul>
 <p>规模为1,0000,0000的时候绘制的加速比 – 处理器曲线如下</p>
-<div id="echarts2102" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts7833" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts2102'));
+        var myChart = echarts.init(document.getElementById('echarts7833'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -532,10 +540,10 @@
 <p>而通过cache缓冲后加速比，在前8核加速比按照处理器核数线性增加，达到8核以后有加速比有上升的趋势但是也有所波动并且不再呈现线性的趋势，因为处理器有限不能同时处理多个任务，这与之前查看windows系统CPU配置的4核8处理器相符。另外有Sp&gt;p，即产生了超线性加速比，通过维基百科得知，超线性加速比有几种可能的成因，如现代计算机的存储层次不同所带来的“高速缓存效应”；具体来说，较之顺序计算，在并行计算中，不仅参与计算的处理器数量更多，不同处理器的高速缓存也集合使用。而有鉴于此，集合的缓存便足以提供计算所需的存储量，算法执行时便不必使用速度较慢的内存，因而存储器读些时间便能大幅降低，这便对实际计算产生了额外的加速效果。</p>
 <h2 id="并行效率"><a href="#并行效率" class="headerlink" title="并行效率"></a>并行效率</h2><p>由加速比派生出的效率（英语：efficiency）则是量度性能的指标，并如下定义：</p>
 <script type="math/tex; mode=display">E_p=\frac{S_p}{p}=\frac{T_1}{pT_p}</script><p>绘制的并行效率与执行进程数的曲线如下：</p>
-<div id="echarts5514" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts1432" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts5514'));
+        var myChart = echarts.init(document.getElementById('echarts1432'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -603,10 +611,10 @@
 <p>可以看到没有使用cache优化的时候并行效率一般介于0~1之间，通过cache命中优化使得产生超线性加速比并且并行效率大于1。</p>
 <h2 id="其他规模"><a href="#其他规模" class="headerlink" title="其他规模"></a>其他规模</h2><p>规模为10,000,000，则素数有664579个，运行时间如下</p>
 <p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/14.png" alt="14"></p>
-<div id="echarts387" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts1239" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts387'));
+        var myChart = echarts.init(document.getElementById('echarts1239'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -670,10 +678,10 @@
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
 </script>
-<div id="echarts9950" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts4851" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts9950'));
+        var myChart = echarts.init(document.getElementById('echarts4851'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -740,10 +748,10 @@
 </script>
 <p>规模为10,0000,0000，则素数有50847533个，运行时间如下</p>
 <p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/15.png" alt="15"></p>
-<div id="echarts9856" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts6034" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts9856'));
+        var myChart = echarts.init(document.getElementById('echarts6034'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -807,10 +815,10 @@
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
 </script>
-<div id="echarts7460" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts5734" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts7460'));
+        var myChart = echarts.init(document.getElementById('echarts5734'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -1051,6 +1059,97 @@
 
 
 
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"7lnT19QcEeBPLqbdFz6RXmt6-gzGzoHsz","app_key":"0m9MYgfgDxi38rb89hJ8gUHF","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
 
 
       </div>
@@ -1172,7 +1271,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
     gitalk.render('gitalk-container');
   }, window.Gitalk);
 });
-</script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
         <style>
@@ -1187,5 +1286,5 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
                 preloadRatio: 1,
                 processImages: null,
             };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(a){a.imageLazyLoadSetting.processImages=t;var e=a.imageLazyLoadSetting.isSPA,i=a.imageLazyLoadSetting.preloadRatio||1,o=r();function r(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(o=r());for(var t,n=0;n<o.length;n++)0<=(t=(t=o[n]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(a.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var e=o[n];!function(t,e){if(t.hasAttribute("bg-lazy"))return t.removeAttribute("bg-lazy"),e&&e();var n=new Image,a=t.getAttribute("data-original");n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a)}(e,function(){o=o.filter(function(t){return e!==t}),a.imageLazyLoadSetting.onImageLoaded&&a.imageLazyLoadSetting.onImageLoaded(e)})}()}function n(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",n),a.addEventListener("resize",n),a.addEventListener("orientationchange",n)}(this);</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(a){a.imageLazyLoadSetting.processImages=t;var e=a.imageLazyLoadSetting.isSPA,i=a.imageLazyLoadSetting.preloadRatio||1,o=r();function r(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(o=r());for(var t,n=0;n<o.length;n++)0<=(t=(t=o[n]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(a.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var e=o[n];!function(t,e){if(t.hasAttribute("bg-lazy"))return t.removeAttribute("bg-lazy"),e&&e();var n=new Image,a=t.getAttribute("data-original");n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a)}(e,function(){o=o.filter(function(t){return e!==t}),a.imageLazyLoadSetting.onImageLoaded&&a.imageLazyLoadSetting.onImageLoaded(e)})}()}function n(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",n),a.addEventListener("resize",n),a.addEventListener("orientationchange",n)}(this);</script></body>
 </html>

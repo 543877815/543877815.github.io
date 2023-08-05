@@ -3724,10 +3724,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
 <li>$T_p$指当有p个处理器时，并行算法的执行时间</li>
 </ul>
 <p>规模为1,0000,0000的时候绘制的加速比 – 处理器曲线如下</p>
-<div id="echarts2102" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts7833" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts2102'));
+        var myChart = echarts.init(document.getElementById('echarts7833'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -3798,10 +3798,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
 <p>而通过cache缓冲后加速比，在前8核加速比按照处理器核数线性增加，达到8核以后有加速比有上升的趋势但是也有所波动并且不再呈现线性的趋势，因为处理器有限不能同时处理多个任务，这与之前查看windows系统CPU配置的4核8处理器相符。另外有Sp&gt;p，即产生了超线性加速比，通过维基百科得知，超线性加速比有几种可能的成因，如现代计算机的存储层次不同所带来的“高速缓存效应”；具体来说，较之顺序计算，在并行计算中，不仅参与计算的处理器数量更多，不同处理器的高速缓存也集合使用。而有鉴于此，集合的缓存便足以提供计算所需的存储量，算法执行时便不必使用速度较慢的内存，因而存储器读些时间便能大幅降低，这便对实际计算产生了额外的加速效果。</p>
 <h2 id="并行效率"><a href="#并行效率" class="headerlink" title="并行效率"></a>并行效率</h2><p>由加速比派生出的效率（英语：efficiency）则是量度性能的指标，并如下定义：</p>
 <script type="math/tex; mode=display">E_p=\frac{S_p}{p}=\frac{T_1}{pT_p}</script><p>绘制的并行效率与执行进程数的曲线如下：</p>
-<div id="echarts5514" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts1432" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts5514'));
+        var myChart = echarts.init(document.getElementById('echarts1432'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -3869,10 +3869,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
 <p>可以看到没有使用cache优化的时候并行效率一般介于0~1之间，通过cache命中优化使得产生超线性加速比并且并行效率大于1。</p>
 <h2 id="其他规模"><a href="#其他规模" class="headerlink" title="其他规模"></a>其他规模</h2><p>规模为10,000,000，则素数有664579个，运行时间如下</p>
 <p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/14.png" alt="14"></p>
-<div id="echarts387" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts1239" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts387'));
+        var myChart = echarts.init(document.getElementById('echarts1239'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -3936,10 +3936,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
 </script>
-<div id="echarts9950" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts4851" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts9950'));
+        var myChart = echarts.init(document.getElementById('echarts4851'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -4006,10 +4006,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
 </script>
 <p>规模为10,0000,0000，则素数有50847533个，运行时间如下</p>
 <p><img src="/images/loading.gif" data-original="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/15.png" alt="15"></p>
-<div id="echarts9856" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts6034" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts9856'));
+        var myChart = echarts.init(document.getElementById('echarts6034'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -4073,10 +4073,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
 </script>
-<div id="echarts7460" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts5734" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts7460'));
+        var myChart = echarts.init(document.getElementById('echarts5734'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -4394,10 +4394,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
 <h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">&#123;% echarts 400 &#x27;85%&#x27; %&#125;</span><br><span class="line">\\TODO echarts option goes here</span><br><span class="line">&#123;% endecharts %&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="Bug"><a href="#Bug" class="headerlink" title="Bug"></a>Bug</h2><p>在所用主题目录下<code>&lt;font color=#c7254e&gt;layout\_partial&lt;/font&gt;中的</code><font color="#c7254e">head.swig</font>里加入：</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;http://echarts.baidu.com/dist/echarts.common.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><div id="echarts7803" style="width: 85%;height: 400px;margin: 0 auto"></div>
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><div id="echarts928" style="width: 85%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts7803'));
+        var myChart = echarts.init(document.getElementById('echarts928'));
 
         // 指定图表的配置项和数据
         var option = {
