@@ -18,7 +18,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="之前在学习cuda和使用opencv来加速图像处理，同时由于用惯了jetbrain系列，所以不想用vs来写代码，于是在配环境的时候看了很多网上的教程踩了很多坑，大概弄了3天才弄好，不过最近又手贱重装了cuda，所以之前编译的包不能用了，重新配置的时候感觉又忘了很多东西，于是决定写一篇博客来记录下之前操作，可能不是很全，重装电脑的时候再补充。">
@@ -28,20 +28,20 @@
 <meta property="og:site_name" content="逗比学长的博客">
 <meta property="og:description" content="之前在学习cuda和使用opencv来加速图像处理，同时由于用惯了jetbrain系列，所以不想用vs来写代码，于是在配环境的时候看了很多网上的教程踩了很多坑，大概弄了3天才弄好，不过最近又手贱重装了cuda，所以之前编译的包不能用了，重新配置的时候感觉又忘了很多东西，于是决定写一篇博客来记录下之前操作，可能不是很全，重装电脑的时候再补充。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2022-07-05-windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/1.png">
-<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2022-07-05-windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2.png">
-<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2022-07-05-windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/3.png">
-<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2022-07-05-windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/4.png">
-<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2022-07-05-windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/5.png">
-<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2022-07-05-windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/6.png">
-<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2022-07-05-windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/7.png">
-<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2022-07-05-windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/8.png">
-<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2022-07-05-windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/9.png">
-<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2022-07-05-windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/10.png">
-<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2022-07-05-windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/11.png">
-<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2022-07-05-windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/12.png">
-<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2022-07-05-windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/13.png">
-<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2022-07-05-windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/14.png">
+<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/1.png">
+<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2.png">
+<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/3.png">
+<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/4.png">
+<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/5.png">
+<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/6.png">
+<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/7.png">
+<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/8.png">
+<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/9.png">
+<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/10.png">
+<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/11.png">
+<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/12.png">
+<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/13.png">
+<meta property="og:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/14.png">
 <meta property="article:published_time" content="2022-07-05T11:04:04.000Z">
 <meta property="article:modified_time" content="2023-08-05T14:25:12.890Z">
 <meta property="article:author" content="lifengjun">
@@ -50,7 +50,7 @@
 <meta property="article:tag" content="cuda">
 <meta property="article:tag" content="c++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2022-07-05-windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/1.png">
+<meta name="twitter:image" content="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/1.png">
 
 <link rel="canonical" href="https://lifengjun.xin/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/">
 
@@ -321,40 +321,40 @@
 <p>分别复制于进行合并</p>
 <figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:<span class="string">\Program</span> Files<span class="string">\NVIDIA</span> GPU Computing Toolkit<span class="string">\CUDA\v11.4\bin</span></span><br><span class="line">C:<span class="string">\Program</span> Files<span class="string">\NVIDIA</span> GPU Computing Toolkit<span class="string">\CUDA\v11.4\include</span></span><br><span class="line">C:<span class="string">\Program</span> Files<span class="string">\NVIDIA</span> GPU Computing Toolkit<span class="string">\CUDA\v11.4\lib</span></span><br></pre></td></tr></table></figure>
 <p>于 <code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.4\extras\demo_suite</code> 中执行 <code>deviceQuery.exe</code> 若Result显示为PASS则证明安装成功：</p>
-<p><img data-src="2022-07-05-windows下编译opencv4的cuda版本\1.png" alt="1"></p>
+<p><img src="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/1.png" alt="1"></p>
 <h1 id="opencv编译"><a href="#opencv编译" class="headerlink" title="opencv编译"></a>opencv编译</h1><p>可以把opencv_contrib的代码解压到opencv的源码中，并创建一个 <code>vs2019-cuda11-build</code>  文件夹用于存放编译后库，我的目录如下：</p>
 <figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="string">opencv4.5.5</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">vs2019-cuda11-build</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">source</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">3rdparty</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">apps</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">cmake</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">data</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">doc</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">include</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">modules</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">opencv_contrib</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">platforms</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">samples</span></span><br><span class="line">		<span class="bullet">-</span> <span class="string">... (other files)</span></span><br></pre></td></tr></table></figure>
 <h2 id="第一次configure"><a href="#第一次configure" class="headerlink" title="第一次configure"></a>第一次configure</h2><p>使用 <code>[cmake_path]\path\bin</code> 下的 <code>cmake-gui.exe</code> 的图形化界面进行编译配置，首先选择 <code>source code</code> 和 <code>Where to build the binaries</code> ：</p>
-<p><img data-src="2022-07-05-windows下编译opencv4的cuda版本\2.png" alt="2"></p>
+<p><img src="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/2.png" alt="2"></p>
 <p>点击 <code>configure</code> 后弹出以下窗口，根据自己主机的环境配置进行选择：</p>
-<p><img data-src="2022-07-05-windows下编译opencv4的cuda版本\3.png"></p>
+<p><img src="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/3.png"></p>
 <p>点击 <code>Finish</code> 后，第一次 <code>configure</code> 完成之后，过程中会有很多文件大概率下载失败，比如：<code>opencv_videoio_ffmpeg.dll</code> ，窗口有红字提示。</p>
 <p>打开 <code>D:/opencv4.5.5/vs2019-cuda11-build/CMakeDownloadLog.txt</code> 看里面的日志</p>
-<p><img data-src="2022-07-05-windows下编译opencv4的cuda版本\4.png"></p>
+<p><img src="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/4.png"></p>
 <p>分析推断下载地址为：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/opencv/opencv_3rdparty/4d348507d156ec797a88a887cfa7f9129a35afac/ffmpeg/opencv_videoio_ffmpeg_64.dll，实验检验后，发现下载文件">https://raw.githubusercontent.com/opencv/opencv_3rdparty/4d348507d156ec797a88a887cfa7f9129a35afac/ffmpeg/opencv_videoio_ffmpeg_64.dll，实验检验后，发现下载文件</a> <code>opencv_videoio_ffmpeg_64.dll</code> 后不能直接放入<code>D:\opencv4.5.5\source\3rdparty\ffmpeg</code> 中，需要将其重命名为 <code>20deefbfe023c8b8d11a52e5a6527c6a-opencv_videoio_ffmpeg_64.dll</code> 并放入 <code>D:\opencv4.5.5\source\.cache\ffmpeg</code> 中，让编译程序检验 md5 和自动重命名拷贝。<strong>对后续下载失败的文件皆是如此操作，不再赘述。</strong></p>
 <h2 id="第二次configure"><a href="#第二次configure" class="headerlink" title="第二次configure"></a>第二次configure</h2><p>添加 </p>
 <p>下面要进行进一步的 <code>configure</code> 配置，在 search 中输入 <code>cuda</code> 并勾选相关选项以支持 cuda：</p>
-<p><img data-src="2022-07-05-windows下编译opencv4的cuda版本\5.png"></p>
+<p><img src="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/5.png"></p>
 <p><code>OPENCV_EXTRA_MODULES_PATH</code> 选择 <code>opencv_contrib\modules</code> 所在目录：</p>
-<p><img data-src="2022-07-05-windows下编译opencv4的cuda版本\6.png"></p>
+<p><img src="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/6.png"></p>
 <p><code>World</code> 勾选相关选项以支持包的集成。</p>
-<p><img data-src="2022-07-05-windows下编译opencv4的cuda版本\7.png"></p>
+<p><img src="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/7.png"></p>
 <p>再次点击 <code>configure</code> 。</p>
 <h2 id="第三次configure"><a href="#第三次configure" class="headerlink" title="第三次configure"></a>第三次configure</h2><p><code>fast</code> 勾选相关选项以支持快速数学运算</p>
-<p><img data-src="2022-07-05-windows下编译opencv4的cuda版本\8.png"></p>
+<p><img src="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/8.png"></p>
 <p><code>CUDA_ARCH_BIN</code> 中可以删除无关的配置加快编译速度，可以从 <code>deviceQuery.exe</code> 的结果中查询到，本机的架构为 <code>8.6</code> 。更多请查看<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-gpus#collapseOne">英伟达官网</a>的 <code>CUDA-Enabled GeForce and TITAN Products</code> 中配置详解。</p>
-<p><img data-src="2022-07-05-windows下编译opencv4的cuda版本\9.png"></p>
+<p><img src="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/9.png"></p>
 <p>最后点击 <code>Generate</code> 。</p>
 <h1 id="vs-构建"><a href="#vs-构建" class="headerlink" title="vs 构建"></a>vs 构建</h1><p>visual studio在安装时需要勾选 <code>使用c++的桌面开发</code>，安装结束后将 <code>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64</code> 加入环境变量</p>
 <h2 id="Release"><a href="#Release" class="headerlink" title="Release"></a>Release</h2><p>于 <code>D:/opencv4.5.5/vs2019-cuda11-build</code> 中用visual studio打开 <code>OpenCV.sln</code> ，于“解决方案资源管理器中”分别找到 <code>CMakeTargets\ALL_BUILD</code> 和 <code>CMakeTargets\INSTALL</code>，选择 <code>Release</code> 下的 <code>x64</code> 模式进行构建。构建成功后会在 <code>D:\opencv4.5.5\vs2019-cuda11-build\install\x64\vc16\bin</code> 下生成 <code>opencv_world455.dll</code> 等文件：</p>
-<p><img data-src="2022-07-05-windows下编译opencv4的cuda版本\10.png"></p>
+<p><img src="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/10.png"></p>
 <h2 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h2><p>同样如果选择 <code>Debug</code> 下的 <code>x64</code> 模型进行构建。构建成功后会在 <code>D:\opencv4.5.5\vs2019-cuda11-build\install\x64\vc16\bin</code> 下生成 <code>opencv_world455d.dll</code> 等文件：</p>
-<p><img data-src="2022-07-05-windows下编译opencv4的cuda版本\11.png"></p>
+<p><img src="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/11.png"></p>
 <h1 id="Clion中使用"><a href="#Clion中使用" class="headerlink" title="Clion中使用"></a>Clion中使用</h1><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="Toolchains"><a href="#Toolchains" class="headerlink" title="Toolchains"></a>Toolchains</h3><p>创建新的 <code>Visual Studio</code> 的环境，<code>Toolset</code> 选择刚刚用于编译 opencv 的 Visual Studio 2019 的位置 <code>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community</code></p>
-<p><img data-src="2022-07-05-windows下编译opencv4的cuda版本\12.png"></p>
+<p><img src="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/12.png"></p>
 <h3 id="Cmake"><a href="#Cmake" class="headerlink" title="Cmake"></a>Cmake</h3><p>分别配置 <code>Release</code> 和 <code>Debug</code> 中的两种 build type：</p>
-<p><img data-src="2022-07-05-windows下编译opencv4的cuda版本\13.png"></p>
-<p><img data-src="2022-07-05-windows下编译opencv4的cuda版本\14.png"></p>
+<p><img src="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/13.png"></p>
+<p><img src="/2022/07/05/windows%E4%B8%8B%E7%BC%96%E8%AF%91opencv4%E7%9A%84cuda%E7%89%88%E6%9C%AC/14.png"></p>
 <h3 id="CMakeLists-txt"><a href="#CMakeLists-txt" class="headerlink" title="CMakeLists.txt"></a>CMakeLists.txt</h3><p>参考的 CMakeLists.txt 编写如下：</p>
 <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Project(CUDA_Freshman CXX C CUDA)</span><br><span class="line"></span><br><span class="line">cmake_minimum_required(VERSION 3.17 FATAL_ERROR)</span><br><span class="line"></span><br><span class="line">set(CMAKE_CUDA_STANDARD 14)</span><br><span class="line">set(CUDA_NVCC_FLAGS -gencode arch=compute_86,code=sm_86;-G;-g)</span><br><span class="line">set(CMAKE_NVCC_FLAGS &quot;CMAKE_NVCC_FLAGS -std=c++11&quot;)</span><br><span class="line"></span><br><span class="line">set(OpenCV_DIR E:\\opencv4.5.5\\vs2019-cuda11-build)</span><br><span class="line">set(CUDA_DIR C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v11.2)</span><br><span class="line"></span><br><span class="line">find_package(CUDA REQUIRED)</span><br><span class="line">find_package(OpenCV REQUIRED)</span><br><span class="line"></span><br><span class="line">include_directories(&quot;$&#123;CUDA_INCLUDE_DIRS&#125;&quot;)</span><br><span class="line">include_directories($&#123;OpenCV_INCLUDE_DIRS&#125;)</span><br><span class="line"></span><br><span class="line">file(GLOB_RECURSE CURRENT_HEADERS *.h *.hpp *.cuh)</span><br><span class="line">file(GLOB CURRENT_SOURCES *.cpp *.cu)</span><br><span class="line"></span><br><span class="line">add_executable(matrix_mult $&#123;CURRENT_HEADERS&#125; $&#123;CURRENT_SOURCES&#125;)</span><br><span class="line"></span><br><span class="line">target_link_libraries(matrix_mult $&#123;CUDA_LIBRARIES&#125;)</span><br><span class="line">target_link_libraries(matrix_mult $&#123;OpenCV_LIBRARIES&#125;)</span><br></pre></td></tr></table></figure>
 <h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>测试代码如下：</p>
@@ -656,7 +656,6 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>

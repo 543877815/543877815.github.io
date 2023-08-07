@@ -18,7 +18,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="​    我之前在写学校艺术中心的项目页面的时候要求有大量的动画，一开始我写的页面动画非常不流畅，有很多卡顿，因此我通过在慕课网上学习了让你页面速度飞起来 Web前端性能优化以及在优达学堂(我是通过在谷歌开发者帮助上找到这个网址的)来了解一些关于现代浏览器页面渲染的原理和过程，当然还有The Applied Science of Runtime Performance - Chrome Dev S">
@@ -28,36 +28,36 @@
 <meta property="og:site_name" content="逗比学长的博客">
 <meta property="og:description" content="​    我之前在写学校艺术中心的项目页面的时候要求有大量的动画，一开始我写的页面动画非常不流畅，有很多卡顿，因此我通过在慕课网上学习了让你页面速度飞起来 Web前端性能优化以及在优达学堂(我是通过在谷歌开发者帮助上找到这个网址的)来了解一些关于现代浏览器页面渲染的原理和过程，当然还有The Applied Science of Runtime Performance - Chrome Dev S">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image1.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image2.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image3.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image4.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image5.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image6.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image7.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image8.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image9.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image10.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image11.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image12.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image13.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image14.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image15.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image17.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/CQN88%601T02C5I%7DMZ000Q%7DDM.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image32.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image33.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image34.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image35.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image36.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image37.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image1.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image2.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image3.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image4.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image5.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image6.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image7.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image8.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image9.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image10.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image11.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image12.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image13.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image14.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image15.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image17.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/CQN88%601T02C5I%7DMZ000Q%7DDM.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image32.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image33.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image34.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image35.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image36.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image37.png">
 <meta property="article:published_time" content="2019-02-08T08:23:20.000Z">
 <meta property="article:modified_time" content="2020-11-13T13:55:58.737Z">
 <meta property="article:author" content="lifengjun">
 <meta property="article:tag" content="性能">
 <meta property="article:tag" content="优化">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/2019-02-08-%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image1.png">
+<meta name="twitter:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image1.png">
 
 <link rel="canonical" href="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/">
 
@@ -329,31 +329,31 @@
 <h3 id="异步http请求线程"><a href="#异步http请求线程" class="headerlink" title="异步http请求线程"></a><strong>异步http请求线程</strong></h3><p>·         在XMLHttpRequest在连接后是通过浏览器新开一个线程请求</p>
 <p>·         将检测到状态变更时，如果设置有回调函数，异步线程就产生状态变更事件，将这个回调再放入事件队列中。再由JavaScript引擎执行。</p>
 <h2 id="新建DOM的过程（浏览器如何构建关键帧）"><a href="#新建DOM的过程（浏览器如何构建关键帧）" class="headerlink" title="新建DOM的过程（浏览器如何构建关键帧）"></a>新建DOM的过程（浏览器如何构建关键帧）</h2><p>​    当浏览器向服务器发出Get请求获取页面</p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image1.png" alt="image1"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image1.png" alt="image1"></p>
 <p>​    服务器会向浏览器返回html页面，这是原始的文本</p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image2.png" alt="image2"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image2.png" alt="image2"></p>
 <p>​    浏览器通过解析其中的dom结点从而形成dom树</p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image3.png" alt="image3"></p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image4.png" alt="image4"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image3.png" alt="image3"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image4.png" alt="image4"></p>
 <p>​    浏览器在构造dom树的同时又会请求该页面的css样式文件，这个过程在chrome的develop tool中叫recalculate Styles</p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image5.png" alt="image5"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image5.png" alt="image5"></p>
 <p>​    dom树结合了css有了样式，构成了新的树叫做渲染树</p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image6.png" alt="image6"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image6.png" alt="image6"></p>
 <p>​    渲染树没有了head和script，如果display:none也会从渲染树除去，如果有:after等伪类，即使没有出现在DOM树，也会添加到渲染树中。一般来说只有显示在网页上的元素才会添加到渲染树中</p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image7.png" alt="image7"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image7.png" alt="image7"></p>
 <p>​    下一个过程叫做layout，也叫做reflow（回流），即对元素的规模尺寸，布局进行页面上的初步构建，注意这是一种网络布局模型，意味着某个元素可以影响到其他元素</p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image8.png" alt="image8"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image8.png" alt="image8"></p>
 <p>​    下一个过程是矢量到光栅的转化，因为电脑屏幕实际上是由一个个格子的像素构成的，这是浏览器的内部操作，我们不需要了解太多</p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image9.png" alt="image9"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image9.png" alt="image9"></p>
 <p>​    再下一步则是到了重绘这个过程(paint)，其将元素的外观绘制在页面上</p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image10.png" alt="image10"></p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image11.png" alt="image11"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image10.png" alt="image10"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image11.png" alt="image11"></p>
 <p>​    其中有一步drawBitmap，浏览器将内容解码成内存，图片的绘制实际上是一个一个像素点解码绘制的，像下面这样：</p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image12.png" alt="image12"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image12.png" alt="image12"></p>
 <p>​    上面讲的是一个图层所要做的事情，因此还有一个过程是的对图层进行合成</p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image13.png" alt="image13"></p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image14.png" alt="image14"></p>
-<p>​    <img data-src="2019-02-08-前端页面性能优化小记/image15.png" alt="image15"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image13.png" alt="image13"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image14.png" alt="image14"></p>
+<p>​    <img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image15.png" alt="image15"></p>
 <p>​    所有这些都是在CPU上发生的，图层本身和其图块将上传到GPU中，同样，这一流程也包含在composite Layers部分，最后GPU将根据指示将图片显示到屏幕上。但我们开发者无法控制这一过程。</p>
 <h3 id="总结如下"><a href="#总结如下" class="headerlink" title="总结如下"></a>总结如下</h3><p>1.获取DOM后分割为多个图层</p>
 <p>2.对每个图层的节点计算样式结果(Recalculate style—样式重计算)</p>
@@ -362,7 +362,7 @@
 <p>5.图层作为纹理上传至GPU</p>
 <p>6.复合多个图层到页面上生成最终屏幕图像(Comoposite Layers—图层重组)</p>
 <h2 id="对于开发者而言"><a href="#对于开发者而言" class="headerlink" title="对于开发者而言"></a>对于开发者而言</h2><p>对于我们开发者来说，通常帧是这样的，你需要了解管道的概念：</p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image17.png" alt="image17"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image17.png" alt="image17"></p>
 <p>你会通过js来改变样式，并导致外观变化，或者添加DOM</p>
 <p>但是并不一定需要js，也可以使用CSS transform、transition来改变，甚至使用最近的Web animations API改变外观变化。</p>
 <p>但是通过js改变不一定触发所有管道元素</p>
@@ -408,25 +408,25 @@
 <p>1.背景图片设置默认高度。因为图片没加载出来的时候如果没有设置默认高度，会导致图片加载的时候时时回流，因此每时每刻都在消耗性能。</p>
 <p>2.用插件<a target="_blank" rel="noopener" href="https://github.com/Prinzhorn/skrollr">skrollr</a>代替background-attachment :fixed做背景视差。skrollr的原理是改变图片的transform属性，而background-attachment会时时触发回流重绘。</p>
 <p>3.FILP(<strong>F</strong>irst、<strong>L</strong>ast、<strong>I</strong>nvert、<strong>P</strong>lay)思想。其原理是获取动画开头和结尾的状态，然后用transform去做动画。</p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/CQN88`1T02C5I}MZ000Q}DM.png" alt="CQN88`1T02C5I}MZ000Q}DM"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/CQN88`1T02C5I}MZ000Q}DM.png" alt="CQN88`1T02C5I}MZ000Q}DM"></p>
 <p>4.tranform会新建图层，but图层不能被滥用！！否则会造成composite的高消耗</p>
 <h2 id="针对动画优化JS"><a href="#针对动画优化JS" class="headerlink" title="针对动画优化JS"></a>针对动画优化JS</h2><h3 id="帧数"><a href="#帧数" class="headerlink" title="帧数"></a>帧数</h3><p>​    相当一部分的浏览器的显示频率是16.7ms（1000/60），意味着动画要到达到60帧/秒，因此浏览器渲染每帧的时间要不得超过16.7ms，但是浏览器除了渲染还有很多工作要做，因此我们应该控制在10ms-12ms之内完成渲染工作</p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image32.png" alt="image32"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image32.png" alt="image32"></p>
 <p>​    显示器16.7ms刷新间隔之前发生了其他绘制请求(setTimeout)，导致所有第三帧丢失，继而导致动画断续显示（堵车的感觉），这就是过度绘制带来的问题。</p>
 <h3 id="requestAnimationFrame"><a href="#requestAnimationFrame" class="headerlink" title="requestAnimationFrame"></a>requestAnimationFrame</h3><p>window.requestAnimationFrame() 方法告诉浏览器您希望执行动画并请求浏览器在下一次重绘之前调用指定的函数来更新动画。该方法使用一个回调函数作为参数，这个回调函数会在浏览器重绘之前调用。</p>
 <h3 id="Web-worker"><a href="#Web-worker" class="headerlink" title="Web worker"></a>Web worker</h3><p>分离无页面渲染无关的逻辑计算</p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image33.png" alt="image33"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image33.png" alt="image33"></p>
 <h3 id="函数节流和函数防抖"><a href="#函数节流和函数防抖" class="headerlink" title="函数节流和函数防抖"></a>函数节流和函数防抖</h3><p>针对scroll事件中的回调，思路之一是对事件进行“稀释”，减少事件回调的执行次数。</p>
 <p><strong>函数去抖（debounce）</strong>：让函数只有在过完一段时间后并且<strong>该段时间内不被调用</strong>才会被执行</p>
 <p><strong>函数节流（throttle）</strong>：让函数在指定的时间段内<strong>周期性地间断</strong>执行</p>
 <p><a target="_blank" rel="noopener" href="https://wall-wxk.github.io/blogDemo/2017/02/15/throttleAndDebounce.html">例子1</a></p>
 <p><a target="_blank" rel="noopener" href="https://css-tricks.com/debouncing-throttling-explained-examples/">例子2</a> - 这篇文章讲的非常到位咯</p>
 <p>不知道从哪截的图（侵删）</p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image34.png" alt="image34"></p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image35.png" alt="image35"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image34.png" alt="image34"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image35.png" alt="image35"></p>
 <h3 id="避免强制重排（StoppingForced-Synchronous-Layout）"><a href="#避免强制重排（StoppingForced-Synchronous-Layout）" class="headerlink" title="避免强制重排（StoppingForced Synchronous Layout）"></a>避免强制重排（StoppingForced Synchronous Layout）</h3><p><a target="_blank" rel="noopener" href="http://output.jsbin.com/aqavin/2/quiet">例子</a></p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image36.png" alt="image36"></p>
-<p><img data-src="2019-02-08-前端页面性能优化小记/image37.png" alt="image37"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image36.png" alt="image36"></p>
+<p><img src="/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image37.png" alt="image37"></p>
 
     </div>
 
@@ -720,7 +720,6 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>

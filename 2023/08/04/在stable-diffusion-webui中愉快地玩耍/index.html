@@ -18,7 +18,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="基于stable-diffusion-webui 1.5.1写的使用说明，更新时间是20230806。 预训练模型下载网站：  https:&#x2F;&#x2F;civitai.com&#x2F; https:&#x2F;&#x2F;www.liblibai.com&#x2F;  基本使用方法项目安装项目地址：https:&#x2F;&#x2F;github.com&#x2F;AUTOMATIC1111&#x2F;stable-diffusion-webui windows 环境下用 git">
@@ -28,17 +28,17 @@
 <meta property="og:site_name" content="逗比学长的博客">
 <meta property="og:description" content="基于stable-diffusion-webui 1.5.1写的使用说明，更新时间是20230806。 预训练模型下载网站：  https:&#x2F;&#x2F;civitai.com&#x2F; https:&#x2F;&#x2F;www.liblibai.com&#x2F;  基本使用方法项目安装项目地址：https:&#x2F;&#x2F;github.com&#x2F;AUTOMATIC1111&#x2F;stable-diffusion-webui windows 环境下用 git">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/2023-08-04-%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/StableSR.png">
-<meta property="og:image" content="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/2023-08-04-%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/Tiled%20diffusion%20and%20tiled%20VAE.png">
-<meta property="og:image" content="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/2023-08-04-%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/ControlNet.png">
-<meta property="og:image" content="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/2023-08-04-%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/tagcomplete.png">
-<meta property="og:image" content="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/2023-08-04-%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/prompt%20all%20in%20one.png">
+<meta property="og:image" content="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/StableSR.png">
+<meta property="og:image" content="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/Tiled%20diffusion%20and%20tiled%20VAE.png">
+<meta property="og:image" content="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/ControlNet.png">
+<meta property="og:image" content="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/tagcomplete.png">
+<meta property="og:image" content="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/prompt%20all%20in%20one.png">
 <meta property="article:published_time" content="2023-08-04T12:41:06.000Z">
 <meta property="article:modified_time" content="2023-08-06T16:05:23.006Z">
 <meta property="article:author" content="lifengjun">
 <meta property="article:tag" content="stable diffusion">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/2023-08-04-%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/StableSR.png">
+<meta name="twitter:image" content="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/StableSR.png">
 
 <link rel="canonical" href="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/">
 
@@ -302,23 +302,23 @@
 <h2 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h2><p>一般想安装什么插件就搜索关键字然后找到 <code>stars</code> 最多的那个。</p>
 <h3 id="sd-webui-stablesr"><a href="#sd-webui-stablesr" class="headerlink" title="sd-webui-stablesr"></a><a target="_blank" rel="noopener" href="https://github.com/pkuliyi2015/sd-webui-stablesr">sd-webui-stablesr</a></h3><p>基于<a target="_blank" rel="noopener" href="https://github.com/IceClear/StableSR/">StableSR</a>的图像超分模型。</p>
 <p>安装完成后可以在img2img的<code>Script</code>的选项卡中选择以看到相关选项：</p>
-<p><img data-src="2023-08-04-在stable-diffusion-webui中愉快地玩耍/StableSR.png" alt="StableSR"></p>
+<p><img src="/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/StableSR.png" alt="StableSR"></p>
 <p>​    下载好的StableSR预训练模型需要放置在<code>extensions\sd-webui-stablesr\models</code>中</p>
 <h3 id="multidiffusion-upscaler-for-automatic1111"><a href="#multidiffusion-upscaler-for-automatic1111" class="headerlink" title="multidiffusion-upscaler-for-automatic1111"></a><a target="_blank" rel="noopener" href="https://github.com/pkuliyi2015/multidiffusion-upscaler-for-automatic1111">multidiffusion-upscaler-for-automatic1111</a></h3><p>基于 <a target="_blank" rel="noopener" href="https://github.com/albarji/mixture-of-diffusers">Mixture of Diffusers</a> 和 <a target="_blank" rel="noopener" href="https://multidiffusion.github.io/">MultiDiffusion</a> 的分块扩散模型。</p>
 <p>安装完成后可以在txt2img和img2img的选项卡中看到相关选项：</p>
-<p><img data-src="2023-08-04-在stable-diffusion-webui中愉快地玩耍/Tiled diffusion and tiled VAE.png" alt="Tiled diffusion and tiled VAE"></p>
+<p><img src="/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/Tiled diffusion and tiled VAE.png" alt="Tiled diffusion and tiled VAE"></p>
 <h3 id="sd-webui-controlnet"><a href="#sd-webui-controlnet" class="headerlink" title="sd-webui-controlnet"></a><a target="_blank" rel="noopener" href="https://github.com/Mikubill/sd-webui-controlnet">sd-webui-controlnet</a></h3><p>基于 <a target="_blank" rel="noopener" href="https://github.com/lllyasviel/ControlNet">ControlNet</a> 的条件扩散模型。</p>
 <p>安装完成后可以在txt2img和img2img的选项卡中看到相关选项：</p>
-<p><img data-src="2023-08-04-在stable-diffusion-webui中愉快地玩耍/ControlNet.png" alt="ControlNet"></p>
+<p><img src="/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/ControlNet.png" alt="ControlNet"></p>
 <h3 id="a1111-sd-webui-tagcomplete"><a href="#a1111-sd-webui-tagcomplete" class="headerlink" title="a1111-sd-webui-tagcomplete"></a><a target="_blank" rel="noopener" href="https://github.com/DominikDoom/a1111-sd-webui-tagcomplete">a1111-sd-webui-tagcomplete</a></h3><p>一个prompt自动补全插件。可以在<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=zHTeZxzJ314">youtube</a>获取中文翻译。具体步骤如下：</p>
 <ol>
 <li>在<a href="ttps://drive.google.com/file/d/1tuJmli_xBz0Y2tQviHdbPuP9Q5UC_wKt/view">google drive</a>中下载<code>danbooru-SC.csv</code>简体中文翻译文件。</li>
 <li>将<code>danbooru-SC.csv</code>放在<code>extensions\a1111-sd-webui-tagcomplete\tags</code>中。</li>
 <li>于stable-diffusion-webui的配置中，<code>Settings\Tag Autocomplete</code>的<code>Tag filename</code>和<code>Translation filename</code>选项中分别设置<code>danbooru-SC.csv</code></li>
 </ol>
-<p>​    安装完成后可以在txt2img和img2img的prompt中看到相关选项：<img data-src="2023-08-04-在stable-diffusion-webui中愉快地玩耍/tagcomplete.png" alt="tagcomplete"></p>
+<p>​    安装完成后可以在txt2img和img2img的prompt中看到相关选项：<img src="/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/tagcomplete.png" alt="tagcomplete"></p>
 <h3 id="sd-webui-prompt-all-in-one"><a href="#sd-webui-prompt-all-in-one" class="headerlink" title="sd-webui-prompt-all-in-one"></a><a target="_blank" rel="noopener" href="https://github.com/Physton/sd-webui-prompt-all-in-one">sd-webui-prompt-all-in-one</a></h3><p>sd-webui-prompt-all-in-one旨在提高提示词/反向提示词输入框的使用体验。它拥有更直观、强大的输入界面功能，它提供了自动翻译、历史记录和收藏等功能。可以结合<a target="_blank" rel="noopener" href="https://github.com/DominikDoom/a1111-sd-webui-tagcomplete">a1111-sd-webui-tagcomplete</a>使用</p>
-<p><img data-src="2023-08-04-在stable-diffusion-webui中愉快地玩耍/prompt all in one.png" alt="prompt all in one"></p>
+<p><img src="/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/prompt all in one.png" alt="prompt all in one"></p>
 
     </div>
 
@@ -608,7 +608,6 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>

@@ -18,7 +18,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="说说最近踩的坑，为了在windows的电脑下做并行程序设计作业埃拉托色尼素数筛选法，用的是MPI，然后发现这类库对于windows的用户非常不友好，比如说MPICH2后续已经不支持windows，OpenMPI貌似只支持linux，而微软维护的MS-MPI能够支持windows，但是我在使用clion(cmake)进行包引入的时候出了很多问题，可能的原因是windows下没有mpicc&#x2F;mpicx">
@@ -28,20 +28,20 @@
 <meta property="og:site_name" content="逗比学长的博客">
 <meta property="og:description" content="说说最近踩的坑，为了在windows的电脑下做并行程序设计作业埃拉托色尼素数筛选法，用的是MPI，然后发现这类库对于windows的用户非常不友好，比如说MPICH2后续已经不支持windows，OpenMPI貌似只支持linux，而微软维护的MS-MPI能够支持windows，但是我在使用clion(cmake)进行包引入的时候出了很多问题，可能的原因是windows下没有mpicc&#x2F;mpicx">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2019-04-25-ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/1.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2019-04-25-ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2019-04-25-ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/3.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2019-04-25-ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/4.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2019-04-25-ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/5.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2019-04-25-ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/6.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2019-04-25-ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/7.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2019-04-25-ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/8.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2019-04-25-ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/10.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2019-04-25-ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/11.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2019-04-25-ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/12.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2019-04-25-ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/13.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2019-04-25-ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/14.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2019-04-25-ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/15.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/1.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/3.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/4.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/5.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/6.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/7.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/8.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/10.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/11.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/12.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/13.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/14.png">
+<meta property="og:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/15.png">
 <meta property="article:published_time" content="2019-04-25T02:41:32.000Z">
 <meta property="article:modified_time" content="2022-09-12T02:42:43.464Z">
 <meta property="article:author" content="lifengjun">
@@ -53,7 +53,7 @@
 <meta property="article:tag" content="msmpi">
 <meta property="article:tag" content="mpich">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2019-04-25-ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/1.png">
+<meta name="twitter:image" content="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/1.png">
 
 <link rel="canonical" href="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/">
 
@@ -322,11 +322,11 @@
 <p>开启xrdp服务</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service xrdp restart</span><br></pre></td></tr></table></figure>
 <h3 id="远程登录"><a href="#远程登录" class="headerlink" title="远程登录"></a>远程登录</h3><p>使用windows下的远程桌面连接，输入IP，用户名</p>
-<p><img data-src="2019-04-25-ubuntu和windows下运行MPI做埃拉托色尼素数筛选法\1.png" alt="1"></p>
+<p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/1.png" alt="1"></p>
 <p>输入密码</p>
-<p><img data-src="2019-04-25-ubuntu和windows下运行MPI做埃拉托色尼素数筛选法\2.png" alt="2"></p>
+<p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/2.png" alt="2"></p>
 <p>使用默认设置</p>
-<p><img data-src="2019-04-25-ubuntu和windows下运行MPI做埃拉托色尼素数筛选法\3.png" alt="3"></p>
+<p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/3.png" alt="3"></p>
 <h2 id="clion"><a href="#clion" class="headerlink" title="clion"></a>clion</h2><h3 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h3><p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/clion/download/download-thanks.html?platform=linux">下载网站</a>找到direct link，将里面的url复制过来下载</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://download.jetbrains.com/cpp/CLion-2019.1.2.tar.gz</span><br></pre></td></tr></table></figure>
 <p>解压</p>
@@ -346,12 +346,12 @@
 <p>查看配置</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">teamviewer info</span><br></pre></td></tr></table></figure>
 <p>其将打印出TeamViewer ID</p>
-<p><img data-src="2019-04-25-ubuntu和windows下运行MPI做埃拉托色尼素数筛选法\4.png" alt="4"></p>
+<p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/4.png" alt="4"></p>
 <p>通过下属命令设置登录密码</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">teamviewer --passwd NEWPASSWORD</span><br></pre></td></tr></table></figure>
 <p>打印 ok，在其他电脑上下载TeamViewer客户端，即可进行远程控制，若不行可以进行服务器重启再试试。</p>
 <p>然鹅，这样貌似会触碰到TeamViewer的商业用途，奥</p>
-<p><img data-src="2019-04-25-ubuntu和windows下运行MPI做埃拉托色尼素数筛选法\5.png" alt="5"></p>
+<p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/5.png" alt="5"></p>
 <h2 id="MPICH"><a href="#MPICH" class="headerlink" title="MPICH"></a>MPICH</h2><p>安装</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install mpich</span><br></pre></td></tr></table></figure>
 <p>CMakeLists.txt下配置</p>
@@ -367,15 +367,15 @@
 <h2 id="MSMPI配置步骤"><a href="#MSMPI配置步骤" class="headerlink" title="MSMPI配置步骤"></a>MSMPI配置步骤</h2><ol>
 <li>在VS中新建C++win32空项目，将项目编译改为x64（vs总是将这个默认为win32，就很烦)</li>
 </ol>
-<p><img data-src="2019-04-25-ubuntu和windows下运行MPI做埃拉托色尼素数筛选法\6.png" alt="6"></p>
+<p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/6.png" alt="6"></p>
 <ol>
 <li>去安装的SDK目录，找到include与lib文件夹右键<font color="#c7254e">项目 — 属性 — vc++ 目录</font>中<font color="#c7254e">包含目录</font>添加 include 文件夹路径，<font color="#c7254e">库目录</font>中添加 lib 文件夹路径。</li>
 </ol>
-<p><img data-src="2019-04-25-ubuntu和windows下运行MPI做埃拉托色尼素数筛选法\7.png" alt="7"></p>
+<p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/7.png" alt="7"></p>
 <ol>
 <li><font color="#c7254e">属性 — 链接器 — 输入 — 附加依赖项</font>中添加<font color="#c7254e">msmpi.lib;msmpifec.lib;msmpifmc.lib</font> ;</li>
 </ol>
-<p><img data-src="2019-04-25-ubuntu和windows下运行MPI做埃拉托色尼素数筛选法\8.png" alt="8"></p>
+<p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/8.png" alt="8"></p>
 <ol>
 <li>新建cpp文件，键入测试代码如下：</li>
 </ol>
@@ -422,10 +422,10 @@
 <h2 id="优化三：分块筛选，提高cache命中率"><a href="#优化三：分块筛选，提高cache命中率" class="headerlink" title="优化三：分块筛选，提高cache命中率"></a>优化三：分块筛选，提高cache命中率</h2><p>在做这个之前我参考了<a target="_blank" rel="noopener" href="http://www.360doc.com/content/14/1015/13/10249440_417146850.shtml">这篇文章</a>，以及这篇文章介绍的<a target="_blank" rel="noopener" href="http://igoro.com/archive/gallery-of-processor-cache-effects/">原版论文</a>，对于第三个有两个优化思路，第一个是基于cache_linesize的优化，另外一个是基于cache_size的优化，现在来介绍一下如何获取cache的相关信息吧。</p>
 <h3 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h3><p>在命令行中输入</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getconf -a | grep CACHE</span><br></pre></td></tr></table></figure>
-<p><img data-src="2019-04-25-ubuntu和windows下运行MPI做埃拉托色尼素数筛选法\10.png" alt="10"></p>
+<p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/10.png" alt="10"></p>
 <p>可以看到不同级别的cache的相关信息，包括cache的大小size，cache每行的大小linesize，cache的链接形式n路组相连。</p>
 <h3 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h3><p>在任务管理栏的性能中</p>
-<p><img data-src="2019-04-25-ubuntu和windows下运行MPI做埃拉托色尼素数筛选法\11.png" alt="11"></p>
+<p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/11.png" alt="11"></p>
 <h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>对于大规模的数组来说cache_line的优化效果并不是很明显，所以下面只针对cache做优化，本优化方法需每个进程都各计算出前sqrt(n)个数中的素数，(对应优化思路2)。由于从cache读取的速度远高于从内存中处理，所以cache_size优化的思路在于每次处理cache大小的数组，之前我们已经将n内分成大小约为n/p的块给每个进程处理，然后在在每个进程中将n/p大小块按照cache_size进行分块，在此之前我们需要对cache的大小从byte转化为int，32位系统即除以4，以上图windows为例，L1，L2，L3缓存分别可以存64KB，0.25MB，1.5MB个int，而单机（注意是单机，如果是分布式计算机理论上可以占满所有的cache）中每个进程又将划分其中的cache，如果对于L3而言如果分配 2 个进程则每个进程能够得到 0.75 MB个int进程处理，而实际中由于计算机中有其他进程也会使用cache，所以在实际中这个数还要小。另外根据测试的时候n大小进行选择cache的级别，比如我测试的是亿级的数据，远超过cache的大小，所以直接对L3级别的cache进行分块，当然选择L3并不一定是最优策略，需要多次实证才能知道。</p>
 <p>故基于此关键代码在于进程内分块：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> LEVEL1_CACHE_size = <span class="number">32768</span>;      <span class="comment">// default 32768</span></span><br><span class="line"><span class="type">int</span> LEVEL2_CACHE_size = <span class="number">262144</span>;     <span class="comment">// default 262144</span></span><br><span class="line"><span class="type">int</span> LEVEL3_CACHE_size = <span class="number">9485760</span>;    <span class="comment">// default 10485760</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> LEVEL1_CACHE_int = LEVEL1_CACHE_size / <span class="number">4</span>;</span><br><span class="line"><span class="type">int</span> LEVEL2_CACHE_int = LEVEL2_CACHE_size / <span class="number">4</span>;</span><br><span class="line"><span class="type">int</span> LEVEL3_CACHE_int = LEVEL3_CACHE_size / <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> Block_size = LEVEL3_CACHE_int / p ;</span><br><span class="line"><span class="type">int</span> Block_num = size / Block_size;</span><br><span class="line"><span class="type">int</span> Block_remain = size % Block_size;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> Block_id = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> Block_N = Block_size - <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> Block_low_index = Block_id * Block_N + <span class="built_in">MIN</span>(Block_id, Block_remain) + low_index;</span><br><span class="line"><span class="type">int</span> Block_high_index = (Block_id + <span class="number">1</span>) * Block_N + <span class="built_in">MIN</span>(Block_id + <span class="number">1</span>, Block_remain) - <span class="number">1</span> + low_index;</span><br><span class="line"><span class="type">int</span> Block_low_value = Block_low_index * <span class="number">2</span> + <span class="number">3</span>;</span><br><span class="line"><span class="type">int</span> Block_high_value = (Block_high_index + <span class="number">1</span>) * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> Block_count;</span><br><span class="line"></span><br><span class="line"><span class="comment">// allocate this process &#x27;s share of the array</span></span><br><span class="line">marked = (<span class="type">char</span> *) <span class="built_in">malloc</span>(Block_size);</span><br><span class="line"><span class="keyword">if</span> (marked == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Cannot allocate enough memory \n&quot;</span>);</span><br><span class="line">    <span class="built_in">MPI_Finalize</span>();</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 总计数</span></span><br><span class="line">count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (Block_id &lt;= Block_num) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 索引初始化为0</span></span><br><span class="line">    index = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从3开始搜寻，first为第一个不是素数的位置</span></span><br><span class="line">    prime = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 块计数</span></span><br><span class="line">    Block_count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 先假定块中的整数都是素数</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; Block_size; i++) marked[i] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在块内找素数</span></span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="comment">/*确定该进程中素数的第一个倍数的下标 */</span></span><br><span class="line">        <span class="comment">// 如果该素数n*n&gt;low_value，n*(n-i)都被标记了</span></span><br><span class="line">        <span class="comment">// 即n*n为该进程中的第一个素数</span></span><br><span class="line">        <span class="comment">// 其下标为n*n-low_value，并且由于数组大小减半所以除以2</span></span><br><span class="line">        <span class="keyword">if</span> (prime * prime &gt; Block_low_value) &#123;</span><br><span class="line">            first = (prime * prime - Block_low_value) / <span class="number">2</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 若最小值low_value为该素数的倍数</span></span><br><span class="line">            <span class="comment">// 则第一个倍数为low_value，即其下标为0</span></span><br><span class="line">            <span class="keyword">if</span> (!(Block_low_value % prime)) first = <span class="number">0</span>;</span><br><span class="line">                <span class="comment">// 若最小值low_value不是该素数的倍数</span></span><br><span class="line">                <span class="comment">// 但是其余数为偶数，那么第一个非素数的索引为该素数剪去求余除以2</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (Block_low_value % prime % <span class="number">2</span> == <span class="number">0</span>) first = prime - ((Block_low_value % prime) / <span class="number">2</span>);</span><br><span class="line">                <span class="comment">// 若最小值low_value不是该素数的倍数</span></span><br><span class="line">                <span class="comment">// 那么第一个倍数的下标为该素数减去余数的值，并且由于数组大小减半所以除以2</span></span><br><span class="line">            <span class="keyword">else</span> first = (prime - (Block_low_value % prime)) / <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 从第一个素数开始，标记该素数的倍数为非素数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = first; i &lt; Block_size; i += prime) &#123;</span><br><span class="line">            marked[i] = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 用于找到下一素数的位置</span></span><br><span class="line">        <span class="keyword">while</span> (sub_marked[++index]);</span><br><span class="line"></span><br><span class="line">        prime = index * <span class="number">2</span> + <span class="number">3</span>; <span class="comment">// 起始加偏移</span></span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">while</span> (prime * prime &lt;= Block_high_value);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 统计块内计数</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; Block_size; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (marked[i] == <span class="number">0</span>) &#123;</span><br><span class="line">            Block_count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 汇总总体计数</span></span><br><span class="line">    count += Block_count;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理下一个块</span></span><br><span class="line">    Block_id++;</span><br><span class="line">    Block_low_index = Block_id * Block_N + <span class="built_in">MIN</span>(Block_id, Block_remain) + low_index;</span><br><span class="line">    Block_high_index = (Block_id + <span class="number">1</span>) * Block_N + <span class="built_in">MIN</span>(Block_id + <span class="number">1</span>, Block_remain) - <span class="number">1</span> + low_index;</span><br><span class="line">    Block_low_value = Block_low_index * <span class="number">2</span> + <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">if</span> (Block_id == Block_num) &#123;</span><br><span class="line">        Block_high_value = high_value;</span><br><span class="line">        Block_high_index = high_index;</span><br><span class="line">        Block_size = (Block_high_value - Block_low_value) / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        Block_high_value = (Block_high_index + <span class="number">1</span>) * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -457,7 +457,7 @@
 </li>
 </ul>
 <h1 id="优化效果及加速比"><a href="#优化效果及加速比" class="headerlink" title="优化效果及加速比"></a>优化效果及加速比</h1><p>我跑的是找1亿以内的素数，结果为5761455个，在我的电脑上运行时间如下图</p>
-<p><img data-src="2019-04-25-ubuntu和windows下运行MPI做埃拉托色尼素数筛选法\12.png" alt="12"></p>
+<p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/12.png" alt="12"></p>
 <ul>
 <li><p>横向对比可以看出通过优化一去掉偶数可以使待处理数组减半，故而时间减半；通过优化二去掉通信在单机上进程数量较少的时候优化效果不明显，随着进程数量增加，优化效果有所提升，如果考虑分布式计算机，优化效果会更加明显；通过优化三增加cache命中率可以显著提升优化效果。</p>
 </li>
@@ -472,10 +472,10 @@
 <li>$T_p$指当有p个处理器时，并行算法的执行时间</li>
 </ul>
 <p>规模为1,0000,0000的时候绘制的加速比 – 处理器曲线如下</p>
-<div id="echarts88" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts6273" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts88'));
+        var myChart = echarts.init(document.getElementById('echarts6273'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -541,15 +541,15 @@
 </script>
 <p>可以发现通过优化一去除偶数使得运行时间减半，加速比表现为原始版本的两倍，而通过优化二去掉通信在单机上优化效果不太明显，但在进程较多的时候还是有所体现，因此，加速比比优化一还是有所提升。当Sp=p时，Sp便可以称为“线性加速比”，即当某一并行算法的加速比为理想加速比时，若将处理器数量加倍，执行速度也会加倍，但是在规模1,0000,0000的情况下除cache优化外其他三种代码并没有表现出这种趋势，初步分析认为这是由于i/o而不是计算占程序的主要部分导致的。</p>
 <p>因此为了让计算占据更多程序运行的更大部分，我将规模增加为10,0000,0000后再进行对比：</p>
-<p><img data-src="2019-04-25-ubuntu和windows下运行MPI做埃拉托色尼素数筛选法\13.png" alt="13"></p>
+<p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/13.png" alt="13"></p>
 <p>可以发现情况依然如此，因此我姑且得出的结论是前三种代码并不是能够产生理想加速比的代码，当然这存在的着通信开销以及一些其他的系统运行开销的影响。 </p>
 <p>而通过cache缓冲后加速比，在前8核加速比按照处理器核数线性增加，达到8核以后有加速比有上升的趋势但是也有所波动并且不再呈现线性的趋势，因为处理器有限不能同时处理多个任务，这与之前查看windows系统CPU配置的4核8处理器相符。另外有Sp&gt;p，即产生了超线性加速比，通过维基百科得知，超线性加速比有几种可能的成因，如现代计算机的存储层次不同所带来的“高速缓存效应”；具体来说，较之顺序计算，在并行计算中，不仅参与计算的处理器数量更多，不同处理器的高速缓存也集合使用。而有鉴于此，集合的缓存便足以提供计算所需的存储量，算法执行时便不必使用速度较慢的内存，因而存储器读些时间便能大幅降低，这便对实际计算产生了额外的加速效果。</p>
 <h2 id="并行效率"><a href="#并行效率" class="headerlink" title="并行效率"></a>并行效率</h2><p>由加速比派生出的效率（英语：efficiency）则是量度性能的指标，并如下定义：</p>
 <script type="math/tex; mode=display">E_p=\frac{S_p}{p}=\frac{T_1}{pT_p}</script><p>绘制的并行效率与执行进程数的曲线如下：</p>
-<div id="echarts3868" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts6205" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts3868'));
+        var myChart = echarts.init(document.getElementById('echarts6205'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -616,11 +616,11 @@
 </script>
 <p>可以看到没有使用cache优化的时候并行效率一般介于0~1之间，通过cache命中优化使得产生超线性加速比并且并行效率大于1。</p>
 <h2 id="其他规模"><a href="#其他规模" class="headerlink" title="其他规模"></a>其他规模</h2><p>规模为10,000,000，则素数有664579个，运行时间如下</p>
-<p><img data-src="2019-04-25-ubuntu和windows下运行MPI做埃拉托色尼素数筛选法\14.png" alt="14"></p>
-<div id="echarts9187" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/14.png" alt="14"></p>
+<div id="echarts4139" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts9187'));
+        var myChart = echarts.init(document.getElementById('echarts4139'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -684,10 +684,10 @@
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
 </script>
-<div id="echarts9912" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts2593" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts9912'));
+        var myChart = echarts.init(document.getElementById('echarts2593'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -753,11 +753,11 @@
         myChart.setOption(option);
 </script>
 <p>规模为10,0000,0000，则素数有50847533个，运行时间如下</p>
-<p><img data-src="2019-04-25-ubuntu和windows下运行MPI做埃拉托色尼素数筛选法\15.png" alt="15"></p>
-<div id="echarts4487" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/15.png" alt="15"></p>
+<div id="echarts3246" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts4487'));
+        var myChart = echarts.init(document.getElementById('echarts3246'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -821,10 +821,10 @@
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
 </script>
-<div id="echarts4577" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts3440" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts4577'));
+        var myChart = echarts.init(document.getElementById('echarts3440'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -1186,7 +1186,6 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>

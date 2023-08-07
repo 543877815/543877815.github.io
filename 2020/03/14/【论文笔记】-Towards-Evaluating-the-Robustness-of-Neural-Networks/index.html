@@ -18,7 +18,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="今天读了一下 Towards Evaluating the Robustness of Neural Networks，这是关于对抗样本(Adversarial Example)的paper，主要贡献是提出了Carlini &amp; Wagner Attack神经网络有目标攻击算法，打破了最近提出的神经网络防御性蒸馏(Defensive Distillation)，证明防御性蒸馏不会显著提高神经">
@@ -28,25 +28,25 @@
 <meta property="og:site_name" content="逗比学长的博客">
 <meta property="og:description" content="今天读了一下 Towards Evaluating the Robustness of Neural Networks，这是关于对抗样本(Adversarial Example)的paper，主要贡献是提出了Carlini &amp; Wagner Attack神经网络有目标攻击算法，打破了最近提出的神经网络防御性蒸馏(Defensive Distillation)，证明防御性蒸馏不会显著提高神经">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2020-03-14-%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/1.png">
-<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2020-03-14-%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2.png">
-<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2020-03-14-%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/4.png">
-<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2020-03-14-%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/3.png">
-<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2020-03-14-%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/5.jpg">
-<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2020-03-14-%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/6.png">
-<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2020-03-14-%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/10.jpg">
-<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2020-03-14-%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/5.png">
-<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2020-03-14-%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/10.png">
-<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2020-03-14-%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/7.png">
-<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2020-03-14-%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/8.png">
-<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2020-03-14-%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/9.png">
-<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2020-03-14-%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/11.png">
+<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/1.png">
+<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2.png">
+<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/4.png">
+<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/3.png">
+<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/5.jpg">
+<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/6.png">
+<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/10.jpg">
+<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/5.png">
+<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/10.png">
+<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/7.png">
+<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/8.png">
+<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/9.png">
+<meta property="og:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/11.png">
 <meta property="article:published_time" content="2020-03-14T11:04:57.000Z">
 <meta property="article:modified_time" content="2023-08-04T16:52:17.911Z">
 <meta property="article:author" content="lifengjun">
 <meta property="article:tag" content="Adversarial Example">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2020-03-14-%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/1.png">
+<meta name="twitter:image" content="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/1.png">
 
 <link rel="canonical" href="https://lifengjun.xin/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/">
 
@@ -312,7 +312,7 @@
 <p>关于论文源码：</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/carlini/nn_robust_attacks">carlini/nn_robust_attacks</a></p>
 <span id="more"></span>
-<h1 id="对抗样本-Adversarial-Example"><a href="#对抗样本-Adversarial-Example" class="headerlink" title="对抗样本 (Adversarial Example)"></a>对抗样本 (Adversarial Example)</h1><h2 id="Basic-Idea"><a href="#Basic-Idea" class="headerlink" title="Basic Idea"></a>Basic Idea</h2><p>通过故意对数据集中输入样例添加难以察觉的摄动使模型以高置信度给出一个错误的输出。即只需要在一张图片上做微小的扰动，(神经网络)分类器以很高的置信度将图片错误分类，甚至被分类成一个指定的标签（不是图片正确所属的标签）。<img data-src="2020-03-14-【论文笔记】-Towards-Evaluating-the-Robustness-of-Neural-Networks/1.png" alt="A demonstration of fast adversarial example generation applied to GoogLeNet (Szegedy et al., 2014a) on ImageNet. By adding an imperceptibly small vector whose elements are equal to the sign of the elements of the gradient of the cost function with respect to the input, we can change GoogLeNet’s classification of the image. Here our epsilon of .007 corresponds to the magnitude of the smallest bit of an 8 bit image encoding after GoogLeNet’s conversion to real numbers."></p>
+<h1 id="对抗样本-Adversarial-Example"><a href="#对抗样本-Adversarial-Example" class="headerlink" title="对抗样本 (Adversarial Example)"></a>对抗样本 (Adversarial Example)</h1><h2 id="Basic-Idea"><a href="#Basic-Idea" class="headerlink" title="Basic Idea"></a>Basic Idea</h2><p>通过故意对数据集中输入样例添加难以察觉的摄动使模型以高置信度给出一个错误的输出。即只需要在一张图片上做微小的扰动，(神经网络)分类器以很高的置信度将图片错误分类，甚至被分类成一个指定的标签（不是图片正确所属的标签）。<img src="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/1.png" alt="A demonstration of fast adversarial example generation applied to GoogLeNet (Szegedy et al., 2014a) on ImageNet. By adding an imperceptibly small vector whose elements are equal to the sign of the elements of the gradient of the cost function with respect to the input, we can change GoogLeNet’s classification of the image. Here our epsilon of .007 corresponds to the magnitude of the smallest bit of an 8 bit image encoding after GoogLeNet’s conversion to real numbers."></p>
 <p>这类问题可以表述为一个约束最小化问题：</p>
 <script type="math/tex; mode=display">
 \text{minimize}\;\;D(x,x+\delta)\\
@@ -348,7 +348,7 @@
 </ul>
 <p>其中：</p>
 <p>$s$ 是正确的分类，<script type="math/tex">(e)^+</script> 是 <script type="math/tex">\max(e,0)</script> 的缩写，<script type="math/tex">\text{suftplus}(x) = \text{log}(1+\text{exp}(x))</script>，<script type="math/tex">loss_{F,s}(x)</script>是关于$x$的交叉熵损失，<script type="math/tex">Z||.||</script> 是最后一个隐藏层的输出，即 logit 层，<script type="math/tex">F||.||</script> 是经过 softmax 后的输出，如图示：</p>
-<p><img data-src="2020-03-14-【论文笔记】-Towards-Evaluating-the-Robustness-of-Neural-Networks/2.png" alt="Overview of a DNN architecture: This architecture, suitable for classification tasks thanks to its softmax output layer, is used throughout the paper along with its notations."></p>
+<p><img src="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/2.png" alt="Overview of a DNN architecture: This architecture, suitable for classification tasks thanks to its softmax output layer, is used throughout the paper along with its notations."></p>
 <p>现在把原始问题表述为：</p>
 <script type="math/tex; mode=display">
 \begin{cases}
@@ -365,7 +365,7 @@
 &x+\delta\in[0,1]^m \\
 
 \end{cases}</script><p>其中 $c\gt0$ 是一个惩罚因子，用于权衡目标和约束的重要性，有点像正则化，论文通过<strong>二分查找法</strong>来选择合适的 $c$，下图是 $c$ 的敏感度，可以看出在 <script type="math/tex">L_2</script> 约束和 <script type="math/tex">f_6</script> 目标函数的前提下，当 <script type="math/tex">c\lt 1</script>，攻击成功率很低。在 <script type="math/tex">c \gt 1</script> 之后，攻击效果提升不大，但成功率很高。</p>
-<p><img data-src="2020-03-14-【论文笔记】-Towards-Evaluating-the-Robustness-of-Neural-Networks/4.png" alt></p>
+<p><img src="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/4.png" alt></p>
 <h3 id="Box-constraints"><a href="#Box-constraints" class="headerlink" title="Box constraints"></a>Box constraints</h3><p>为了确保生成有效的图片，对于像素点的扰动 $\delta$ 存在着约束 <script type="math/tex">0\le x_i+\delta_i\le1</script>，在优化问题中，这个被称为“盒约束”。该论文研究了三种不同方法来解决这个问题：</p>
 <p>第一个方法是<strong>Projected gradient descent</strong>，在每次迭代中，执行一个单步标准梯度下降后，将所有坐标约束到 $[0,1]$ 的范围内，这个方法的性能不佳，原因在于它将剪辑后的图片作为下一次迭代的输入。（这个方法的具体表述不是很清楚，需要看看源码）</p>
 <p>第二个方法是<strong>Clipped gradient descent</strong>，上述方法存在一个问题就是算法可能会卡在一个平坦的点上，即当像素增加了一个比允许的最大值大得多的分量的时候，再将其约束到 1，那么偏导数就会变成 0。所以这个方法将盒约束整合到目标函数中，即目标函数从 <script type="math/tex">f(x+\delta)</script> 转化为 <script type="math/tex">f(\min{(\max{(x+\delta,0)},1)})</script>。</p>
@@ -379,9 +379,9 @@
 <li><strong>Worst Case</strong>: 对所有不正确的类执行攻击，并报告最难攻击的目标类。</li>
 </ul>
 <p>下图图示为在不同目标类选择策略中，三个不同盒约束中，七个可能目标函数的前提下，<script type="math/tex">L_2</script> 的平均距离、标准偏差(where?)和攻击成功概率。另外，当攻击成功率不是100%时，平均距离仅计算了攻击成功的部分。</p>
-<p><img data-src="2020-03-14-【论文笔记】-Towards-Evaluating-the-Robustness-of-Neural-Networks/3.png" alt></p>
+<p><img src="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/3.png" alt></p>
 <p>从中可以发现看出<strong>Projected gradient descent</strong>在处理盒约束成功率是优于另外两种策略，而<strong>Change of variables</strong>往往能找到更小的扰动，对于目标函数而言，<script type="math/tex">f_6</script>表现的比其他的好，扰动最小，成功率最高。为什么有些损失函数比其他函数更好？论文认为原因在于当 $c=0$ 的时候，梯度下降法不会改变原始图像，但是如果 $c$ 较大的时候往往会导致梯度下降的初始步骤过于贪婪，只沿着最容易降低 $f$ 的方向移动，而忽略了 $D$ 的损失，从而导致梯度下降找到次优解。论文认为 <script type="math/tex">f_1</script> 和 <script type="math/tex">f_4</script> 的表现相对较差，找不到一个合适的 $c$，因为 $c$ 权衡了距离约束项和损失函数项的重要性，如果要找到一个固定的常数 $c$，那么这两项的值应该保持相对一致。对于 <script type="math/tex">f_4</script>，论文做了一个实验就是将 $x$ 和 $x’$ 进行线性组合构造 <script type="math/tex">y=\alpha x+(1-\alpha) x'\;，\alpha\in[0,1]'</script>，事实发现从干净样本到对抗样本（$\alpha$ 从 0 到 1）， <script type="math/tex">Z(.)_t</script>的值基本是线性的，因此 <script type="math/tex">F(.)_t</script> 应该是一个logistic函数，论文实验验证结果的皮尔斯相关系数 <script type="math/tex">r\gt 0.9</script> 证明<script type="math/tex">F(.)_t</script>服从该分布。那么，对于 <script type="math/tex">f_4(x')=(0.5-F(x')_t)^+</script>，其图像应该为</p>
-<p><img data-src="2020-03-14-【论文笔记】-Towards-Evaluating-the-Robustness-of-Neural-Networks/5.jpg" alt="5"></p>
+<p><img src="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/5.jpg" alt="5"></p>
 <p>为了使梯度下降攻击在一开始发生变化，常数 $c$ 必须足够大</p>
 <script type="math/tex; mode=display">
 \epsilon\lt c(f_1(x+\epsilon)-f_1(x))</script><p>或者当攻击快结束时，即 <script type="math/tex">\epsilon \rightarrow 0</script>，有</p>
@@ -403,10 +403,10 @@ f(x')=\text{max}(\max{\{Z(x')_i:i\ne t\}-Z(x')_t,-κ})</script><p>$f(x’)$ 这�
 \text{minimize}\;c\,·\,f(x+\delta)+||\delta||_\infty</script><p>但是实验结果表明 <script type="math/tex">||\delta||_\infty</script> 项只对扰动最大的像素点进行惩罚，而对其他像素点没有影响。论文使用迭代攻击来解决这个问题，通过引入一个递减的阈值 <script type="math/tex">\tau</script>，如果扰动 <script type="math/tex">\delta_i</script> 大于该值则目标函数将会被惩罚，直到所有扰动都小于该阈值为止：</p>
 <script type="math/tex; mode=display">
 \text{minimize}\;c\,·\,f(x+\delta)+\sum_i[(\delta_i-\tau)^+]</script><p>在每次迭代中使用“暖启动”来进行梯度下降，该算法的速度大约与<script type="math/tex">L_2</script> attack算法一样快(只有一个起始点的时候)。另外 $c$ 值选取的策略和 <script type="math/tex">L_0</script> attack 一致。</p>
-<p><img data-src="2020-03-14-【论文笔记】-Towards-Evaluating-the-Robustness-of-Neural-Networks/6.png" alt></p>
+<p><img src="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/6.png" alt></p>
 <p>可以看到三种攻击方法的性能比前面做的还是有很大的提升。</p>
 <h2 id="Evaluating-Defensive-Distillation"><a href="#Evaluating-Defensive-Distillation" class="headerlink" title="Evaluating Defensive Distillation"></a>Evaluating Defensive Distillation</h2><p>蒸馏网络原来是神经网络压缩的一种方法，蒸馏网络的直觉是基于这样的一个事实，即在训练过程中DNN获得的知识不仅被编码为DNN学习的权重参数，而且还被编码为网络产生的概率向量。使用类别概率代替硬标签的好处是直观的，因为概率除了简单提供样本的正确类别外，还会编码有关每个类别的其他信息，可以从这个额外的熵推导出有关类的相对信息。</p>
-<p><img data-src="2020-03-14-【论文笔记】-Towards-Evaluating-the-Robustness-of-Neural-Networks/10.jpg" alt></p>
+<p><img src="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/10.jpg" alt></p>
 <p>蒸馏网络的训练步骤：</p>
 <ol>
 <li>训练大型模型：首先训练具有硬目标即正常标签(单标签)的大型模型。</li>
@@ -414,7 +414,7 @@ f(x')=\text{max}(\max{\{Z(x')_i:i\ne t\}-Z(x')_t,-κ})</script><p>$f(x’)$ 这�
 <li>训练小模型，在小模型的基础上添加附加的软目标损失函数，并通过 $\lambda$ 调整两个损失函数的比例。</li>
 <li>进行预测时，以常规方式使用训练好的小模型（右图）。</li>
 </ol>
-<p><img data-src="2020-03-14-【论文笔记】-Towards-Evaluating-the-Robustness-of-Neural-Networks/5.png" alt></p>
+<p><img src="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/5.png" alt></p>
 <p>训练防御性蒸馏网络步骤如下：</p>
 <ol>
 <li><p>在硬标签的监督下训练教师模型。</p>
@@ -428,14 +428,14 @@ q_i=\frac{exp(z_i/T)}{\sum_jexp(z_i/T)}</script></li>
 </li>
 </ol>
 <p>两种训练的主要区别我认为一个是学生模型的规模，另一个是 $\lambda$ 的设置是否。</p>
-<p>在软标签的计算中，参数 $T$ 是一个超参数，$T$ 越大，曲线越平滑，这意味着教师模型以较大的 $T$ 来训练网络可以产生分布更加均匀的软标签，随后学生模型以同样的 $T$ 进行学习，可以更加容易学习到类之间的相对信息。在最终预测中，重新设置 $T=1$，这有利于正确类别以高置信度胜出，而错误类别输出的置信度很低，此时 softmax 层本质上输出了一个硬标签。<img data-src="2020-03-14-【论文笔记】-Towards-Evaluating-the-Robustness-of-Neural-Networks/10.png" alt></p>
+<p>在软标签的计算中，参数 $T$ 是一个超参数，$T$ 越大，曲线越平滑，这意味着教师模型以较大的 $T$ 来训练网络可以产生分布更加均匀的软标签，随后学生模型以同样的 $T$ 进行学习，可以更加容易学习到类之间的相对信息。在最终预测中，重新设置 $T=1$，这有利于正确类别以高置信度胜出，而错误类别输出的置信度很低，此时 softmax 层本质上输出了一个硬标签。<img src="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/10.png" alt></p>
 <p>这篇论文提到，事实上，在大多数情况下错误类别输出的置信度太小，以至于32位浮点值四舍五入为0。出于类似的原因，梯度非常小，当用32位浮点值表示时，梯度就变成了0。这导致了依赖于以错误类别梯度进行攻击的算法（FGSM）和依赖梯度进行优化（L-BFGS）或迭代（JSMA-F）的攻击算法由于梯度消失而失效。（JSMA-Z）也会失效是因为改变目标分类所需要相对的差异在 $T= 1$  很大，比如当 logit 从 -100 到 -90，输出仍然是原来的分类，而当 logit 从 10 到 0，输出却变成了另一个类别。</p>
 <p>论文评估了本文提出的三种攻击在防御性蒸馏网络效果，如下图，可以看出成功率都为100%。</p>
-<p><img data-src="2020-03-14-【论文笔记】-Towards-Evaluating-the-Robustness-of-Neural-Networks/7.png" alt></p>
+<p><img src="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/7.png" alt></p>
 <p>另外在以往的工作中，提高蒸馏网络的温度 $T$ 会降低攻击的成功率，而实验显示，<script type="math/tex">L_2</script> attack 成功率与 $T$ 是不相关的，这意味着攻击方法是鲁棒的。</p>
-<p><img data-src="2020-03-14-【论文笔记】-Towards-Evaluating-the-Robustness-of-Neural-Networks/8.png" alt></p>
+<p><img src="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/8.png" alt></p>
 <p>一个模型的对抗样本往往也能对另一个模型攻击成功，即使它们在不同的训练数据集上训练，即使它们使用完全不同的算法(神经网络上的对抗样本攻击随机森林），这称为对抗样本攻击迁移性，论文分别在非蒸馏网络和防御性蒸馏网络中评估攻击的迁移性能。</p>
-<p><img data-src="2020-03-14-【论文笔记】-Towards-Evaluating-the-Robustness-of-Neural-Networks/9.png" width="40%"><img data-src="2020-03-14-【论文笔记】-Towards-Evaluating-the-Robustness-of-Neural-Networks/11.png" width="42%"></p>
+<p><img src="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/9.png" width="40%"><img src="/2020/03/14/%E3%80%90%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%91-Towards-Evaluating-the-Robustness-of-Neural-Networks/11.png" width="42%"></p>
 <p>在 <script type="math/tex">L_2</script> attack 中，<script type="math/tex">f(x')=\text{max}(\max{\{Z(x')_i:i\ne t\}-Z(x')_t,-κ})</script>，其中 $κ$ 值用于控制对抗样本的强度， $κ$ 值越大，对抗样本的置信度越高。从图中看出，高置信度的对抗样本迁移性越强。当然使用了防御性蒸馏的网络在一定程度上可以抵御对抗样本的迁移攻击。因此作者认为通过使更强的攻击算法和迁移攻击的成功率来评估神经网络防御的鲁棒性。</p>
 <p>[参考资料]</p>
 <ol>
@@ -738,7 +738,6 @@ q_i=\frac{exp(z_i/T)}{\sum_jexp(z_i/T)}</script></li>
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
