@@ -18,7 +18,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="这篇文章是我在网易云上学习吴恩达深度学习做的一些总结，我是先看了一遍视频才来做的总结，所以很多参考了黄广海博士的翻译和笔记，另外有的知识点与之前吴恩达机器学习上的有所重复，就记录得比较简单，可见这里，还有一篇笔记也我觉得也记得很好。">
@@ -287,6 +287,11 @@
     <a href="/portal" rel="section"><i class="fa fa-rocket fa-fw"></i>传送门</a>
 
   </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>展览</a>
+
+  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -460,13 +465,13 @@
 <li>边：代表权重或者误差</li>
 </ul>
 <p>提供两种等效的示意图</p>
-<h3 id="详细的网络"><a href="#详细的网络" class="headerlink" title="详细的网络"></a>详细的网络</h3><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/5.png" alt="5"></p>
+<h3 id="详细的网络"><a href="#详细的网络" class="headerlink" title="详细的网络"></a>详细的网络</h3><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/5.png" alt="5"></p>
 <p>常用于神经网络的表示,为了更好的审美，我们省略了一些在边上的参数的细节(如<script type="math/tex">w_{ij}^{[l]}</script> 和$b_{i}^{[l]}$等)。</p>
-<h3 id="简化网络"><a href="#简化网络" class="headerlink" title="简化网络"></a>简化网络</h3><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/6.png" alt="6"></p>
+<h3 id="简化网络"><a href="#简化网络" class="headerlink" title="简化网络"></a>简化网络</h3><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/6.png" alt="6"></p>
 <p>两层神经网络的更简单的表示。</p>
 <h1 id="神经网络和深度学习"><a href="#神经网络和深度学习" class="headerlink" title="神经网络和深度学习"></a>神经网络和深度学习</h1><h2 id="神经网络基础"><a href="#神经网络基础" class="headerlink" title="神经网络基础"></a>神经网络基础</h2><h3 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h3><p>为什么神经网络需要非线性激活函数？为了产生非线性映射关系拟合更加丰富的函数。</p>
 <h4 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h4><p>传统使用的激活函数是<strong>sigmoid</strong>，与<strong>tanh</strong>一样可以将值映射到-1到+1之间。结果表明在隐藏层上使用<strong>tanh</strong>函数效果上往往比<strong>sigmoid</strong>要好，因为<strong>tanh</strong>的均值更接近于0而不是0.5。事实上，可以将<strong>tanh</strong>看作是<strong>sigmoid</strong>函数向下平移和伸缩后的结果。<strong>sigmoid</strong>函数和<strong>tanh</strong>函数两者共同的缺点是，在$z$特别大或者特别小的情况下，导数的梯度或者函数的斜率会变得特别小，最后就会接近于0，导致梯度消失。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/1.png" alt="1" style="zoom:80%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/1.png" alt="1" style="zoom:80%;"></p>
 <p>后来衍生出了另一个激活函数<strong>ReLU(Rectified Linear Unit)</strong>，以及另一个版本<strong>Leaky ReLU</strong>，这个函数通常比<strong>ReLU</strong>激活效果要好，因为<strong>Relu</strong>进入负半区的时候，梯度为0，神经元此时不会训练，产生所谓的稀疏性，而<strong>Leaky ReLu</strong>不会有这问题。但是在实际中<strong>Leaky ReLu</strong>用的并不多，虽然它的训练效果比较好，但是同样的它会增加计算量。</p>
 <p>这两者相比<strong>sigmoid</strong>和<strong>tanh</strong>的优点在于：</p>
 <ul>
@@ -480,7 +485,7 @@
 <li><strong>ReLu</strong>激活函数：最常用的默认函数，，如果不确定用哪个激活函数，就使用<strong>ReLu</strong>或者<strong>Leaky ReLu</strong>。</li>
 </ul>
 <h4 id="导数"><a href="#导数" class="headerlink" title="导数"></a>导数</h4><p><strong>sigmoid</strong> </p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/2.png" alt="2"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/2.png" alt="2"></p>
 <script type="math/tex; mode=display">
 \frac{d}{dz}g(z) = \frac{1}{1 + e^{-z}} (1-\frac{1}{1 + e^{-z}})=g(z)(1-g(z))</script><p>注：</p>
 <ul>
@@ -490,7 +495,7 @@
 </li>
 </ul>
 <p><strong>tanh</strong></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/3.png" alt="3"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/3.png" alt="3"></p>
 <script type="math/tex; mode=display">
 g(z) = tanh(z) = \frac{e^{z} - e^{-z}}{e^{z} + e^{-z}} \\
 \frac{d}{dz}g(z) = 1 - (tanh(z))^{2}</script><p>注：</p>
@@ -501,7 +506,7 @@ g(z) = tanh(z) = \frac{e^{z} - e^{-z}}{e^{z} + e^{-z}} \\
 </li>
 </ul>
 <p><strong>ReLU</strong></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/4.png" alt="4"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/4.png" alt="4"></p>
 <script type="math/tex; mode=display">
 g(z) =max (0,z)\\
 g(z)^{'}=
@@ -514,7 +519,7 @@ undefined&    \text{if z = 0}
 <li>通常在$z = 0$的时候给定其导数</li>
 </ul>
 <h3 id="权重初始化"><a href="#权重初始化" class="headerlink" title="权重初始化"></a>权重初始化</h3><p>随机初始化：防止相同常数项对称问题（<strong>symmetry breaking problem</strong>）</p>
-<h3 id="前向传播和反向传播"><a href="#前向传播和反向传播" class="headerlink" title="前向传播和反向传播"></a>前向传播和反向传播</h3><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/7.png" style="zoom:80%;"></p>
+<h3 id="前向传播和反向传播"><a href="#前向传播和反向传播" class="headerlink" title="前向传播和反向传播"></a>前向传播和反向传播</h3><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/7.png" style="zoom:80%;"></p>
 <h4 id="正向传播"><a href="#正向传播" class="headerlink" title="正向传播"></a>正向传播</h4><p>步骤：</p>
 <script type="math/tex; mode=display">
 \begin{align}
@@ -544,38 +549,38 @@ undefined&    \text{if z = 0}
 <p>但是在大数据时代，我们现在的数据量可能是百万级别，那么验证集和测试集占数据总量的比例会趋向于变得更小。因为验证集的目的就是验证不同的算法，检验哪种算法更有效，因此，验证集只要足够大到能评估不同的算法。</p>
 <p>假设我们有100万条数据，其中1万条作为验证集，1万条作为测试集，100万里取1万，比例是1%，即：训练集占98%，验证集和测试集各占1%。对于数据量过百万的应用，训练集可以占到99.5%，验证和测试集各占0.25%，或者验证集占0.4%，测试集占0.1%。</p>
 <p>就算没有测试集也不要紧，测试集的目的是对最终所选定的神经网络系统做出无偏估计，如果不需要无偏估计，也可以不设置测试集。搭建训练验证集和测试集能够加速神经网络的集成，也可以更有效地衡量算法地偏差和方差，从而帮助我们更高效地选择合适方法来优化算法。</p>
-<h3 id="偏差，方差"><a href="#偏差，方差" class="headerlink" title="偏差，方差"></a>偏差，方差</h3><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/9.png" alt="9"></p>
+<h3 id="偏差，方差"><a href="#偏差，方差" class="headerlink" title="偏差，方差"></a>偏差，方差</h3><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/9.png" alt="9"></p>
 <p>假设这就是数据集，如果给这个数据集拟合一条直线，可能得到一个逻辑回归拟合，但它并不能很好地拟合该数据，这是高偏差（<strong>high bias</strong>）的情况，我们称为“欠拟合”（<strong>underfitting</strong>）。</p>
 <p>相反的如果我们拟合一个非常复杂的分类器，比如深度神经网络或含有隐藏单元的神经网络，可能就非常适用于这个数据集，但是这看起来也不是一种很好的拟合方式分类器方差较高（<strong>high variance</strong>），数据过度拟合（<strong>overfitting</strong>）。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/8.png" alt="8"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/8.png" alt="8"></p>
 <p>高方差、高偏差示意如上图。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/10.png" width="75%"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/10.png" width="75%"></p>
 <p>高偏差和高方差见上图的紫线，首先它是高偏差的，因为他几乎是线性的；其次它也是高方差的，因为这条曲线中间部分灵活性非常高，它过度拟合了这两个样本。</p>
 <p>需要注意的地方：</p>
 <p>高偏差和高方差是两种不同的情况，我们后续要尝试的方法也可能完全不同，我通常会用训练验证集来诊断算法是否存在偏差或方差问题，然后根据结果选择尝试部分方法。举个例子，如果算法存在高偏差问题，准备更多训练数据其实也没什么用处，至少这不是更有效的方法，所以大家要清楚存在的问题是偏差还是方差，还是两者都有问题，明确这一点有助于我们选择出最有效的方法。</p>
 <p>在机器学习的初期阶段，关于所谓的偏差方差权衡的讨论屡见不鲜，原因是我们能尝试的方法有很多。可以增加偏差，减少方差，也可以减少偏差，增加方差，但是在深度学习的早期阶段，我们没有太多工具可以做到只减少偏差或方差却不影响到另一方。但在当前的深度学习和大数据时代，只要持续训练一个更大的网络，只要准备了更多数据，只要正则适度，通常构建一个更大的网络便可以，在不影响方差的同时减少偏差，而采用更多数据通常可以在不过多影响偏差的同时减少方差。</p>
 <h3 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h3><h4 id="L2正则化"><a href="#L2正则化" class="headerlink" title="L2正则化"></a>L2正则化</h4><p>在损失函数中加入L2正则项，最小化该损失函数，让参数变得稀疏，用于削弱某些值较小的隐藏单元的影响，从而使模型变得更加简单，以达到防止过拟合的目的。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/11.png" alt="11" style="zoom:80%;"></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/12.png" alt="12" style="zoom:80%;"></p>
-<h4 id="dropout-正则化"><a href="#dropout-正则化" class="headerlink" title="dropout 正则化"></a>dropout 正则化</h4><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/13.png" alt="13"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/11.png" alt="11" style="zoom:80%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/12.png" alt="12" style="zoom:80%;"></p>
+<h4 id="dropout-正则化"><a href="#dropout-正则化" class="headerlink" title="dropout 正则化"></a>dropout 正则化</h4><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/13.png" alt="13"></p>
 <p><strong>keep-prob</strong>：保留某个隐藏单元的概率</p>
 <p><strong>inverted dropout</strong>（反向随机失活）方法通过除以<strong>keep-prob</strong>，确保输出的期望值不变</p>
-<h4 id="其他正则化方法"><a href="#其他正则化方法" class="headerlink" title="其他正则化方法"></a>其他正则化方法</h4><h4 id="data-augmentation"><a href="#data-augmentation" class="headerlink" title="data augmentation"></a>data augmentation</h4><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/14.png" alt="14"></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/56.png" alt="14"></p>
+<h4 id="其他正则化方法"><a href="#其他正则化方法" class="headerlink" title="其他正则化方法"></a>其他正则化方法</h4><h4 id="data-augmentation"><a href="#data-augmentation" class="headerlink" title="data augmentation"></a>data augmentation</h4><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/14.png" alt="14"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/56.png" alt="14"></p>
 <p>包括：翻转、裁剪、扭曲、旋转、颜色失真(PCA)</p>
-<h4 id="early-stopping"><a href="#early-stopping" class="headerlink" title="early stopping"></a>early stopping</h4><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/15.png" alt="15"></p>
+<h4 id="early-stopping"><a href="#early-stopping" class="headerlink" title="early stopping"></a>early stopping</h4><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/15.png" alt="15"></p>
 <p><strong>early stopping</strong>代表提早停止训练神经网络。其优点是，只运行一次梯度下降，你可以找出$w$的较小值，中间值和较大值，而无需尝试$L2$正则化超级参数$\lambda$的很多值。 其缺点是，很难再减少方差和预防过拟合之间进行权衡取舍，因为考虑的东西变得更多了。</p>
-<h3 id="归一化输入"><a href="#归一化输入" class="headerlink" title="归一化输入"></a>归一化输入</h3><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/16.png" alt="16"></p>
+<h3 id="归一化输入"><a href="#归一化输入" class="headerlink" title="归一化输入"></a>归一化输入</h3><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/16.png" alt="16"></p>
 <p>第一步是零均值化，$\mu = \frac{1}{m}\sum_{i =1}^{m}x^{(i)}$，它是一个向量，$x$等于每个训练数据 $x$减去$\mu$，意思是移动训练集，直到它完成零均值化。</p>
 <p>第二步是归一化方差，注意特征<script type="math/tex">x_{1}</script>的方差比特征<script type="math/tex">x_{2}</script>的方差要大得多，我们要做的是给$\sigma$赋值，<script type="math/tex">\sigma^{2}= \frac{1}{m}\sum_{i =1}^{m}{({x^{(i)})}^{2}}</script>，这是节点$y$ 的平方，$\sigma^{2}$是一个向量，它的每个特征都有方差，注意，我们已经完成零值均化，$({x^{(i)})}^{2}$元素$y^{2}$就是方差，我们把所有数据除 以向量$\sigma^{2}$，最后变成上图形式。</p>
 <p>归一化可以使得特征的范围映射到相似的范围内，这样有助于提升优化速度。</p>
-<h3 id="梯度消失-爆炸"><a href="#梯度消失-爆炸" class="headerlink" title="梯度消失/爆炸"></a>梯度消失/爆炸</h3><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/17.png" alt="16" style="zoom:67%;"></p>
+<h3 id="梯度消失-爆炸"><a href="#梯度消失-爆炸" class="headerlink" title="梯度消失/爆炸"></a>梯度消失/爆炸</h3><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/17.png" alt="16" style="zoom:67%;"></p>
 <h3 id="权重初始化-1"><a href="#权重初始化-1" class="headerlink" title="权重初始化"></a>权重初始化</h3><p><strong>Xavier</strong>权重初始化：$W$ ~ <script type="math/tex">U[-\frac{\sqrt{6}}{\sqrt{n_j+n_{j+1}}}, \frac{\sqrt{6}}{\sqrt{n_j+n_{j+1}}}]</script></p>
 <p><strong>Relu</strong>，方差为$\frac{2}{n}$，权重初始化为$\text{np.}\text{sqrt}(\frac{2}{n^{[l-1]}})$</p>
 <p><strong>tanh</strong>权重初始化：$\sqrt{\frac{1}{n^{[l-1]}}}$</p>
 <p>其他：<strong>Yoshua Bengio</strong>用的是$\sqrt{\frac{2}{n^{[l-1]} + n^{\left[l\right]}}}$</p>
 <h3 id="梯度的数值逼近和检验"><a href="#梯度的数值逼近和检验" class="headerlink" title="梯度的数值逼近和检验"></a>梯度的数值逼近和检验</h3><p>见<a href="/2019/09/18/Re-recognizing-machine-learning/#梯度检测">上一篇博客</a>，检查$\varepsilon$为$10^{-7}$下，<script type="math/tex">\frac{||d\theta_{approx}-d\theta||}{||d\theta_{approx}||_2+||d\theta||_2}</script>的值，$d\theta\left[i \right]$是代价函数的偏导数，<script type="math/tex">d\theta_{approx}[i]</script>是梯度的数值逼近</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/18.png" alt="18" style="zoom:67%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/18.png" alt="18" style="zoom:67%;"></p>
 <p>注意事项：</p>
 <ul>
 <li>不要在训练的过程中使用，因为这会导致训练速度很慢</li>
@@ -584,31 +589,31 @@ undefined&    \text{if z = 0}
 <li>不能dropout同用，这样会很难计算真实的代价函数</li>
 <li>进行随机初始化；如果随机初始化值比较小，反复训练网络之后，再重新运行梯度检验。</li>
 </ul>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/19.png" alt="19" style="zoom:67%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/19.png" alt="19" style="zoom:67%;"></p>
 <h2 id="优化算法"><a href="#优化算法" class="headerlink" title="优化算法"></a>优化算法</h2><h3 id="Mini-batch-梯度下降"><a href="#Mini-batch-梯度下降" class="headerlink" title="Mini-batch 梯度下降"></a>Mini-batch 梯度下降</h3><p>为了提高优化速度，我们把训练集分隔为小一点的子集训练，这些子集被取名为<strong>mini-batch</strong>，假设每一个子集中有500万个样本，我们把其中的$x^{(1)}$到$x^{(1000)}$取出来，定义为$X^1$，称为将其称为第一个子训练集，也叫做<strong>mini-batch</strong>，这样一共有5000个<strong>mini-batch</strong>。<strong>mini-batch梯度下降</strong>做的就是每次在一个子训练集<strong>mini-batch</strong>中使用梯度下降法。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/20.png" alt="20" style="zoom:67%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/20.png" alt="20" style="zoom:67%;"></p>
 <p>因为每次的迭代的方向并不一定朝着梯度减少的方向，所以<strong>mini-batch</strong>梯度下降的损失函数会有震荡的形状。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/21.png" alt="21" style="zoom:67%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/21.png" alt="21" style="zoom:67%;"></p>
 <p>如果<strong>mini-batch size</strong>为n，则<strong>mini-batch</strong>梯度下降法将变为<strong>batch</strong>梯度下降法，由于每次迭代需要处理大量训练样本，所以如果样本数据量巨大的时候，单次迭代耗时会很长。</p>
 <p>如果<strong>mini-batch size</strong>为1，则<strong>mini-batch</strong>梯度下降法将变为随机梯度下降法，随机梯度的是有很多噪声的，从平均来看，它最终会靠近最小值，但它永远不会收敛，而是会一直在最小值附近波动，因此需要根据迭代次数来调整学习率，使随机梯度下降法的结果更加接近最小值。另外使用随机梯度下降法的一个缺点是，将会失去所有向量化带来的加速，因为一次迭代只处理一个训练样本，这样效率非常低下。</p>
 <p>如果<strong>mini-batch size</strong>在区间1到n之间，一方面<strong>mini-batch</strong>梯度下降法在样本数据量巨大的时候它的迭代速度较<strong>batch</strong>梯度下降法要更快，当然另一方面，它也不会一直朝着最小值靠近，但是它比随机梯度下降要更持续地靠近最小值的方向，它也不一定在很小的范围内收敛或者波动，同样需要学习率衰减。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/22.png" alt="22" style="zoom:67%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/22.png" alt="22" style="zoom:67%;"></p>
 <h3 id="指数加权平均数"><a href="#指数加权平均数" class="headerlink" title="指数加权平均数"></a>指数加权平均数</h3><p>关键方程<script type="math/tex">v_t=\beta v_{t-1}+(1-\beta )\theta_t</script></p>
 <p>$\beta=0.9$大概是10天的平均值，$\beta=0.98$大概是50天的平均值，计算公式$\frac{1}{1-\beta}$，经过$\frac{1}{1-\beta}$天后，原来影响的曲线先下降到$\frac{1}{1-\beta}^{\frac{1}{\beta}}\approx0.34$，换句话说，10天后，曲线的高度下降到$\frac{1}{\beta}$，相当于在峰值的$\frac{1}{e}$。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/23.png" alt="23" style="zoom:67%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/23.png" alt="23" style="zoom:67%;"></p>
 <p>指数加权平均数公式的好处之一在于，它占用极少内存，电脑内存中只占用一行数字而已，然后把最新数据代入公式，不断覆盖就可以了。但缺点是，如果保存所有最近的温度数据，和过去10天的总和，必须占用更多的内存，执行更加复杂，计算成本也更加高昂。</p>
 <p>偏差纠正，由于初始化<script type="math/tex">v_{0} = 0</script>，<script type="math/tex">v_{1} = 0.98v_{0} +0.02\theta_{1}</script>导致前面的值估测不准。纠正办法就是，在估测初期，不用<script type="math/tex">v_{t}</script>，而是用<script type="math/tex">\frac{v_{t}}{1- \beta^{t}}</script>，t就是现在的天数。举个具体例子，当$t=2$时，$1 - \beta^{t} = 1 -  {0.98}^{2} = 0.0396$，因此对第二天温度的估测变成了<script type="math/tex">\frac{v_{2}}{0.0396} =\frac{0.0196\theta_{1} +  0.02\theta_{2}}{0.0396}</script>，也就是<script type="math/tex">\theta_{1}</script>和<script type="math/tex">\theta_{2}</script>的加权平均数，并去除了偏差。随着$t$增加，$\beta^{t}$接近于0，所以当$t$很大的时候，偏差修正几乎没有作用。不过在开始学习阶段，偏差修正可以帮助你更好预测值。</p>
 <h3 id="动量梯度下降法"><a href="#动量梯度下降法" class="headerlink" title="动量梯度下降法"></a>动量梯度下降法</h3><p>目标，在横轴上学习得快一点，在纵轴上学习得慢一点。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/24.png" alt="24" style="zoom:67%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/24.png" alt="24" style="zoom:67%;"></p>
 <p>实现细节：</p>
 <p>在第$t$次迭代的过程中，首先计算微分$dW$，$db$。其次，计算<script type="math/tex">v_{dW}= \beta v_{dW} + \left( 1 - \beta \right)dW</script>，这跟之前的计算相似，也就是<script type="math/tex">v = \beta v + \left( 1 - \beta \right)\theta_{t}</script>，$dW$的移动平均数，接着同样地计算<script type="math/tex">v_{db}</script>，<script type="math/tex">v_{db} = \beta v_ + ( 1 - \beta){db}</script>，然后重新赋值权重，<script type="math/tex">W:= W -av_{dW}</script>，同样<script type="math/tex">b:= b - a v_{db}</script>，这样就可以减缓梯度下降的幅度。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/25.png" alt="25" style="zoom:67%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/25.png" alt="25" style="zoom:67%;"></p>
 <p>动量梯度下降法一共有两个超参数，学习率$\alpha$以及参数$\beta$，$\beta$控制着指数加权平均数，往往取0.9。关于偏差修正，我们要拿<script type="math/tex">v_{dW}</script>和<script type="math/tex">v_{db}</script>除以<script type="math/tex">1-\beta^{t}</script>，在实际操作中往往会忽略偏差的影响。</p>
 <p>有些版本会删除$1-\beta$，最后得到<script type="math/tex">v_{dW}= \beta v_{dW} +dW</script>，所以<script type="math/tex">v_{dW}</script>缩小了$1-\beta$倍，相当于乘以$\frac{1}{1- \beta}$，所以你要用梯度下降最新值的话，$a$要根据$\frac{1}{1 -\beta}$相应变化。实际上，二者效果都不错，只会影响到学习率$a$的最佳值。</p>
 <h3 id="RMSprop"><a href="#RMSprop" class="headerlink" title="RMSprop"></a>RMSprop</h3><p>全称是<strong>root mean square prop</strong>算法。回忆一下之前的例子，如果你执行梯度下降，虽然横轴方向正在推进，但纵轴方向会有大幅度摆动，为了分析这个例子，假设纵轴代表参数$b$，横轴代表参数$W$，可能有<script type="math/tex">W_{1}</script>，<script type="math/tex">W_{2}</script>或者其它重要的参数，为了便于理解，被称为$b$和$W$。所以，如果想减缓$b$方向的学习，即纵轴方向，同时加快，至少不是减缓横轴方向的学习，<strong>RMSprop</strong>算法可以实现这一点。</p>
 <p>实现细节：</p>
 <p>在第$t$次迭代中，该算法会照常计算当下<strong>mini-batch</strong>的微分$dW$，$db$，定义新符号<script type="math/tex">S_{dW}= \beta S_{dW} + (1 -\beta) {dW}^{2}</script>，澄清一下，这个平方的操作是针对这一整个符号的，这样做能够保留微分平方的加权平均数，同样<script type="math/tex">S_{db}= \beta S_{db} + (1 - \beta){db}^{2}</script>。接着<strong>RMSprop</strong>会这样更新参数值，<script type="math/tex">W:= W -a\frac{dW}{\sqrt{S_{dW}}}</script>，<script type="math/tex">b:=b -\alpha\frac{db}{\sqrt{S_{db}}}</script></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/26.png" alt="26" style="zoom:67%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/26.png" alt="26" style="zoom:67%;"></p>
 <p>我们希望学习速度快，也就是在水平方向，我们希望<script type="math/tex">S_{dW}</script>会相对较小，所以我们要除以一个较小的数；我们希望减缓纵轴上的摆动，也就是在垂直方向上，我们希望<script type="math/tex">S_{db}</script>会相对较大，所以我们要除以一个较大的数。</p>
 <p><strong>RMSprop</strong>的影响就是你的更新最后会变成这样（绿色线），纵轴方向上摆动较小，而横轴方向继续推进。还有个影响就是，你可以用一个更大学习率$a$，然后加快学习，而无须在纵轴上垂直方向偏离。在实际中$dW$和$db$可能是一个高维的参数向量，但是目标都是去掉那些有摆动的方向。另外，为了确保算法不会除以0，在实际操作中往往在分母上加入一个很小很小的$\epsilon$，比如$10^{-8}$，这样有助于保证数值的稳定。</p>
 <h3 id="Adam-优化算法"><a href="#Adam-优化算法" class="headerlink" title="Adam 优化算法"></a>Adam 优化算法</h3><p><strong>Adam</strong>代表的是<strong>Adaptive Moment Estimation</strong>，<script type="math/tex">\beta_1</script>用于计算这个微分（$dW$），叫做第一矩，<script type="math/tex">\beta_2</script>用来计算平方数的指数加权平均数（$(dW)^2$），叫做第二矩，所以<strong>Adam</strong>的名字由此而来。</p>
@@ -617,7 +622,7 @@ undefined&    \text{if z = 0}
 <p>接着用<strong>RMSprop</strong>进行更新，即用不同的超参数<script type="math/tex">\beta_2</script>，<script type="math/tex">S_{dW}=\beta_{2}S_{dW} + ( 1 - \beta_{2}){(dW)}^{2}</script>，再说一次，这里是对整个微分$dW$进行平方处理，<script type="math/tex">S_{db} =\beta_{2}S_{db} + \left( 1 - \beta_{2} \right){(db)}^{2}</script>。</p>
 <p>相当于<strong>Momentum</strong>更新了超参数<script type="math/tex">\beta_1</script>，<strong>RMSprop</strong>更新了超参数<script type="math/tex">\beta_2</script>。一般使用<strong>Adam</strong>算法的时候，要计算偏差修正<script type="math/tex">v_{dW}^{corrected}= \frac{v_{dW}}{1 - \beta_1^t}</script>，同样<script type="math/tex">v_{db}^{corrected} =\frac{v_{db}}{1 -\beta_1^t}</script>。$S$也使用偏差修正，也就是<script type="math/tex">S_{dW}^{corrected} =\frac{S_{dW}}{1 - \beta_2^t}</script>，<script type="math/tex">S_{db}^{corrected} =\frac{S_{db}}{1 - \beta_2^t}</script>。</p>
 <p>最后更新权重，所以$W$更新后是<script type="math/tex">W:= W - \alpha\frac{ v_{dW}^{corrected}}{\sqrt{S_{dW}^{corrected}} +\varepsilon}</script>（如果你只是用<strong>Momentum</strong>，使用<script type="math/tex">v_{dW}</script>或者修正后的<script type="math/tex">v_{dW}</script>，但现在我们加入了<strong>RMSprop</strong>的部分，所以我们要除以修正后<script type="math/tex">S_{dW}</script>的平方根加上$\varepsilon$）。根据类似的公式更新$b$值，<script type="math/tex">b:=b - \alpha\frac{v_{db}^{corrected}}{\sqrt{S_{db}^{corrected}} +\varepsilon}</script>。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/27.png" alt="27" style="zoom:67%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/27.png" alt="27" style="zoom:67%;"></p>
 <p>本算法中有很多超参数，超参数学习率$a$很重要，也经常需要调试。<script type="math/tex">\beta_1</script>常用的缺省值为0.9，这是dW的移动平均数，也就是$dW$的加权平均数，这是<strong>Momentum</strong>涉及的项。至于超参数<script type="math/tex">\beta_2</script>，<strong>Adam</strong>论文作者，也就是<strong>Adam</strong>算法的发明者，推荐使用0.999，这是在计算$(dW)^2$以及$(db)^2$的移动加权平均值。关于$\varepsilon$的选择其实没那么重要，<strong>Adam</strong>论文的作者建议$\varepsilon$为$10^{-8}$，但你并不需要设置它，因为它并不会影响算法表现。</p>
 <h3 id="学习率衰减"><a href="#学习率衰减" class="headerlink" title="学习率衰减"></a>学习率衰减</h3><p>为了解决<strong>mini-batch</strong>梯度下降法和随机梯度下降法的收敛问题，需要对学习率进行动态调整。</p>
 <p>常规方法：<script type="math/tex">a=\frac{1}{1+decayRate\;*\;epochNum}a_0</script> ，其中<strong>decay-rate</strong>称为衰减率，<strong>epoch-num</strong>为迭代数，$\alpha_{0}$为初始学习率，衰减率和初始学习率都是需要调整的超参数。</p>
@@ -626,24 +631,24 @@ undefined&    \text{if z = 0}
 <p>离散下降，某个步骤有某个学习率（<strong>discrete stair cease</strong>），一会之后，学习率减少了一半，一会儿减少一半，一会儿又一半。</p>
 <h3 id="局部最优的问题"><a href="#局部最优的问题" class="headerlink" title="局部最优的问题"></a>局部最优的问题</h3><p>一个高维的神经网络，通常梯度为零的点并不是这个图中的局部最优点，实际上损失函数的零梯度点，通常是鞍点，因此我们不容易到达局部最优。</p>
 <p>局部最优不是问题，问题在于平稳段会减缓学习，平稳段是一块区域，其中导数长时间接近于0，如果你在此处，梯度会从曲面从从上向下下降，因为梯度等于或接近0，曲面很平坦，你得花上很长时间慢慢抵达平稳段的这个点。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/28.png" alt="28" style="zoom:67%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/28.png" alt="28" style="zoom:67%;"></p>
 <h2 id="超参数调试、Batch正则化"><a href="#超参数调试、Batch正则化" class="headerlink" title="超参数调试、Batch正则化"></a>超参数调试、Batch正则化</h2><h3 id="调试处理"><a href="#调试处理" class="headerlink" title="调试处理"></a>调试处理</h3><p>尝试使用随机值，而不是用网格搜索。因为在高维空间中，很难知道哪个超参数是相对更重要的，随机能够发现效果更好的那个。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/29.png" alt="29" style="zoom:50%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/29.png" alt="29" style="zoom:50%;"></p>
 <p>从粗到细的进行搜索。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/30.png" alt="30" style="zoom:50%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/30.png" alt="30" style="zoom:50%;"></p>
 <h3 id="为超参数选择合适的范围"><a href="#为超参数选择合适的范围" class="headerlink" title="为超参数选择合适的范围"></a>为超参数选择合适的范围</h3><p>对搜索空间进行映射，比如在0.0001，0.001，0.01，0.1，1范围内对数轴上均匀随机取点，如果这里使用线性轴进行搜索，那么0.1~1的空间就会占据90%的搜索空间，而0.0001~0.1只有10%的搜索空间，因此使用数标尺搜索超参数的方式会更合理，做法是在-4~0之间随机取样记作$a$，再使用公式$10^a$映射到超参数所在的空间。那么如果我们想在0.9~0.999的区间进行搜索应该怎么做，考虑这个问题的方法是我们要探究的是$1-\beta$，这个值在0.1~0.001区间，这样就可以用前面所述的方法进行。</p>
 <h3 id="超参数调试的实践"><a href="#超参数调试的实践" class="headerlink" title="超参数调试的实践"></a>超参数调试的实践</h3><p>一种是你照看一个模型，通常是有庞大的数据组，但没有许多计算资源或足够的<strong>CPU</strong>和<strong>GPU</strong>的前提下，基本而言，你一次只可以负担起试验一个模型或一小批模型。在这种情况下，即使当它在试验时，你也可以逐渐改良，比如逐渐修改它的学习率。</p>
 <p>另一种方法则是同时试验多种模型，你设置了一些超参数，尽管让它自己运行，或者是一天甚至多天，然后你会获得像这样的学习曲线，这可以是损失函数$J$或实验误差或损失或数据误差的损失，但都是你曲线轨迹的度量。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/31.png" alt="31" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/31.png" alt="31" style="zoom:75%;"></p>
 <h3 id="归一化网络的激活函数"><a href="#归一化网络的激活函数" class="headerlink" title="归一化网络的激活函数"></a>归一化网络的激活函数</h3><p>在深度学习兴起后，最重要的一个思想是它的一种算法，叫做<strong>Batch</strong>归一化，由<strong>Sergey loffe</strong>和<strong>Christian Szegedy</strong>两位研究者创造。<strong>Batch</strong>归一化会使你的参数搜索问题变得很容易，使神经网络对超参数的选择更加稳定，超参数的范围会更加庞大，工作效果也很好，也会是你的训练更加容易，甚至是深层网络。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/32.png" alt="32" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/32.png" alt="32" style="zoom:75%;"></p>
 <p>如上，首先计算平均值，强调一下，所有这些都是针对$l$层，但省略了$l$及方括号，然后计算方差，接着，取每个$z^{(i)}$值，使其规范化。方法如下，减去均值再除以标准偏差，为了使数值稳定，通常将$\varepsilon$作为分母，以防$σ=0$的情况。</p>
 <p>现在我们已把这些$z$值标准化，化为含平均值0和标准单位方差，所以$z$的每一个分量都含有平均值0和方差1，但我们不想让隐藏单元总是含有平均值0和方差1，也许隐藏单元有了不同的分布会有意义，所以我们所要做的就是计算，我们称之为${\tilde{z}}^{(i)}$，<script type="math/tex">{\tilde{z}}^{(i)}= \gamma z_{\text{norm}}^{(i)} +\beta</script>，这里$\gamma$和$\beta$是你模型的学习参数，所以我们使用梯度下降或一些其它类似梯度下降的算法，比如<strong>Momentum</strong>或者<strong>Nesterov</strong>，<strong>Adam</strong>，我们将会更新$\gamma$和$\beta$，正如更新神经网络的权重一样。</p>
 <p>请注意$\gamma$和$\beta$的作用是，我们可以随意设置${\tilde{z}}^{(i)}$的平均值，事实上，如果<script type="math/tex">\gamma= \sqrt{\sigma^{2} +\varepsilon}</script>，如果$\gamma$等于这个分母项（<script type="math/tex">z_{\text{norm}}^{(i)} = \frac{z^{(i)} -\mu}{\sqrt{\sigma^{2} +\varepsilon}}</script>中的分母），$\beta$等于$\mu$，这里的这个值是<script type="math/tex">z_{\text{norm}}^{(i)}= \frac{z^{(i)} - \mu}{\sqrt{\sigma^{2} + \varepsilon}}</script>中的$\mu$，那么<script type="math/tex">\gamma z_{\text{norm}}^{(i)} +\beta</script>的作用在于，如果这些成立（<script type="math/tex">\gamma =\sqrt{\sigma^{2} + \varepsilon},\beta =\mu</script>），那么<script type="math/tex">{\tilde{z}}^{(i)} = z^{(i)}</script>。</p>
 <p>从根本来说，这只是计算恒等函数，以构造含其它平均值和方差的隐藏单元值。</p>
-<h3 id="将-Batch-Norm-拟合进神经网络"><a href="#将-Batch-Norm-拟合进神经网络" class="headerlink" title="将 Batch Norm 拟合进神经网络"></a>将 Batch Norm 拟合进神经网络</h3><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/33.png" alt="33" style="zoom:75%;"></p>
+<h3 id="将-Batch-Norm-拟合进神经网络"><a href="#将-Batch-Norm-拟合进神经网络" class="headerlink" title="将 Batch Norm 拟合进神经网络"></a>将 Batch Norm 拟合进神经网络</h3><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/33.png" alt="33" style="zoom:75%;"></p>
 <p>如上图所示，$\beta$和$\gamma$的计算介于神经元输入$z$和输出$a$之间，同时在梯度下降法中也需要更新这两值，比如$\beta$为$\beta^{[l]} = \beta^{[l]} - \alpha d\beta^{[l]}$，需要注意区别的就是不要将<strong>Batch Norm</strong>中的$\beta$与<strong>Adam</strong>优化算法中的$\beta$弄混。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/34.png" alt="34" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/34.png" alt="34" style="zoom:75%;"></p>
 <p>实践中，<strong>Batch</strong>归一化通常和训练集的<strong>mini-batch</strong>一起使用。你应用<strong>Batch</strong>归一化的方式就是：你用第一个<strong>mini-batch</strong>($X^1$)，然后计算$z^{[1]}$，这和上张幻灯片上我们所做的一样，应用参数$w^{[1]}$和$b^{[1]}$，使用这个<strong>mini-batch</strong>($X^1$)。接着，继续第二个<strong>mini-batch</strong>($X^2$)，接着<strong>Batch</strong>归一化会减去均值，除以标准差，由${\beta}^{[1]}$和$\gamma^{[1]}$重新缩放，这样就得到了${\tilde{z}}^{[1]}$，而所有的这些都是在第一个<strong>mini-batch</strong>的基础上，你再应用激活函数得到$a^{[1]}$。然后用$w^{[2]}$和$b^{[2]}$计算$z^{[2]}$，等等，所以你做的这一切都是为了在第一个<strong>mini-batch</strong>($X^1$)上进行一步梯度下降法。</p>
 <p>类似的工作，你会在第二个<strong>mini-batch</strong>（$X^{\left{2 \right}}$）上计算$z^{[1]}$，然后用<strong>Batch</strong>归一化来计算${\tilde{z}}^{[1]}$，所以<strong>Batch</strong>归一化的此步中，你用第二个<strong>mini-batch</strong>（$X^{\left{2 \right}}$）中的数据使${\tilde{z}}^{[1]}$归一化，这里的<strong>Batch</strong>归一化步骤也是如此，让我们来看看在第二个<strong>mini-batch</strong>（$X^{\left{2 \right}}$）中的例子，在<strong>mini-batch</strong>上计算$z^{[1]}$的均值和方差，重新缩放的$\beta$和$\gamma$得到$z^{[1]}$，等等。然后在第三个<strong>mini-batch</strong>（$X^{\left{ 3 \right}}$）上同样这样做，继续训练。</p>
 <p>澄清此参数的一个细节，即参数$b$的影响。先前提及每层的参数是$w^{[l]}$和$b^{[l]}$，还有${\beta}^{[l]}$和$\gamma^{[l]}$，首先注意计算$z$的方式如下，$z^{[l]} =w^{[l]}a^{\left\lbrack l - 1 \right\rbrack} +b^{[l]}$，而<strong>Batch</strong>归一化做的是，它要看这个<strong>mini-batch</strong>，先将$z^{[l]}$归一化，结果为均值0和标准方差，再由$\beta$和<script type="math/tex">\gamma</script>重缩放，但这意味着，无论$b^{[l]}$的值是多少，都是要被减去的，因为在<strong>Batch</strong>归一化的过程中，你要计算$z^{[l]}$的均值，再减去平均值，在此例中的<strong>mini-batch</strong>中增加任何常数，数值都不会改变，因为加上的任何常数都将会被均值减去所抵消。</p>
@@ -652,11 +657,11 @@ undefined&    \text{if z = 0}
 <p>最后，请记住$z^{[l]}$的维数，因为在这个例子中，维数会是$(n^{[l]},1)$，$b^{[l]}$的尺寸为$(n^{[l]},1)$，如果是l层隐藏单元的数量，那${\beta}^{[l]}$和$\gamma^{[l]}$的维度也是$(n^{[l]},1)$，因为这是你隐藏层的数量，你有$n^{[l]}$隐藏单元，所以${\beta}^{[l]}$和$\gamma^{[l]}$用来将每个隐藏层的均值和方差缩放为网络想要的值。</p>
 <h3 id="Batch-Norm-为什么奏效？"><a href="#Batch-Norm-为什么奏效？" class="headerlink" title="Batch Norm 为什么奏效？"></a>Batch Norm 为什么奏效？</h3><p>直观而言，<strong>BN</strong>让输入$x$获得类似的范围，这可以加速学习。另一个原因是，它可以使权重比你的网络更滞后或更深层。</p>
 <p>一个形象的理解就是，在左边训练得很好的模块，同样在右边也运行得很好，即使存在运行都很好的同一个函数，因为如果只看左边数据的话，可能是一个线性的分类器，而不是绿色的决策边界。就好比训练出来的分类器能够很好的区分黑猫和其他非猫图片，但是不一定能在非黑猫和非猫图片很好地分类。因为黑猫和非黑猫不在同一个分布中。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/35.png" alt="35" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/35.png" alt="35" style="zoom:75%;"></p>
 <p>所以我们想办法改变数据分布，这个想法被称为“<strong>Covariate shift</strong>”，想法是这样的，如果你已经学习了$x$到$y$ 的映射，如果$x$ 的分布改变了，那么你可能需要重新训练你的学习算法。这种做法同样适用于，如果真实函数由$x$ 到$y$ 映射保持不变，正如此例中，因为真实函数是此图片是否是一只猫，训练你的函数的需要变得更加迫切，如果真实函数也改变，情况就更糟了。</p>
 <p>“<strong>Covariate shift</strong>”在神经网络的应用就是，神经网络隐藏层的值会受到前面输入的影响，这导致隐藏单元的值不断地改变，所以它就有了“<strong>Covariate shift</strong>”的问题，<strong>Batch</strong>归一化做的是其限制了在前层的参数更新，会影响数值分布的程度，这将减少了这些隐藏值分布变化的数量。</p>
 <p><strong>Batch</strong>归一化还有一个作用，它有轻微的正则化效果，<strong>Batch</strong>归一化中非直观的一件事是，每个<strong>mini-batch</strong>，我会说<strong>mini-batch</strong>$X^$的值为$z^{\lbrack t\rbrack}$，$z^{[l]}$，在<strong>mini-batch</strong>计算中，由均值和方差缩放的，因为在<strong>mini-batch</strong>上计算的均值和方差，而不是在整个数据集上，均值和方差有一些小的噪声，因为它只在你的<strong>mini-batch</strong>上计算，比如64或128或256或更大的训练例子。因为均值和方差有一点小噪音，因为它只是由一小部分数据估计得出的。缩放过程从$z^{[l]}$到${\tilde{z}}^{[l]}$，过程也有一些噪音，因为它是用有些噪音的均值和方差计算得出的。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/36.png" alt="36" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/36.png" alt="36" style="zoom:75%;"></p>
 <p>所以和<strong>dropout</strong>相似，它往每个隐藏层的激活值上增加了噪音，<strong>dropout</strong>有增加噪音的方式，它使一个隐藏的单元，以一定的概率乘以0，以一定的概率乘以1，所以你的<strong>dropout</strong>含几重噪音，因为它乘以0或1。</p>
 <p>对比而言，<strong>Batch</strong>归一化含几重噪音，因为标准偏差的缩放和减去均值带来的额外噪音。这里的均值和标准差的估计值也是有噪音的，所以类似于<strong>dropout</strong>，<strong>Batch</strong>归一化有轻微的正则化效果，因为给隐藏单元添加了噪音，这迫使后部单元不过分依赖任何一个隐藏单元，类似于<strong>dropout</strong>，它给隐藏层增加了噪音，因此有轻微的正则化效果。因为添加的噪音很微小，所以并不是巨大的正则化效果，可以将<strong>Batch</strong>归一化和<strong>dropout</strong>一起使用，这将得到<strong>dropout</strong>更强大的正则化效果。</p>
 <p>也许另一个轻微非直观的效果是，如果应用了较大的<strong>mini-batch</strong>，比如说用了512而不是64，通过应用较大的<strong>min-batch</strong>，减少了噪音，因此减少了正则化效果，这是<strong>dropout</strong>的一个奇怪的性质，就是应用较大的<strong>mini-batch</strong>可以减少正则化效果。</p>
@@ -665,9 +670,9 @@ undefined&    \text{if z = 0}
 <p>在测试时，对应这个等式（<script type="math/tex">z_{\text{norm}}^{(i)} = \frac{z^{(i)} -\mu}{\sqrt{\sigma^{2} +\varepsilon}}</script>），只需要用$z$值来计算<script type="math/tex">z_{\text{norm}}^{(i)}</script>，用$\mu$和$\sigma^{2}$的指数加权平均，用手头的最新数值来做调整，然后就可以用刚算出来的<script type="math/tex">z_{\text{norm}}</script>和你在神经网络训练过程中得到的$\beta$和$\gamma$参数来计算测试样本的$\tilde{z}$值。</p>
 <p>对于样本则需要逐步处理，方法是根据训练集估算$\mu$和$\sigma^{2}$，估算的方式有很多种，理论上可以在最终的网络中运行整个训练集来得到$\mu$和$\sigma^{2}$，但在实际操作中，通常运用指数加权平均来追踪在训练过程中的$\mu$和$\sigma^{2}$的值。还可以用指数加权平均，有时也叫做流动平均来粗略估算$\mu$和$\sigma^{2}$，然后在测试中使用$\mu$和$\sigma^{2}$的值来进行所需要的隐藏单元$z$值的调整。在实践中，不管用什么方式估算$\mu$和$\sigma^{2}$，这套过程都是比较稳健的，如果使用的是某种深度学习框架，通常会有默认的估算$\mu$和$\sigma^{2}$的方式，应该一样会起到比较好的效果。但在实践中，任何合理的估算隐藏单元$z$值的均值和方差的方式，在测试中应该都会有效。</p>
 <h3 id="Softmax-回归"><a href="#Softmax-回归" class="headerlink" title="Softmax 回归"></a>Softmax 回归</h3><p><strong>softmax</strong>层用于对多分类做预测，计算公式为：<script type="math/tex">S_i=\frac{e^i}{\sum_je^j}</script></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/37.png" alt="37" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/37.png" alt="37" style="zoom:75%;"></p>
 <p>直观来讲，它是一个线性分类器</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/38.png" alt="38" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/38.png" alt="38" style="zoom:75%;"></p>
 <h3 id="训练一个-Softmax-分类器"><a href="#训练一个-Softmax-分类器" class="headerlink" title="训练一个 Softmax 分类器"></a>训练一个 Softmax 分类器</h3><p>举个例子，我们来看看训练集中某个样本的目标输出，真实标签是$\begin{bmatrix} 0 \ 1 \ 0 \ 0 \ \end{bmatrix}$，假设神经网络输出的是$\hat y$，$\hat y$是一个包括总和为1的概率的向量，$y = \begin{bmatrix} 0.3 \ 0.2 \ 0.1 \ 0.4 \ \end{bmatrix}$，在<strong>Softmax</strong>分类中，我们一般用到的损失函数是<script type="math/tex">L(\hat y,y ) = - \sum_{j = 1}^{4}{y_{j}log\hat y_{j}}</script>，在这个例子中，<script type="math/tex">L\left( \hat y,y \right) = - \sum_{j = 1}^{4}{y_{j}\log \hat y_{j}} = - y_{2}{\ log} \hat y_{2} = - {\ log} \hat y_{2}</script>，这就意味着，如果你的学习算法试图将它变小，因为梯度下降法是用来减少训练集的损失的，要使它变小的唯一方式就是使$-{\log}\hat y<em>{2}$变小，要想做到这一点，就需要使$\hat y</em>{2}$尽可能大，也就是让真实标签的输出尽可能大。</p>
 <p>这是单个训练样本的损失，对于整个训练集的损失$J$而言，就是整个训练集损失的总和，把你的训练算法对所有训练样本的预测都加起来，<script type="math/tex">J( w^{[1]},b^{[1]},\ldots\ldots) = \frac{1}{m}\sum_{i = 1}^{m}{L( \hat y^{(i)},y^{(i)})}</script>，接下来要做的就是使用梯度下降法，使这里的损失最小化。</p>
 <h1 id="结构化机器学习项目"><a href="#结构化机器学习项目" class="headerlink" title="结构化机器学习项目"></a>结构化机器学习项目</h1><h2 id="机器学习（ML）策略（1）"><a href="#机器学习（ML）策略（1）" class="headerlink" title="机器学习（ML）策略（1）"></a>机器学习（ML）策略（1）</h2><ul>
@@ -754,12 +759,12 @@ undefined&    \text{if z = 0}
 </ul>
 <h3 id="卷积步长"><a href="#卷积步长" class="headerlink" title="卷积步长"></a>卷积步长</h3><p>如果用一个$f×f$的过滤器卷积一个$n×n$的图像，<strong>padding</strong>为$p$，步长为$s$，输出将变为$\frac{n+2p - f}{s} + 1 \times \frac{n+2p - f}{s} + 1$，注意垂直和水平方向都是这个步长。如果商不是整数，在这种情况下通常向下取整，这个原则实现的方式是，只有在卷积核完全包括在图像或填充完的图像内部时，才对它进行运算。因此为了正确计算输出维度的方法是向下取整，以免$\frac{n + 2p - f}{s}$不是整数。</p>
 <h3 id="三维卷积"><a href="#三维卷积" class="headerlink" title="三维卷积"></a>三维卷积</h3><p>如果你有一个<script type="math/tex">n \times n \times n_{c}</script>（通道数）的输入图像，这里的<script type="math/tex">n_{c}</script>就是通道数目，然后卷积上一个<script type="math/tex">f×f×n_{c}</script>，按照惯例，这个（前一个<script type="math/tex">n_{c}</script>）和这个（后一个<script type="math/tex">n_{c}</script>）必须数值相同，可以得到了<script type="math/tex">（n-f+1）×（n-f+1）×n_{c^{'}}</script>，这里<script type="math/tex">n_{c^{'}}</script>其实就是下一层的通道数，也等于使用的过滤器的个数。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/42.png" alt="42" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/42.png" alt="42" style="zoom:100%;"></p>
 <h3 id="单层卷积网络"><a href="#单层卷积网络" class="headerlink" title="单层卷积网络"></a>单层卷积网络</h3><p>在卷积层，用$f^{[l]}$表示过滤器大小，过滤器大小为$f×f$，上标$\lbrack l\rbrack$表示$l$层中过滤器大小为$f×f$。通常情况下，上标$\lbrack l\rbrack$用来标记$l$层。用$p^{[l]}$来标记<strong>padding</strong>的数量，<strong>padding</strong>数量也可指定为一个<strong>valid</strong>卷积，即无<strong>padding</strong>。或是<strong>same</strong>卷积，即选定<strong>padding</strong>，如此一来，输出和输入图片的高度和宽度就相同了。用$s^{[l]}$标记步幅。</p>
 <p>这一层的输入会是某个维度的数据，表示为<script type="math/tex">n \times n \times n_{c}</script>，<script type="math/tex">n_{c}</script>某层上的颜色通道数。稍作修改增加上标$\lbrack l -1\rbrack$，即<script type="math/tex">n^{\left\lbrack l - 1 \right\rbrack} \times n^{\left\lbrack l -1 \right\rbrack} \times n_{c}^{\left\lbrack l - 1\right\rbrack}</script>，因为它是上一层的激活值。图片的高度和宽度分别用上下标$H$和$W$来标记，即<script type="math/tex">n_{H}^{\left\lbrack l - 1 \right\rbrack} \times n_{W}^{\left\lbrack l - 1 \right\rbrack} \times n_{c}^{\left\lbrack l - 1\right\rbrack}</script>。那么在第$l$层，图片大小为<script type="math/tex">n_{H}^{\left\lbrack l - 1 \right\rbrack} \times n_{W}^{\left\lbrack l - 1  \right\rbrack} \times n_{c}^{\left\lbrack l - 1\right\rbrack}</script>，$l$层的输入就是上一层的输出，因此上标要用$\lbrack l - 1\rbrack$。神经网络这一层中会有输出，它本身会输出图像。其大小为<script type="math/tex">n_{H}^{[l]} \times n_{W}^{[l]} \times n_{c}^{[l]}</script>，这就是输出图像的大小。</p>
 <p>公式$\lfloor\frac{n+2p - f}{s} + 1\rfloor$（注意：（$\frac{n + 2p - f}{s} +1)$直接用这个运算结果，也可以向下取整）给出了输出图片的高度和宽度。在这个新表达式中，$l$层输出图像的高度，即<script type="math/tex">n_{H}^{[l]} = \lfloor\frac{n_{H}^{\left\lbrack l - 1 \right\rbrack} +2p^{[l]} - f^{[l]}}{s^{[l]}} +1\rfloor</script>，同样计算出图像的宽度，用$W$替换参数$H$，即<script type="math/tex">n_{W}^{[l]} = \lfloor\frac{n_{W}^{\left\lbrack l - 1 \right\rbrack} +2p^{[l]} - f^{[l]}}{s^{[l]}} +1\rfloor</script>，公式一样，只要变化高度和宽度的参数我们便能计算输出图像的高度或宽度。这就是由<script type="math/tex">n_{H}^{\left\lbrack l - 1 \right\rbrack}</script>推导<script type="math/tex">n_{H}^{[l]}$以及$n_{W}^{\left\lbrack l - 1\right\rbrack}</script>推导<script type="math/tex">n_{W}^{[l]}</script>的过程。</p>
 <p>最后过滤器中通道的数量必须与输入中通道的数量一致。因此，输出通道数量就是输入通道数量，所以过滤器维度等于<script type="math/tex">f^{[l]} \times f^{[l]} \times n_{c}^{\left\lbrack l - 1 \right\rbrack}</script>。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/43.png" alt="43" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/43.png" alt="43" style="zoom:100%;"></p>
 <p>用偏差和非线性函数之后，这一层的输出等于它的激活值$a^{[l]}$，也就是这个维度（输出维度）。$a^{[l]}$是一个三维体，即<script type="math/tex">n_{H}^{[l]} \times n_{W}^{[l]} \times n_{c}^{[l]}</script>。当执行批量梯度下降或小批量梯度下降时，如果有$m$个例子，就是有$m$个激活值的集合，那么输出<script type="math/tex">A^{[l]} = m \times n_{H}^{[l]} \times n_{W}^{[l]} \times n_{c}^{[l]}</script>。如果采用批量梯度下降，变量的排列顺序如下，首先是索引和训练示例，然后是其它三个变量。</p>
 <p>对于权重参数$W$的确定，由于过滤器的维度已知，为<script type="math/tex">f^{[l]} \times  f^{[l]} \times  n_{c}^{[l - 1]}</script>，这只是一个过滤器的维度，有多少个过滤器，这（<script type="math/tex">n_{c}^{[l]}</script>）是过滤器的数量，权重也就是所有过滤器的集合再乘以过滤器的总数量，即<script type="math/tex">f^{[l]} \times f^{[l]} \times  n_{c}^{[l - 1]} \times n_{c}^{[l]}</script>，损失数量L就是$l$层中过滤器的个数。</p>
 <p>对于偏差参数$b$的确定，每个过滤器都有一个偏差参数，它是一个实数。偏差包含了这些变量，它是该维度上的一个向量。为了方便，偏差在代码中表示为一个1×1×1×<script type="math/tex">n_{c}^{[l]}</script>的四维向量或四维张量。</p>
@@ -772,9 +777,9 @@ undefined&    \text{if z = 0}
 <li>一是<strong>参数共享</strong>。观察发现，特征检测如垂直边缘检测如果适用于图片的某个区域，那么它也可能适用于图片的其他区域。每个特征检测器以及输出都可以在输入图片的不同区域中使用同样的参数，以便提取垂直边缘或其它特征。它不仅适用于边缘特征这样的低阶特征，同样适用于高阶特征，例如提取脸上的眼睛，猫或者其他特征对象。</li>
 <li>二是<strong>稀疏连接</strong>。图中绿色框框住的0是通过3×3的卷积计算得到的，它只依赖于这个3×3的输入的单元格，右边这个红色框框住的输出单元0仅与36个输入特征中9个相连接。而且其它像素值都不会对输出产生任影响，这就是稀疏连接的概念。</li>
 </ul>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/44.png" alt="44" style="zoom:67%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/44.png" alt="44" style="zoom:67%;"></p>
 <p>神经网络可以通过这两种机制减少参数，以便我们用更小的训练集来训练它，从而预防过度拟合。</p>
-<h2 id="深度卷积网络：实例探究"><a href="#深度卷积网络：实例探究" class="headerlink" title="深度卷积网络：实例探究"></a>深度卷积网络：实例探究</h2><h3 id="经典网络"><a href="#经典网络" class="headerlink" title="经典网络"></a>经典网络</h3><h4 id="LeNet-5"><a href="#LeNet-5" class="headerlink" title="LeNet-5"></a>LeNet-5</h4><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/45.png" alt="45" style="zoom:100%;"></p>
+<h2 id="深度卷积网络：实例探究"><a href="#深度卷积网络：实例探究" class="headerlink" title="深度卷积网络：实例探究"></a>深度卷积网络：实例探究</h2><h3 id="经典网络"><a href="#经典网络" class="headerlink" title="经典网络"></a>经典网络</h3><h4 id="LeNet-5"><a href="#LeNet-5" class="headerlink" title="LeNet-5"></a>LeNet-5</h4><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/45.png" alt="45" style="zoom:100%;"></p>
 <p>结构如下：</p>
 <div class="table-container">
 <table>
@@ -854,7 +859,7 @@ undefined&    \text{if z = 0}
 <li>先卷积后池化的套路</li>
 <li>现在版本的<strong>LeNet-5</strong>输出层一般采用<strong>softmax</strong>激活函数，在原论文的不是，但其现在不常用。</li>
 </ul>
-<h4 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h4><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/46.png" alt="46" style="zoom:75%;"></p>
+<h4 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h4><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/46.png" alt="46" style="zoom:75%;"></p>
 <p>结构如下：</p>
 <div class="table-container">
 <table>
@@ -973,7 +978,7 @@ undefined&    \text{if z = 0}
 <li>使用<strong>ReLU</strong>作为激活函数</li>
 <li><strong>LRN</strong>层后来被发现用处不大</li>
 </ul>
-<h4 id="VGGNet"><a href="#VGGNet" class="headerlink" title="VGGNet"></a>VGGNet</h4><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/47.png" alt="47" style="zoom:75%;"></p>
+<h4 id="VGGNet"><a href="#VGGNet" class="headerlink" title="VGGNet"></a>VGGNet</h4><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/47.png" alt="47" style="zoom:75%;"></p>
 <p>vgg-16结构如下：</p>
 <div class="table-container">
 <table>
@@ -1103,75 +1108,75 @@ undefined&    \text{if z = 0}
 </li>
 </ul>
 <h3 id="残差网络ResNet"><a href="#残差网络ResNet" class="headerlink" title="残差网络ResNet"></a>残差网络ResNet</h3><p>网络结构：</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/48.png" alt="48" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/48.png" alt="48" style="zoom:75%;"></p>
 <ul>
 <li>实线的Connection部分都是执行3x3x64的卷积，他们的channel个数一致，所以采用计算方式：$Y = F(x) + x $</li>
 <li>虚线的Connection部分是3x3x64和3x3x128的卷积操作，他们的channel个数不同，所以采用计算方式：$ y=F(x)+Wx $。其中$W$是卷积操作，用来调整$x$的channel维度。 </li>
 </ul>
 <p><strong>Residual block:</strong></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/49.png" alt="49" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/49.png" alt="49" style="zoom:75%;"></p>
 <ul>
 <li>计算表达式为<script type="math/tex">a^{\left\lbrack l + 2\right\rbrack} = g(z^{\left\lbrack l + 2 \right\rbrack} + a^{\left\lbrack l\right\rbrack})</script></li>
 </ul>
-<h3 id="InceptionNet"><a href="#InceptionNet" class="headerlink" title="InceptionNet"></a>InceptionNet</h3><h4 id="1x1卷积"><a href="#1x1卷积" class="headerlink" title="1x1卷积"></a>1x1卷积</h4><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/50.png" alt="50" style="zoom:75%;"></p>
+<h3 id="InceptionNet"><a href="#InceptionNet" class="headerlink" title="InceptionNet"></a>InceptionNet</h3><h4 id="1x1卷积"><a href="#1x1卷积" class="headerlink" title="1x1卷积"></a>1x1卷积</h4><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/50.png" alt="50" style="zoom:75%;"></p>
 <ul>
 <li>将多通道的信息归一</li>
 <li>既可扩充通道数，也可减少通道数</li>
 <li>用于降低计算量</li>
 </ul>
-<h4 id="Inception"><a href="#Inception" class="headerlink" title="Inception"></a>Inception</h4><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/51.png" alt="51" style="zoom:75%;"></p>
+<h4 id="Inception"><a href="#Inception" class="headerlink" title="Inception"></a>Inception</h4><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/51.png" alt="51" style="zoom:75%;"></p>
 <ul>
 <li><strong>Inception</strong>网络或<strong>Inception</strong>层的作用就是代替人工来确定卷积层中的过滤器类型，或者确定是否需要创建卷积层或池化层。</li>
 </ul>
-<h4 id="结合1x1和inception"><a href="#结合1x1和inception" class="headerlink" title="结合1x1和inception"></a>结合1x1和inception</h4><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/52.png" alt="52" width="60%"></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/53.png" alt="53" width="60%"></p>
+<h4 id="结合1x1和inception"><a href="#结合1x1和inception" class="headerlink" title="结合1x1和inception"></a>结合1x1和inception</h4><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/52.png" alt="52" width="60%"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/53.png" alt="53" width="60%"></p>
 <ul>
 <li>1x1其作为瓶颈层(<strong>bottleneck layer</strong>)用以降低计算量，如果直接使用5x5卷积，总参数会达到1.2亿，如果先使用1x1卷积，再使用5x5卷积，总参数仅仅为1240万。</li>
 </ul>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/54.png" alt="54" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/54.png" alt="54" style="zoom:75%;"></p>
 <ul>
 <li>结合1x1和inception构造出来inception module，将模块化的思想引入神经网络</li>
 </ul>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/55.png" alt="55" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/55.png" alt="55" style="zoom:75%;"></p>
 <ul>
 <li>不同<strong>inception module</strong>可能有<strong>max-pooling</strong>进行连接</li>
 <li>不同分支的<strong>softmax</strong>用来做预测</li>
 </ul>
 <h2 id="目标检测"><a href="#目标检测" class="headerlink" title="目标检测"></a>目标检测</h2><h3 id="目标定位"><a href="#目标定位" class="headerlink" title="目标定位"></a>目标定位</h3><p>图像分类、目标定位、目标检测：</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/57.png" alt="57" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/57.png" alt="57" style="zoom:75%;"></p>
 <p>目标标签$y$的定义如下：<script type="math/tex">y= \ \begin{bmatrix} p_{c} \\ b_{x} \\ b_{y} \\ b_{h} \\ b_{w} \\ c_{1} \\ c_{2}\\ c_{3} \\\end{bmatrix}</script>，第一个组件<script type="math/tex">p_{c}</script>表示是否含有对象，如果对象属于前三类（行人、汽车、摩托车），则<script type="math/tex">p_{c}= 1</script>，如果是背景，则图片中没有要检测的对象，则<script type="math/tex">p_{c} =0</script>。我们可以这样理解<script type="math/tex">p_{c}</script>，它表示被检测对象属于某一分类的概率，背景分类除外。如果检测到对象，就输出被检测对象的边界框参数<script type="math/tex">b_{x}</script>、<script type="math/tex">b_{y}</script>、<script type="math/tex">b_{h}</script>和<script type="math/tex">b_{w}</script>。最后，如果存在某个对象，那么<script type="math/tex">p_{c}=1</script>，同时输出<script type="math/tex">c_{1}</script>、<script type="math/tex">c_{2}</script>和<script type="math/tex">c_{3}</script>，表示该对象属于1-3类中的哪一类，是行人，汽车还是摩托车。边界框参数示意图如下</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/58.png" alt="58" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/58.png" alt="58" style="zoom:75%;"></p>
 <h3 id="特征点检测"><a href="#特征点检测" class="headerlink" title="特征点检测"></a>特征点检测</h3><p>对于特征点检测，若有64个特征点，则目标标签有129个单元，第一个单元输出1或0，1表示有人脸，0表示没有人脸，然后输出（<script type="math/tex">l_{1x}</script>，<script type="math/tex">l_{1y}</script>）……直到（<script type="math/tex">l_{64x}</script>，<script type="math/tex">l_{64y}</script>）。对于人体姿态检测也是同样的道理，可以定义一些关键特征点，如胸部的中点，左肩，左肘，腰等等， 比如说，从胸部中心点(<script type="math/tex">l_{1x}</script>，<script type="math/tex">l_{1y}</script>)一直往下，直到(<script type="math/tex">l_{32x}</script>，<script type="math/tex">l_{32y}</script>)。。然后通过神经网络标注人物姿态的关键特征点，再输出这些标注过的特征点，就相当于输出了人物的姿态动作。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/59.png" alt="59" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/59.png" alt="59" style="zoom:75%;"></p>
 <h3 id="目标检测-1"><a href="#目标检测-1" class="headerlink" title="目标检测"></a>目标检测</h3><p>简单滑动窗口目标检测，通过改变步长和滑动窗口大小检测目标，存在的问题：计算成本过高</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/60.png" alt="60" style="zoom:100%;"></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/61.png" alt="61" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/60.png" alt="60" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/61.png" alt="61" style="zoom:100%;"></p>
 <h3 id="滑动窗口的卷积实现"><a href="#滑动窗口的卷积实现" class="headerlink" title="滑动窗口的卷积实现"></a>滑动窗口的卷积实现</h3><p>参考论文：<strong>Sermanet, Pierre, et al. “OverFeat: Integrated Recognition, Localization and Detection using Convolutional Networks.” <em>Eprint Arxiv</em> (2013).</strong></p>
 <p>回顾将全连接层转化为卷积层的过程：</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/62.png" alt="62" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/62.png" alt="62" style="zoom:75%;"></p>
 <p>动机，在滑动窗口卷积操作中存在很多重复计算，所以滑动窗口卷积操作的原理是我们不需要把输入图像分割成四个子集，分别执行前向传播，而是把它们作为一张图片输入给卷积网络进行计算，其中的公共区域可以共享很多计算。这样可以一次得到所有预测值的同时，又能提高整个算法的效率。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/63.png" alt="63" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/63.png" alt="63" style="zoom:75%;"></p>
 <p>不过这种算法仍然存在一个缺点，就是边界框的位置可能不够准确</p>
 <h3 id="Bounding-Box预测"><a href="#Bounding-Box预测" class="headerlink" title="Bounding Box预测"></a>Bounding Box预测</h3><p>上述算法存在的问题是，不能够预先知道目标物体的长宽，因此在设定边框的时候恨不准确。一个能得到更精准边界框的算法是<strong>YOLO</strong>算法，<strong>YOLO</strong>(<strong>You only look once</strong>)意思是你只看一次，这是由<strong>Joseph Redmon</strong>，<strong>Santosh Divvala</strong>，<strong>Ross Girshick</strong>和<strong>Ali Farhadi</strong>提出的算法，论文名字叫<strong>You Only Look Once: Unified, Real-Time Object Detection.</strong></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/64.png" alt="64" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/64.png" alt="64" style="zoom:100%;"></p>
 <p>输出标签是<script type="math/tex">y= \ \begin{bmatrix} p_{c} \\ b_{x} \\ b_{y} \\ b_{h} \\ b_{w} \\ c_{1} \\ c_{2}\\ c_{3} \\\end{bmatrix}</script>，<script type="math/tex">p_{c}</script>等于0或1取决于这个绿色格子中是否有图像。然后<script type="math/tex">b_{x}</script>、<script type="math/tex">b_{y}</script>、<script type="math/tex">b_{h}</script>和<script type="math/tex">b_{w}</script>作用就是，如果那个格子里有对象，那么就给出边界框坐标。然后<script type="math/tex">c_{1}</script>、<script type="math/tex">c_{2}</script>和<script type="math/tex">c_{3}</script>就是想要识别的三个类别。</p>
 <p>把对象分配到一个格子的过程是，观察对象的中点，然后将这个对象分配到其中点所在的格子，所以即使对象可以横跨多个格子，也只会被分配到9个格子其中之一，就是3×3网络的其中一个格子，或者19×19网络的其中一个格子。在19×19网格中，两个对象的中点（图中蓝色点所示）处于同一个格子的概率就会更低。</p>
 <p>（我的理解）然后用神经网络来做回归。</p>
 <h3 id="交并比"><a href="#交并比" class="headerlink" title="交并比"></a>交并比</h3><p>交并比是一个用来评估对象检测算法的指标，交并比（<strong>loU</strong>）函数做的是计算两个边界框交集和并集之比。以下图为例，两个边界框的并集是包含两个边界框区域（绿色阴影表示区域），而交集就是这个比较小的区域（橙色阴影表示区域），那么交并比就是交集的大小，这个橙色阴影面积，然后除以绿色阴影的并集面积。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/65.png" alt="65" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/65.png" alt="65" style="zoom:75%;"></p>
 <p>一般约定，在计算机检测任务中，如果$loU≥0.5$，就说检测正确，如果预测器和实际边界框完美重叠，<strong>loU</strong>就是1，因为交集就等于并集，所以，<strong>loU</strong>越高，边界框越精确。</p>
 <h3 id="非极大值抑制"><a href="#非极大值抑制" class="headerlink" title="非极大值抑制"></a>非极大值抑制</h3><p>到目前为止学到的对象检测中的一个问题是，算法可能对同一个对象做出多次检测，所以算法不是对某个对象检测出一次，而是检测出多次。非极大值抑制这个方法可以确保你的算法对每个对象只检测一次。</p>
 <p>具体上，这个算法做的是，首先看看每次报告每个检测结果相关的概率<script type="math/tex">p_{c}</script>，实际上是<script type="math/tex">p_{c}</script>乘以<script type="math/tex">c_{1}</script>、<script type="math/tex">c_{2}</script>或<script type="math/tex">c_{3}</script>。找到概率最大的检测结果，然后定义其是最可靠的检测，之后，非极大值抑制就会逐一审视剩下的矩形，所有和这个最大的边框有很高交并比，高度重叠的其他边界框，那么这些输出就会被抑制。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/67.png" alt="67" style="zoom:100%;"></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/66.png" alt="66" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/67.png" alt="67" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/66.png" alt="66" style="zoom:75%;"></p>
 <p>如果尝试同时检测三个对象，比如说行人、汽车、摩托，那么输出向量就会有三个额外的分量。事实证明，正确的做法是独立进行三次非极大值抑制，对每个输出类别都做一次。</p>
 <h3 id="Anchor-Boxes"><a href="#Anchor-Boxes" class="headerlink" title="Anchor Boxes"></a>Anchor Boxes</h3><p>到目前为止，对象检测中存在的一个问题是每个格子只能检测出一个对象，如果想让一个格子检测出多个对象，就是使用<strong>anchor box</strong>这个概念。</p>
 <p><strong>anchor box</strong>的思路是，这样子，预先定义两个不同形状的<strong>anchor box</strong>，或者<strong>anchor box</strong>形状，接下来要做的是把预测结果和这两个<strong>anchor box</strong>关联起来。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/68.png" alt="68" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/68.png" alt="68" style="zoom:75%;"></p>
 <p>重新定义类别标签<script type="math/tex">y=  \begin{bmatrix} p_{c} & b_{x} & b_{y} &b_{h} & b_{w} & c_{1} & c_{2} & c_{3} & p_{c} & b_{x} & b_{y} & b_{h} & b_{w} &c_{1} & c_{2} & c_{3} \\\end{bmatrix}^{T}</script>，前面的<script type="math/tex">p_{c},b_{x},b_{y},b_{h},b_{w},c_{1},c_{2},c_{3}</script>（绿色方框标记的参数）是和<strong>anchor box 1</strong>关联的8个参数，后面的8个参数（橙色方框标记的元素）是和<strong>anchor box 2</strong>相关联。</p>
 <p>缺点：如果有两个<strong>anchor box</strong>，但在同一个格子中有三个对象，这种情况算法处理不好，而且<strong>archor box</strong>的形状需要人工指定。</p>
 <h3 id="YOLO-算法"><a href="#YOLO-算法" class="headerlink" title="YOLO 算法"></a>YOLO 算法</h3><p><strong>YOLO</strong>算法的思想就是<strong>Bounding Box</strong>预测和<strong>Archor Boxes</strong>等上述几个概念的结合。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/69.png" alt="69" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/69.png" alt="69" style="zoom:100%;"></p>
 <h2 id="特殊应用：人脸识别和神经风格转换"><a href="#特殊应用：人脸识别和神经风格转换" class="headerlink" title="特殊应用：人脸识别和神经风格转换"></a>特殊应用：人脸识别和神经风格转换</h2><h3 id="人脸识别"><a href="#人脸识别" class="headerlink" title="人脸识别"></a>人脸识别</h3><h4 id="One-Shot学习"><a href="#One-Shot学习" class="headerlink" title="One-Shot学习"></a>One-Shot学习</h4><p>目标是学习<strong>Similarity</strong>函数，该函数以两张图片作为输入，然后输出这两张图片的差异值，如果这两张图片的差一只小于某个阈值$\tau$，它是一个超参数，那么这时就能预测这两张图片是同一个人，如果差异值大于τ，就能预测这是不同的两个人，这就是解决人脸验证问题的一个可行办法。</p>
 <ul>
 <li>One-Shot Imitation Learning </li>
@@ -1179,10 +1184,10 @@ undefined&    \text{if z = 0}
 <li>One-Shot Imitation from Observing Humans via Domain-Adaptive Meta-Learning </li>
 </ul>
 <h4 id="Siamese-网络"><a href="#Siamese-网络" class="headerlink" title="Siamese 网络"></a>Siamese 网络</h4><p>对于两个不同的输入，运行相同的卷积神经网络，然后比较它们，这一般叫做<strong>Siamese</strong>网络架构。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/70.png" alt="70" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/70.png" alt="70" style="zoom:75%;"></p>
 <p>神经网络的参数定义了一个编码函数$f(x^{(i)})$，如果给定输入图像$x^{(i)}$，这个网络会输出$x^{(i)}$的128维的编码。接下来需要做的就是学习参数，使得如果两个图片$x^{( i)}$和$x^{( j)}$是同一个人，那么你得到的两个编码的距离就小。相反，如果$x^{(i)}$和$x^{(j)}$是不同的人，那么你会想让它们之间的编码距离大一点。</p>
 <h4 id="Triplet-损失"><a href="#Triplet-损失" class="headerlink" title="Triplet 损失"></a>Triplet 损失</h4><p>要想通过学习神经网络的参数来得到优质的人脸图片编码，方法之一就是定义三元组损失函数然后应用梯度下降。三元组损失意味着你需要看<strong>Anchor</strong>图片、<strong>Positive</strong>图片(同一个人)、<strong>Negative</strong>图片(非同一个人)。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/71.png" alt="71" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/71.png" alt="71" style="zoom:75%;"></p>
 <p>目标就是希望<strong>Anchor</strong>与<strong>Positive</strong>的距离尽可能的近，使<strong>Anchor</strong>与<strong>Negative</strong>的距离尽可能的远，用公式表达即</p>
 <script type="math/tex; mode=display">
 || f(A) - f(P)||^{2} \leq ||f(A) - f(N)||^{2}</script><p>其中（$|| f(A) - f(P) ||^{2}$）=$d(A,P)$，（$|| f(A) - f(N) ||^{2}$）=$d(A,N)$。在实际中为了避免<script type="math/tex">0-0\le0</script>的情况出现，这样$f$实际没有学习到东西，而公式却成立了，所以往往将公式重新定义为</p>
@@ -1190,11 +1195,11 @@ undefined&    \text{if z = 0}
 || f(A) - f(P)||^{2} -||f(A) - f(N)||^{2} \leq -a</script><p>$a$说是一个间隔超参数，即<script type="math/tex">d(A,N)</script>必须要比<script type="math/tex">d(A,P)</script>大很多才成立，那么损失函数将定义为：</p>
 <script type="math/tex; mode=display">
 L( A,P,N) = max(|| f( A) - f( P)||^{2} -|| f( A) - f( N)||^{2} + a,0)</script><h4 id="人脸验证与二分类"><a href="#人脸验证与二分类" class="headerlink" title="人脸验证与二分类"></a>人脸验证与二分类</h4><p>一个训练神经网络的方法是选取一对神经网络，选取<strong>Siamese</strong>网络，使其同时计算这些嵌入，比如说128维的嵌入，然后将其输入到逻辑回归单元，然后进行预测，如果是相同的人，那么输出是1，若是不同的人，输出是0。这就把人脸识别问题转换为一个二分类问题，训练这种系统时可以替换<strong>Triplet loss</strong>的方法。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/72.png" alt="72" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/72.png" alt="72" style="zoom:75%;"></p>
 <p>定义<script type="math/tex">\hat y = \sigma(\sum_{k = 1}^{128}{w_{i}| f( x^{( i)})_{k} - f( x^{( j)})_{k}| + b})</script>，其中符号<script type="math/tex">f( x^{( i)})_{k}</script>代表图片<script type="math/tex">x^{(i)}</script>的编码，下标$k$代表选择这个向量中的第$k$个元素，<script type="math/tex">| f(x^{( i)})_{k} - f( x^{( j)})_{k}|</script>对这两个编码取元素差的绝对值。接下来可以把这128个元素当作特征，然后把他们放入逻辑回归中，最后的逻辑回归可以增加参数<script type="math/tex">w_{i}</script>和$b$，就像普通的逻辑回归一样。然后在这128个单元上训练合适的权重，用来预测两张图片是否是一个人，这是一个很合理的方法来学习预测0或者1，即是否是同一个人。</p>
 <p>还有其他不同的形式来计算绿色标记的这部分公式（<script type="math/tex">| f( x^{( i)})_{k} - f( x^{( j)})_{k}|</script>），比如说，公式可以是<script type="math/tex">\frac{(f( x^{( i)})_{k} - f(x^{( j)})_{k})^{2}}{f(x^{( i)})_{k} + f( x^{( j)})_{k}}</script>，这个公式也被叫做$\chi^{2}$公式，是一个希腊字母$\chi$，也被称为$\chi$平方相似度。</p>
 <p>总结一下，把人脸验证当作一个监督学习，创建一个只有成对图片的训练集，不是三个一组，而是成对的图片，目标标签是1表示一对图片是一个人，目标标签是0表示图片中是不同的人。利用不同的成对图片，使用反向传播算法去训练神经网络，训练<strong>Siamese</strong>神经网络。</p>
-<h3 id="神经风格迁移"><a href="#神经风格迁移" class="headerlink" title="神经风格迁移"></a>神经风格迁移</h3><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/73.png" alt="73" style="zoom:100%;"></p>
+<h3 id="神经风格迁移"><a href="#神经风格迁移" class="headerlink" title="神经风格迁移"></a>神经风格迁移</h3><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/73.png" alt="73" style="zoom:100%;"></p>
 <p>给定一个内容图像$C$，给定一个风格图片$S$，而目标是生成一个新图片$G$。为了实现神经风格迁移，我们需要定义一个关于$G$的代价函数$J$用来评判某个生成图像的好坏，然后使用梯度下降法去最小化$J(G)$，以便于生成这个图像。</p>
 <p>怎么判断生成图像的好坏呢？我们把这个代价函数定义为两个部分。</p>
 <p>第一部分被称作内容代价<script type="math/tex">J_{\text{content}}(C,G)</script>，这是一个关于内容图片和生成图片的函数，它是用来度量生成图片$G$的内容与内容图片$C$的内容有多相似。然后我们会把结果加上一个风格代价函数<script type="math/tex">J_{\text{style}}(S,G)</script>，也就是关于$S$和$G$的函数，用来度量图片$G$的风格和图片$S$的风格的相似度。然后我们会把结果加上一个风格代价函数，得到</p>
@@ -1204,8 +1209,8 @@ J( G) = a J_{\text{content}}( C,G) + \beta J_{\text{style}}(S,G)</script><p>也�
 <h4 id="内容代价函数"><a href="#内容代价函数" class="headerlink" title="内容代价函数"></a>内容代价函数</h4><p>假如需要衡量一个内容图片和一个生成图片在内容上的相似度，我们令这个$a^{[l][C]}$和$a^{[l][G]}$，代表这两个图片$C$和$G$的$l$层的激活函数值。如果这两个激活值相似，那么就意味着两个图片的内容相似。我们定义</p>
 <script type="math/tex; mode=display">
 J_{\text{content}}( C,G) = \frac{1}{2}|| a^{[l][C]} - a^{[l][G]}||^{2}</script><p>为两个激活值不同或者相似的程度，我们取$l$层的隐含单元的激活值，按元素相减，内容图片的激活值与生成图片相比较，然后取平方，也可以在前面加上归一化或者不加，比如$\frac{1}{2}$或者其他的，都影响不大,因为这都可以由这个超参数$a$来调整。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/74.png" alt="74" style="zoom:100%;"></p>
-<h4 id="风格代价函数"><a href="#风格代价函数" class="headerlink" title="风格代价函数"></a>风格代价函数</h4><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/75.png" alt="75" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/74.png" alt="74" style="zoom:100%;"></p>
+<h4 id="风格代价函数"><a href="#风格代价函数" class="headerlink" title="风格代价函数"></a>风格代价函数</h4><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/75.png" alt="75" style="zoom:100%;"></p>
 <p>为了测量生成的图像的风格与输入的风格图像的相似程度，我们设<script type="math/tex">a_{i,\ j,\ k}^{[l]}</script>，设它为隐藏层l中$(i,j,k)$位置的激活项，$i$，$j$，$k$分别代表该位置的高度、宽度以及对应的通道数。现在要做的就是去计算一个<strong>关于$l$层和风格图像</strong>的矩阵，即<script type="math/tex">G^{[l](S)}</script>（$l$表示层数，$S$表示风格图像），这（<script type="math/tex">G^{[l]( S)}</script>）是一个<script type="math/tex">n_{c} \times n_{c}</script>的矩阵，同样地，我们也对生成的图像进行这个操作。</p>
 <p>现在先来定义风格图像，设这个关于$l$层和风格图像的，$G$是一个矩阵，这个矩阵的高度和宽度都是$l$层的通道数。在这个矩阵中$k$和$k’$元素被用来描述$k$通道和$k’$通道之间的相关系数。具体地：</p>
 <script type="math/tex; mode=display">
@@ -1214,9 +1219,9 @@ G_{kk^{'}}^{[l]( S)} = \sum_{i = 1}^{n_{H}^{[l]}}{\sum_{j = 1}^{n_{W}^{[l]}}{a_{
 <script type="math/tex; mode=display">
 G_{kk^{'}}^{[l]( G)} = \sum_{i = 1}^{n_{H}^{[l]}}{\sum_{j = 1}^{n_{W}^{[l]}}{a_{i,\ j,\ k}^{[l](G)}a_{i,\ j,\ k^{'}}^{[l](G)}}}</script><p>其中，<script type="math/tex">a_{i,\ j,\ k}^{[l](S)}</script>和<script type="math/tex">a_{i, j,k}^{[l](G)}</script>中的上标$(S)$和$(G)$分别表示在风格图像$S$中的激活项和在生成图像$G$的激活项。之所以用大写字母$G$来代表这些风格矩阵，是因为在线性代数中这种矩阵有时也叫<strong>Gram</strong>矩阵，但在这里叫做风格矩阵。</p>
 <p>最后，如果我们将$S$和$G$代入到风格代价函数中去计算，这将得到这两个矩阵之间的误差，因为它们是矩阵，所以在这里加一个$F$（<strong>Frobenius</strong>范数，编号1所示），这实际上是计算两个矩阵对应元素相减的平方的和，将这个式子展开，从$k$和$k’$开始作它们的差，把对应的式子写下来，然后把得到的结果都加起来，作者在这里使用了一个归一化常数，也就是<script type="math/tex">\frac{1}{2n_{H}^{[l]l}n_{W}^{[l]}n_{C}^{[l]}}</script>，再在外面加一个平方，但是一般情况下不用写这么多，一般只要将它乘以一个超参数$\beta$就行。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/76.png" alt="76" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/76.png" alt="76" style="zoom:100%;"></p>
 <p>最后，这是对$l$层定义的风格代价函数，这是两个矩阵间一个基本的<strong>Frobenius</strong>范数，也就是$S$图像和$G$图像之间的范数再乘上一个归一化常数。实际上，如果对各层都使用风格代价函数，会让结果变得更好。如果要对各层都使用风格代价函数 ，可以这么定义代价函数，把各个层的结果（各层的风格代价函数）都加起来，这样就能定义它们全体了。另外，还需要对每个层定义权重，也就是一些额外的超参数，这用$\lambda^{[l]}$来表示，这样将使你能够在神经网络中使用不同的层，包括之前的一些可以测量类似边缘这样的低级特征的层，以及之后的一些能测量高级特征的层，使得神经网络在计算风格时能够同时考虑到这些低级和高级特征的相关系数。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/77.png" alt="77" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/77.png" alt="77" style="zoom:100%;"></p>
 <p>为了把这些东西封装起来，定义一个全体代价函数：</p>
 <script type="math/tex; mode=display">
 J(G) = a J_{\text{content}( C,G)} + \beta J_(S,G)</script><p>之后用梯度下降法，或者更复杂的优化算法来找到一个合适的图像$G$，并计算$J(G)$的最小值。</p>
@@ -1230,51 +1235,51 @@ J(G) = a J_{\text{content}( C,G)} + \beta J_(S,G)</script><p>之后用梯度下�
 <li><script type="math/tex">T_{y}^{(i)}</script>就是第$i$个训练样本的输出序列的长度</li>
 </ul>
 <p>想要表示一个句子里的单词，第一件事是做一张词表，有时也称为词典，意思是列一列你的表示方法中用到的单词。使用的是one-hot编码。</p>
-<h3 id="循环神经网络模型"><a href="#循环神经网络模型" class="headerlink" title="循环神经网络模型"></a>循环神经网络模型</h3><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/78.png" alt="78" style="zoom:75%;"></p>
+<h3 id="循环神经网络模型"><a href="#循环神经网络模型" class="headerlink" title="循环神经网络模型"></a>循环神经网络模型</h3><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/78.png" alt="78" style="zoom:75%;"></p>
 <h3 id="标准神经网络的问题"><a href="#标准神经网络的问题" class="headerlink" title="标准神经网络的问题"></a>标准神经网络的问题</h3><ul>
 <li>是输入和输出数据在不同例子中可以有不同的长度，不是所有的例子都有着同样输入长度<script type="math/tex">T_{x}</script>或是同样输出长度的<script type="math/tex">T_{y}</script>。</li>
 <li>一个像这样单纯的神经网络结构，它并不共享从文本的不同位置上学到的特征。</li>
 </ul>
 <h4 id="前向传播"><a href="#前向传播" class="headerlink" title="前向传播"></a>前向传播</h4><p>一般开始先输入$a^{<0>}$，它是一个零向量。接着就是前向传播过程，先计算激活值$a^{<1>}$，然后再计算$y^{<1>}$。</1></1></0></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/79.png" alt="79" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/79.png" alt="79" style="zoom:75%;"></p>
 <script type="math/tex; mode=display">
 a^{<1>} = g_{1}(W_{aa}a^{< 0 >} + W_{ax}x^{< 1 >} + b_{a})\\
 \hat y^{< 1 >} = g_{2}(W_{ya}a^{< 1 >} + b_{y})</script><p>更一般的，在$t$时刻，有</p>
 <script type="math/tex; mode=display">
 a^{< t >} = g_{1}(W_{aa}a^{< t - 1 >} + W_{ax}x^{< t >} + b_{a})\\
-\hat y^{< t >} = g_{2}(W_{ya}a^{< t >} + b_{y})</script><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/80.png" alt="80" style="zoom:75%;"></p>
+\hat y^{< t >} = g_{2}(W_{ya}a^{< t >} + b_{y})</script><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/80.png" alt="80" style="zoom:75%;"></p>
 <p>为了简化符号，将<script type="math/tex">a^{<t>}</script>表达为<script type="math/tex">a^{<t>} =g(W_{a}\left\lbrack a^{< t-1 >},x^{<t>} \right\rbrack +b_{a})</script>，定义<script type="math/tex">W_{a}</script>的方式是将矩阵<script type="math/tex">W_{aa}</script>和矩阵<script type="math/tex">W_{ax}</script>水平并列放置，<script type="math/tex">[ {W_{aa}}\vdots {W_{ax}}]=W_{a}</script>。举个例子，如果$a$是100维的，然后延续之前的例子，$x$是10,000维的，那么<script type="math/tex">W_{aa}</script>就是个$（100，100）$维的矩阵，<script type="math/tex">W_{ax}</script>就是个$（100，10,000）$维的矩阵，因此如果将这两个矩阵堆起来，<script type="math/tex">W_{a}</script>就会是个$（100，10,100）$维的矩阵。用这个符号（<script type="math/tex">\left\lbrack a^{< t - 1 >},x^{< t >}\right\rbrack</script>）的意思是将这两个向量堆在一起，堆叠方式为纵向，即<script type="math/tex">\begin{bmatrix}a^{< t-1 >} \\ x^{< t >} \\\end{bmatrix}</script>，它是一个($10,100，100$)维的矩阵，此时矩阵<script type="math/tex">[ {W_{aa}}\vdots {W_{ax}}]</script>乘以<script type="math/tex">\begin{bmatrix} a^{< t - 1 >} \\ x^{< t >} \\ \end{bmatrix}</script>，刚好等于<script type="math/tex">W_{aa}a^{<t-1>} + W_{ax}x^{<t>}</script>。</p>
 <p><strong>RNN</strong>前向传播示意图：</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/81.png" alt="81" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/81.png" alt="81" style="zoom:100%;"></p>
 <h4 id="反向传播（通过时间的）"><a href="#反向传播（通过时间的）" class="headerlink" title="反向传播（通过时间的）"></a>反向传播（通过时间的）</h4><p>为了计算反向传播，首先需要定义一个元素损失函数：</p>
 <script type="math/tex; mode=display">
 L^{<t>}( \hat y^{<t>},y^{<t>}) = - y^{<t>}\log\hat  y^{<t>}-( 1- y^{<t>})log(1-\hat y^{<t>})</script><p>它对应的是序列中一个具体的词，如果它是某个人的名字，那么<script type="math/tex">y^{<t>}</script>的值就是1，然后神经网络将输出这个词是名字的概率值，比如0.1。其被定义为标准逻辑回归损失函数，也叫交叉熵损失函数（<strong>Cross Entropy Loss</strong>），这是关于单个位置上或者说某个时间步$t$上某个单词的预测值的损失函数。那么整个序列的损失函数$L$定义为</p>
 <script type="math/tex; mode=display">
-L(\hat y,y) = \ \sum_{t = 1}^{T_x}{L^{< t >}(\hat  y^{< t >},y^{< t >})}</script><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/82.png" alt="82" style="zoom:75%;"></p>
+L(\hat y,y) = \ \sum_{t = 1}^{T_x}{L^{< t >}(\hat  y^{< t >},y^{< t >})}</script><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/82.png" alt="82" style="zoom:75%;"></p>
 <p><strong>RNN</strong>反向传播示意图：</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/83.png" alt="83" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/83.png" alt="83" style="zoom:75%;"></p>
 <h3 id="不同类型的循环神经网络"><a href="#不同类型的循环神经网络" class="headerlink" title="不同类型的循环神经网络"></a>不同类型的循环神经网络</h3><ul>
 <li>多对多：机器翻译</li>
 <li>多对一：情感分类</li>
 <li>一对多：音乐生成</li>
 <li>一对一：标准神经网络</li>
 </ul>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/84.png" alt="84" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/84.png" alt="84" style="zoom:75%;"></p>
 <h3 id="语言模型和序列生成"><a href="#语言模型和序列生成" class="headerlink" title="语言模型和序列生成"></a>语言模型和序列生成</h3><p>语言模型所做的就是，判断某个特定的句子它出现的概率是多少。构建一个语言模型首先需要将句子标记化，比如<strong>EOS</strong>它表示句子的结尾，<strong>UNK</strong>的代表未知词的标志，将输入的句子都映射到了各个标志上。</p>
 <p>然后通过构建一个<strong>RNN</strong>来构建这些序列的概率模型，即将上一时间步输出作为下一时间步的输入，即将$x^{<t>}$设为$y^{<t-1>}$。</t-1></t></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/85.png" alt="85" style="zoom:75%;"></p>
-<h3 id="对新序列采样"><a href="#对新序列采样" class="headerlink" title="对新序列采样"></a>对新序列采样</h3><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/86.png" alt="86" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/85.png" alt="85" style="zoom:75%;"></p>
+<h3 id="对新序列采样"><a href="#对新序列采样" class="headerlink" title="对新序列采样"></a>对新序列采样</h3><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/86.png" alt="86" style="zoom:75%;"></p>
 <p>第一步要做的就是对想要模型生成的第一个词进行采样，于是输入$x^{<1>} =0$，$a^{<0>} =0$，现在第一个时间步得到的是所有可能的输出是经过<strong>softmax</strong>层后得到的概率，然后根据这个<strong>softmax</strong>的分布进行随机采样。<strong>Softmax</strong>分布给出的信息就是第一个词<strong>a</strong>的概率是多少，第一个词是<strong>aaron</strong>的概率是多少，第一个词是<strong>zulu</strong>的概率是多少，还有第一个词是<strong>UNK</strong>（未知标识）的概率是多少，这个标识可能代表句子的结尾，然后对这个向量使用例如<strong>numpy</strong>命令，<code>np.random.choice</code>，来根据向量中这些概率的分布进行采样，这样就能对第一个词进行采样了。</0></1></p>
 <p>然后继续下一个时间步，记住第二个时间步需要$\hat y^{<1>}$作为输入，而现在要做的是把刚刚采样得到的$\hat y^{<1>}$放到$a^{<2>}$，作为下一个时间步的输入，所以不管在第一个时间步得到的是什么词，都要把它传递到下一个位置作为输入，然后<strong>softmax</strong>层就会预测$\hat y^{<2>}$是什么。举个例子，假如说对第一个词进行抽样后，得到的是<strong>The</strong>，<strong>The</strong>作为第一个词的情况很常见，然后把<strong>The</strong>当成$x^{<2>}$，现在$x^{<2>}$就是$\hat y^{<1>}$，现在要计算出在第一词是<strong>The</strong>的情况下，第二个词应该是什么，然后得到的结果就是$\hat y^{<2>}$，然后再次用这个采样函数来对$\hat y^{<2>}$进行采样。</2></2></1></2></2></2></2></1></1></p>
 <p>然后再到下一个时间步，无论得到什么样的用<strong>one-hot</strong>码表示的选择结果，都把它传递到下一个时间步，然后对第三个词进行采样。不管得到什么都把它传递下去，一直这样直到最后一个时间步（EOS标识）。另一种情况是，如果字典中没有这个词，可以决定从20个或100个或其他个单词进行采样，然后一直将采样进行下去直到达到所设定的时间步。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/87.png" alt="87" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/87.png" alt="87" style="zoom:75%;"></p>
 <p>如果建立一个基于字符的语言模型，比起基于词汇的语言模型，序列$\hat y^{<1>}$，$\hat y^{<2>}$，$\hat y^{<3>}$在训练数据中将会是单独的字符，而不是单独的词汇。所以对于前面的例子来说，那个句子（上图编号3所示），“<strong>Cats average 15 hours of sleep a day.</strong>”，在该例中<strong>C</strong>就是$\hat y^{<1>}$，<strong>a</strong>就是$\hat y^{<2>}$，<strong>t</strong>就是$\hat y^{<3>}$，空格符就是$\hat y^{<4>}$等等。</4></3></2></1></3></2></1></p>
 <h3 id="循环序列模型单元"><a href="#循环序列模型单元" class="headerlink" title="循环序列模型单元"></a>循环序列模型单元</h3><h4 id="梯度消失和梯度爆炸问题"><a href="#梯度消失和梯度爆炸问题" class="headerlink" title="梯度消失和梯度爆炸问题"></a>梯度消失和梯度爆炸问题</h4><p>对于<strong>RNN</strong>，首先从左到右前向传播，然后反向传播。但是反向传播会很困难，因为同样的梯度消失的问题，后面层的输出误差很难影响前面层的计算。这就意味着，实际上很难让一个神经网络能够意识到它要记住看到的是单数名词还是复数名词，然后在序列后面生成依赖单复数形式的<strong>was</strong>或者<strong>were</strong>。其受到区域的影响要更大。</p>
 <p>尽管梯度爆炸也是会出现，但是梯度爆炸很明显，因为指数级大的梯度会让参数变得极其大，以至于网络参数崩溃。所以梯度爆炸很容易发现，因为参数会大到崩溃，将会看到很多<strong>NaN</strong>，这意味着网络计算出现了数值溢出。一个解决方法就是用梯度修剪。意思就是观察你的梯度向量，如果它大于某个阈值，缩放梯度向量，保证它不会太大，这就是通过一些最大值来修剪的方法。</p>
 <h4 id="GRU-Gated-Recurrent-Unit-单元"><a href="#GRU-Gated-Recurrent-Unit-单元" class="headerlink" title="GRU(Gated Recurrent Unit)单元"></a><strong>GRU</strong>(<strong>Gated Recurrent Unit</strong>)单元</h4><p>传统的RNN隐藏层单元可视化如下：</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/88.png" alt="88" style="zoom:75%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/88.png" alt="88" style="zoom:75%;"></p>
 <p>（<strong>GRU</strong>）单元将会有个新的变量称为$c$，代表记忆细胞。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/89.png" alt="89" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/89.png" alt="89" style="zoom:100%;"></p>
 <p>对于<strong>GRU</strong>，$c^{<t>}$的值等于$a^{<t>}$的激活值。</t></t></p>
 <p>在每个时间步，我们将用一个候选值重写记忆细胞，即<script type="math/tex">{\tilde{c}}^{} =tanh(W_{c}\left\lbrack c^{},x^{} \right\rbrack +b_{c})</script>,所以${\tilde{c}}^{<t>}$的值就是个替代值，代替表示$c^{<t>}$的值。</t></t></p>
 <p>$\Gamma<em>{u}= \sigma(W</em>{u}\left\lbrack c^{<t-1>},x^{<t>} \right\rbrack +b_{u})$是一个更新门，用来决定什么时候更新$c^{<t>}$。</t></t></t-1></p>
@@ -1282,13 +1287,13 @@ L(\hat y,y) = \ \sum_{t = 1}^{T_x}{L^{< t >}(\hat  y^{< t >},y^{< t >})}</script
 <p>所以总体步骤就是：</p>
 <p>输入上层时间步记忆细胞<script type="math/tex">c^{<t-1>}</script>和当前时间步序列<script type="math/tex">x^{<x>}</script>，然后把这两个用合适的权重结合在一起，再用<strong>tanh</strong>还算得到${\tilde{c}}^{<t>}$，<script type="math/tex">{\tilde{c}}^{} =tanh(W_{c}\left\lbrack c^{},x^{} \right\rbrack +b_{c})</script>，即<script type="math/tex">c^{<t>}</script>的替代值。再用一个不同的参数集，通过<strong>sigmoid</strong>激活函数算出<script type="math/tex">\Gamma_{u}= \sigma(W_{u}\left\lbrack c^{<t-1>},x^{<t>} \right\rbrack +b_{u})</script>，即更新门。最后所有的值通过另一个运算符结合产生记忆细胞新值<script type="math/tex">c^{<t>} = \Gamma_{u}*{\tilde{c}}^{<t>} +\left( 1- \Gamma_{u} \right)*c^{<t-1>}</script>，另外，也可以把这个代入<strong>softmax</strong>来预测<script type="math/tex">y^{<t>}</script>。</t></p>
 <p><strong>GRU</strong>的优点就是通过门来决定更新和不更新记忆细胞的值，并且因为<script type="math/tex">\Gamma_{u}</script>很接近0，这样就不会有梯度消失问题，同时$c^{<t>}$几乎就等于$c^{<t-1>}$，所以$c^{<t>}$的值也很好地被维持了。上述介绍的仅仅是简化的<strong>GRU</strong>单元，而完整的<strong>GRU</strong>单元还需要添加一个门，这个<script type="math/tex">\Gamma_{r}= \sigma(W_{r}\left\lbrack c^{<t-1>},x^{<t>} \right\rbrack + b_{r})</script>，<script type="math/tex">\Gamma_{r}</script>门告诉你计算出的下一个$c^{<t>}$的候选值${\tilde{c}}^{<t>}$跟$c^{<t-1>}$有多大的相关性。</t-1></t></t></t></t-1></t></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/90.png" alt="90" style="zoom:100%;"></p>
-<h4 id="长短期记忆-LSTM-long-short-term-memory-unit"><a href="#长短期记忆-LSTM-long-short-term-memory-unit" class="headerlink" title="长短期记忆 LSTM(long short term memory) unit"></a>长短期记忆 LSTM(long short term memory) unit</h4><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/91.png" alt="91" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/90.png" alt="90" style="zoom:100%;"></p>
+<h4 id="长短期记忆-LSTM-long-short-term-memory-unit"><a href="#长短期记忆-LSTM-long-short-term-memory-unit" class="headerlink" title="长短期记忆 LSTM(long short term memory) unit"></a>长短期记忆 LSTM(long short term memory) unit</h4><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/91.png" alt="91" style="zoom:100%;"></p>
 <ul>
 <li>在<strong>LSTM</strong>中不再有$a^{<t>} = c^{<t>}$的情况，所以与<strong>GRU</strong>不同，原本的符号<script type="math/tex">c^{<T>}</script>需要换成<script type="math/tex">a^{<t-1>}</script>。并且也没有了相关门<script type="math/tex">\Gamma_r</script>。</t></t></li>
 </ul>
 <p><strong>LSTM</strong>前向传播图：</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/92.png" alt="92" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/92.png" alt="92" style="zoom:100%;"></p>
 <p><strong>LSTM</strong>反向传播计算：</p>
 <p><strong>门求偏导：</strong></p>
 <script type="math/tex; mode=display">d \Gamma_o^{\langle t \rangle} = da_{next}*\tanh(c_{next}) * \Gamma_o^{\langle t \rangle}*(1-\Gamma_o^{\langle t \rangle})\tag{1}</script><script type="math/tex; mode=display">d\tilde c^{\langle t \rangle} = dc_{next}*\Gamma_i^{\langle t \rangle}+ \Gamma_o^{\langle t \rangle} (1-\tanh(c_{next})^2) * i_t * da_{next} * \tilde c^{\langle t \rangle} * (1-\tanh(\tilde c)^2) \tag{2}</script><script type="math/tex; mode=display">d\Gamma_u^{\langle t \rangle} = dc_{next}*\tilde c^{\langle t \rangle} + \Gamma_o^{\langle t \rangle} (1-\tanh(c_{next})^2) * \tilde c^{\langle t \rangle} * da_{next}*\Gamma_u^{\langle t \rangle}*(1-\Gamma_u^{\langle t \rangle})\tag{3}</script><script type="math/tex; mode=display">d\Gamma_f^{\langle t \rangle} = dc_{next}*\tilde c_{prev} + \Gamma_o^{\langle t \rangle} (1-\tanh(c_{next})^2) * c_{prev} * da_{next}*\Gamma_f^{\langle t \rangle}*(1-\Gamma_f^{\langle t \rangle})\tag{4}</script><p><strong>参数求偏导 ：</strong></p>
@@ -1296,10 +1301,10 @@ L(\hat y,y) = \ \sum_{t = 1}^{T_x}{L^{< t >}(\hat  y^{< t >},y^{< t >})}</script
 <p>最后，计算隐藏状态、记忆状态和输入的偏导数：</p>
 <script type="math/tex; mode=display">da_{prev} = W_f^T*d\Gamma_f^{\langle t \rangle} + W_u^T * d\Gamma_u^{\langle t \rangle}+ W_c^T * d\tilde c^{\langle t \rangle} + W_o^T * d\Gamma_o^{\langle t \rangle} \tag{9}</script><script type="math/tex; mode=display">dc_{prev} = dc_{next}\Gamma_f^{\langle t \rangle} + \Gamma_o^{\langle t \rangle} * (1- \tanh(c_{next})^2)*\Gamma_f^{\langle t \rangle}*da_{next} \tag{10}</script><script type="math/tex; mode=display">dx^{\langle t \rangle} = W_f^T*d\Gamma_f^{\langle t \rangle} + W_u^T * d\Gamma_u^{\langle t \rangle}+ W_c^T * d\tilde c_t + W_o^T * d\Gamma_o^{\langle t \rangle}\tag{11}</script><p><strong>GRU</strong>的优点是这是个更加简单的模型，所以更容易创建一个更大的网络，而且它只有两个门，在计算性上也运行得更快，然后它可以扩大模型的规模。但是<strong>LSTM</strong>更加强大和灵活，因为它有三个门而不是两个。</p>
 <h3 id="双向循环神经网络"><a href="#双向循环神经网络" class="headerlink" title="双向循环神经网络"></a>双向循环神经网络</h3><p>动机：不能仅仅通句子前面的成分就决定后续的单词。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/93.png" alt="93" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/93.png" alt="93" style="zoom:100%;"></p>
 <p>假如输入只有4个，从$x^{<1>}$到$x^{<4>}$。从这里开始的这个网络会有一个前向的循环单元叫做${\overrightarrow{a}}^{<1>}$，${\overrightarrow{a}}^{<2>}$，${\overrightarrow{a}}^{<3>}$还有${\overrightarrow{a}}^{<4>}$，这4个循环单元都有一个当前输入$x$输入进去，得到预测的$\hat y^{<1>}$，$\hat y^{<2>}$，$\hat y^{<3>}$和$\hat y^{<4>}$。然后再增加反向的循环单元${\overleftarrow{a}}^{<1>}$、${\overleftarrow{a}}^{<2>}$、${\overleftarrow{a}}^{<3>}$、${\overleftarrow{a}}^{<4>}$构成一个无环图，为了预测结果<script type="math/tex">\hat y^{<t>} =g(W_{g}\left\lbrack {\overrightarrow{a}}^{< t >},{\overleftarrow{a}}^{< t >} \right\rbrack +b_{y})</script>。参数<script type="math/tex">W_{a}^{\left\lbrack 2 \right\rbrack}</script>和<script type="math/tex">b_{a}^{\left\lbrack 2 \right\rbrack}</script>在这一层的计算里都一样，相对应地第一层也有自己的参数<script type="math/tex">W_{a}^{\left\lbrack 1 \right\rbrack}</script>和<script type="math/tex">b_{a}^{\left\lbrack 1 \right\rbrack}</script>。</4></3></2></1></4></3></2></1></4></3></2></1></4></1></p>
 <h3 id="深层循环神经网络"><a href="#深层循环神经网络" class="headerlink" title="深层循环神经网络"></a>深层循环神经网络</h3><p>这是一个有三个隐层（纵向来看）的新的网络，$a^{\lbrack l\rbrack <t>}$来表示第l层的激活值，这个\<t\>表示第$t$个时间点，具体的激活值计算例子：<script type="math/tex">a^{\lbrack 2\rbrack < 3 >} = g(W_{a}^{\left\lbrack 2 \right\rbrack}\left\lbrack a^{\left\lbrack 2 \right\rbrack < 2 >},a^{\left\lbrack 1 \right\rbrack < 3 >} \right\rbrack + b_{a}^{\left\lbrack 2 \right\rbrack})</script>。</t\></t></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/94.png" alt="94" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/94.png" alt="94" style="zoom:100%;"></p>
 <h2 id="自然语言处理与词嵌入"><a href="#自然语言处理与词嵌入" class="headerlink" title="自然语言处理与词嵌入"></a>自然语言处理与词嵌入</h2><h3 id="词嵌入"><a href="#词嵌入" class="headerlink" title="词嵌入"></a>词嵌入</h3><h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><p><strong>词嵌入</strong>（<strong>word embeddings</strong>）：对于相近的概念（apple, orange），学到的特征也比较类似，在对这些概念可视化的时候，这些概念就比较相似，最终把它们映射为相似的特征向量。</p>
 <h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><h5 id="做迁移学习"><a href="#做迁移学习" class="headerlink" title="做迁移学习"></a>做迁移学习</h5><p>词嵌入做<strong>迁移学习</strong>的步骤：</p>
 <ul>
@@ -1307,23 +1312,23 @@ L(\hat y,y) = \ \sum_{t = 1}^{T_x}{L^{< t >}(\hat  y^{< t >},y^{< t >})}</script
 <li>第二步，用这些词嵌入模型把它迁移到新的只有少量标注训练集的任务中。这样做的一个好处就是可以用更低维度的特征向量代替原来的高维的<strong>one-hot</strong>向量。</li>
 <li>第三步，在新的任务上训练模型时，在命名实体识别任务上，只有少量的标记数据集上，可以选择要不要继续微调，用新的数据调整词嵌入。</li>
 </ul>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/95.png" alt="95" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/95.png" alt="95" style="zoom:100%;"></p>
 <h5 id="帮助类比推理"><a href="#帮助类比推理" class="headerlink" title="帮助类比推理"></a>帮助类比推理</h5><p>词嵌入还有一个特性就是帮助实现类比推理。假如我提出一个问题，<strong>man</strong>如果对应<strong>woman</strong>，那么<strong>king</strong>应该对应什么？你们应该都能猜到<strong>king</strong>应该对应<strong>queen</strong>。能否有一种算法来自动推导出这种关系，下面就是实现的方法。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/96.png" alt="96" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/96.png" alt="96" style="zoom:100%;"></p>
 <p>为了得出这样的类比推理，计算当<strong>man</strong>对于<strong>woman</strong>，那么<strong>king</strong>对于什么，要做的就是找到单词<strong>w</strong>来使得，<script type="math/tex">e_{\text{man}}-e_{\text{woman}}≈ e_{\text{king}} - e_{w}</script>这个等式成立，目标就是找到单词<strong>w</strong>来最大化<script type="math/tex">e_{w}</script>与<script type="math/tex">e_{\text{king}} -  e_{\text{man}} + e_{\text{woman}}</script>的相似度，即<script type="math/tex">Find\ word\ w:argmax \ Sim(e_{w},e_{\text{king}} - e_{\text{man}} + e_{\text{woman}})</script></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/97.png" alt="97" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/97.png" alt="97" style="zoom:100%;"></p>
 <p>为了测量两个词的相似程度，我们需要一种方法来测量两个词的两个嵌入向量之间的相似程度。 给定两个向量$u$和$v$，余弦相似度定义如下： </p>
 <script type="math/tex; mode=display">{CosineSimilarity(u, v)} = \frac {u . v} {||u||_2 ||v||_2} = cos(\theta) \tag{1}</script><p>其中 $u.v$ 是两个向量的点积（或内积），<script type="math/tex">||u||_2</script>是向量$u$的范数（或长度），并且 $\theta$ 是向量$u$和$v$之间的角度。这种相似性取决于角度在向量$u$和$v$之间。如果向量$u$和$v$非常相似，它们的余弦相似性将接近1; 如果它们不相似，则余弦相似性将取较小的值。</p>
-<h4 id="嵌入矩阵"><a href="#嵌入矩阵" class="headerlink" title="嵌入矩阵"></a>嵌入矩阵</h4><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/98.png" alt="98" style="zoom:100%;"></p>
+<h4 id="嵌入矩阵"><a href="#嵌入矩阵" class="headerlink" title="嵌入矩阵"></a>嵌入矩阵</h4><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/98.png" alt="98" style="zoom:100%;"></p>
 <p>令<script type="math/tex">EO_{j}=e_j</script>，其中$E$是嵌入矩阵，<script type="math/tex">O_j</script>(10000x1)就是只有第$j$个位置是1的<strong>one-hot</strong>向量，<script type="math/tex">e_j</script>(300x1)是字典中单词$j$的嵌入向量。目标是学习一个嵌入矩阵$E$(300x10000)。</p>
-<h4 id="学习词嵌入"><a href="#学习词嵌入" class="headerlink" title="学习词嵌入"></a>学习词嵌入</h4><h5 id="构建神经网络语言模型"><a href="#构建神经网络语言模型" class="headerlink" title="构建神经网络语言模型"></a>构建神经网络语言模型</h5><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/99.png" alt="99" style="zoom:100%;"></p>
+<h4 id="学习词嵌入"><a href="#学习词嵌入" class="headerlink" title="学习词嵌入"></a>学习词嵌入</h4><h5 id="构建神经网络语言模型"><a href="#构建神经网络语言模型" class="headerlink" title="构建神经网络语言模型"></a>构建神经网络语言模型</h5><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/99.png" alt="99" style="zoom:100%;"></p>
 <p>构造嵌入矩阵$E$，并对输入词进行<strong>one-hot</strong>编码，然后计算出嵌入向量<script type="math/tex">e_j</script>，经过神经网络隐藏层以后再通过<strong>softmax</strong>层，这个<strong>softmax</strong>也有自己的参数，然后这个<strong>softmax</strong>分类器会在10,000个可能的输出中预测结尾这个单词。这个例子中有6个词，所以用6×300，所以这个输入会是一个1800维的向量，这是通过将这6个嵌入向量堆在一起得到的。</p>
 <p>另外还有一个固定的历史窗口，比如这里的4是算法的超参数。如果使用一个4个词的历史窗口，这就意味着神经网络会输入一个1200维的特征变量到这个层中（上图编号4所示），然后再通过<strong>softmax</strong>来预测输出，选择有很多种，用一个固定的历史窗口就意味着你可以处理任意长度的句子，因为输入的维度总是固定的。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/100.png" alt="100" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/100.png" alt="100" style="zoom:100%;"></p>
 <p>如果目标不是学习语言模型本身的话，那么也可以选择其他的上下文。</p>
 <h5 id="Word2Vec模型"><a href="#Word2Vec模型" class="headerlink" title="Word2Vec模型"></a>Word2Vec模型</h5><p><strong>word2vec</strong>模型是自然语言处理NLP中一个经典的模型，其将离散的词语映射到连续空间，同时能编码得出词语的上下文语义信息。一般而言，在机器学习算法中使用<strong>one-hot</strong>编码将一个离散型的词语编码为一条数值型的变量。在此基础上，<strong>word2vec</strong>采用神经网络中自动编码机<strong>Auto-Encoder</strong>的方法，包含 <strong>CBOW（Continuous Bag-Of-Words</strong>，即连续的词袋模型）和 <strong>Skip-Gram</strong>两种模型，将词语映像到同一坐标系，得出数值向量。</p>
 <p><strong>CBOW</strong>是从原始语句推测目标字词；而<strong>Skip-Gram</strong>正好相反，是从目标字词推测出原始语句。<strong>CBOW</strong>对小型数据库比较合适，而<strong>Skip-Gram</strong>在大型语料中表现更好。 （下图左边为<strong>CBOW</strong>，右边为<strong>Skip-Gram</strong>）</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/101.png" alt="101" style="zoom:45%;"><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/102.png" alt="102" style="zoom:45%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/101.png" alt="101" style="zoom:45%;"><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/102.png" alt="102" style="zoom:45%;"></p>
 <p>在<strong>Skip-Gram</strong>模型中，我们要做的是抽取上下文和目标词配对，来构造一个监督学习问题。上下文不一定总是目标单词之前离得最近的$n$个单词。我们要的做的是随机选一个词作为上下文词然后我们要做的是随机在一定词距内选另一个词。于是我们将构造一个监督学习问题，它给定上下文词，要求你预测在这个词正负$n$个词距内随机选择的某个目标词。显然，这不是个非常简单的学习问题，因为在单词的正负$n$个词距之间，可能会有很多不同的单词。但是构造这个监督学习问题的目标并不是想要解决这个监督学习问题本身，而是想要使用这个学习问题来学到一个好的词嵌入模型。</p>
 <p>模型细节和上述一样，输入<strong>one-hot</strong>向量<script type="math/tex">O_{c}</script>，嵌入矩阵$E$乘以向量<script type="math/tex">O_{c}</script>，然后得到了输入的上下文词的嵌入向量<script type="math/tex">e_{c}=EO_{c}</script>。通过<strong>softmax</strong>模型来预测不同词的概率：</p>
 <script type="math/tex; mode=display">
@@ -1332,36 +1337,36 @@ Softmax:p\left( t \middle| c \right) = \frac{e^{\theta_{t}^{T}e_{c}}}{\sum_{j = 
 L\left( \hat y,y \right) = - \sum_{i = 1}^{10,000}{y_{i}\log \hat y_{i}}</script><p>总结一下，这大体上就是一个可以找到词嵌入的简化模型和神经网络（上图编号2所示），其实就是个<strong>softmax</strong>单元。矩阵$E$将会有很多参数，所以矩阵$E$有对应所有嵌入向量<script type="math/tex">e_{c}</script>的参数（上图编号6所示），<strong>softmax</strong>单元也有<script type="math/tex">\theta_{t}</script>的参数（上图编号3所示）。如果优化这个关于所有这些参数的损失函数，你就会得到一个较好的嵌入向量集，这个就叫做<strong>Skip-Gram</strong>模型。</p>
 <p>该模型存在的问题就是<strong>softmax</strong>层的计算速度很慢，解决方法主要有分级（<strong>hierarchical</strong>）的<strong>softmax</strong>分类器和<strong>负采样</strong>（<strong>Negative Sampling</strong>）</p>
 <h6 id="hierarchical-softmax"><a href="#hierarchical-softmax" class="headerlink" title="hierarchical softmax"></a>hierarchical softmax</h6><p> <strong>hierarchical softmax</strong>的核心内容是哈夫曼树（Huffman Tree），树的核心概念是 出现概率越高的符号使用较短的编码（层次越浅），出现概率低的符号则使用较长的编码（层次越深）。 </p>
-<h6 id="负采样"><a href="#负采样" class="headerlink" title="负采样"></a>负采样</h6><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/103.png" alt="103" style="zoom:100%;"></p>
+<h6 id="负采样"><a href="#负采样" class="headerlink" title="负采样"></a>负采样</h6><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/103.png" alt="103" style="zoom:100%;"></p>
 <p>假设<strong>orange juice</strong>是一个正样本，然后需要做的是给定$K$次，我们将用相同的上下文词，再从字典中选取随机的词，<strong>king</strong>、<strong>book</strong>、<strong>the</strong>、<strong>of</strong>等，从词典中任意选取的词，并标记0，这些就会成为负样本。</p>
 <p>接下来我们将构造一个监督学习问题，其中学习算法输入$x$，输入这对词，要去预测目标的标签，即预测输出$y$。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/104.png" alt="104" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/104.png" alt="104" style="zoom:100%;"></p>
 <p>为了定义模型，我们将使用记号$c$表示上下文词，记号$t$表示可能的目标词，我再用$y$表示0和1，表示是否是一对上下文-目标词。我们要做的就是定义一个逻辑回归模型，给定输入的$c$，$t$对的条件下，$y=1$的概率，即：</p>
 <script type="math/tex; mode=display">
 P\left( y = 1 \middle| c,t \right) = \sigma(\theta_{t}^{T}e_{c})</script><p>这个模型基于逻辑回归模型，但不同的是我们将一个<strong>sigmoid</strong>函数作用于<script type="math/tex">\theta_{t}^{T}e_{c}</script>，参数和之前一样，你对每一个可能的目标词有一个参数向量<script type="math/tex">\theta_{t}</script>和另一个参数向量<script type="math/tex">e_{c}</script>，即每一个可能上下文词的的嵌入向量，我们将用这个公式估计$y=1$的概率。</p>
 <p>这个算法有一个重要的细节就是如何选取负样本，一个办法是对中间的这些词进行采样，即候选的目标词，可以根据其在语料中的经验频率进行采样，就是通过词出现的频率对其进行采样。但问题是这会导致在<strong>like</strong>、<strong>the</strong>、<strong>of</strong>、<strong>and</strong>诸如此类的词上有很高的频率。另一个极端就是用1除以词汇表总词数，即$\frac{1}{\left|v\right|}$，均匀且随机地抽取负样本，这对于英文单词的分布是非常没有代表性的。所以论文的作者<strong>Mikolov</strong>等人根据经验，他们发现这个经验值的效果最好，它位于这两个极端的采样方法之间，既不用经验频率，也就是实际观察到的英文文本的分布，也不用均匀分布，他们采用以下方式：</p>
 <script type="math/tex; mode=display">
 P\left( w_{i} \right) = \frac{f\left( w_{i} \right)^{\frac{3}{4}}}{\sum_{j = 1}^{10,000}{f\left( w_{j} \right)^{\frac{3}{4}}}}</script><p>进行采样，所以如果$f(w_{i})$是观测到的在语料库中的某个英文词的词频，通过$\frac{3}{4}$次方的计算，使其处于完全独立的分布和训练集的观测分布两个极端之间。</p>
-<h5 id="GloVe-词向量（GloVe-Word-Vectors）"><a href="#GloVe-词向量（GloVe-Word-Vectors）" class="headerlink" title="GloVe 词向量（GloVe Word Vectors）"></a>GloVe 词向量（GloVe Word Vectors）</h5><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/105.png" alt="105" style="zoom:100%;"></p>
+<h5 id="GloVe-词向量（GloVe-Word-Vectors）"><a href="#GloVe-词向量（GloVe-Word-Vectors）" class="headerlink" title="GloVe 词向量（GloVe Word Vectors）"></a>GloVe 词向量（GloVe Word Vectors）</h5><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/105.png" alt="105" style="zoom:100%;"></p>
 <p><strong>GloVe</strong>代表用词表示的全局变量（<strong>global vectors for word representation</strong>）。假定<script type="math/tex">X_{ij}</script>是单词$i$在单词$j$上下文中出现的次数，那么这里$i$和$j$就和$t$和$c$的功能一样，所以可以认为<script type="math/tex">X_{ij}</script>等同于<script type="math/tex">X_{tc}</script>，<script type="math/tex">X_{ij}</script>是一个能够获取单词$i$和单词$j$出现位置相近时或是彼此接近的频率的计数器。<strong>GloVe</strong>模型做的就是进行优化，将他们之间的差距进行最小化处理：</p>
 <script type="math/tex; mode=display">
 \text{mini}\text{mize}\sum_{i = 1}^{10,000}{\sum_{j = 1}^{10,000}{f\left( X_{ij} \right)\left( \theta_{i}^{T}e_{j} + b_{i} + b_{j}^{'} - logX_{ij} \right)^{2}}}</script><p>加权项<script type="math/tex">f\left(X_{ij}\right)</script>用于如果<script type="math/tex">X_{ij}</script>等于0的话，则<script type="math/tex">f\left(X_{ij}\right)=0</script>，同时我们会用一个约定，即$0log0= 0$。其另一个作用是对于不频繁的词，也能给与有意义的运算；对于出现频繁的词更大但不至于过分的权重</p>
-<h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><h5 id="情感分类"><a href="#情感分类" class="headerlink" title="情感分类"></a>情感分类</h5><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/106.png" alt="106" style="zoom:100%;"></p>
+<h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><h5 id="情感分类"><a href="#情感分类" class="headerlink" title="情感分类"></a>情感分类</h5><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/106.png" alt="106" style="zoom:100%;"></p>
 <p>将词嵌入与<strong>RNN</strong>进行结合。</p>
-<h5 id="词嵌入除偏"><a href="#词嵌入除偏" class="headerlink" title="词嵌入除偏"></a>词嵌入除偏</h5><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/107.png" alt="107" style="zoom:100%;"></p>
+<h5 id="词嵌入除偏"><a href="#词嵌入除偏" class="headerlink" title="词嵌入除偏"></a>词嵌入除偏</h5><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/107.png" alt="107" style="zoom:100%;"></p>
 <p>根据训练模型所使用的文本，词嵌入能够反映出性别、种族、年龄、性取向等其他方面的偏见。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/108.png" alt="108" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/108.png" alt="108" style="zoom:100%;"></p>
 <p>处理词嵌入的偏见主要有三个步骤：</p>
 <ul>
 <li>平均步骤，对于偏见词汇作差取平均。</li>
 <li>中和步骤，对于那些定义不确切的词可以将其处理一下，避免偏见。</li>
 <li>均衡步骤，假如有这样的词对，<strong>grandmother</strong>和<strong>grandfather</strong>，或者是<strong>girl</strong>和<strong>boy</strong>，对于这些词嵌入，你只希望性别是其区别。</li>
 </ul>
-<h2 id="序列模型和注意力机制"><a href="#序列模型和注意力机制" class="headerlink" title="序列模型和注意力机制"></a>序列模型和注意力机制</h2><h3 id="基础模型"><a href="#基础模型" class="headerlink" title="基础模型"></a>基础模型</h3><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/109.png" alt="109" style="zoom:100%;"></p>
+<h2 id="序列模型和注意力机制"><a href="#序列模型和注意力机制" class="headerlink" title="序列模型和注意力机制"></a>序列模型和注意力机制</h2><h3 id="基础模型"><a href="#基础模型" class="headerlink" title="基础模型"></a>基础模型</h3><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/109.png" alt="109" style="zoom:100%;"></p>
 <p>首先，建立一个网络，这个网络叫做编码网络（<strong>encoder network</strong>）（上图编号1所示），它是一个<strong>RNN</strong>的结构， <strong>RNN</strong>的单元可以是<strong>GRU</strong> 也可以是<strong>LSTM</strong>。每次只向该网络中输入一个法语单词，将输入序列接收完毕后，这个<strong>RNN</strong>网络会输出一个向量来代表这个输入序列。之后建立一个解码网络（上图编号2所示），它以编码网络的输出作为输入，编码网络是左边的黑色部分（上图编号1所示），之后它可以被训练为每次输出一个翻译后的单词，一直到它输出序列的结尾或者句子结尾标记，这个解码网络的工作就结束了。和往常一样把每次生成的标记都传递到下一个单元中来进行预测，就像之前用语言模型合成文本时一样。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/111.png" alt="111" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/111.png" alt="111" style="zoom:100%;"></p>
 <p>机器翻译相当于是建立一个条件语言模型，最上方是一个循环神经网络模型，这个模型能够估计句子的可能性，这就是语言模型所做的事情。机器翻译模型其实和语言模型非常相似，不同在于语言模型总是以零向量开始，而<strong>encoder</strong>网络会计算出一系列向量来表示输入的句子。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/110.png" alt="110" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/110.png" alt="110" style="zoom:100%;"></p>
 <p>机器翻译是建立一个条件语言模型，所以当使用这个模型来进行机器翻译时，并不是从得到的分布中进行随机取样，而是要找到一个英语句子$y$，使得条件概率最大化。所以在开发机器翻译系统时，需要做的一件事就是想出一个算法，用来找出合适的$y$值，使得该项最大化。</p>
 <h3 id="集束搜索（Beam-Search）"><a href="#集束搜索（Beam-Search）" class="headerlink" title="集束搜索（Beam Search）"></a>集束搜索（Beam Search）</h3><p> <strong>Beam Search</strong>（集束搜索）是一种启发式图搜索算法，通常用在图的解空间比较大的情况下，为了减少搜索所占用的空间和时间，在每一步深度扩展的时候，剪掉一些质量比较差的结点，保留下一些质量较高的结点。这样减少了空间消耗，并提高了时间效率。 </p>
 <p>算法的工作流程如下：</p>
@@ -1372,30 +1377,30 @@ P\left( w_{i} \right) = \frac{f\left( w_{i} \right)^{\frac{3}{4}}}{\sum_{j = 1}^
 <li>否则扩展该节点，取集束宽度的节点入堆。然后到第二步继续循环</li>
 <li>算法结束的条件是找到最优解或者堆为空。</li>
 </ul>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/112.png" alt="112" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/112.png" alt="112" style="zoom:100%;"></p>
 <p>集束搜索第一步就是挑选出英文翻译句子中的第一个单词。过程是先将整个待翻译的句子输入到绿色的编码网络中，然后使用紫色的解码网络进行解码，结果是一个10000维的向量，用来表示第一个英文单词的概率，选择概率最大的3个（集束宽）单词存储在内存中。<script type="math/tex">P(Y^{<1>|x})</script>，其中$x$表示输入的法语句子，<script type="math/tex">y^{<1>}</script>表示输出的第一个英语单词。</p>
 <p>对于第二个单词，是要在第一个单词确定的情况下进行搜索。假设第一个单词被设置为<strong>in</strong>或<strong>jane</strong>或<strong>September</strong>，将第一个单词<strong>in</strong>作为解码器的第一个节点的输出，并且将其作为第二个节点的输入。这样这个网络就能评估第二个词的概率了<script type="math/tex">P(y^{<2>}|x,"in")</script>，接下来要关注的是第一个和第二个单词的联合概率，即<script type="math/tex">P(y^{<1>}, y^{<2>}|x)=P(y^{<1>}|x)P(y^{<2>}|x,y^{<1>})</script>，同样对第一个翻译结果的其他候选词也进行如上操作，由于使用的集束宽为3，并且词汇表中单词的数量为10000，所以最终会有30000个可能的结果，再从这30000个结果中挑选出3个概率最大的结果。 集束搜索通过这种方法每次找到一个词，最终得到希望的结果。</p>
-<h4 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h4><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/113.png" alt="113" style="zoom:100%;"></p>
+<h4 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h4><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/113.png" alt="113" style="zoom:100%;"></p>
 <ol>
 <li>防止数值下溢（多个小于1的数相乘），取log值。</li>
 <li>对于目标函数，因为多个小于1的数相乘，会导致模型倾向于选择更短的翻译结果。为了解决这个问题，可以对目标函数进行归一化，即通过除以翻译结果的单词数量，来减少对输出长的结果的惩罚。在实践中，有个探索性的方法，相比于直接除$T<em>{y}$，也就是输出句子的单词总数，我们有时会用一个更柔和的方法（<strong>a softer approach</strong>），在$T</em>{y}$上加上指数$a$，$a$可以等于0.7。如果$a$等于1，就相当于完全用长度来归一化，如果$a$等于0，$T_{y}$的0次幂就是1，就相当于完全没有归一化，这就是在完全归一化和没有归一化之间。$a$就是算法另一个超参数（<strong>hyper parameter</strong>），需要调整大小来得到最好的结果。另外集束宽的选择也是一个在准确率和计算速度之间trade-off的超参数。</li>
 </ol>
-<h4 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h4><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/114.png" alt="114" style="zoom:100%;"></p>
+<h4 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h4><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/114.png" alt="114" style="zoom:100%;"></p>
 <p>RNN的功能是计算$P(y|x)$,所以可以通过比较 $P(y^*|x)$和$P(\hat y|x)$的值的大小来判断RNN和束搜索方法的好坏。 </p>
 <h3 id="Bleu得分"><a href="#Bleu得分" class="headerlink" title="Bleu得分"></a>Bleu得分</h3><p><strong>BLEU</strong>代表<strong>bilingual evaluation understudy</strong> (双语评估替补)</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/116.png" alt="116" style="zoom:100%;"></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/115.png" alt="115" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/116.png" alt="116" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/115.png" alt="115" style="zoom:100%;"></p>
 <p>定义$n$元词组精确度<script type="math/tex">P_n</script>，如果机器翻译输出与参考1或是参考2完全一致的话，那么所有的这些<script type="math/tex">P_1</script>、<script type="math/tex">P_2</script>等等的值，都会等于1.0。</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/117.png" alt="117" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/117.png" alt="117" style="zoom:100%;"></p>
 <p>将所有$n$元组组合一下来构成最终的<strong>BLEU</strong>得分，按照惯例<strong>BLEU</strong>得分被定义为，$exp (\frac{1}{4}\sum\limits_{n=1}^{4}{P_n})$，对这个线性运算进行乘方运算，乘方是严格单调递增的运算，实际上会用额外的一个叫做<strong>BP</strong> 的惩罚因子（<strong>the BP penalty</strong>）来调整这项。<strong>BP</strong>的意思是“简短惩罚”（ <strong>brevity penalty</strong>）。</p>
-<h3 id="注意力模型"><a href="#注意力模型" class="headerlink" title="注意力模型"></a>注意力模型</h3><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/118.png" alt="118" style="zoom:100%;"></p>
+<h3 id="注意力模型"><a href="#注意力模型" class="headerlink" title="注意力模型"></a>注意力模型</h3><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/118.png" alt="118" style="zoom:100%;"></p>
 <p>假定有一个输入句子，并使用双向的<strong>RNN</strong>，在双向<strong>RNN</strong>已经计算了前向的特征值和后向的特征值，用$a^{<t>}$来一起表示这些联系。所以$a^{<t>}$就是时间步$t$上的特征向量。为了保持记号的一致性，用$t’$来索引法语里的词。$\alpha^{<t,t'>}$就是$y^{<t>}$应该在$t'$时，花在$a$上注意力的数量，$t$时间的上下文是特征向量的注意力加权求和$c^{<t>}=\sum_{t<code>&#125;\alpha^&#123;&lt;t,t</code>&gt;}a^{t`}$。</t></t></t,t'></t></t></p>
 <p>下一步需要做的是定义注意力权重$\alpha^{&lt;t,t’&gt;}$的计算：</p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/119.png" alt="119" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/119.png" alt="119" style="zoom:100%;"></p>
 <p>$s^{<t>}$是时间步的隐藏状态，<script type="math/tex">e^{<t,t`>}</script>是一个通过神经网络学习的关于$s^{<t-1>}$和$a^{<t`>}$的结果。</t`></t-1></t></p>
-<h4 id="应用-1"><a href="#应用-1" class="headerlink" title="应用"></a>应用</h4><h5 id="语音识别"><a href="#语音识别" class="headerlink" title="语音识别"></a>语音识别</h5><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/120.png" alt="120" style="zoom:100%;"></p>
-<p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/121.png" alt="121" style="zoom:100%;"></p>
-<h5 id="触发字检测"><a href="#触发字检测" class="headerlink" title="触发字检测"></a>触发字检测</h5><p><img src="/images/loading.gif" data-original="/2019/10/03/Recognize-Deeplearning.ai/122.png" alt="122" style="zoom:100%;"></p>
+<h4 id="应用-1"><a href="#应用-1" class="headerlink" title="应用"></a>应用</h4><h5 id="语音识别"><a href="#语音识别" class="headerlink" title="语音识别"></a>语音识别</h5><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/120.png" alt="120" style="zoom:100%;"></p>
+<p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/121.png" alt="121" style="zoom:100%;"></p>
+<h5 id="触发字检测"><a href="#触发字检测" class="headerlink" title="触发字检测"></a>触发字检测</h5><p><img data-src="/images/loading.gif" data-original="2019-10-03-Recognizing-Deeplearning-ai/122.png" alt="122" style="zoom:100%;"></p>
 
     </div>
 
@@ -1403,6 +1408,23 @@ P\left( w_{i} \right) = \frac{f\left( w_{i} \right)^{\frac{3}{4}}}{\sum_{j = 1}^
     
     
       
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lifengjun
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/" title="Recognize Deeplearning.ai">https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
 
 
       <footer class="post-footer">
@@ -1512,7 +1534,7 @@ P\left( w_{i} \right) = \frac{f\left( w_{i} \right)^{\frac{3}{4}}}{\sum_{j = 1}^
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">51</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1524,6 +1546,9 @@ P\left( w_{i} \right) = \frac{f\left( w_{i} \right)^{\frac{3}{4}}}{\sum_{j = 1}^
       <span class="links-of-author-item">
         <a href="mailto:543877815@qq.com" title="E-Mail → mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
@@ -1669,6 +1694,7 @@ P\left( w_{i} \right) = \frac{f\left( w_{i} \right)^{\frac{3}{4}}}{\sum_{j = 1}^
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>

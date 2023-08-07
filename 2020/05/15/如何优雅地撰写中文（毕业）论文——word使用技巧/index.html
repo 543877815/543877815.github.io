@@ -18,7 +18,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="本人在写毕设论文的时候踩了很多坑，让我重新学习了了如何高效使用word进行编辑。当然下面的顺序并不是依照我踩坑的顺序续写的，而是我写完论文之后进行了总结：如果重头开始写论文应该怎么做才是高效且容易管理的，仅记录一些能够免去搬砖的使用技巧，个人感觉套模板是没用滴，学之以渔才是正确路线。注：用到的word是window10的版本。">
@@ -189,6 +189,11 @@
     <a href="/portal" rel="section"><i class="fa fa-rocket fa-fw"></i>传送门</a>
 
   </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>展览</a>
+
+  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -314,51 +319,51 @@
 </li>
 </ul>
 <p>这些基本格式可以在<code>开始-&gt;样式</code>中进行修改，其中图片和表格题注的格式一般需要自己创建新样式。标题二和标题三如何区分上接高一级的标题还是正文来设置格式，这个我也没有找到很好的解决方案，我是根据哪个用的比较多来设置统一样式，之后再进行微调。如果有大神懂的话可以在评论区补充一下哦。以标题一为例，设置完结果如下：</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/1.png" alt="1"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/1.png" alt="1"></p>
 <h1 id="多级列表"><a href="#多级列表" class="headerlink" title="多级列表"></a>多级列表</h1><p>多级列表的设置是公式、图标题注关联章节的核心，当然也可以包括目录。于<code>开始-&gt;段落</code>中找到<code>多级列表</code>，定义新的多级列表，先把<code>更多</code>点出来</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/2.png" alt="2"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/2.png" alt="2"></p>
 <p>将<code>此级别的编号格式</code>设置为<code>一、二、三</code>，然后在编号的格式左右加字使之成为<code>第一章</code>，并设置好字体，在更多弹出来的项中<code>将级别链接到格式</code>设置为·标题一·，对于标题一一半设置<code>标号对其方式</code>为<code>居中</code>，<code>编号之后</code>为<code>空格</code>，同时多级标号的字体字号应该与标题一致。</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/3.png" alt="3"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/3.png" alt="3"></p>
 <p>以此类推，依次设置好第二级、第三级多次列表：</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/4.png" alt="4"></p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/5.png" alt="5"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/4.png" alt="4"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/5.png" alt="5"></p>
 <p>最后可实现结果如下：</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/22.png" alt="22"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/22.png" alt="22"></p>
 <h1 id="word”自定义”快捷键"><a href="#word”自定义”快捷键" class="headerlink" title="word”自定义”快捷键"></a>word”自定义”快捷键</h1><p>word其实没有所谓的自定义快捷键啦，但是它有一个<code>快速访问工具栏</code>，在<code>文件-&gt;选项-&gt;快速访问工具栏</code>中可以进行定义，如图我将用的比较多距离比较远的“插入新公式“、”插入交叉引用”以及“自动图文集”加入到快速访问工具栏中。</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/6.png" alt="6"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/6.png" alt="6"></p>
 <p>确定之后就可以分别通过<code>Alt+4</code>、<code>Alt+5</code>、<code>Alt+6</code>进行访问了。</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/7.png" alt="7"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/7.png" alt="7"></p>
 <h1 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h1><h2 id="排版"><a href="#排版" class="headerlink" title="排版"></a>排版</h2><p>现在使用<code>Alt+4</code>就可以打开<code>设计</code>栏进行公式编辑，这个版本的word有个自带的<code>LaTeX</code>能够以与markdown的mathjax相似的语法插入公式，用起来非常方便比如，输入<code>\epsilon</code>并单击空格就可以解析为$\epsilon$了，可以快速编辑公式和符号。</p>
 <p>对于公式编号的设置一直是一个很头疼的东西，我开始做时候也不会，网上主要有两种做法，一种是表格法，还有一种是制表符法。表格法的思想就是创建一个1x3的表格，中间格键入公式并居中，右边格键入公式的编号并居右，最后见该表格的框线去除即可，这种方法的优势就是简单，劣势就是不能自动管理编号，不利于大量公式的管理。</p>
 <p>而使用制表符法虽然初始设置比较麻烦，但是其能补表格法之短。使用该方法首先需要确定两个制表符的位置，一个是公式居中，一个是编号居右，通过<code>布局-&gt;页面设置</code>的<code>页边距</code>栏和<code>纸张</code>栏分别找到页边距的左右距离以及纸张的宽度：</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/8.png" width="48%"><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/9.png" width="48%"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/8.png" width="48%"><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/9.png" width="48%"></p>
 <p>通过计算得到第一个制表符的位置为<script type="math/tex">(21-3.17*2)/2=7.32cm</script>，第二个指标符的位置为<script type="math/tex">21-3.71=17.82cm</script>，新开一个空行，键入公式及编号，此时该公式及编号将居左排列，光标置于该行，于<code>开始-&gt;段落-&gt;制表位</code>中设置第一个制表符，并居中对齐：</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/11.png" alt="11"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/11.png" alt="11"></p>
 <p>点击确定后设置第二个制表符，右对齐：</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/12.png" alt="12"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/12.png" alt="12"></p>
 <p>分别在公式前和编号前键入<code>Tab</code>，就能使公式居中，编号居右显示，如下图所示：</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/10.png" alt="10"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/10.png" alt="10"></p>
 <p>如果不太care自动编号，可以在样式中新建<code>公式</code>的样式，然后按照上述的方式使公式居中，编号居右，样式图示：</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/13.png" alt="13"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/13.png" alt="13"></p>
 <h2 id="自动编号"><a href="#自动编号" class="headerlink" title="自动编号"></a>自动编号</h2><p>在括号中使用<code>Ctrl+F9</code>插入域代码，输入<code>&#123;seq list&#125;</code>以生成序列编号，注意<code>Seq</code>与<code>list</code>之间存在空格，完成后选中使用<code>F9</code>更新域生成编号<code>(1)</code>。</p>
 <p>如果需要输入包含章节信息的公式，需要使用更加复杂的域代码，我具体没有实战到论文中，就是看了一下demo，一个案例如下：</p>
 <figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml">第一章</span><span class="template-variable">&#123;seq chapter \h&#125;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">1.1(</span><span class="template-variable">&#123;seq chapter \c&#125;</span><span class="language-xml">-</span><span class="template-variable">&#123;seq list \s 1&#125;</span><span class="language-xml">)</span></span><br><span class="line"><span class="language-xml">1.2(</span><span class="template-variable">&#123;seq chapter \c&#125;</span><span class="language-xml">-</span><span class="template-variable">&#123;seq list \s 1&#125;</span><span class="language-xml">)</span></span><br><span class="line"><span class="language-xml">第二章</span><span class="template-variable">&#123;seq chapter \h&#125;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">2.1(</span><span class="template-variable">&#123;seq chapter \c&#125;</span><span class="language-xml">-</span><span class="template-variable">&#123;seq list \s 1&#125;</span><span class="language-xml">)</span></span><br><span class="line"><span class="language-xml">2.2(</span><span class="template-variable">&#123;seq chapter \c&#125;</span><span class="language-xml">-</span><span class="template-variable">&#123;seq list \s 1&#125;</span><span class="language-xml">)</span></span><br><span class="line"><span class="language-xml">2.2.1(</span><span class="template-variable">&#123;seq chapter \c&#125;</span><span class="language-xml">-</span><span class="template-variable">&#123;seq list \s 1&#125;</span><span class="language-xml">)</span></span><br></pre></td></tr></table></figure>
 <p>解读一下上面代码的意思吧（其实我也不太懂）,<code>seq</code>是序列的定义，后面<code>chapter</code>跟的是一个变量名称，<code>\h</code>表示hidden，生成了一个隐藏的…占位符，<code>\c</code>表示const，表示这里的序列号不变，<code>\s</code>可以理解为set（大概？），后面的数值<code>1</code>表示在指定标题级别下开始排序，即如果一级标题改变则重新计算编号。结果如下，可以从复选中看到添加的域代码部分：</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/17.png" alt="17"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/17.png" alt="17"></p>
 <p>如何复用？需要将序列编号添加至自动图文集，拿不包含章节信息的情况而言，选中<code>(1)</code>，于<code>插入-&gt;文档部件-&gt;将所选内容保存到文档部件库</code>中：</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/14.png" alt="14"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/14.png" alt="14"></p>
 <p>使用的时候只需要调用<code>插入-&gt;文档部件</code>中调用（或使用之前定义的快捷键<code>Alt+6</code>）即可：</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/15.png" alt="15"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/15.png" alt="15"></p>
 <p>效果如下图，可以从复选中看到递增的部分：</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/16.png" alt="16"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/16.png" alt="16"></p>
 <h1 id="图表题注"><a href="#图表题注" class="headerlink" title="图表题注"></a>图表题注</h1><p>其实图标题注不包含章节信息还是比较简单的，如果包含章节信息也可以像上述公式的方法进行设置，这样可以达到高度的定制化。实际上图标题注的可以比上述部分更加简单，即只需要在插入题注中于<code>编号</code>中将包含章节号选中即可。</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/18.png" alt="18"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/18.png" alt="18"></p>
 <p>但是仍然有一个问题就是如果一级标题列表设置的是汉字形式，那么题注的将会显示为<code>图表 二-1</code>，如下图所示，非常恼火。</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/19.png" alt="18"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/19.png" alt="18"></p>
 <p>一个技巧就是先右选其中一个多级列表，选择<code>调整列表缩进</code>：</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/20.png" alt="20"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/20.png" alt="20"></p>
 <p>将一级标题的编号设置为数字的形式，然后在插入图表题注</p>
-<p><img src="/images/loading.gif" data-original="/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/21.png" alt="21"></p>
+<p><img data-src="/images/loading.gif" data-original="2020-05-15-如何优雅地撰写中文（毕业）论文——word使用技巧/21.png" alt="21"></p>
 <p>这样生成的图表题注就是数字形式，之后再将一级标题的编号调回汉字，当然有个需要注意的地方就是后续不能对图表标注更新域，否则编号又会变成汉字形式。</p>
 <hr>
 <p>目前大概用到和了解到的word编写管理技巧就是这些，对于写一篇毕业设计中文论文应该是够用的了，参考，整理和总结了下面的博客：</p>
@@ -376,6 +381,23 @@
     
     
       
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lifengjun
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://lifengjun.xin/2020/05/15/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E6%92%B0%E5%86%99%E4%B8%AD%E6%96%87%EF%BC%88%E6%AF%95%E4%B8%9A%EF%BC%89%E8%AE%BA%E6%96%87%E2%80%94%E2%80%94word%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" title="如何优雅地撰写中文（毕业）论文——word使用技巧">https://lifengjun.xin/2020/05/15/如何优雅地撰写中文（毕业）论文——word使用技巧/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
 
 
       <footer class="post-footer">
@@ -484,7 +506,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">51</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -496,6 +518,9 @@
       <span class="links-of-author-item">
         <a href="mailto:543877815@qq.com" title="E-Mail → mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
@@ -641,6 +666,7 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>

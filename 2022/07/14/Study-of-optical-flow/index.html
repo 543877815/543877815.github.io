@@ -18,7 +18,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="记录几种常用的光流方法的原理和思想 参考了  光流法-Optical Flow 光流估计概念及算法介绍 计算机视觉—光流法(optical flow)简介 Harris角点检测 Horn-Schunck_method Horn-Schunck光流算法 啥是TV-L1 OpticalFlow">
@@ -193,6 +193,11 @@
     <a href="/portal" rel="section"><i class="fa fa-rocket fa-fw"></i>传送门</a>
 
   </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>展览</a>
+
+  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -318,20 +323,20 @@
 </ul>
 <span id="more"></span>
 <h2 id="Motion-field"><a href="#Motion-field" class="headerlink" title="Motion field"></a>Motion field</h2><p>考虑在某个场景下，物体朝着三维空间的某个方向上移动，我们通过相机将物体的运动投影到图像屏幕的平面上形成视频，我们会从视频看到物体的运动方向。当物体在相机前移动时，图像中会有相应的更改。 因此，如果对象上的点 <script type="math/tex">p_o</script> 以速度 <script type="math/tex">v_o</script> 移动，则可以将成像点 <script type="math/tex">p_i</script> 看成以速度 <script type="math/tex">v_i</script> 在图像平面上的运动。 所有这些三维空间运动速度投影在二维图像平面的向量的集合形成了运动场(motion field)。</p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/2.png" alt="1"></p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/1.png" alt="3"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\2.png" alt="1"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\1.png" alt="3"></p>
 <p>然而我们想通过物体在视频中的移动速度来推导物体在三维空间中的移动速度是不现实的。原因如下，在一个很短的时间段 <script type="math/tex">\delta t</script> 内，场景中物体的速度为 <script type="math/tex">v_0=\frac{dr_0}{dt}</script> 以及图像的速度 <script type="math/tex">v_i=\frac{dr_i}{dt}</script>，我们想要关联这两者的关系。根据位置关系我们能得到以下信息：</p>
 <script type="math/tex; mode=display">
 \frac{r_i}{f}=\frac{r_0}{r_0\cdot z}</script><p>其中 <script type="math/tex">r_0\cdot z</script> 表示 <script type="math/tex">r_0</script> 在 $z$ 轴上的投影。</p>
 <p>图像(运动场)的速度为 (<a target="_blank" rel="noopener" href="https://www.cse.psu.edu/~rtc12/CSE486/lecture22_6pp.pdf">https://www.cse.psu.edu/~rtc12/CSE486/lecture22_6pp.pdf</a> 有一些更详细的)：</p>
 <script type="math/tex; mode=display">
 v_i=\frac{dr_i}{dt}=\frac{\frac{f\cdot r_0}{r_0\cdot z}}{dt}=f\frac{(r_0\cdot z)v_0-(v_0\cdot z)r_0}{(r_0\cdot z)^2}=f\frac{(r_0\times v_0)\times z}{(r_0\cdot z)^2}</script><p>然而在绝大部分情况下，我们并不能直接通过上式来计算物体的运动场。退而求其次，我们只能通过计算视频光流（optical flow）对物体的运动场进行估计。在理想情况下，光流估计=运动场。然而，也有一些场景光流估计不等于运动场，比如下图中左图是一个单侧光源照射在一个表面质地相同的旋转的球体上，无论球体旋转到什么位置，其反射的光线在相机上成像都是相同的，此时物体的运动场存在，然而没有光流。下图右图中，存在一个围绕静止球体旋转的单侧光源，此时物体并没有旋转，而且其反射的光线在相机上的成像随着光源的旋转而改变，此时物体没有运动场存在，但是却有光流。</p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/3.png" alt="3"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\3.png" alt="3"></p>
 <p>又如下图中，旋转灯的运动方向是横向朝右的，而其呈现出来的光流方向却是纵向向下的</p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/4.gif" alt="4"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\4.gif" alt="4"></p>
 <p>同样，在下面两幅图中，图像的纹理并没有移动，而人眼却能观察到光流。</p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/5.png" alt="5"></p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/6.png" alt="6"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\5.png" alt="5"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\6.png" alt="6"></p>
 <h2 id="Optical-flow"><a href="#Optical-flow" class="headerlink" title="Optical flow"></a>Optical flow</h2><p>所谓的光流(optical flow)指的是物体或场景相对观测者（相机）运动引起的，往往将在连续帧图像上的特定坐标点上的亮度变化定义为该坐标点的光流矢量，对图像上每个坐标点都计算其光流矢量，则构成图像的光流场，我们希望用光流场来估计物体的运动场，计算光流的算法主要分为稀疏光流算法(sparse optical flow)和密集光流(dense optical flow)两类，常用的光流算法主要有以下几种：</p>
 <ul>
 <li>Lucas-Kanade(LK)光流法 (稀疏光流)</li>
@@ -340,7 +345,7 @@ v_i=\frac{dr_i}{dt}=\frac{\frac{f\cdot r_0}{r_0\cdot z}}{dt}=f\frac{(r_0\cdot z)
 <h3 id="重要假设"><a href="#重要假设" class="headerlink" title="重要假设"></a>重要假设</h3><p>基于光流的算法研究往往围绕着以下假设开始建模：</p>
 <p><strong>1. 光强恒定假设</strong></p>
 <p><strong>2. 瞬时移动假设</strong></p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/7.png" alt="7"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\7.png" alt="7"></p>
 <p>考虑 <script type="math/tex">t</script> 时刻，图像某点在坐标 <script type="math/tex">(x, y)</script> 上的强度(intensity)为 <script type="math/tex">I(x,y,t)</script>，在一个很短的时间间隔 <script type="math/tex">\delta t</script> 后，该点移动到不远处坐标 <script type="math/tex">(x+\delta x, y+\delta y)</script>，其中 <script type="math/tex">\delta</script> 表示一个很小的值，其强度为 <script type="math/tex">I(x+\delta x, y +\delta y, t+\delta t)</script>，在该光强恒定假设中，该点在不同时刻的强度恒定不变：</p>
 <script type="math/tex; mode=display">
 I(x,y,t)=I(x+\delta x,y+\delta y,t+\delta t)</script><p>将右式进行一阶泰勒展开可得：</p>
@@ -354,15 +359,15 @@ I(x,y,t)=I(x,y,t)+\frac{\partial I}{\partial x}\delta x+\frac{\partial I}{\parti
 => \,\,\frac{\partial I}{\partial x}\delta x+\frac{\partial I}{\partial y}\delta y+\frac{\partial I}{\partial t}\delta t=0\\
 
 =>\,\,\frac{\partial I}{\partial x}\frac{\delta x}{\delta t}+\frac{\partial I}{\partial y}\frac{\delta y}{\delta t}+\frac{\partial I}{\partial t}\frac{\delta t}{\delta t}=0</script><p>令 <script type="math/tex">u=\frac{\delta x}{\delta t}, v=\frac{\delta y}{\delta t}</script> 分别表示光流分别为沿 $x$ 轴与 $y$ 轴的速度矢量，<script type="math/tex">I_x=\frac{\partial I}{\partial x}, I_y=\frac{\partial I}{\partial y}, I_t=\frac{\partial I}{\partial t}</script>分别表示为图像中像素点的灰度沿 $x, y, t$ 方向的偏导数。在具体操作中，<script type="math/tex">(I_x, I_y, I_t)</script>可以很容易的从连续的两帧图像中计算出来。如下图所示，图像中像素点的灰度沿着 $x$ 方向的偏导数 <script type="math/tex">I_x</script> 为右边四个方块减去左边四个方块的均值，同理 <script type="math/tex">I_y</script> 为上面四个方块减去下面四个方块的均值，<script type="math/tex">I_t</script> 为后面四个方块减去正面四个方块的均值。</p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/8.png" alt="8"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\8.png" alt="8"></p>
 <p>我们现在有了这样的约束方程：</p>
 <script type="math/tex; mode=display">
 I_xu+I_yv+I_t=0</script><p>如下图所示，由于 <script type="math/tex">I_x,I_y,I_t</script> 已知，而 <script type="math/tex">u,v</script> 未知，对于某点坐标的光流矢量 <script type="math/tex">\text{u}(u,v)</script> 我们有下图二维坐标的黄线的约束，当然我们可以将该矢量分解为垂直于约束直线方向和平行于约束直线的方向的两个矢量 <script type="math/tex">u_p</script> 和 <script type="math/tex">u_n</script>。</p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/9.png" alt="9"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\9.png" alt="9"></p>
 <p>当然我们也可以轻易计算出垂直于约束直线方向的矢量的方向和大小：</p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/10.png" alt="10"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\10.png" alt="10"></p>
 <p>因此问题的难点在于我们无法计算平行于约束直线的光流分量 <script type="math/tex">u_p</script> 的大小，当然对于约束直线来说，存在一个方程和两个未知数，因此，仅有该约束，光流问题的求解是欠定的（under constrained），即该存在不同满足单一约束的解。从物理意义上，由于我们观察（假设）的是一个很小的区域的图像像素的灰度变化，如下图孔径问题（aperture problem）所示，在孔径中我们观察到的光流的方向是朝着右下角的方向，然而从整体观察来看，其物体实际运动可能是向下或者是向右的。</p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/11.gif" alt="11"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\11.gif" alt="11"></p>
 <p>因此我们需要额外的约束来解决光流估计问题，也就是不同光流估计算法提出的出发点和需要解决的问题。</p>
 <h2 id="Lucas-Kanade-LK-光流法"><a href="#Lucas-Kanade-LK-光流法" class="headerlink" title="Lucas-Kanade(LK)光流法"></a>Lucas-Kanade(LK)光流法</h2><p>LK光流法，进一步假设，图像中一个小的窗口中的每个像素，其运动场也就是光流是相同的。用数学的语言表达，在一个大小为 $n\times n$ 的窗口 $W$ 中的所有像素点 <script type="math/tex">(k, l)\in W</script>，其满足：</p>
 <script type="math/tex; mode=display">
@@ -429,14 +434,14 @@ u=(A^TA)^{-1}A^TB</script><p>其中，<script type="math/tex">A^TA</script> 是�
 </li>
 </ol>
 <p>如果 <script type="math/tex">\lambda_1</script> 和 <script type="math/tex">\lambda_2</script> 都很小，这说明矩阵的基向量的重要程度很低。如果其中一个特征值 <script type="math/tex">\lambda_1</script> 远大于另一个特征值 <script type="math/tex">\lambda_2</script>，则说明矩阵在一个方向上的基向量很重要，而另一个方向上的基向量重要程度很低。如果这两个条件之一不满足，其求解出来的光流是不准确的。</p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/12.png" alt="12"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\12.png" alt="12"></p>
 <p>从实际的物理意义来看，如果窗口定位在光滑区域上，由于光滑区域的各方向的梯度都很小，则其矩阵的 <script type="math/tex">\lambda_1</script> 和 <script type="math/tex">\lambda_2</script> 都很小，因此估计的光流是不可靠的。</p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/13.png" alt="13"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\13.png" alt="13"></p>
 <p>当另一个条件不满足时，其对应的实际物理意义是，窗口定位在边缘的区域上，则垂直于边的梯度很大，平行于边的梯度很小，这样会产生矩阵一个特征值 <script type="math/tex">\lambda_1</script> 远大于另一个特征值 <script type="math/tex">\lambda_2</script> 的结果，从上面的图可以得知，这样估计得到的光流也是不可靠的。<strong>说明了即使是适定问题，其任然有可能是个病态问题，体现在其输入端极小的误差，也可能导致输出值的巨大误差。</strong></p>
 <p>那么什么样的区域对于光流的估计是更为准确的呢？结果是窗口定位在富含纹理的区域，这种区域各方向的梯度都比较大而且多样，得到的特征值都比较大，估计的光流较为准确。</p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/14.png" alt="14"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\14.png" alt="14"></p>
 <p>当然物理意义上也可以认为是Harris角点检测成立的条件，本质上是用 <script type="math/tex">A^TA</script> 的特征值 <script type="math/tex">\lambda_1、 \lambda_2</script> 来分类图像中平滑、边缘、角点的区域。</p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/15.png" alt="15"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\15.png" alt="15"></p>
 <p>因此LK算法在平滑和边缘的区域表现较差，而在角点或者梯度丰富的区域表现得较好。</p>
 <h2 id="Horn-Schunck-HS-光流法"><a href="#Horn-Schunck-HS-光流法" class="headerlink" title="Horn-Schunck(HS)光流法"></a><strong>Horn-Schunck</strong>(HS)光流法</h2><p>More details: <a target="_blank" rel="noopener" href="http://www.ipol.im/pub/art/2013/20/">http://www.ipol.im/pub/art/2013/20/</a></p>
 <p>HS光流法是最早提出来估计光流的方法（之一？），他把光强恒定的假设写成需要优化的损失函数，并加上一个平滑约束，新的约束的出发点是运动场在图像上趋于平稳变化，即速度的变化率趋于零，在该假设下，相邻帧的图像中光流分别为沿 $x$ 轴与 $y$ 轴的速度矢量 $u$ 和 $v$ 随着像素点移动而发生的改变是缓慢的，如果变化过大则给于惩罚，<script type="math/tex">\lambda</script> 是一个用于权衡重要性的超参数：</p>
@@ -444,7 +449,7 @@ u=(A^TA)^{-1}A^TB</script><p>其中，<script type="math/tex">A^TA</script> 是�
 L=\iint_{image}(I_xu+I_yv+I_t)^2+\lambda(u_x^2+u_y^2+v_x^2+v_y^2)dxdy\\
 L=\iint_{image}E_{data}(u,v)+\lambda E_{smoothness}(u,v)dxdy</script><p>目标是为了最小化上述损失函数，其中 <script type="math/tex">u_x</script> 是速度矢量 $u$ 对 $x$ 的偏导 <script type="math/tex">\frac{\partial u}{\partial x}</script>，同理 <script type="math/tex">u_y=\frac{\partial u}{\partial v}, u_x=\frac{\partial v}{\partial x}, u_y=\frac{\partial u}{\partial y}</script>，由此看出HS光流法给出的是一个全局约束。</p>
 <p>我们可以通过多维欧拉-拉格朗日方程</p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/26.png" alt="26"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\26.png" alt="26"></p>
 <p>对其进行求解有：</p>
 <script type="math/tex; mode=display">
 \frac{\partial L}{\partial u}-\frac{\partial}{\partial x}\frac{\partial L}{\partial u_x}-\frac{\partial}{\partial y}\frac{\partial L}{\partial u_y}=0  \\
@@ -472,7 +477,7 @@ v^{k+1}=v^{-k}-\frac{I_y(I_xu^{-k}+I_yv^{-k}+I_t)}{4\alpha^2+I_x^2+I_y^2}\\</scr
 <li><strong>并没有解决</strong>我们先前提出的针对<strong>变化幅度比较大</strong>情况下如何准确求解光流的问题。于是乎有了Coarse-to-Fine方法：</li>
 </ol>
 <p>针对光流估计的算法还提出了一个改进算法 (Coarse-to-Fine)，其要解决的问题是，当物体运动速度很快的时候，即连续两帧物体位置差异较大的情况，那么，在完整的分辨率下，光强恒定和瞬时移动的假设将不成立。这个改进方法的想法是，通过降分辨率的方式来使假设成立，因为在低分辨率情况下，物体运动的位置变化变小了，打个比方，物体在原始分辨率图像下运动4px的像素，在1/4分辨率大小的图像上只运动1px的像素，因此在分辨率降低的情况下可以使得原来的光强恒定和瞬时移动的假设成立。为了计算原始分辨率图像下的光流场，如下图所示，先在低分辨率情况下使用光流算法得到图像的光流场，使用仿射变换将光流场转换到中等分辨率的情况下，利用中等分辨率大小的光流场和前一帧的图像计算得到一个中间插值(interpolation)图像，利用插值帧和后一帧的图像计算中等分辨率下的光流场。以此类推，得到原始分辨率下的光流场 。</p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/17.png" alt="17"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\17.png" alt="17"></p>
 <p>详参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/App_12062011/article/details/51880258?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522165854658816782391894059%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fblog.%2522%257D&amp;request_id=165854658816782391894059&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~blog~first_rank_ecpm_v1~rank_v31_ecpm-2-51880258-null-null.185^v2^control&amp;utm_term=%E5%85%89%E6%B5%81&amp;spm=1018.2226.3001.4450">LK算法改进（金字塔LK）</a></p>
 <p>然而，Coarse-to-Fine方法依然有 其局限性：</p>
 <p>① 图象分层方法和插值方法的选择对结果有着极大的影响；</p>
@@ -482,19 +487,19 @@ v^{k+1}=v^{-k}-\frac{I_y(I_xu^{-k}+I_yv^{-k}+I_t)}{4\alpha^2+I_x^2+I_y^2}\\</scr
 <h2 id="Brox光流法"><a href="#Brox光流法" class="headerlink" title="Brox光流法"></a>Brox光流法</h2><p>More details：<a target="_blank" rel="noopener" href="http://www.ipol.im/pub/art/2013/21/article_lr.pdf">http://www.ipol.im/pub/art/2013/21/article_lr.pdf</a></p>
 <p>加入了梯度恒定的假设即 <script type="math/tex">\nabla I(x+u, y+v, t+1)=\nabla I(x,y,t)</script>，损失函数写成</p>
 <script type="math/tex; mode=display">
-E_{data}=(I_2(x+u,y+v)-I_1(x,y))^2+\lambda(||\nabla I_2(x+u,y+v)-I_1(x,y)||^2)</script><h2 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h2><p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/18.png" alt="18"></p>
-<p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/19.png" alt="19"></p>
+E_{data}=(I_2(x+u,y+v)-I_1(x,y))^2+\lambda(||\nabla I_2(x+u,y+v)-I_1(x,y)||^2)</script><h2 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h2><p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\18.png" alt="18"></p>
+<p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\19.png" alt="19"></p>
 <h2 id="Source-code-and-paper"><a href="#Source-code-and-paper" class="headerlink" title="Source code and paper"></a>Source code and paper</h2><ol>
 <li><a target="_blank" rel="noopener" href="http://www.ipol.im/pub/art/2013/20/">Horn and Schunck Optical Flow</a></li>
 <li><a target="_blank" rel="noopener" href="http://www.ipol.im/pub/art/2013/26/">TV-L1 Optical Flow</a></li>
 <li><a target="_blank" rel="noopener" href="http://www.ipol.im/pub/art/2013/21/">Robust Optical Flow</a></li>
 </ol>
-<h2 id="光流的应用"><a href="#光流的应用" class="headerlink" title="光流的应用"></a>光流的应用</h2><h3 id="Optical-Mouse"><a href="#Optical-Mouse" class="headerlink" title="Optical Mouse"></a>Optical Mouse</h3><p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/20.png" alt="20"></p>
-<h3 id="Traffic-Monitoring"><a href="#Traffic-Monitoring" class="headerlink" title="Traffic Monitoring"></a>Traffic Monitoring</h3><p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/21.png" alt="21"></p>
-<h3 id="Video-Retiming"><a href="#Video-Retiming" class="headerlink" title="Video Retiming"></a>Video Retiming</h3><p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/22.png" alt="22"></p>
-<h3 id="Image-Stabilization"><a href="#Image-Stabilization" class="headerlink" title="Image Stabilization"></a>Image Stabilization</h3><p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/23.png" alt="23"></p>
-<h3 id="Face-Tracking"><a href="#Face-Tracking" class="headerlink" title="Face Tracking"></a>Face Tracking</h3><p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/24.png" alt="24"></p>
-<h3 id="Games"><a href="#Games" class="headerlink" title="Games"></a>Games</h3><p><img src="/images/loading.gif" data-original="/2022/07/14/Study-of-optical-flow/25.png" alt="25"></p>
+<h2 id="光流的应用"><a href="#光流的应用" class="headerlink" title="光流的应用"></a>光流的应用</h2><h3 id="Optical-Mouse"><a href="#Optical-Mouse" class="headerlink" title="Optical Mouse"></a>Optical Mouse</h3><p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\20.png" alt="20"></p>
+<h3 id="Traffic-Monitoring"><a href="#Traffic-Monitoring" class="headerlink" title="Traffic Monitoring"></a>Traffic Monitoring</h3><p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\21.png" alt="21"></p>
+<h3 id="Video-Retiming"><a href="#Video-Retiming" class="headerlink" title="Video Retiming"></a>Video Retiming</h3><p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\22.png" alt="22"></p>
+<h3 id="Image-Stabilization"><a href="#Image-Stabilization" class="headerlink" title="Image Stabilization"></a>Image Stabilization</h3><p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\23.png" alt="23"></p>
+<h3 id="Face-Tracking"><a href="#Face-Tracking" class="headerlink" title="Face Tracking"></a>Face Tracking</h3><p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\24.png" alt="24"></p>
+<h3 id="Games"><a href="#Games" class="headerlink" title="Games"></a>Games</h3><p><img data-src="/images/loading.gif" data-original="2022-07-14-Study-of-optical-flow\25.png" alt="25"></p>
 
     </div>
 
@@ -502,6 +507,23 @@ E_{data}=(I_2(x+u,y+v)-I_1(x,y))^2+\lambda(||\nabla I_2(x+u,y+v)-I_1(x,y)||^2)</
     
     
       
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lifengjun
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://lifengjun.xin/2022/07/14/Study-of-optical-flow/" title="Study of optical flow">https://lifengjun.xin/2022/07/14/Study-of-optical-flow/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
 
 
       <footer class="post-footer">
@@ -611,7 +633,7 @@ E_{data}=(I_2(x+u,y+v)-I_1(x,y))^2+\lambda(||\nabla I_2(x+u,y+v)-I_1(x,y)||^2)</
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">51</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -623,6 +645,9 @@ E_{data}=(I_2(x+u,y+v)-I_1(x,y))^2+\lambda(||\nabla I_2(x+u,y+v)-I_1(x,y)||^2)</
       <span class="links-of-author-item">
         <a href="mailto:543877815@qq.com" title="E-Mail → mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
@@ -768,6 +793,7 @@ E_{data}=(I_2(x+u,y+v)-I_1(x,y))^2+\lambda(||\nabla I_2(x+u,y+v)-I_1(x,y)||^2)</
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>

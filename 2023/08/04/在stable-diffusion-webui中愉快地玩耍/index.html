@@ -18,23 +18,27 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="个人学习笔记和日志">
+  <meta name="description" content="基于stable-diffusion-webui 1.5.1写的使用说明，更新时间是20230806。 预训练模型下载网站：  https:&#x2F;&#x2F;civitai.com&#x2F; https:&#x2F;&#x2F;www.liblibai.com&#x2F;  基本使用方法项目安装项目地址：https:&#x2F;&#x2F;github.com&#x2F;AUTOMATIC1111&#x2F;stable-diffusion-webui windows 环境下用 git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在stable-diffusion-webui中愉快地玩耍">
 <meta property="og:url" content="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/index.html">
 <meta property="og:site_name" content="逗比学长的博客">
-<meta property="og:description" content="个人学习笔记和日志">
+<meta property="og:description" content="基于stable-diffusion-webui 1.5.1写的使用说明，更新时间是20230806。 预训练模型下载网站：  https:&#x2F;&#x2F;civitai.com&#x2F; https:&#x2F;&#x2F;www.liblibai.com&#x2F;  基本使用方法项目安装项目地址：https:&#x2F;&#x2F;github.com&#x2F;AUTOMATIC1111&#x2F;stable-diffusion-webui windows 环境下用 git">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
+<meta property="og:image" content="https://lifengjun.xin/images/loading.gif">
 <meta property="article:published_time" content="2023-08-04T12:41:06.000Z">
-<meta property="article:modified_time" content="2023-08-04T12:44:32.591Z">
+<meta property="article:modified_time" content="2023-08-06T16:05:23.006Z">
 <meta property="article:author" content="lifengjun">
-<meta property="article:tag" content="image generation">
-<meta property="article:tag" content="image restoration">
 <meta property="article:tag" content="stable diffusion">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lifengjun.xin/images/loading.gif">
 
 <link rel="canonical" href="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/">
 
@@ -168,6 +172,11 @@
     <a href="/portal" rel="section"><i class="fa fa-rocket fa-fw"></i>传送门</a>
 
   </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>展览</a>
+
+  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -242,10 +251,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-08-04 20:41:06 / 修改时间：20:44:32" itemprop="dateCreated datePublished" datetime="2023-08-04T20:41:06+08:00">2023-08-04</time>
+              <time title="创建时间：2023-08-04 20:41:06" itemprop="dateCreated datePublished" datetime="2023-08-04T20:41:06+08:00">2023-08-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-07 00:05:23" itemprop="dateModified" datetime="2023-08-07T00:05:23+08:00">2023-08-07</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -274,7 +289,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>基于<code>stable-diffusion-webui 1.5.1</code>写的使用说明，更新时间是<code>20230806</code>。</p>
+<p>预训练模型下载网站：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://civitai.com/">https://civitai.com/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.liblibai.com/">https://www.liblibai.com/</a></li>
+</ol>
+<h1 id="基本使用方法"><a href="#基本使用方法" class="headerlink" title="基本使用方法"></a>基本使用方法</h1><h2 id="项目安装"><a href="#项目安装" class="headerlink" title="项目安装"></a>项目安装</h2><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">https://github.com/AUTOMATIC1111/stable-diffusion-webui</a></p>
+<p>windows 环境下用 <code>git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui</code> 下载到本地，双击执行 <code>webui-user.bat</code> 以自动安装环境。</p>
+<h2 id="目录说明"><a href="#目录说明" class="headerlink" title="目录说明"></a>目录说明</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- modules 				<span class="regexp">//</span> 网络定义</span><br><span class="line">- models  				<span class="regexp">//</span> 预训练模型存放位置</span><br><span class="line">	- Codeformer 		<span class="regexp">//</span> 人脸修复模型，包括检测和语义分割模型</span><br><span class="line">	- ControlNet 		<span class="regexp">//</span> ControlNet</span><br><span class="line">	- deepbooru  		<span class="regexp">//</span> TODO</span><br><span class="line">	- ESRGAN     		<span class="regexp">//</span> 通用图像超分模型</span><br><span class="line">	- GFPGAN     		<span class="regexp">//</span> 特定域图像超分模型</span><br><span class="line">	- hypernetworks		<span class="regexp">//</span> 超参数网络模型</span><br><span class="line">	- karlo				<span class="regexp">//</span> TODO</span><br><span class="line">	- LDSR				<span class="regexp">//</span> 利用LDM提高图像分辨率</span><br><span class="line">	- RealESRGAN    	<span class="regexp">//</span> 面相真实世界的通用图像超分模型</span><br><span class="line">	- Stable-Diffusion	<span class="regexp">//</span> stable-diffusion模型，包括Dreambooth</span><br><span class="line">	- SwinIR			<span class="regexp">//</span> 通用图像超分模型，基于Transformer</span><br><span class="line">	- VAE				<span class="regexp">//</span> VAE，用途如调整图像色彩分布</span><br><span class="line">	- VAE-aaprox		<span class="regexp">//</span> TO understanding</span><br><span class="line">- embeddings 			<span class="regexp">//</span> textual inversion权重存放位置</span><br><span class="line">- extensions 			<span class="regexp">//</span> 存放了从extensions中下载的其他功能的repository</span><br></pre></td></tr></table></figure>
+<span id="more"></span> 
+<h2 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h2><p>一般想安装什么插件就搜索关键字然后找到 <code>stars</code> 最多的那个。</p>
+<h3 id="sd-webui-stablesr"><a href="#sd-webui-stablesr" class="headerlink" title="sd-webui-stablesr"></a><a target="_blank" rel="noopener" href="https://github.com/pkuliyi2015/sd-webui-stablesr">sd-webui-stablesr</a></h3><p>基于<a target="_blank" rel="noopener" href="https://github.com/IceClear/StableSR/">StableSR</a>的图像超分模型。</p>
+<p>安装完成后可以在img2img的<code>Script</code>的选项卡中选择以看到相关选项：</p>
+<p><img data-src="/images/loading.gif" data-original="2023-08-04-在stable-diffusion-webui中愉快地玩耍/StableSR.png" alt="StableSR"></p>
+<p>​    下载好的StableSR预训练模型需要放置在<code>extensions\sd-webui-stablesr\models</code>中</p>
+<h3 id="multidiffusion-upscaler-for-automatic1111"><a href="#multidiffusion-upscaler-for-automatic1111" class="headerlink" title="multidiffusion-upscaler-for-automatic1111"></a><a target="_blank" rel="noopener" href="https://github.com/pkuliyi2015/multidiffusion-upscaler-for-automatic1111">multidiffusion-upscaler-for-automatic1111</a></h3><p>基于 <a target="_blank" rel="noopener" href="https://github.com/albarji/mixture-of-diffusers">Mixture of Diffusers</a> 和 <a target="_blank" rel="noopener" href="https://multidiffusion.github.io/">MultiDiffusion</a> 的分块扩散模型。</p>
+<p>安装完成后可以在txt2img和img2img的选项卡中看到相关选项：</p>
+<p><img data-src="/images/loading.gif" data-original="2023-08-04-在stable-diffusion-webui中愉快地玩耍/Tiled diffusion and tiled VAE.png" alt="Tiled diffusion and tiled VAE"></p>
+<h3 id="sd-webui-controlnet"><a href="#sd-webui-controlnet" class="headerlink" title="sd-webui-controlnet"></a><a target="_blank" rel="noopener" href="https://github.com/Mikubill/sd-webui-controlnet">sd-webui-controlnet</a></h3><p>基于 <a target="_blank" rel="noopener" href="https://github.com/lllyasviel/ControlNet">ControlNet</a> 的条件扩散模型。</p>
+<p>安装完成后可以在txt2img和img2img的选项卡中看到相关选项：</p>
+<p><img data-src="/images/loading.gif" data-original="2023-08-04-在stable-diffusion-webui中愉快地玩耍/ControlNet.png" alt="ControlNet"></p>
+<h3 id="a1111-sd-webui-tagcomplete"><a href="#a1111-sd-webui-tagcomplete" class="headerlink" title="a1111-sd-webui-tagcomplete"></a><a target="_blank" rel="noopener" href="https://github.com/DominikDoom/a1111-sd-webui-tagcomplete">a1111-sd-webui-tagcomplete</a></h3><p>一个prompt自动补全插件。可以在<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=zHTeZxzJ314">youtube</a>获取中文翻译。具体步骤如下：</p>
+<ol>
+<li>在<a href="ttps://drive.google.com/file/d/1tuJmli_xBz0Y2tQviHdbPuP9Q5UC_wKt/view">google drive</a>中下载<code>danbooru-SC.csv</code>简体中文翻译文件。</li>
+<li>将<code>danbooru-SC.csv</code>放在<code>extensions\a1111-sd-webui-tagcomplete\tags</code>中。</li>
+<li>于stable-diffusion-webui的配置中，<code>Settings\Tag Autocomplete</code>的<code>Tag filename</code>和<code>Translation filename</code>选项中分别设置<code>danbooru-SC.csv</code></li>
+</ol>
+<p>​    安装完成后可以在txt2img和img2img的prompt中看到相关选项：<img data-src="/images/loading.gif" data-original="2023-08-04-在stable-diffusion-webui中愉快地玩耍/tagcomplete.png" alt="tagcomplete"></p>
+<h3 id="sd-webui-prompt-all-in-one"><a href="#sd-webui-prompt-all-in-one" class="headerlink" title="sd-webui-prompt-all-in-one"></a><a target="_blank" rel="noopener" href="https://github.com/Physton/sd-webui-prompt-all-in-one">sd-webui-prompt-all-in-one</a></h3><p>sd-webui-prompt-all-in-one旨在提高提示词/反向提示词输入框的使用体验。它拥有更直观、强大的输入界面功能，它提供了自动翻译、历史记录和收藏等功能。可以结合<a target="_blank" rel="noopener" href="https://github.com/DominikDoom/a1111-sd-webui-tagcomplete">a1111-sd-webui-tagcomplete</a>使用</p>
+<p><img data-src="/images/loading.gif" data-original="2023-08-04-在stable-diffusion-webui中愉快地玩耍/prompt all in one.png" alt="prompt all in one"></p>
+
     </div>
 
     
@@ -282,11 +327,26 @@
     
       
 
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lifengjun
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/" title="在stable-diffusion-webui中愉快地玩耍">https://lifengjun.xin/2023/08/04/在stable-diffusion-webui中愉快地玩耍/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/image-generation/" rel="tag"># image generation</a>
-              <a href="/tags/image-restoration/" rel="tag"># image restoration</a>
               <a href="/tags/stable-diffusion/" rel="tag"># stable diffusion</a>
           </div>
 
@@ -359,6 +419,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">基本使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">项目安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E8%AF%B4%E6%98%8E"><span class="nav-number">1.2.</span> <span class="nav-text">目录说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-number">1.3.</span> <span class="nav-text">插件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sd-webui-stablesr"><span class="nav-number">1.3.1.</span> <span class="nav-text">sd-webui-stablesr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#multidiffusion-upscaler-for-automatic1111"><span class="nav-number">1.3.2.</span> <span class="nav-text">multidiffusion-upscaler-for-automatic1111</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sd-webui-controlnet"><span class="nav-number">1.3.3.</span> <span class="nav-text">sd-webui-controlnet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#a1111-sd-webui-tagcomplete"><span class="nav-number">1.3.4.</span> <span class="nav-text">a1111-sd-webui-tagcomplete</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sd-webui-prompt-all-in-one"><span class="nav-number">1.3.5.</span> <span class="nav-text">sd-webui-prompt-all-in-one</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -387,7 +448,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">51</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -399,6 +460,9 @@
       <span class="links-of-author-item">
         <a href="mailto:543877815@qq.com" title="E-Mail → mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
@@ -544,6 +608,7 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
