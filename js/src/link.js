@@ -2,7 +2,7 @@ link = {
   init: function() {
       var that = this;
       //这里设置的是刚才的 linklist.json 文件路径
-      $.getJSON("/source/photos/linkList.txt",
+      $.getJSON("/source/aigc/linkList.txt",
       function(data) {
           console.log(data)
           that.render(data);
