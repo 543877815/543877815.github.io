@@ -41,7 +41,7 @@
 <meta property="og:image" content="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/after%20outpainting__before%20outpainting.png">
 <meta property="og:image" content="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/Effect%20of%20outpainting.gif">
 <meta property="article:published_time" content="2023-08-04T12:41:06.000Z">
-<meta property="article:modified_time" content="2023-08-12T18:44:35.379Z">
+<meta property="article:modified_time" content="2023-08-14T16:25:29.768Z">
 <meta property="article:author" content="lifengjun">
 <meta property="article:tag" content="stable diffusion">
 <meta name="twitter:card" content="summary">
@@ -266,7 +266,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-08-13 02:44:35" itemprop="dateModified" datetime="2023-08-13T02:44:35+08:00">2023-08-13</time>
+                <time title="修改时间：2023-08-15 00:25:29" itemprop="dateModified" datetime="2023-08-15T00:25:29+08:00">2023-08-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -343,6 +343,13 @@
 <li><a target="_blank" rel="noopener" href="https://www.liblibai.com/modelinfo/f1f4d04417044118a53c777ec00d1c98">SHMILY梦幻水彩</a>，水彩风图像。</li>
 <li><a target="_blank" rel="noopener" href="https://civitai.com/models/36520">ghostmix_v20Bakedvae</a>，类似攻壳机动队图像。</li>
 <li><a target="_blank" rel="noopener" href="https://civitai.com/models/47274">XXMix_9realistic</a>，景深风格人像居多。</li>
+<li><p>majicMIX系列，如：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://civitai.com/models/41865/majicmix-fantasy">majicMIX fantasy 麦橘幻想</a></li>
+<li><a target="_blank" rel="noopener" href="https://civitai.com/models/56967?modelVersionId=89855">majicMIX lux 麦橘奇幻</a></li>
+<li><a target="_blank" rel="noopener" href="https://civitai.com/models/43331?modelVersionId=48289">majicMIX realistic 麦橘写实</a></li>
+</ol>
+</li>
 </ol>
 <h3 id="VAE"><a href="#VAE" class="headerlink" title="VAE"></a>VAE</h3><p><code>vae-ft-mse-840000-ema-pruned-vae.pt</code>：该模型可以使生成的图片对比度更高，色彩更加丰富。</p>
 <p>下面是例子：</p>
@@ -352,12 +359,22 @@
 <li><a target="_blank" rel="noopener" href="https://civitai.com/models/106312?modelVersionId=114163">Jellyfish-noise</a>，用来生成水母森林。</li>
 <li><a target="_blank" rel="noopener" href="https://civitai.com/models/28182?modelVersionId=62833">loong2-000015</a>，用来生成中国龙。</li>
 <li><a target="_blank" rel="noopener" href="https://civitai.com/models/47909?modelVersionId=52506">NijiExpressive_v2</a>，用来生成忍者风格的人物。</li>
-<li><a target="_blank" rel="noopener" href="https://civitai.com/models/13941/epinoiseoffset">epi_noiseoffset</a>，提高暗场景下单的对比度。</li>
+<li><p><a target="_blank" rel="noopener" href="https://civitai.com/models/13941/epinoiseoffset">epi_noiseoffset</a>，提高暗场景下单的对比度。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://civitai.com/models/11722/iu">iu_v35</a>，画的是IU。</p>
+</li>
+<li><a target="_blank" rel="noopener" href="https://civitai.com/models/53601/nwsjrealistic">BeautyNwsjMajic2-01</a>，画的是娜乌斯嘉。</li>
 </ol>
-<h3 id="embedding"><a href="#embedding" class="headerlink" title="embedding"></a>embedding</h3><ol>
-<li><h3 id="Hires-fix"><a href="#Hires-fix" class="headerlink" title="Hires.fix"></a>Hires.fix</h3></li>
+<h3 id="embedding"><a href="#embedding" class="headerlink" title="embedding"></a>embedding</h3><p>大部分是在做手，一部分在做肢体。</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://civitai.com/models/4629?modelVersionId=126470">ng_deepnegative_v1_75t</a></li>
+<li><a target="_blank" rel="noopener" href="https://civitai.com/models/11772">verybadimagenegative_v1.3</a></li>
+<li><a target="_blank" rel="noopener" href="https://civitai.com/models/7808?modelVersionId=25820">easynegative</a></li>
+<li><a target="_blank" rel="noopener" href="https://civitai.com/models/16993">badhandv4</a></li>
+<li><a target="_blank" rel="noopener" href="https://civitai.com/models/116230">badhandsv5-neg</a></li>
+<li>EasyNegativ====</li>
 </ol>
-<p>上采样方法：</p>
+<h3 id="Hires-fix"><a href="#Hires-fix" class="headerlink" title="Hires.fix"></a>Hires.fix</h3><p>上采样方法：</p>
 <h4 id="4x-UltrSharp"><a href="#4x-UltrSharp" class="headerlink" title="4x-UltrSharp"></a>4x-UltrSharp</h4><h4 id="R-ESRGAN-4x-Anime6B"><a href="#R-ESRGAN-4x-Anime6B" class="headerlink" title="R-ESRGAN 4x+Anime6B"></a>R-ESRGAN 4x+Anime6B</h4><h4 id="8x-NMKD-Superscale-150000-G"><a href="#8x-NMKD-Superscale-150000-G" class="headerlink" title="8x_NMKD-Superscale_150000_G"></a>8x_NMKD-Superscale_150000_G</h4><h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><h3 id="Inpainting"><a href="#Inpainting" class="headerlink" title="Inpainting"></a>Inpainting</h3><p>尽量使用和 <code>text2img</code> 相同的 prompt、negative prompt 和 sampling method 等。</p>
 <h3 id="Outpainting"><a href="#Outpainting" class="headerlink" title="Outpainting"></a>Outpainting</h3><p>一种使用场景是当相同的prompt无法在指定图像长宽比例生成对应的内容时，如 <code>1024X1024</code> 产生正常内容，而相同的prompt在 <code>1024x1536</code> 中可能产生多个主体，此时可以使用Outpainting进行在 <code>1024X1024</code> 的大小进行外拓展，以在期望图像比例达到类似的效果。</p>
 <p>一种方法是在 <code>img2img</code> 的 tab 中使用 <code>script</code> 的 <code>Outpainting mk2</code>，如下图设置将 <code>1024X1024</code> 的图片展成 <code>1024X1536</code> 的图片：</p>
