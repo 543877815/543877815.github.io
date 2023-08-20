@@ -109,7 +109,7 @@
       <h1 class="site-title">逗比学长的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
-      <p class="site-subtitle" itemprop="description">博客是写给我自己看的（叉腰）</p>
+      <p class="site-subtitle" itemprop="description">此人有“亿”点强迫症</p>
   </div>
 
   <div class="site-nav-right">
@@ -220,6 +220,90 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2023/08/20/%E5%9C%A8stable-diffusion%E4%BF%AE%E5%A4%8D%E6%89%8B%E5%A7%BF%E7%9A%84%E5%8E%9F%E7%90%86%E3%80%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E8%B7%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/08/20/%E5%9C%A8stable-diffusion%E4%BF%AE%E5%A4%8D%E6%89%8B%E5%A7%BF%E7%9A%84%E5%8E%9F%E7%90%86%E3%80%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E8%B7%B5/" class="post-title-link" itemprop="url">调教stable diffusion修复手姿的原理、分析与实践</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-08-20 11:25:48 / 修改时间：22:49:47" itemprop="dateCreated datePublished" datetime="2023-08-20T11:25:48+08:00">2023-08-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/stable-diffusion/" itemprop="url" rel="index"><span itemprop="name">stable diffusion</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2023/08/20/%E5%9C%A8stable-diffusion%E4%BF%AE%E5%A4%8D%E6%89%8B%E5%A7%BF%E7%9A%84%E5%8E%9F%E7%90%86%E3%80%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E8%B7%B5/" class="post-meta-item leancloud_visitors" data-flag-title="调教stable diffusion修复手姿的原理、分析与实践" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>无论是在商用的midjourney V5，还是在基于开源的stable diffusion的text to image的AI生图中，一个难以绕过去的问题是，人物手部姿势的稳定生成。一个容易遇到的问题场景是，当用户使用精心设计的prompt和denoising parameter生成一副高分辨率的图片，从整体构图，到色彩、人物神情等都比较的满意的时候，却发现人物的手部姿势发生扭曲，最常见的是产生六指。如果此时通过调整参数如textural inversion、lora和controlNet等，又会改变生成图像的分布，达不到原来的生成效果。另外一种方案是使用inpainting的方式将畸形的手部区域进行重绘，但是如果没有合适的方法和技巧，仅仅靠不同的随机数搜索好的手姿的分布，其搜索范围将会很大，并且在设备有限的情况下比较耗时。如何设计一个高效的inpainting的工作流将是一个需要不断探索和实践的方向。</p>
+<p>在这篇文章中，本人主要探索仅仅使用AI工具对手姿进行修复的工作流，不涉及其他如photoshop的工具的使用<del>（主要是没探索出来，用了效果一般）</del>。以下是我复现的效果。</p>
+<p><img src="/2023/08/20/%E5%9C%A8stable-diffusion%E4%BF%AE%E5%A4%8D%E6%89%8B%E5%A7%BF%E7%9A%84%E5%8E%9F%E7%90%86%E3%80%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E8%B7%B5/Effect of Inpainting.png" alt="Effect of Inpainting"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/08/20/%E5%9C%A8stable-diffusion%E4%BF%AE%E5%A4%8D%E6%89%8B%E5%A7%BF%E7%9A%84%E5%8E%9F%E7%90%86%E3%80%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E8%B7%B5/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -251,7 +335,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-08-15 00:25:29" itemprop="dateModified" datetime="2023-08-15T00:25:29+08:00">2023-08-15</time>
+                <time title="修改时间：2023-08-20 17:23:10" itemprop="dateModified" datetime="2023-08-20T17:23:10+08:00">2023-08-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1058,94 +1142,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
-      <meta itemprop="name" content="lifengjun">
-      <meta itemprop="description" content="个人学习笔记和日志">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="逗比学长的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/03/Recognize-Deeplearning.ai/" class="post-title-link" itemprop="url">Recognize Deeplearning.ai</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-10-03 19:35:23" itemprop="dateCreated datePublished" datetime="2019-10-03T19:35:23+08:00">2019-10-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-04 17:09:55" itemprop="dateModified" datetime="2021-07-04T17:09:55+08:00">2021-07-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/10/03/Recognize-Deeplearning.ai/" class="post-meta-item leancloud_visitors" data-flag-title="Recognize Deeplearning.ai" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这篇文章是我在网易云上学习吴恩达深度学习做的一些总结，我是先看了一遍视频才来做的总结，所以很多参考了黄广海博士的翻译和笔记，另外有的知识点与之前吴恩达机器学习上的有所重复，就记录得比较简单，可见<a href="/2019/09/18/Re-recognizing-machine-learning/#神经网络">这里</a>，还有一篇<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/58787190">笔记</a>也我觉得也记得很好。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/10/03/Recognize-Deeplearning.ai/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1217,14 +1213,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
