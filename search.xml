@@ -183,11 +183,11 @@
 <p>安装完成后可以在img2img的<code>Script</code>的选项卡中选择以看到相关选项：</p>
 <p><img src="/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/StableSR.png" alt="StableSR"></p>
 <p>​    下载好的StableSR预训练模型需要放置在<code>extensions\sd-webui-stablesr\models</code>中</p>
-<h2 id="界面设置"><a href="#界面设置" class="headerlink" title="界面设置"></a>界面设置</h2><h3 id="sd-vae显示"><a href="#sd-vae显示" class="headerlink" title="sd_vae显示"></a>sd_vae显示</h3><p>在<code>Setting-&gt;Show all pages</code>中找到<code>Quicksetting list</code>，在其中加上<code>sd_vae</code>，如下图所示：</p>
+<h4 id="Ultimate-SD-Upscale-manipulation"><a href="#Ultimate-SD-Upscale-manipulation" class="headerlink" title="Ultimate SD Upscale manipulation"></a>Ultimate SD Upscale manipulation</h4><h2 id="界面设置"><a href="#界面设置" class="headerlink" title="界面设置"></a>界面设置</h2><h3 id="sd-vae显示"><a href="#sd-vae显示" class="headerlink" title="sd_vae显示"></a>sd_vae显示</h3><p>在<code>Setting-&gt;Show all pages</code>中找到<code>Quicksetting list</code>，在其中加上<code>sd_vae</code>，如下图所示：</p>
 <p><img src="/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/sd_vae.png" alt="sd_vae"></p>
 <p>随后点击<code>Apply settings</code>之后<code>Reload UI</code>，可以看到页面上出现VAE的选项：</p>
 <p><img src="/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/sd_vae1.png" alt="sd_vae"></p>
-<h2 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h2><h3 id="Stable-Diffusion"><a href="#Stable-Diffusion" class="headerlink" title="Stable Diffusion"></a>Stable Diffusion</h3><ol>
+<h2 id><a href="#" class="headerlink" title=" "></a> </h2><h2 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h2><h3 id="Stable-Diffusion"><a href="#Stable-Diffusion" class="headerlink" title="Stable Diffusion"></a>Stable Diffusion</h3><ol>
 <li><a href="https://www.liblibai.com/modelinfo/f1f4d04417044118a53c777ec00d1c98">SHMILY梦幻水彩</a>，水彩风图像。</li>
 <li><a href="https://civitai.com/models/36520">ghostmix_v20Bakedvae</a>，类似攻壳机动队图像。</li>
 <li><a href="https://civitai.com/models/47274">XXMix_9realistic</a>，景深风格人像居多。</li>
@@ -197,6 +197,8 @@
 <li><a href="https://civitai.com/models/56967?modelVersionId=89855">majicMIX lux 麦橘奇幻</a></li>
 <li><a href="https://civitai.com/models/43331?modelVersionId=48289">majicMIX realistic 麦橘写实</a></li>
 </ol>
+</li>
+<li><p><a href="https://civitai.com/models/24779?modelVersionId=93208">Dark Sushi Mix 大颗寿司Mix</a>，二次元画风。</p>
 </li>
 </ol>
 <h3 id="VAE"><a href="#VAE" class="headerlink" title="VAE"></a>VAE</h3><p><code>vae-ft-mse-840000-ema-pruned-vae.pt</code>：该模型可以使生成的图片对比度更高，色彩更加丰富。</p>
@@ -215,6 +217,12 @@
 <li><a href="https://civitai.com/models/53601/nwsjrealistic">BeautyNwsjMajic2-01</a>，画的是娜乌斯嘉。</li>
 <li><a href="https://civitai.com/models/34855?modelVersionId=41111">sxz-death-knight</a>，魔兽世界的骑士风格。</li>
 <li><a href="https://huggingface.co/casque/hipoly_3dcg_v7-epoch-000012">hipoly_3dcg_v7-epoch</a>，可以增加手部出图的稳定性。</li>
+<li><a href="https://civitai.com/models/111408?modelVersionId=120178">geometric_shapes</a>，几何形状。</li>
+<li><a href="https://civitai.com/models/78605/ink-scenery-or?modelVersionId=83390">Ink scenery</a>，山水墨画。</li>
+<li><a href="https://civitai.com/models/104099?modelVersionId=111544">reference sheet-model</a>，绘制参考图</li>
+<li><a href="https://www.liblibai.com/modelinfo/368e04d537c149f8ba92c48e1e3319b3">焱落纱_v1.0</a>，熔岩衣服</li>
+<li><a href>Sun and Shadow（LAS)</a>，强烈的光影对比。</li>
+<li><a href="https://tensor.art/models/604139711994466966">FilmVelvia2</a>， 胶片风</li>
 </ol>
 <h3 id="LyCORIS-1"><a href="#LyCORIS-1" class="headerlink" title="LyCORIS"></a>LyCORIS</h3><ol>
 <li><a href="https://civitai.com/models/47085/envybetterhands-locon">GoodHand</a>，用来增加手部稳定出图概率。</li>
@@ -3966,10 +3974,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
 <li>$T_p$指当有p个处理器时，并行算法的执行时间</li>
 </ul>
 <p>规模为1,0000,0000的时候绘制的加速比 – 处理器曲线如下</p>
-<div id="echarts4627" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts6565" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts4627'));
+        var myChart = echarts.init(document.getElementById('echarts6565'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -4040,10 +4048,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
 <p>而通过cache缓冲后加速比，在前8核加速比按照处理器核数线性增加，达到8核以后有加速比有上升的趋势但是也有所波动并且不再呈现线性的趋势，因为处理器有限不能同时处理多个任务，这与之前查看windows系统CPU配置的4核8处理器相符。另外有Sp&gt;p，即产生了超线性加速比，通过维基百科得知，超线性加速比有几种可能的成因，如现代计算机的存储层次不同所带来的“高速缓存效应”；具体来说，较之顺序计算，在并行计算中，不仅参与计算的处理器数量更多，不同处理器的高速缓存也集合使用。而有鉴于此，集合的缓存便足以提供计算所需的存储量，算法执行时便不必使用速度较慢的内存，因而存储器读些时间便能大幅降低，这便对实际计算产生了额外的加速效果。</p>
 <h2 id="并行效率"><a href="#并行效率" class="headerlink" title="并行效率"></a>并行效率</h2><p>由加速比派生出的效率（英语：efficiency）则是量度性能的指标，并如下定义：</p>
 <script type="math/tex; mode=display">E_p=\frac{S_p}{p}=\frac{T_1}{pT_p}</script><p>绘制的并行效率与执行进程数的曲线如下：</p>
-<div id="echarts7107" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts9651" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts7107'));
+        var myChart = echarts.init(document.getElementById('echarts9651'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -4111,10 +4119,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
 <p>可以看到没有使用cache优化的时候并行效率一般介于0~1之间，通过cache命中优化使得产生超线性加速比并且并行效率大于1。</p>
 <h2 id="其他规模"><a href="#其他规模" class="headerlink" title="其他规模"></a>其他规模</h2><p>规模为10,000,000，则素数有664579个，运行时间如下</p>
 <p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/14.png" alt="14"></p>
-<div id="echarts5240" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts4999" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts5240'));
+        var myChart = echarts.init(document.getElementById('echarts4999'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -4178,10 +4186,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
 </script>
-<div id="echarts9143" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts2063" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts9143'));
+        var myChart = echarts.init(document.getElementById('echarts2063'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -4248,10 +4256,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
 </script>
 <p>规模为10,0000,0000，则素数有50847533个，运行时间如下</p>
 <p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/15.png" alt="15"></p>
-<div id="echarts2344" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts79" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts2344'));
+        var myChart = echarts.init(document.getElementById('echarts79'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -4315,10 +4323,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
 </script>
-<div id="echarts4501" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts1603" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts4501'));
+        var myChart = echarts.init(document.getElementById('echarts1603'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -4636,10 +4644,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
 <h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">&#123;% echarts 400 &#x27;85%&#x27; %&#125;</span><br><span class="line">\\TODO echarts option goes here</span><br><span class="line">&#123;% endecharts %&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="Bug"><a href="#Bug" class="headerlink" title="Bug"></a>Bug</h2><p>在所用主题目录下<code>&lt;font color=#c7254e&gt;layout\_partial&lt;/font&gt;中的</code><font color="#c7254e">head.swig</font>里加入：</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;http://echarts.baidu.com/dist/echarts.common.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><div id="echarts7654" style="width: 85%;height: 400px;margin: 0 auto"></div>
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><div id="echarts2155" style="width: 85%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts7654'));
+        var myChart = echarts.init(document.getElementById('echarts2155'));
 
         // 指定图表的配置项和数据
         var option = {
