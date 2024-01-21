@@ -1,5 +1,5 @@
+https://lifengjun.xin/2023/12/24/%E4%BB%A5%E4%B8%80%E7%A7%8D%E7%9B%B4%E8%A7%82%E7%9A%84%E6%96%B9%E5%BC%8F%E7%90%86%E8%A7%A3%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/
 https://lifengjun.xin/2023/08/20/%E5%9C%A8stable-diffusion%E4%BF%AE%E5%A4%8D%E6%89%8B%E5%A7%BF%E7%9A%84%E5%8E%9F%E7%90%86%E3%80%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E8%B7%B5/
 https://lifengjun.xin/2023/08/04/%E5%9C%A8stable-diffusion-webui%E4%B8%AD%E6%84%89%E5%BF%AB%E5%9C%B0%E7%8E%A9%E8%80%8D/
 https://lifengjun.xin/2023/04/12/%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E6%B1%82%E5%92%8C%E7%BA%A6%E5%AE%9A%E7%9A%84pytorch%E7%94%A8%E6%B3%95-torch-einsum/
 https://lifengjun.xin/2022/09/29/yolo%E7%B3%BB%E5%88%97%E6%A0%B8%E5%BF%83%E8%AE%BE%E8%AE%A1%E6%80%BB%E7%BB%93%E4%B8%8E%E6%80%9D%E8%80%83/
-https://lifengjun.xin/2022/07/14/Study-of-optical-flow/
