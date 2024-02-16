@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Vscode准备工作官方文档：https:&#x2F;&#x2F;code.visualstudio.com&#x2F;docs&#x2F;cpp&#x2F;config-mingw 参考：  在vscode运行c++：https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_62411288&#x2F;article&#x2F;details&#x2F;130796591 在vscode用makefile运行opengl：https:&#x2F;&#x2F;blog.csdn.net&#x2F;weix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Visual Studio与VSCode的C++配置手册">
+<meta property="og:url" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/index.html">
+<meta property="og:site_name" content="逗比学长的博客">
+<meta property="og:description" content="Vscode准备工作官方文档：https:&#x2F;&#x2F;code.visualstudio.com&#x2F;docs&#x2F;cpp&#x2F;config-mingw 参考：  在vscode运行c++：https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_62411288&#x2F;article&#x2F;details&#x2F;130796591 在vscode用makefile运行opengl：https:&#x2F;&#x2F;blog.csdn.net&#x2F;weix">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/vscode%E5%AE%89%E8%A3%85c++%20extension.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/root_directory.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/c_cpp_properties.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/gcc-c_cpp_properties_json_ui.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/gcc-c_cpp_properties_json.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Configure%20Default%20Build%20Task.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/build%20active%20file.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/gcc_tasks_json.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/run%20and%20debug.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Debug.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/root_directory.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/c_cpp_properties.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/msvc-c_cpp_properties_json_ui.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/msvc-c_cpp_properties_json.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/where%20cl.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/update%20x86%20cl%20to%20x64%20cl.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/where%20code.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/msvc-tasks.json.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Environment%20setting.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Import%20environment%20setting.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/propertySheet.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/common.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Include%20directory.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Library%20directory.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/library.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/post%20build%20event.png">
+<meta property="article:published_time" content="2024-02-01T13:34:27.000Z">
+<meta property="article:modified_time" content="2024-02-16T15:16:45.988Z">
+<meta property="article:author" content="lifengjun">
+<meta property="article:tag" content="word">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/vscode%E5%AE%89%E8%A3%85c++%20extension.png">
+
+<link rel="canonical" href="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css"><style>
+#needsharebutton-postbottom {
+  cursor: pointer;
+  height: 26px;
+  margin-top: 10px;
+  position: relative;
+}
+#needsharebutton-postbottom .btn {
+  border: 1px solid $btn-default-border-color;
+  border-radius: 3px;
+  display: initial;
+  padding: 1px 4px;
+}
+</style>
+<script src="/js/src/echarts.common.min.js"></script>
+
+  <title>Visual Studio与VSCode的C++配置手册 | 逗比学长的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/543877815" class="github-corner" aria-label="View source on GitHub">
+    <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#000000; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+    <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">逗比学长的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">此人有“亿”点强迫症</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-quick-check">
+
+    <a href="/quick-check" rel="section"><i class="fa fa-calendar fa-fw"></i>速查</a>
+
+  </li>
+        <li class="menu-item menu-item-portal">
+
+    <a href="/portal" rel="section"><i class="fa fa-rocket fa-fw"></i>传送门</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/aigc/" rel="section"><i class="fa fa-camera fa-fw"></i>展览</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Visual Studio与VSCode的C++配置手册
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-02-01 21:34:27" itemprop="dateCreated datePublished" datetime="2024-02-01T21:34:27+08:00">2024-02-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 23:16:45" itemprop="dateModified" datetime="2024-02-16T23:16:45+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/" class="post-meta-item leancloud_visitors" data-flag-title="Visual Studio与VSCode的C++配置手册" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Vscode准备工作"><a href="#Vscode准备工作" class="headerlink" title="Vscode准备工作"></a>Vscode准备工作</h1><p>官方文档：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-mingw">https://code.visualstudio.com/docs/cpp/config-mingw</a></p>
+<p>参考：</p>
+<ol>
+<li>在vscode运行c++：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62411288/article/details/130796591">https://blog.csdn.net/weixin_62411288/article/details/130796591</a></li>
+<li>在vscode用makefile运行opengl：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43952192/article/details/122877840">https://blog.csdn.net/weixin_43952192/article/details/122877840</a></li>
+<li>VSCode-Clang-MinGW-OpenGl配置教程：<a target="_blank" rel="noopener" href="https://apollomao.com/VSCode-Clang-MinGW-OpenGl%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/">https://apollomao.com/VSCode-Clang-MinGW-OpenGl%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/</a></li>
+<li>vscode中文乱码解决：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51723388/article/details/124171357">https://blog.csdn.net/weixin_51723388/article/details/124171357</a></li>
+</ol>
+<span id="more"></span>
+<ol>
+<li><p>下载vscode <a target="_blank" rel="noopener" href="https://code.visualstudio.com/">Visual Studio Code - Code Editing. Redefined</a></p>
+</li>
+<li><p>vscode安装c++扩展；</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/vscode安装c++ extension.png" alt="vscode安装c++ extension" style="width: 67%;"></p>
+</li>
+<li><p>g++的话推荐是安装 <a target="_blank" rel="noopener" href="https://www.msys2.org/">MSYS2</a>；MSVC的话需要安装 <a target="_blank" rel="noopener" href="https://visualstudio.microsoft.com/">visual studio</a>。</p>
+</li>
+<li><p>安装完打开<code>MSYS2 UCRT64</code>，安装<code>mingw-w64-ucrt-x86_64-gcc</code>和<code>mingw-w64-x86_64-toolchain</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pacman -S mingw-w64-ucrt-x86_64-gcc</span><br><span class="line">pacman -S --needed base-devel mingw-w64-x86_64-toolchain</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>给 <code>D:\msys64\mingw64\bin</code> 配置系统环境变量，重启电脑后在 <code>cmd</code> 上输入检查是否安装成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc --version</span><br><span class="line">g++ --version</span><br><span class="line">gdb --version</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果配置MSVC，需要给<code>D:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Tools\MSVC\14.38.33130\bin\Hostx64\x64</code> 配置环境变量，其中 <code>Hostx64</code> 表示软件编译时使用的处理器架构，即 x64 架构。第二个 <code>x64</code> 表示目标平台的处理器架构，即编译生成的可执行文件将在 x64 架构的处理器上运行，重启电脑后在 <code>cmd</code> 上输入检查是否安装成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cl -V</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Vscode-amp-amp-g"><a href="#Vscode-amp-amp-g" class="headerlink" title="Vscode &amp;&amp; g++"></a>Vscode &amp;&amp; g++</h1><p>官方文档：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-mingw">https://code.visualstudio.com/docs/cpp/config-mingw</a></p>
+<p>以<a target="_blank" rel="noopener" href="https://github.com/JoeyDeVries/LearnOpenGL">learnOpenGL</a>源码为例，需要配置的有glfw、glad等库。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>需要用cmake-gui进行 <code>Configure</code> 和 <code>Generate</code> 生成 <code>root_directory.h</code>，随后需要 Include 到目录中。</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/root_directory.png" alt="cmake-gui生成root_directory.h" style="width: 80%;"></p>
+<p>生成的<code>root_directory.h</code> 在 <code>abs_path/build_vs2022/configuration/</code> 中。</p>
+<p>这个代码运行的过程中会遇到 <strong>undefined reference to ‘stbi_load’</strong> 的问题，需要在代码 <code>#include &lt;stb_image.h&gt;</code> <strong>后</strong>加入 <code>STB_IMAGE_IMPLEMENTATION</code> 宏的定义。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stb_image.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> STB_IMAGE_IMPLEMENTATION</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置编译器-c-cpp-properties-json"><a href="#配置编译器-c-cpp-properties-json" class="headerlink" title="配置编译器(c_cpp_properties.json)"></a>配置编译器(c_cpp_properties.json)</h2><p>在vscode中输入 <code>ctrl+shift+p</code> 调出命令行，输入选择 <code>C/C++: Edit Configurations (UI)</code>：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/c_cpp_properties.png" alt="c_cpp_properties.json" style="width: 50%;"></p>
+<p>这个操作会在 <code>.vscode</code> 的文件夹中创建 <code>c_cpp_properties.json</code> 文件，其中需要设置的是 <code>Include Path</code>、 <code>Compiler Path</code> 和 <code>IntelliSense Mode</code> </p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/gcc-c_cpp_properties_json_ui.png" alt="gcc-c_cpp_properties_ui" style="width:70%;"></p>
+<p>其中：</p>
+<ul>
+<li><code>Compiler Path</code>是使用的编译器，这里选择 <code>gcc.exe</code>。</li>
+<li><code>IntelliSense Mode</code> 选择和编译器、运行平台对应的，这里选择 <code>windows-gcc-x64</code>。</li>
+<li><code>Include Path</code>是下述 xxx 文件中的 includepath 的搜索范围：</li>
+</ul>
+<p>这等价于在 <code>c_cpp_properties.json</code> 进行相应的编辑：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/gcc-c_cpp_properties_json.png" alt="gcc-c_cpp_properties_json" style="width: 50%;"></p>
+<h2 id="配置构建任务-tasks-json"><a href="#配置构建任务-tasks-json" class="headerlink" title="配置构建任务(tasks.json)"></a>配置构建任务(tasks.json)</h2><p>在vscode中输入 <code>ctrl+shift+p</code> 调出命令行，输入选择 <code>Tasks:Configure Default Build Task</code>：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Configure Default Build Task.png" alt="Configure Default Build Task" style="width: 50%;"></p>
+<p>再选择 <code>C/C++: g++.exe build active file</code>：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/build active file.png" alt="build active file" style="width: 50%;"></p>
+<p>这个操作会在 <code>.vscode</code> 的文件夹中创建 <code>tasks.json</code> 文件：</p>
+<p>其中，一些配置说明如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Compile&quot;</span><span class="punctuation">,</span> <span class="comment">// 任务名称，与launch.json的preLaunchTask相对应</span></span><br><span class="line">            <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;clang++&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span> <span class="comment">//编译时的参数</span></span><br><span class="line">                <span class="string">&quot;$&#123;file&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-o&quot;</span><span class="punctuation">,</span> <span class="comment">//指定输出文件名</span></span><br><span class="line">                <span class="string">&quot;$&#123;fileDirname&#125;/$&#123;fileBasenameNoExtension&#125;.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-g&quot;</span><span class="punctuation">,</span> <span class="comment">//添加gdb调试选项</span></span><br><span class="line">                <span class="string">&quot;-Wall&quot;</span><span class="punctuation">,</span>  <span class="comment">//开启额外警告</span></span><br><span class="line">                <span class="string">&quot;-static-libgcc&quot;</span><span class="punctuation">,</span> <span class="comment">//静态链接libgcc</span></span><br><span class="line">                <span class="string">&quot;--target=x86_64-w64-mingw&quot;</span><span class="punctuation">,</span>  <span class="comment">//clang编译器需要加上这条，因为它默认的target是msvc；如果用gcc或者linux要注释掉</span></span><br><span class="line">                <span class="string">&quot;-std=c++17&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-I$&#123;workspaceFolder&#125;/include&quot;</span><span class="punctuation">,</span> <span class="comment">//添加工作路径下的include</span></span><br><span class="line">                <span class="string">&quot;-L$&#123;workspaceFolder&#125;/lib&quot;</span><span class="punctuation">,</span> <span class="comment">//添加工作路径下的lib</span></span><br><span class="line">                <span class="string">&quot;-lglut32&quot;</span><span class="punctuation">,</span> <span class="comment">//使用glut</span></span><br><span class="line">                <span class="string">&quot;-lglu32&quot;</span><span class="punctuation">,</span>  <span class="comment">//使用glut</span></span><br><span class="line">                <span class="string">&quot;-lopengl32&quot;</span><span class="punctuation">,</span> <span class="comment">//使用opengl</span></span><br><span class="line">                <span class="string">&quot;-lglad&quot;</span><span class="punctuation">,</span> <span class="comment">//使用glad+glfw，这里可以先注释掉</span></span><br><span class="line">                <span class="string">&quot;-lglfw3&quot;</span><span class="punctuation">,</span>  <span class="comment">//使用glad+glfw，这里可以先注释掉 </span></span><br><span class="line">                <span class="string">&quot;-lglfw3dll&quot;</span><span class="punctuation">,</span> <span class="comment">//使用glad+glfw，这里可以先注释掉</span></span><br><span class="line">                <span class="string">&quot;-lgdi32&quot;</span><span class="punctuation">,</span>  <span class="comment">//使用glad+glfw，这里可以先注释掉</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;group&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;kind&quot;</span><span class="punctuation">:</span> <span class="string">&quot;build&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;isDefault&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span> <span class="comment">//表示快捷键Ctrl+Shift+B可以运行该任务</span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;presentation&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;echo&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;reveal&quot;</span><span class="punctuation">:</span> <span class="string">&quot;always&quot;</span><span class="punctuation">,</span> <span class="comment">// 执行任务时是否跳转到终端面板</span></span><br><span class="line">                <span class="attr">&quot;focus&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;panel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shared&quot;</span> <span class="comment">// 不同的文件的编译信息共享一个终端面板</span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>在这个demo中，配置如下：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/gcc_tasks_json.png" alt="gcc-tasks.json" style="width: 50%;"></p>
+<h2 id="配置调试设置-launch-json"><a href="#配置调试设置-launch-json" class="headerlink" title="配置调试设置(launch.json)"></a>配置调试设置(launch.json)</h2><p>菜单栏点击 <code>run and debug</code>，或者直接用 <code>F5</code>：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/run and debug.png" alt="run and debug" style="width: 25%;"></p>
+<p>选择 <code>C++(GDB/LLDB)</code>：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Debug.png" alt="(GDB/LLDB)" style="width: 50%;"></p>
+<p>这个操作会在 <code>.vscode</code> 的文件夹中创建 <code>launch.json</code> 文件：</p>
+<p>其相关配置说明如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;(gdb) Launch&quot;</span><span class="punctuation">,</span> <span class="comment">// 配置名称，将会在启动配置的下拉菜单中显示</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span> <span class="comment">// 配置类型，cppdbg对应cpptools提供的调试功能；可以认为此处只能是cppdbg</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span> <span class="comment">// 请求配置类型，可以为launch（启动）或attach（附加）</span></span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;/$&#123;fileBasenameNoExtension&#125;.exe&quot;</span><span class="punctuation">,</span> <span class="comment">// 将要进行调试的程序的路径</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span> <span class="comment">// 程序调试时传递给程序的命令行参数，一般设为空即可</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span> <span class="comment">// 设为true时程序将暂停在程序入口处，相当于在main上打断点</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="punctuation">,</span> <span class="comment">// 调试程序时的工作目录，此为工作区文件夹；改成$&#123;fileDirname&#125;可变为文件所在目录</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span> <span class="comment">// 环境变量</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span> <span class="comment">// 为true时使用单独的cmd窗口，与其它IDE一致；18年10月后设为false可调用VSC内置终端</span></span><br><span class="line">            <span class="attr">&quot;internalConsoleOptions&quot;</span><span class="punctuation">:</span> <span class="string">&quot;neverOpen&quot;</span><span class="punctuation">,</span> <span class="comment">// 如果不设为neverOpen，调试时会跳到“调试控制台”选项卡，你应该不需要对gdb手动输命令吧？</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span> <span class="comment">// 指定连接的调试器，可以为gdb或lldb。但我没试过lldb</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb.exe&quot;</span><span class="punctuation">,</span> <span class="comment">// 调试器路径，Windows下后缀不能省略，Linux下则不要</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="punctuation">&#123;</span> <span class="comment">// 模板自带，好像可以更好地显示STL容器的内容，具体作用自行Google</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Compile&quot;</span> <span class="comment">// 调试会话开始前执行的任务，一般为编译程序。与tasks.json的label相对应</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h1 id="Vscode-amp-amp-MSVC"><a href="#Vscode-amp-amp-MSVC" class="headerlink" title="Vscode &amp;&amp; MSVC"></a>Vscode &amp;&amp; MSVC</h1><p>官方文档：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-msvc">https://code.visualstudio.com/docs/cpp/config-msvc</a></p>
+<p>以<a target="_blank" rel="noopener" href="https://github.com/JoeyDeVries/LearnOpenGL">learnOpenGL</a>源码为例，需要配置的有glfw、glad等库。</p>
+<h2 id="准备工作-1"><a href="#准备工作-1" class="headerlink" title="准备工作"></a>准备工作</h2><p>准备工作基本同上。</p>
+<p>需要用cmake-gui进行 <code>Configure</code> 和 <code>Generate</code> 生成 <code>root_directory.h</code>，随后需要 Include 到目录中。</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/root_directory.png" alt="cmake-gui生成root_directory.h" style="width: 80%;"></p>
+<p>生成的<code>root_directory.h</code> 在 <code>abs_path/build_vs2022/configuration/</code> 中。</p>
+<p>这个代码运行的过程中会遇到 <strong>undefined reference to ‘stbi_load’</strong> 的问题，需要在代码 <code>#include &lt;stb_image.h&gt;</code> <strong>后</strong>加入 <code>STB_IMAGE_IMPLEMENTATION</code> 宏的定义。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stb_image.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> STB_IMAGE_IMPLEMENTATION</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置编译器-c-cpp-properties-json-1"><a href="#配置编译器-c-cpp-properties-json-1" class="headerlink" title="配置编译器(c_cpp_properties.json)"></a>配置编译器(c_cpp_properties.json)</h2><p>在vscode中输入 <code>ctrl+shift+p</code> 调出命令行，输入选择 <code>C/C++: Edit Configurations (UI)</code>：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/c_cpp_properties.png" alt="c_cpp_properties.json" style="width: 50%;"></p>
+<p>这个操作会在 <code>.vscode</code> 的文件夹中创建 <code>c_cpp_properties.json</code> 文件，其中需要设置的是 <code>Include Path</code>、 <code>Compiler Path</code> 和 <code>IntelliSense Mode</code> </p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/msvc-c_cpp_properties_json_ui.png" alt="msvc-c_cpp_properties_json_ui" style="width:70%;"></p>
+<p>其中：</p>
+<ul>
+<li><code>Compiler Path</code>是使用的编译器，这里选择 <code>cl.exe</code>。</li>
+<li><code>IntelliSense Mode</code> 选择和编译器、运行平台对应的，这里选择 <code>msvc-x64(legacy)</code>。</li>
+<li><code>Include Path</code>是下述 xxx 文件中的 includepath 的搜索范围：</li>
+</ul>
+<p>这等价于在 <code>c_cpp_properties.json</code> 进行相应的编辑：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/msvc-c_cpp_properties_json.png" alt="msvc-c_cpp_properties.json" style="width:80%;"></p>
+<h2 id="配置构建任务-tasks-json-1"><a href="#配置构建任务-tasks-json-1" class="headerlink" title="配置构建任务(tasks.json)"></a>配置构建任务(tasks.json)</h2><h3 id="使用Develop-Command-Prompt启动"><a href="#使用Develop-Command-Prompt启动" class="headerlink" title="使用Develop Command Prompt启动"></a>使用Develop Command Prompt启动</h3><p>启动Develop Command Prompt，输入<code>where cl</code>可以得到<code>cl.exe</code>的位置：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/where cl.png" alt="where cl" style="width:80%;"></p>
+<p>可以看到默认是使用<code>x86</code>，通过命令<code>set path=D:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Tools\MSVC\14.38.33130\bin\Hostx64\x64;%path%</code>修改环境变量可以修改为使用 <code>x64</code>：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/update x86 cl to x64 cl.png" alt="update x86 cl.exe to x64 cl.exe" style="width:80%;"></p>
+<p>命令行修改目录到vscode工作目录：</p>
+<p>使用<code>code .</code>使用vscode打开当前工作目录，如果<code>code</code>命令找不到，则需要配置vscode中<code>bin</code>目录添加到系统环境变量中。</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/where code.png" alt="where code" style="width:50%;"></p>
+<p>tasks.json配置如下，简单来说就是缺啥找啥，这里使用<a target="_blank" rel="noopener" href="https://www.voidtools.com/zh-cn/">everything</a>进行对报错缺失的文件进行快速搜索：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppbuild&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;C/C++: cl.exe build active file&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;D:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/bin/Hostx64/x64/cl.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">            <span class="string">&quot;/Zi&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/EHsc&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/I&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;D:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/include&quot;</span><span class="punctuation">,</span>     <span class="comment">// 附加项目录</span></span><br><span class="line">            <span class="string">&quot;/I&quot;</span><span class="punctuation">,</span>                              </span><br><span class="line">            <span class="string">&quot;C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/um&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/I&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/shared&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/I&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/ucrt&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/I&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/include&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/I&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;$&#123;workspaceFolder&#125;/includes/&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/I&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;$&#123;workspaceFolder&#125;/build_vs2022/configuration/&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/Fe:&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;$&#123;fileDirname&#125;\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</span><span class="punctuation">,</span>    </span><br><span class="line">            <span class="string">&quot;$&#123;file&#125;&quot;</span><span class="punctuation">,</span>    <span class="comment">// 需要参与编译的文件</span></span><br><span class="line">            <span class="string">&quot;$&#123;workspaceFolder&#125;/src/glad.c&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/MDd&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/link&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/MACHINE:x64&quot;</span><span class="punctuation">,</span>     <span class="comment">// 目标系统</span></span><br><span class="line">            <span class="string">&quot;/LIBPATH:$&#123;workspaceFolder&#125;/lib&quot;</span><span class="punctuation">,</span>       <span class="comment">// 静态链接路径</span></span><br><span class="line">            <span class="string">&quot;/LIBPATH:D:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/lib/x64&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/LIBPATH:C:/Program Files (x86)/Windows Kits/10/Lib/10.0.22621.0/um/x64&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/LIBPATH:C:/Program Files (x86)/Windows Kits/10/Lib/10.0.22621.0/ucrt/x64&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;glfw3.lib&quot;</span><span class="punctuation">,</span>    <span class="comment">// 静态链接</span></span><br><span class="line">            <span class="string">&quot;assimp.lib&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;freetype.lib&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;user32.lib&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;gdi32.lib&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;kernel32.lib&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;winspool.lib&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;shell32.lib&quot;</span></span><br><span class="line">        <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;options&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">            <span class="string">&quot;$msCompile&quot;</span></span><br><span class="line">        <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;group&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;kind&quot;</span><span class="punctuation">:</span> <span class="string">&quot;build&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;isDefault&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;detail&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Task generated by Debugger.&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+<p>其参数分为编译和连接两个阶段。</p>
+<p>其中：</p>
+<ul>
+<li><strong><code>&quot;/Zi&quot;</code></strong>：生成调试信息。</li>
+<li><strong><code>&quot;/EHsc&quot;</code></strong>：启用 C++ 异常处理。</li>
+<li><strong><code>&quot;/Fe:&quot;</code></strong>：指定输出文件的名称和路径。</li>
+<li><strong><code>$&#123;fileDirname&#125;\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</code></strong>：输出文件的路径和名称，基于当前打开的文件。</li>
+<li><strong><code>$&#123;file&#125;</code></strong>：当前打开的文件的路径和名称。</li>
+<li><strong><code>$&#123;workspaceFolder&#125;/src/glad.c&quot;</code></strong>：引入 <code>glad.c</code> 文件。</li>
+<li><strong><code>&quot;/I&quot;</code></strong>：指定包含文件的路径。</li>
+<li><strong><code>$&#123;workspaceFolder&#125;/includes&quot;</code></strong>：包含文件的路径。</li>
+<li><strong><code>$&#123;workspaceFolder&#125;/build_vs2022/configuration/&quot;</code></strong>：配置文件的路径。</li>
+<li><strong><code>&quot;/link&quot;</code></strong>：链接阶段的参数。</li>
+<li><strong><code>&quot;MACHINE:x64&quot;</code></strong>：指定目标机器架构为 64 位。</li>
+<li><strong><code>&quot;LIBPATH:$&#123;workspaceFolder&#125;/lib&quot;</code></strong>：指定库文件的路径。</li>
+<li><strong><code>&quot;glfw3.lib&quot;</code></strong>：链接到 <code>glfw3.lib</code> 库。</li>
+<li><strong><code>$&#123;workspaceFolder&#125;/build_vs2022/Debug/STB_IMAGE.lib&quot;</code></strong>：链接到 <code>STB_IMAGE.lib</code> 库。</li>
+<li><strong><code>$&#123;workspaceFolder&#125;/build_vs2022/Debug/GLAD.lib&quot;</code></strong>：链接到 <code>GLAD.lib</code> 库。</li>
+</ul>
+<h3 id="使用vscode直接启动-还没验证"><a href="#使用vscode直接启动-还没验证" class="headerlink" title="使用vscode直接启动(还没验证)"></a>使用vscode直接启动(还没验证)</h3><p>需要加上<code>&quot;windows&quot;</code> 部分，可从官网上复制：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-msvc">https://code.visualstudio.com/docs/cpp/config-msvc</a></p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/msvc-tasks.json.png" alt="msvc-tasks.json" style="width:80%;"></p>
+<p>这里的：<strong><code>&quot;\&quot;D:/Program Files/Microsoft Visual Studio/2022/Professional/Common7/Tools/VsDevCmd.bat\&quot;&quot;</code></strong>：这是要运行的批处理文件的路径。在这里，<code>VsDevCmd.bat</code> 是 <strong>Visual Studio</strong> 的开发者命令提示符批处理文件。它设置了一些环境变量和路径，以便在命令行中使用 <strong>Visual Studio</strong> 的工具和编译器。</p>
+<h1 id="Visual-Studio"><a href="#Visual-Studio" class="headerlink" title="Visual Studio"></a>Visual Studio</h1><p><strong>环境设置</strong>。用一个油管up主thecherno的环境设置：<a target="_blank" rel="noopener" href="http://thecherno.com/vs">http://thecherno.com/vs</a></p>
+<p>在Visual Studio中，使用<code>工具-&gt;导入导出设置</code>：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Environment setting.png" alt="Environment setting" style="width:50%;"></p>
+<p>一直点下一步，在这个界面通过预览来找到需要加载的环境配置文件：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Import environment setting.png" alt="Import environment setting" style="width:50%;"></p>
+<p><strong>属性管理器。</strong>使用属性管理器复用项目配置的时候，创建了 <code>PropertySheet.prop</code> 文件需要点击到项目的里面的<code>PropertySheet</code>才能打开图形窗口编辑，直接双击 <code>PropertySheet.prop</code> 是以文本编辑的形式打开。</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/propertySheet.png" alt="propertySheet" style="width:30%;"></p>
+<p><strong>输出路径</strong>，可以将输出目录和中间目录(主要包括 <code>.obj</code>、 <code>.pdb</code> 文件等)修改到 <code>bin</code> 下。</p>
+<p> <img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/common.png" alt="常规配置" style="width: 75%;"></p>
+<p><strong>附加包含目录</strong>和<strong>附加库目录</strong>中尽量使用宏来设定。</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Include directory.png" alt="Include directory" style="width:75%;"></p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Library directory.png" alt="Library directory" style="width:75%;"></p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/library.png" alt="library" style="width:75%;"></p>
+<p><strong>生成事件</strong>可用于拷贝 <code>.dll</code> 到 <code>.exe</code> 所在目录：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/post build event.png" alt="post event" style="width:75%;"></p>
+
+    </div>
+
+    
+    
+    
+      
+<div class="post-widgets">
+      <div id="needsharebutton-postbottom">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lifengjun
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/" title="Visual Studio与VSCode的C++配置手册">https://lifengjun.xin/2024/02/01/VS与VSC的C-配置手册/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/word/" rel="tag"># word</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/12/24/%E4%BB%A5%E4%B8%80%E7%A7%8D%E7%9B%B4%E8%A7%82%E7%9A%84%E6%96%B9%E5%BC%8F%E7%90%86%E8%A7%A3%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/" rel="prev" title="以一种直观的方式理解扩散生成模型">
+      <i class="fa fa-chevron-left"></i> 以一种直观的方式理解扩散生成模型
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vscode%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">Vscode准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vscode-amp-amp-g"><span class="nav-number">2.</span> <span class="nav-text">Vscode &amp;&amp; g++</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%BC%96%E8%AF%91%E5%99%A8-c-cpp-properties-json"><span class="nav-number">2.2.</span> <span class="nav-text">配置编译器(c_cpp_properties.json)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%9E%84%E5%BB%BA%E4%BB%BB%E5%8A%A1-tasks-json"><span class="nav-number">2.3.</span> <span class="nav-text">配置构建任务(tasks.json)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%B0%83%E8%AF%95%E8%AE%BE%E7%BD%AE-launch-json"><span class="nav-number">2.4.</span> <span class="nav-text">配置调试设置(launch.json)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vscode-amp-amp-MSVC"><span class="nav-number">3.</span> <span class="nav-text">Vscode &amp;&amp; MSVC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C-1"><span class="nav-number">3.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%BC%96%E8%AF%91%E5%99%A8-c-cpp-properties-json-1"><span class="nav-number">3.2.</span> <span class="nav-text">配置编译器(c_cpp_properties.json)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%9E%84%E5%BB%BA%E4%BB%BB%E5%8A%A1-tasks-json-1"><span class="nav-number">3.3.</span> <span class="nav-text">配置构建任务(tasks.json)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Develop-Command-Prompt%E5%90%AF%E5%8A%A8"><span class="nav-number">3.3.1.</span> <span class="nav-text">使用Develop Command Prompt启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8vscode%E7%9B%B4%E6%8E%A5%E5%90%AF%E5%8A%A8-%E8%BF%98%E6%B2%A1%E9%AA%8C%E8%AF%81"><span class="nav-number">3.3.2.</span> <span class="nav-text">使用vscode直接启动(还没验证)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Visual-Studio"><span class="nav-number">4.</span> <span class="nav-text">Visual Studio</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lifengjun"
+      src="https://avatars0.githubusercontent.com/u/25082467?v=4">
+  <p class="site-author-name" itemprop="name">lifengjun</p>
+  <div class="site-description" itemprop="description">个人学习笔记和日志</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/543877815" title="GitHub → https://github.com/543877815" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:543877815@qq.com" title="E-Mail → mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lifengjun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"7lnT19QcEeBPLqbdFz6RXmt6-gzGzoHsz","app_key":"0m9MYgfgDxi38rb89hJ8gUHF","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/',]
+      });
+      });
+  </script>
+
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+      pbOptions = {};
+        pbOptions.iconStyle = "box";
+        pbOptions.boxForm = "horizontal";
+        pbOptions.position = "bottomCenter";
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+  </script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '970dc8fd856c3e17f9f0',
+      clientSecret: '7f6d29828dd1f4a02336c480ba1012f1851b0eb0',
+      repo        : '543877815.github.io',
+      owner       : '543877815',
+      admin       : ['543877815'],
+      id          : '48c7b9211d7c84edd0b91c19aadfd7ff',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

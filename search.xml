@@ -1,6 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Visual Studio与VSCode的C++配置手册</title>
+    <url>/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<h1 id="Vscode准备工作"><a href="#Vscode准备工作" class="headerlink" title="Vscode准备工作"></a>Vscode准备工作</h1><p>官方文档：<a href="https://code.visualstudio.com/docs/cpp/config-mingw">https://code.visualstudio.com/docs/cpp/config-mingw</a></p>
+<p>参考：</p>
+<ol>
+<li>在vscode运行c++：<a href="https://blog.csdn.net/weixin_62411288/article/details/130796591">https://blog.csdn.net/weixin_62411288/article/details/130796591</a></li>
+<li>在vscode用makefile运行opengl：<a href="https://blog.csdn.net/weixin_43952192/article/details/122877840">https://blog.csdn.net/weixin_43952192/article/details/122877840</a></li>
+<li>VSCode-Clang-MinGW-OpenGl配置教程：<a href="https://apollomao.com/VSCode-Clang-MinGW-OpenGl%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/">https://apollomao.com/VSCode-Clang-MinGW-OpenGl%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/</a></li>
+<li>vscode中文乱码解决：<a href="https://blog.csdn.net/weixin_51723388/article/details/124171357">https://blog.csdn.net/weixin_51723388/article/details/124171357</a></li>
+</ol>
+<span id="more"></span>
+<ol>
+<li><p>下载vscode <a href="https://code.visualstudio.com/">Visual Studio Code - Code Editing. Redefined</a></p>
+</li>
+<li><p>vscode安装c++扩展；</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/vscode安装c++ extension.png" alt="vscode安装c++ extension" style="width: 67%;"></p>
+</li>
+<li><p>g++的话推荐是安装 <a href="https://www.msys2.org/">MSYS2</a>；MSVC的话需要安装 <a href="https://visualstudio.microsoft.com/">visual studio</a>。</p>
+</li>
+<li><p>安装完打开<code>MSYS2 UCRT64</code>，安装<code>mingw-w64-ucrt-x86_64-gcc</code>和<code>mingw-w64-x86_64-toolchain</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pacman -S mingw-w64-ucrt-x86_64-gcc</span><br><span class="line">pacman -S --needed base-devel mingw-w64-x86_64-toolchain</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>给 <code>D:\msys64\mingw64\bin</code> 配置系统环境变量，重启电脑后在 <code>cmd</code> 上输入检查是否安装成功：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gcc --version</span><br><span class="line">g++ --version</span><br><span class="line">gdb --version</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果配置MSVC，需要给<code>D:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Tools\MSVC\14.38.33130\bin\Hostx64\x64</code> 配置环境变量，其中 <code>Hostx64</code> 表示软件编译时使用的处理器架构，即 x64 架构。第二个 <code>x64</code> 表示目标平台的处理器架构，即编译生成的可执行文件将在 x64 架构的处理器上运行，重启电脑后在 <code>cmd</code> 上输入检查是否安装成功：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cl -V</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Vscode-amp-amp-g"><a href="#Vscode-amp-amp-g" class="headerlink" title="Vscode &amp;&amp; g++"></a>Vscode &amp;&amp; g++</h1><p>官方文档：<a href="https://code.visualstudio.com/docs/cpp/config-mingw">https://code.visualstudio.com/docs/cpp/config-mingw</a></p>
+<p>以<a href="https://github.com/JoeyDeVries/LearnOpenGL">learnOpenGL</a>源码为例，需要配置的有glfw、glad等库。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>需要用cmake-gui进行 <code>Configure</code> 和 <code>Generate</code> 生成 <code>root_directory.h</code>，随后需要 Include 到目录中。</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/root_directory.png" alt="cmake-gui生成root_directory.h" style="width: 80%;"></p>
+<p>生成的<code>root_directory.h</code> 在 <code>abs_path/build_vs2022/configuration/</code> 中。</p>
+<p>这个代码运行的过程中会遇到 <strong>undefined reference to ‘stbi_load’</strong> 的问题，需要在代码 <code>#include &lt;stb_image.h&gt;</code> <strong>后</strong>加入 <code>STB_IMAGE_IMPLEMENTATION</code> 宏的定义。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stb_image.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> STB_IMAGE_IMPLEMENTATION</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置编译器-c-cpp-properties-json"><a href="#配置编译器-c-cpp-properties-json" class="headerlink" title="配置编译器(c_cpp_properties.json)"></a>配置编译器(c_cpp_properties.json)</h2><p>在vscode中输入 <code>ctrl+shift+p</code> 调出命令行，输入选择 <code>C/C++: Edit Configurations (UI)</code>：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/c_cpp_properties.png" alt="c_cpp_properties.json" style="width: 50%;"></p>
+<p>这个操作会在 <code>.vscode</code> 的文件夹中创建 <code>c_cpp_properties.json</code> 文件，其中需要设置的是 <code>Include Path</code>、 <code>Compiler Path</code> 和 <code>IntelliSense Mode</code> </p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/gcc-c_cpp_properties_json_ui.png" alt="gcc-c_cpp_properties_ui" style="width:70%;"></p>
+<p>其中：</p>
+<ul>
+<li><code>Compiler Path</code>是使用的编译器，这里选择 <code>gcc.exe</code>。</li>
+<li><code>IntelliSense Mode</code> 选择和编译器、运行平台对应的，这里选择 <code>windows-gcc-x64</code>。</li>
+<li><code>Include Path</code>是下述 xxx 文件中的 includepath 的搜索范围：</li>
+</ul>
+<p>这等价于在 <code>c_cpp_properties.json</code> 进行相应的编辑：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/gcc-c_cpp_properties_json.png" alt="gcc-c_cpp_properties_json" style="width: 50%;"></p>
+<h2 id="配置构建任务-tasks-json"><a href="#配置构建任务-tasks-json" class="headerlink" title="配置构建任务(tasks.json)"></a>配置构建任务(tasks.json)</h2><p>在vscode中输入 <code>ctrl+shift+p</code> 调出命令行，输入选择 <code>Tasks:Configure Default Build Task</code>：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Configure Default Build Task.png" alt="Configure Default Build Task" style="width: 50%;"></p>
+<p>再选择 <code>C/C++: g++.exe build active file</code>：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/build active file.png" alt="build active file" style="width: 50%;"></p>
+<p>这个操作会在 <code>.vscode</code> 的文件夹中创建 <code>tasks.json</code> 文件：</p>
+<p>其中，一些配置说明如下：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Compile&quot;</span><span class="punctuation">,</span> <span class="comment">// 任务名称，与launch.json的preLaunchTask相对应</span></span><br><span class="line">            <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;clang++&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span> <span class="comment">//编译时的参数</span></span><br><span class="line">                <span class="string">&quot;$&#123;file&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-o&quot;</span><span class="punctuation">,</span> <span class="comment">//指定输出文件名</span></span><br><span class="line">                <span class="string">&quot;$&#123;fileDirname&#125;/$&#123;fileBasenameNoExtension&#125;.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-g&quot;</span><span class="punctuation">,</span> <span class="comment">//添加gdb调试选项</span></span><br><span class="line">                <span class="string">&quot;-Wall&quot;</span><span class="punctuation">,</span>  <span class="comment">//开启额外警告</span></span><br><span class="line">                <span class="string">&quot;-static-libgcc&quot;</span><span class="punctuation">,</span> <span class="comment">//静态链接libgcc</span></span><br><span class="line">                <span class="string">&quot;--target=x86_64-w64-mingw&quot;</span><span class="punctuation">,</span>  <span class="comment">//clang编译器需要加上这条，因为它默认的target是msvc；如果用gcc或者linux要注释掉</span></span><br><span class="line">                <span class="string">&quot;-std=c++17&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-I$&#123;workspaceFolder&#125;/include&quot;</span><span class="punctuation">,</span> <span class="comment">//添加工作路径下的include</span></span><br><span class="line">                <span class="string">&quot;-L$&#123;workspaceFolder&#125;/lib&quot;</span><span class="punctuation">,</span> <span class="comment">//添加工作路径下的lib</span></span><br><span class="line">                <span class="string">&quot;-lglut32&quot;</span><span class="punctuation">,</span> <span class="comment">//使用glut</span></span><br><span class="line">                <span class="string">&quot;-lglu32&quot;</span><span class="punctuation">,</span>  <span class="comment">//使用glut</span></span><br><span class="line">                <span class="string">&quot;-lopengl32&quot;</span><span class="punctuation">,</span> <span class="comment">//使用opengl</span></span><br><span class="line">                <span class="string">&quot;-lglad&quot;</span><span class="punctuation">,</span> <span class="comment">//使用glad+glfw，这里可以先注释掉</span></span><br><span class="line">                <span class="string">&quot;-lglfw3&quot;</span><span class="punctuation">,</span>  <span class="comment">//使用glad+glfw，这里可以先注释掉 </span></span><br><span class="line">                <span class="string">&quot;-lglfw3dll&quot;</span><span class="punctuation">,</span> <span class="comment">//使用glad+glfw，这里可以先注释掉</span></span><br><span class="line">                <span class="string">&quot;-lgdi32&quot;</span><span class="punctuation">,</span>  <span class="comment">//使用glad+glfw，这里可以先注释掉</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;group&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;kind&quot;</span><span class="punctuation">:</span> <span class="string">&quot;build&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;isDefault&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span> <span class="comment">//表示快捷键Ctrl+Shift+B可以运行该任务</span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;presentation&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;echo&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;reveal&quot;</span><span class="punctuation">:</span> <span class="string">&quot;always&quot;</span><span class="punctuation">,</span> <span class="comment">// 执行任务时是否跳转到终端面板</span></span><br><span class="line">                <span class="attr">&quot;focus&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;panel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shared&quot;</span> <span class="comment">// 不同的文件的编译信息共享一个终端面板</span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>在这个demo中，配置如下：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/gcc_tasks_json.png" alt="gcc-tasks.json" style="width: 50%;"></p>
+<h2 id="配置调试设置-launch-json"><a href="#配置调试设置-launch-json" class="headerlink" title="配置调试设置(launch.json)"></a>配置调试设置(launch.json)</h2><p>菜单栏点击 <code>run and debug</code>，或者直接用 <code>F5</code>：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/run and debug.png" alt="run and debug" style="width: 25%;"></p>
+<p>选择 <code>C++(GDB/LLDB)</code>：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Debug.png" alt="(GDB/LLDB)" style="width: 50%;"></p>
+<p>这个操作会在 <code>.vscode</code> 的文件夹中创建 <code>launch.json</code> 文件：</p>
+<p>其相关配置说明如下：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;(gdb) Launch&quot;</span><span class="punctuation">,</span> <span class="comment">// 配置名称，将会在启动配置的下拉菜单中显示</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span> <span class="comment">// 配置类型，cppdbg对应cpptools提供的调试功能；可以认为此处只能是cppdbg</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span> <span class="comment">// 请求配置类型，可以为launch（启动）或attach（附加）</span></span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;/$&#123;fileBasenameNoExtension&#125;.exe&quot;</span><span class="punctuation">,</span> <span class="comment">// 将要进行调试的程序的路径</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span> <span class="comment">// 程序调试时传递给程序的命令行参数，一般设为空即可</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span> <span class="comment">// 设为true时程序将暂停在程序入口处，相当于在main上打断点</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="punctuation">,</span> <span class="comment">// 调试程序时的工作目录，此为工作区文件夹；改成$&#123;fileDirname&#125;可变为文件所在目录</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span> <span class="comment">// 环境变量</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span> <span class="comment">// 为true时使用单独的cmd窗口，与其它IDE一致；18年10月后设为false可调用VSC内置终端</span></span><br><span class="line">            <span class="attr">&quot;internalConsoleOptions&quot;</span><span class="punctuation">:</span> <span class="string">&quot;neverOpen&quot;</span><span class="punctuation">,</span> <span class="comment">// 如果不设为neverOpen，调试时会跳到“调试控制台”选项卡，你应该不需要对gdb手动输命令吧？</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span> <span class="comment">// 指定连接的调试器，可以为gdb或lldb。但我没试过lldb</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb.exe&quot;</span><span class="punctuation">,</span> <span class="comment">// 调试器路径，Windows下后缀不能省略，Linux下则不要</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="punctuation">&#123;</span> <span class="comment">// 模板自带，好像可以更好地显示STL容器的内容，具体作用自行Google</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Compile&quot;</span> <span class="comment">// 调试会话开始前执行的任务，一般为编译程序。与tasks.json的label相对应</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h1 id="Vscode-amp-amp-MSVC"><a href="#Vscode-amp-amp-MSVC" class="headerlink" title="Vscode &amp;&amp; MSVC"></a>Vscode &amp;&amp; MSVC</h1><p>官方文档：<a href="https://code.visualstudio.com/docs/cpp/config-msvc">https://code.visualstudio.com/docs/cpp/config-msvc</a></p>
+<p>以<a href="https://github.com/JoeyDeVries/LearnOpenGL">learnOpenGL</a>源码为例，需要配置的有glfw、glad等库。</p>
+<h2 id="准备工作-1"><a href="#准备工作-1" class="headerlink" title="准备工作"></a>准备工作</h2><p>准备工作基本同上。</p>
+<p>需要用cmake-gui进行 <code>Configure</code> 和 <code>Generate</code> 生成 <code>root_directory.h</code>，随后需要 Include 到目录中。</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/root_directory.png" alt="cmake-gui生成root_directory.h" style="width: 80%;"></p>
+<p>生成的<code>root_directory.h</code> 在 <code>abs_path/build_vs2022/configuration/</code> 中。</p>
+<p>这个代码运行的过程中会遇到 <strong>undefined reference to ‘stbi_load’</strong> 的问题，需要在代码 <code>#include &lt;stb_image.h&gt;</code> <strong>后</strong>加入 <code>STB_IMAGE_IMPLEMENTATION</code> 宏的定义。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stb_image.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> STB_IMAGE_IMPLEMENTATION</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置编译器-c-cpp-properties-json-1"><a href="#配置编译器-c-cpp-properties-json-1" class="headerlink" title="配置编译器(c_cpp_properties.json)"></a>配置编译器(c_cpp_properties.json)</h2><p>在vscode中输入 <code>ctrl+shift+p</code> 调出命令行，输入选择 <code>C/C++: Edit Configurations (UI)</code>：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/c_cpp_properties.png" alt="c_cpp_properties.json" style="width: 50%;"></p>
+<p>这个操作会在 <code>.vscode</code> 的文件夹中创建 <code>c_cpp_properties.json</code> 文件，其中需要设置的是 <code>Include Path</code>、 <code>Compiler Path</code> 和 <code>IntelliSense Mode</code> </p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/msvc-c_cpp_properties_json_ui.png" alt="msvc-c_cpp_properties_json_ui" style="width:70%;"></p>
+<p>其中：</p>
+<ul>
+<li><code>Compiler Path</code>是使用的编译器，这里选择 <code>cl.exe</code>。</li>
+<li><code>IntelliSense Mode</code> 选择和编译器、运行平台对应的，这里选择 <code>msvc-x64(legacy)</code>。</li>
+<li><code>Include Path</code>是下述 xxx 文件中的 includepath 的搜索范围：</li>
+</ul>
+<p>这等价于在 <code>c_cpp_properties.json</code> 进行相应的编辑：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/msvc-c_cpp_properties_json.png" alt="msvc-c_cpp_properties.json" style="width:80%;"></p>
+<h2 id="配置构建任务-tasks-json-1"><a href="#配置构建任务-tasks-json-1" class="headerlink" title="配置构建任务(tasks.json)"></a>配置构建任务(tasks.json)</h2><h3 id="使用Develop-Command-Prompt启动"><a href="#使用Develop-Command-Prompt启动" class="headerlink" title="使用Develop Command Prompt启动"></a>使用Develop Command Prompt启动</h3><p>启动Develop Command Prompt，输入<code>where cl</code>可以得到<code>cl.exe</code>的位置：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/where cl.png" alt="where cl" style="width:80%;"></p>
+<p>可以看到默认是使用<code>x86</code>，通过命令<code>set path=D:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Tools\MSVC\14.38.33130\bin\Hostx64\x64;%path%</code>修改环境变量可以修改为使用 <code>x64</code>：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/update x86 cl to x64 cl.png" alt="update x86 cl.exe to x64 cl.exe" style="width:80%;"></p>
+<p>命令行修改目录到vscode工作目录：</p>
+<p>使用<code>code .</code>使用vscode打开当前工作目录，如果<code>code</code>命令找不到，则需要配置vscode中<code>bin</code>目录添加到系统环境变量中。</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/where code.png" alt="where code" style="width:50%;"></p>
+<p>tasks.json配置如下，简单来说就是缺啥找啥，这里使用<a href="https://www.voidtools.com/zh-cn/">everything</a>进行对报错缺失的文件进行快速搜索：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppbuild&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;C/C++: cl.exe build active file&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;D:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/bin/Hostx64/x64/cl.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">            <span class="string">&quot;/Zi&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/EHsc&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/I&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;D:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/include&quot;</span><span class="punctuation">,</span>     <span class="comment">// 附加项目录</span></span><br><span class="line">            <span class="string">&quot;/I&quot;</span><span class="punctuation">,</span>                              </span><br><span class="line">            <span class="string">&quot;C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/um&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/I&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/shared&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/I&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/ucrt&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/I&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/include&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/I&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;$&#123;workspaceFolder&#125;/includes/&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/I&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;$&#123;workspaceFolder&#125;/build_vs2022/configuration/&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/Fe:&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;$&#123;fileDirname&#125;\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</span><span class="punctuation">,</span>    </span><br><span class="line">            <span class="string">&quot;$&#123;file&#125;&quot;</span><span class="punctuation">,</span>    <span class="comment">// 需要参与编译的文件</span></span><br><span class="line">            <span class="string">&quot;$&#123;workspaceFolder&#125;/src/glad.c&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/MDd&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/link&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/MACHINE:x64&quot;</span><span class="punctuation">,</span>     <span class="comment">// 目标系统</span></span><br><span class="line">            <span class="string">&quot;/LIBPATH:$&#123;workspaceFolder&#125;/lib&quot;</span><span class="punctuation">,</span>       <span class="comment">// 静态链接路径</span></span><br><span class="line">            <span class="string">&quot;/LIBPATH:D:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/lib/x64&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/LIBPATH:C:/Program Files (x86)/Windows Kits/10/Lib/10.0.22621.0/um/x64&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/LIBPATH:C:/Program Files (x86)/Windows Kits/10/Lib/10.0.22621.0/ucrt/x64&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;glfw3.lib&quot;</span><span class="punctuation">,</span>    <span class="comment">// 静态链接</span></span><br><span class="line">            <span class="string">&quot;assimp.lib&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;freetype.lib&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;user32.lib&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;gdi32.lib&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;kernel32.lib&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;winspool.lib&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;shell32.lib&quot;</span></span><br><span class="line">        <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;options&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">            <span class="string">&quot;$msCompile&quot;</span></span><br><span class="line">        <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;group&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;kind&quot;</span><span class="punctuation">:</span> <span class="string">&quot;build&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;isDefault&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;detail&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Task generated by Debugger.&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+<p>其参数分为编译和连接两个阶段。</p>
+<p>其中：</p>
+<ul>
+<li><strong><code>&quot;/Zi&quot;</code></strong>：生成调试信息。</li>
+<li><strong><code>&quot;/EHsc&quot;</code></strong>：启用 C++ 异常处理。</li>
+<li><strong><code>&quot;/Fe:&quot;</code></strong>：指定输出文件的名称和路径。</li>
+<li><strong><code>$&#123;fileDirname&#125;\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</code></strong>：输出文件的路径和名称，基于当前打开的文件。</li>
+<li><strong><code>$&#123;file&#125;</code></strong>：当前打开的文件的路径和名称。</li>
+<li><strong><code>$&#123;workspaceFolder&#125;/src/glad.c&quot;</code></strong>：引入 <code>glad.c</code> 文件。</li>
+<li><strong><code>&quot;/I&quot;</code></strong>：指定包含文件的路径。</li>
+<li><strong><code>$&#123;workspaceFolder&#125;/includes&quot;</code></strong>：包含文件的路径。</li>
+<li><strong><code>$&#123;workspaceFolder&#125;/build_vs2022/configuration/&quot;</code></strong>：配置文件的路径。</li>
+<li><strong><code>&quot;/link&quot;</code></strong>：链接阶段的参数。</li>
+<li><strong><code>&quot;MACHINE:x64&quot;</code></strong>：指定目标机器架构为 64 位。</li>
+<li><strong><code>&quot;LIBPATH:$&#123;workspaceFolder&#125;/lib&quot;</code></strong>：指定库文件的路径。</li>
+<li><strong><code>&quot;glfw3.lib&quot;</code></strong>：链接到 <code>glfw3.lib</code> 库。</li>
+<li><strong><code>$&#123;workspaceFolder&#125;/build_vs2022/Debug/STB_IMAGE.lib&quot;</code></strong>：链接到 <code>STB_IMAGE.lib</code> 库。</li>
+<li><strong><code>$&#123;workspaceFolder&#125;/build_vs2022/Debug/GLAD.lib&quot;</code></strong>：链接到 <code>GLAD.lib</code> 库。</li>
+</ul>
+<h3 id="使用vscode直接启动-还没验证"><a href="#使用vscode直接启动-还没验证" class="headerlink" title="使用vscode直接启动(还没验证)"></a>使用vscode直接启动(还没验证)</h3><p>需要加上<code>&quot;windows&quot;</code> 部分，可从官网上复制：<a href="https://code.visualstudio.com/docs/cpp/config-msvc">https://code.visualstudio.com/docs/cpp/config-msvc</a></p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/msvc-tasks.json.png" alt="msvc-tasks.json" style="width:80%;"></p>
+<p>这里的：<strong><code>&quot;\&quot;D:/Program Files/Microsoft Visual Studio/2022/Professional/Common7/Tools/VsDevCmd.bat\&quot;&quot;</code></strong>：这是要运行的批处理文件的路径。在这里，<code>VsDevCmd.bat</code> 是 <strong>Visual Studio</strong> 的开发者命令提示符批处理文件。它设置了一些环境变量和路径，以便在命令行中使用 <strong>Visual Studio</strong> 的工具和编译器。</p>
+<h1 id="Visual-Studio"><a href="#Visual-Studio" class="headerlink" title="Visual Studio"></a>Visual Studio</h1><p><strong>环境设置</strong>。用一个油管up主thecherno的环境设置：<a href="http://thecherno.com/vs">http://thecherno.com/vs</a></p>
+<p>在Visual Studio中，使用<code>工具-&gt;导入导出设置</code>：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Environment setting.png" alt="Environment setting" style="width:50%;"></p>
+<p>一直点下一步，在这个界面通过预览来找到需要加载的环境配置文件：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Import environment setting.png" alt="Import environment setting" style="width:50%;"></p>
+<p><strong>属性管理器。</strong>使用属性管理器复用项目配置的时候，创建了 <code>PropertySheet.prop</code> 文件需要点击到项目的里面的<code>PropertySheet</code>才能打开图形窗口编辑，直接双击 <code>PropertySheet.prop</code> 是以文本编辑的形式打开。</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/propertySheet.png" alt="propertySheet" style="width:30%;"></p>
+<p><strong>输出路径</strong>，可以将输出目录和中间目录(主要包括 <code>.obj</code>、 <code>.pdb</code> 文件等)修改到 <code>bin</code> 下。</p>
+<p> <img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/common.png" alt="常规配置" style="width: 75%;"></p>
+<p><strong>附加包含目录</strong>和<strong>附加库目录</strong>中尽量使用宏来设定。</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Include directory.png" alt="Include directory" style="width:75%;"></p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Library directory.png" alt="Library directory" style="width:75%;"></p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/library.png" alt="library" style="width:75%;"></p>
+<p><strong>生成事件</strong>可用于拷贝 <code>.dll</code> 到 <code>.exe</code> 所在目录：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/post build event.png" alt="post event" style="width:75%;"></p>
+]]></content>
+      <categories>
+        <category>tools</category>
+      </categories>
+      <tags>
+        <tag>word</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>以一种直观的方式理解扩散生成模型</title>
     <url>/2023/12/24/%E4%BB%A5%E4%B8%80%E7%A7%8D%E7%9B%B4%E8%A7%82%E7%9A%84%E6%96%B9%E5%BC%8F%E7%90%86%E8%A7%A3%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/</url>
     <content><![CDATA[<ol>
@@ -904,6 +1043,7 @@ E_{data}=(I_2(x+u,y+v)-I_1(x,y))^2+\lambda(||\nabla I_2(x+u,y+v)-I_1(x,y)||^2)</
     <title>leetcode的奇怪操作</title>
     <url>/2020/08/01/leetcode%E7%9A%84%E5%A5%87%E6%80%AA%E6%93%8D%E4%BD%9C/</url>
     <content><![CDATA[<p>写两个字收缩</p>
+<p>记录了一些刷题时遇到的算法。</p>
 <span id="more"></span>
 <h1 id="快速幂取余"><a href="#快速幂取余" class="headerlink" title="快速幂取余"></a>快速幂取余</h1><p>题目：<a href="https://leetcode-cn.com/problems/jian-sheng-zi-ii-lcof/">剑指 Offer 14- II. 剪绳子 II</a>、<a href="https://leetcode-cn.com/problems/powx-n/">50. Pow(x, n)</a></p>
 <p>定理：</p>
@@ -2459,8 +2599,8 @@ P\left( w_{i} \right) = \frac{f\left( w_{i} \right)^{\frac{3}{4}}}{\sum_{j = 1}^
         <category>machine learning</category>
       </categories>
       <tags>
-        <tag>machine learning</tag>
         <tag>deep learning</tag>
+        <tag>machine learning</tag>
       </tags>
   </entry>
   <entry>
@@ -3516,8 +3656,8 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
         <category>machine learning</category>
       </categories>
       <tags>
-        <tag>machine learning</tag>
         <tag>deep learning</tag>
+        <tag>machine learning</tag>
       </tags>
   </entry>
   <entry>
@@ -4092,10 +4232,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
 <li>$T_p$指当有p个处理器时，并行算法的执行时间</li>
 </ul>
 <p>规模为1,0000,0000的时候绘制的加速比 – 处理器曲线如下</p>
-<div id="echarts4273" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts311" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts4273'));
+        var myChart = echarts.init(document.getElementById('echarts311'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -4166,10 +4306,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
 <p>而通过cache缓冲后加速比，在前8核加速比按照处理器核数线性增加，达到8核以后有加速比有上升的趋势但是也有所波动并且不再呈现线性的趋势，因为处理器有限不能同时处理多个任务，这与之前查看windows系统CPU配置的4核8处理器相符。另外有Sp&gt;p，即产生了超线性加速比，通过维基百科得知，超线性加速比有几种可能的成因，如现代计算机的存储层次不同所带来的“高速缓存效应”；具体来说，较之顺序计算，在并行计算中，不仅参与计算的处理器数量更多，不同处理器的高速缓存也集合使用。而有鉴于此，集合的缓存便足以提供计算所需的存储量，算法执行时便不必使用速度较慢的内存，因而存储器读些时间便能大幅降低，这便对实际计算产生了额外的加速效果。</p>
 <h2 id="并行效率"><a href="#并行效率" class="headerlink" title="并行效率"></a>并行效率</h2><p>由加速比派生出的效率（英语：efficiency）则是量度性能的指标，并如下定义：</p>
 <script type="math/tex; mode=display">E_p=\frac{S_p}{p}=\frac{T_1}{pT_p}</script><p>绘制的并行效率与执行进程数的曲线如下：</p>
-<div id="echarts9273" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts8751" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts9273'));
+        var myChart = echarts.init(document.getElementById('echarts8751'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -4237,10 +4377,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
 <p>可以看到没有使用cache优化的时候并行效率一般介于0~1之间，通过cache命中优化使得产生超线性加速比并且并行效率大于1。</p>
 <h2 id="其他规模"><a href="#其他规模" class="headerlink" title="其他规模"></a>其他规模</h2><p>规模为10,000,000，则素数有664579个，运行时间如下</p>
 <p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/14.png" alt="14"></p>
-<div id="echarts822" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts9758" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts822'));
+        var myChart = echarts.init(document.getElementById('echarts9758'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -4304,10 +4444,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
 </script>
-<div id="echarts5190" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts8693" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts5190'));
+        var myChart = echarts.init(document.getElementById('echarts8693'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -4374,10 +4514,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
 </script>
 <p>规模为10,0000,0000，则素数有50847533个，运行时间如下</p>
 <p><img src="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/15.png" alt="15"></p>
-<div id="echarts5820" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts2429" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts5820'));
+        var myChart = echarts.init(document.getElementById('echarts2429'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -4441,10 +4581,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
 </script>
-<div id="echarts3198" style="width: 100%;height: 400px;margin: 0 auto"></div>
+<div id="echarts767" style="width: 100%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts3198'));
+        var myChart = echarts.init(document.getElementById('echarts767'));
 
         // 指定图表的配置项和数据
         var option = 
@@ -4762,10 +4902,10 @@ cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_\theta(x^{(i)})-y^{(i)})^2</script>
 <h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">&#123;% echarts 400 &#x27;85%&#x27; %&#125;</span><br><span class="line">\\TODO echarts option goes here</span><br><span class="line">&#123;% endecharts %&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="Bug"><a href="#Bug" class="headerlink" title="Bug"></a>Bug</h2><p>在所用主题目录下<code>&lt;font color=#c7254e&gt;layout\_partial&lt;/font&gt;中的</code><font color="#c7254e">head.swig</font>里加入：</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;http://echarts.baidu.com/dist/echarts.common.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><div id="echarts2794" style="width: 85%;height: 400px;margin: 0 auto"></div>
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><div id="echarts2292" style="width: 85%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts2794'));
+        var myChart = echarts.init(document.getElementById('echarts2292'));
 
         // 指定图表的配置项和数据
         var option = {
@@ -5352,8 +5492,8 @@ L(x,\lambda)=f(x)+\lambda g(x) \tag{*25}</script><p>此时最优点 $x$*或在$ 
         <category>maths</category>
       </categories>
       <tags>
-        <tag>machine learning</tag>
         <tag>deep learning</tag>
+        <tag>machine learning</tag>
         <tag>危机分</tag>
         <tag>SVM</tag>
       </tags>

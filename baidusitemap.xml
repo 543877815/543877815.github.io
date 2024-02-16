@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/</loc>
+    <lastmod>2024-02-16</lastmod>
+  </url>
+  <url>
+    <loc>https://lifengjun.xin/2020/08/01/leetcode%E7%9A%84%E5%A5%87%E6%80%AA%E6%93%8D%E4%BD%9C/</loc>
+    <lastmod>2024-02-10</lastmod>
+  </url>
+  <url>
     <loc>https://lifengjun.xin/2023/12/24/%E4%BB%A5%E4%B8%80%E7%A7%8D%E7%9B%B4%E8%A7%82%E7%9A%84%E6%96%B9%E5%BC%8F%E7%90%86%E8%A7%A3%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/</loc>
     <lastmod>2024-01-21</lastmod>
   </url>
@@ -59,10 +67,6 @@
   <url>
     <loc>https://lifengjun.xin/2023/04/12/%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E6%B1%82%E5%92%8C%E7%BA%A6%E5%AE%9A%E7%9A%84pytorch%E7%94%A8%E6%B3%95-torch-einsum/</loc>
     <lastmod>2023-04-15</lastmod>
-  </url>
-  <url>
-    <loc>https://lifengjun.xin/2020/08/01/leetcode%E7%9A%84%E5%A5%87%E6%80%AA%E6%93%8D%E4%BD%9C/</loc>
-    <lastmod>2022-09-12</lastmod>
   </url>
   <url>
     <loc>https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/</loc>
