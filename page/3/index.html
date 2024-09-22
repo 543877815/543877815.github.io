@@ -233,6 +233,277 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/" class="post-title-link" itemprop="url">ubuntu和windows下运行MPI做埃拉托色尼素数筛选法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-04-25 10:41:32" itemprop="dateCreated datePublished" datetime="2019-04-25T10:41:32+08:00">2019-04-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-12 10:42:43" itemprop="dateModified" datetime="2022-09-12T10:42:43+08:00">2022-09-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MPI/" itemprop="url" rel="index"><span itemprop="name">MPI</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="ubuntu和windows下运行MPI做埃拉托色尼素数筛选法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>说说最近踩的坑，为了在windows的电脑下做并行程序设计作业埃拉托色尼素数筛选法，用的是MPI，然后发现这类库对于windows的用户非常不友好，比如说MPICH2后续已经不支持windows，OpenMPI貌似只支持linux，而微软维护的MS-MPI能够支持windows，但是我在使用clion(cmake)进行包引入的时候出了很多问题，可能的原因是windows下没有mpicc/mpicxx，可能的解决方案是使用微软自家的VS去做，但是我觉得VS太过臃肿而不想下载，最终我得出来的结论是：windows + clion + MPI 暂时无法实现，即使翻阅了很多网上的资料也没有响应的解决方案，无奈之下只能在远程的linux下编程，使用的是ubuntu 16.04这个系统，然后思路是因为要编程所以配置一个ubuntu GUI，然后装上lion，把之前写的代码从git下clone下来，然后由于我的服务器是在华为云上的一个7天体验卷，也就只有2核4G，所以我打算后续在工作室一台比较老的服务器上写代码，然后比较坑的是那个玩意儿没有公网IP，因此我想看看能否通过teamviewer来从远程连接，虽然感觉可能性不大hhh。</p>
+<p>2019-05-19续——</p>
+<p>后来我测试了一下teamviewer连接服务器，但是这个被归为了商业用途就是要收费的（就很烦），算了算了…只能老老实实用windows的远程连接8。后续在linux服务器上写完了几个优化之后（见后）,在测试阶段发现优化后的时间反而边长了，虽然后来用了增加cache命中率来提升性能，但是我认为加速还是受到了干扰，于是只能去专业的实验室用里面的电脑搞事情，所以我又把windows上mpi的配置搞了一边，还生成了一下不同优化的exe，然后再拿回自己的电脑测试，现在想一想，之前无法在自己的电脑的windows上用clion编译可能是和cmake建立动态链接失败有关，但是自己对这方面不熟，网上资料不全，所以搞着搞着就放弃了。但是安装了mpi还是能够执行编译生成的exe文件滴。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/04/25/ubuntu%E5%92%8Cwindows%E4%B8%8B%E8%BF%90%E8%A1%8CMPI%E5%81%9A%E5%9F%83%E6%8B%89%E6%89%98%E8%89%B2%E5%B0%BC%E7%B4%A0%E6%95%B0%E7%AD%9B%E9%80%89%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2019/04/10/%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84front-end-cli/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/10/%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84front-end-cli/" class="post-title-link" itemprop="url">构建自己的front-end-cli</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-04-10 21:32:27" itemprop="dateCreated datePublished" datetime="2019-04-10T21:32:27+08:00">2019-04-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-05 00:52:17" itemprop="dateModified" datetime="2023-08-05T00:52:17+08:00">2023-08-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/front-end/" itemprop="url" rel="index"><span itemprop="name">front end</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/04/10/%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84front-end-cli/" class="post-meta-item leancloud_visitors" data-flag-title="构建自己的front-end-cli" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="全局安装-不推荐"><a href="#全局安装-不推荐" class="headerlink" title="全局安装(不推荐)"></a>全局安装(不推荐)</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack webpack-cli -g</span><br></pre></td></tr></table></figure>
+<p>全局的话容易发生webpack3和webpack4的版本冲突</p>
+<h2 id="局部安装-推荐"><a href="#局部安装-推荐" class="headerlink" title="局部安装(推荐)"></a>局部安装(推荐)</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack webpack-cli -D</span><br><span class="line"><span class="comment"># npm install webpack webpack-cli --save-dev</span></span><br></pre></td></tr></table></figure>
+<h2 id="查看版本"><a href="#查看版本" class="headerlink" title="查看版本"></a>查看版本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx webpack -v</span><br></pre></td></tr></table></figure>
+<h3 id="查看包版本"><a href="#查看包版本" class="headerlink" title="查看包版本"></a>查看包版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm info webpack</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/04/10/%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84front-end-cli/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2019/04/10/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9B%86%E6%88%90anaconda%E5%AE%89%E8%A3%85jupyter-notebook/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/10/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9B%86%E6%88%90anaconda%E5%AE%89%E8%A3%85jupyter-notebook/" class="post-title-link" itemprop="url">服务器集成anaconda安装jupyter notebook</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-04-10 19:13:45" itemprop="dateCreated datePublished" datetime="2019-04-10T19:13:45+08:00">2019-04-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-05 00:51:58" itemprop="dateModified" datetime="2023-08-05T00:51:58+08:00">2023-08-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/04/10/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9B%86%E6%88%90anaconda%E5%AE%89%E8%A3%85jupyter-notebook/" class="post-meta-item leancloud_visitors" data-flag-title="服务器集成anaconda安装jupyter notebook" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="anaconda"><a href="#anaconda" class="headerlink" title="anaconda"></a>anaconda</h1><p>在<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/?C=M&amp;O=D">清华大学开源软件镜像网</a>找到合适的下载软件包</p>
+<p><img src="/2019/04/10/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9B%86%E6%88%90anaconda%E5%AE%89%E8%A3%85jupyter-notebook/1.png" alt="1"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/04/10/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9B%86%E6%88%90anaconda%E5%AE%89%E8%A3%85jupyter-notebook/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2019/04/08/echarts%E4%BD%BF%E7%94%A8%E7%9B%B8%E5%85%B3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -299,10 +570,10 @@
 <h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% echarts 400 &#x27;85%&#x27; %&#125;</span><br><span class="line">\\TODO echarts option goes here</span><br><span class="line">&#123;% endecharts %&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="Bug"><a href="#Bug" class="headerlink" title="Bug"></a>Bug</h2><p>在所用主题目录下<code>&lt;font color=#c7254e&gt;layout\_partial&lt;/font&gt;中的</code><font color="#c7254e">head.swig</font>里加入：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;http://echarts.baidu.com/dist/echarts.common.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><div id="echarts2292" style="width: 85%;height: 400px;margin: 0 auto"></div>
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><div id="echarts7391" style="width: 85%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts2292'));
+        var myChart = echarts.init(document.getElementById('echarts7391'));
 
         // 指定图表的配置项和数据
         var option = {
@@ -934,102 +1205,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2019/02/06/chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9C%89%E5%93%AA%E4%BA%9B%E4%BC%98%E7%A7%80%E7%9A%84%E6%89%A9%E5%B1%95%E7%A8%8B%E5%BA%8F%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
-      <meta itemprop="name" content="lifengjun">
-      <meta itemprop="description" content="个人学习笔记和日志">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="逗比学长的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/02/06/chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9C%89%E5%93%AA%E4%BA%9B%E4%BC%98%E7%A7%80%E7%9A%84%E6%89%A9%E5%B1%95%E7%A8%8B%E5%BA%8F%EF%BC%9F/" class="post-title-link" itemprop="url">chrome浏览器有哪些优秀的扩展程序？</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-02-06 21:41:03" itemprop="dateCreated datePublished" datetime="2019-02-06T21:41:03+08:00">2019-02-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-13 21:55:58" itemprop="dateModified" datetime="2020-11-13T21:55:58+08:00">2020-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/development-tool/" itemprop="url" rel="index"><span itemprop="name">development tool</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/02/06/chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9C%89%E5%93%AA%E4%BA%9B%E4%BC%98%E7%A7%80%E7%9A%84%E6%89%A9%E5%B1%95%E7%A8%8B%E5%BA%8F%EF%BC%9F/" class="post-meta-item leancloud_visitors" data-flag-title="chrome浏览器有哪些优秀的扩展程序？" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/2019/02/06/chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9C%89%E5%93%AA%E4%BA%9B%E4%BC%98%E7%A7%80%E7%9A%84%E6%89%A9%E5%B1%95%E7%A8%8B%E5%BA%8F%EF%BC%9F/image001.jpg" alt="image001"></p>
-<p>Chrome浏览器作为目前最好用的浏览器之一，在全球市场上拥有绝对的占有率，这是截止至2017年7月的数据</p>
-<p><img src="/2019/02/06/chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9C%89%E5%93%AA%E4%BA%9B%E4%BC%98%E7%A7%80%E7%9A%84%E6%89%A9%E5%B1%95%E7%A8%8B%E5%BA%8F%EF%BC%9F/image002.png" alt="image002"></p>
-<p>不仅如此，chrome网上应用店还拥有大量可扩展程序，用于丰富浏览器的功能。</p>
-<p>wo在各论坛摸爬滚打了好些天，加上之前的使用经验，总结安利一波个人觉得比较有用的插件，有兴趣的童鞋可以看看（求安利~），然后希望大家可以在chrome浏览器中愉快地玩（zhuang）耍（bi）。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/02/06/chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9C%89%E5%93%AA%E4%BA%9B%E4%BC%98%E7%A7%80%E7%9A%84%E6%89%A9%E5%B1%95%E7%A8%8B%E5%BA%8F%EF%BC%9F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1097,7 +1276,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1110,7 +1289,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

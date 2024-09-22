@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="主要记录图形算法、建模思想，不记录公式推导和训练思路：  【Nerf】Representing Scenes as Neural Radiance Fields for View Synthesis. 【Mip-Nerf】Mip-NeRF: A Multiscale Representation for Anti-Aliasing Neural Radiance Fields. 【Mip-Nerf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文阅读】从Nerf到3D gaussian-splatting的逆渲染">
+<meta property="og:url" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/index.html">
+<meta property="og:site_name" content="逗比学长的博客">
+<meta property="og:description" content="主要记录图形算法、建模思想，不记录公式推导和训练思路：  【Nerf】Representing Scenes as Neural Radiance Fields for View Synthesis. 【Mip-Nerf】Mip-NeRF: A Multiscale Representation for Anti-Aliasing Neural Radiance Fields. 【Mip-Nerf">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E9%80%86%E6%B8%B2%E6%9F%93%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Blender%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%ADJson%E6%96%87%E4%BB%B6%E7%9A%84%E5%86%85%E5%AE%B9.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E7%84%A6%E6%AE%B5%E5%92%8C%E8%A7%92%E5%BA%A6%E5%85%B3%E7%B3%BB.jpg">
+<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E8%A7%86%E8%A7%92%E5%92%8C%E7%84%A6%E8%B7%9D%E7%9A%84%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/coordinate_systems.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E8%A7%86%E5%9B%BE%E7%9F%A9%E9%98%B5%E5%8F%82%E6%95%B0%E5%90%AB%E4%B9%89.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Clip%20Space%20and%20NDC.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Colmap%E5%92%8CBlender%E6%95%B0%E6%8D%AE%E9%9B%86%E5%8F%98%E6%8D%A2%E7%A4%BA%E6%84%8F%E5%9B%BE.jpeg">
+<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E5%B8%B8%E8%A7%81%E7%9A%84%E4%B8%89%E7%BB%B4%E8%A1%A8%E7%A4%BA.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Nerf%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E5%85%89%E7%BA%BF%E5%8F%91%E5%B0%84%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4%E5%92%8C%E8%A7%86%E5%B7%AE%E7%A9%BA%E9%97%B4%E9%87%87%E6%A0%B7%E5%AF%B9%E6%AF%94.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/mip-nerf%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/2024-04-21-%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Mip-Nerf%E7%9B%B8%E5%85%B3%E5%85%AC%E5%BC%8F.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Mip-Nerf%20360%E6%AD%A3%E5%88%99%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/instant-NGP%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Plenoxel%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="article:published_time" content="2024-04-21T08:54:23.000Z">
+<meta property="article:modified_time" content="2024-07-10T13:53:04.181Z">
+<meta property="article:author" content="lifengjun">
+<meta property="article:tag" content="computer vision">
+<meta property="article:tag" content="computer graphic">
+<meta property="article:tag" content="nerf">
+<meta property="article:tag" content="3D gaussian splatting">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E9%80%86%E6%B8%B2%E6%9F%93%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+
+<link rel="canonical" href="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css"><style>
+#needsharebutton-postbottom {
+  cursor: pointer;
+  height: 26px;
+  margin-top: 10px;
+  position: relative;
+}
+#needsharebutton-postbottom .btn {
+  border: 1px solid $btn-default-border-color;
+  border-radius: 3px;
+  display: initial;
+  padding: 1px 4px;
+}
+</style>
+<script src="/js/src/echarts.common.min.js"></script>
+
+  <title>【论文阅读】从Nerf到3D gaussian-splatting的逆渲染 | 逗比学长的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/543877815" class="github-corner" aria-label="View source on GitHub">
+    <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#000000; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+    <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">逗比学长的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">此人有“亿”点强迫症</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-quick-check">
+
+    <a href="/quick-check" rel="section"><i class="fa fa-calendar fa-fw"></i>速查</a>
+
+  </li>
+        <li class="menu-item menu-item-portal">
+
+    <a href="/portal" rel="section"><i class="fa fa-rocket fa-fw"></i>传送门</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/aigc/" rel="section"><i class="fa fa-camera fa-fw"></i>展览</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【论文阅读】从Nerf到3D gaussian-splatting的逆渲染
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-21 16:54:23" itemprop="dateCreated datePublished" datetime="2024-04-21T16:54:23+08:00">2024-04-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-07-10 21:53:04" itemprop="dateModified" datetime="2024-07-10T21:53:04+08:00">2024-07-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/" class="post-meta-item leancloud_visitors" data-flag-title="【论文阅读】从Nerf到3D gaussian-splatting的逆渲染" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>主要记录图形算法、建模思想，不记录公式推导和训练思路：</p>
+<ol>
+<li>【Nerf】Representing Scenes as Neural Radiance Fields for View Synthesis.</li>
+<li>【Mip-Nerf】Mip-NeRF: A Multiscale Representation for Anti-Aliasing Neural Radiance Fields.</li>
+<li>【Mip-Nerf 360】Mip-NeRF 360: Unbounded Anti-Aliased Neural Radiance Fields</li>
+<li>【Instant-NGP】Instant Neural Graphics Primitives with a Multiresolution Hash Encoding</li>
+<li>【Plenoxels】Plenoxels: Radiance Fields without Neural Networks.</li>
+<li>【Ref-NeRF】Ref-NeRF: Structured View-Dependent Appearance for Neural Radiance Fields</li>
+<li>【3DGS】3d gaussian splatting for real-time radiance field rendering</li>
+</ol>
+<span id="more"></span>
+<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p><strong>渲染（Rendering）</strong>是计算机图形学中的一个过程，指的是将计算机生成的三维模型转换成二维图像的过程。这个过程涉及到多个步骤，包括几何变换、光照计算、纹理映射、着色、抗锯齿处理等。渲染的目的是生成视觉上令人满意的图像，它可以用于动画、电影特效、游戏开发、虚拟现实等领域。</p>
+<p><strong>逆渲染（Inverse Rendering）</strong>是渲染的逆过程，它的目标是从给定的二维图像中恢复出三维场景的信息。这通常涉及到重建场景的几何结构、光照条件、材质属性等。逆渲染在计算机视觉、三维重建、图像编辑等领域有着重要的应用。</p>
+<p><img src="/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/逆渲染示意图.png" alt="逆渲染示意图" style="width: 67%;"></p>
+<p>与渲染不同的是，逆渲染的难点在于，不同的三维场景可能产生相似的二维图像，类似于图像复原，这是一个欠定问题，因此需要设计复杂的模型和算法才能求得合理的解。</p>
+<p><strong>Nerf</strong>和<strong>3D Gaussian splatting</strong>是近两年比较火的基于深度学习的逆渲染算法。从统计学习数据驱动的角度出发，可以将其认为是训练神经网络从大量不同相机视角渲染得到的图片数据中，学习出该场景的三维表示，因此相关方法有时候会被称为<strong>神经渲染（Neural Rendering）</strong>；而要让AI工具与图形渲染的相结合，不能忽略的是一个叫<strong>可微渲染（Differentiable Rendering）</strong>的概念，与传统的渲染管线不同的是，在可微渲染中，渲染过程被设计成可以计算梯度，这使得可以使用基于梯度的优化算法来改进渲染结果或从图像中恢复场景属性。</p>
+<h1 id="训练数据"><a href="#训练数据" class="headerlink" title="训练数据"></a>训练数据</h1><p>Nerf和3D Gaussian splatting系列方法既可认为是神经渲染，也符合可微渲染的定义。为了更好的理解两者算法，需要认识训练数据的是怎么产生，是怎么构成输入-输出的映射关系的。在笔者认知范围内，常用的数据集类型主要有两种，一种是来自Blender的数据集，还有是一种是来自COLMAP的数据集(当然nerf源码中还有deepvoxels、LINEMOD和llff的数据集，以后补充)。</p>
+<h2 id="Blender数据集"><a href="#Blender数据集" class="headerlink" title="Blender数据集"></a>Blender数据集</h2><p>Blender是一个开源的3D创作套件，它提供了一整套用于3D建模、渲染、动画、模拟、视频编辑和2D图像编辑的工具。我理解，对于一个在Blender建模的三维场景，可以从较容易地导出其不同视角的图片。以Nerf中常使用的数据集”lego”为例，其主要包含训练、验证和测试集的图片文件夹和json文件，其中json文件中主要记录的时候<strong>相机内参</strong> “camera_angle_x” 和各图片对应的<strong>相机外参</strong> “transform_matrix”。</p>
+<p>所谓的相机内参，描述的是相机自身的属性，与相机的物理特性有关，包括但不限于：</p>
+<ul>
+<li><strong>焦距</strong>（Focal Length）：相机的焦距决定了图像的放大倍数。</li>
+<li><strong>主点</strong>（Principal Point）：通常是图像的中心点，是图像坐标系的原点。</li>
+<li><strong>像素尺寸</strong>（Pixel Size）：每个像素的物理尺寸，影响图像的分辨率。</li>
+<li><strong>畸变系数</strong>（Distortion Coefficients）：描述镜头畸变，如桶形畸变或枕形畸变。</li>
+</ul>
+<p>所谓的相机外参，描述的是相机在世界坐标系中的位置和方向，包括：</p>
+<ul>
+<li><strong>旋转矩阵</strong>（Rotation Matrix）：描述相机相对于世界坐标系的方向。</li>
+<li><strong>平移向量</strong>（Translation Vector）：描述相机在世界坐标系中的位置。</li>
+</ul>
+<p><img src="/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Blender数据集中Json文件的内容.png" alt="Blender数据集中Json文件的内容"></p>
+<p>其中”camera_angle_x”是相机的水平视角（FOV, 单位角度），为 <script type="math/tex">0.69°</script>，即视野的宽，通过相机的水平视角和图片的宽高可以计算出相机的焦距，Lego数据集中焦距约为 <script type="math/tex">1111.11mm</script>。其中焦距f与视角的比例关系如下，即焦距越长，视角越窄（其中的数值因画幅大小而异）：</p>
+<p><img src="/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/焦段和角度关系.jpg" alt="焦段和角度关系"></p>
+<p>实际中，两者的关系还需考量传感器尺寸大小，以水平大小为例，其一般关系如下：</p>
+<script type="math/tex; mode=display">
+\tan\frac{FOV_x}{2}=\frac{x/2}{f}</script><p>下图展示的是传感器垂直视角和焦距的关系：</p>
+<p><img src="/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/视角和焦距的关系.png" alt="视角和焦距的关系"></p>
+<p>注：”camera_angle_x”一开始我以为是量纲弧度，然而，1弧度约为<script type="math/tex">1\times \frac{360}{2\pi}\approx57.29577951°</script>，若为弧度，”camera_angle_x”转换角度大约为<script type="math/tex">39.59°</script>，这换算的焦距与实际不符，故起量纲应为角度。</p>
+<p>“transform_matrix”是一个视图矩阵<strong>（view matrix）</strong>，在该任务中，每一张图像对应一个transform_matrix，即对应一个相机的位置和旋转角度。</p>
+<p>在3D渲染中，为了将三维物体按相机所在位置的二维成像结果正确的表示，其存下如下变换顺序：</p>
+<p><img src="/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/coordinate_systems.png" alt="coordinate_systems"></p>
+<ul>
+<li><p>模型矩阵<strong>（model matrix）</strong>，用以将模型从其所在局部坐标系转换到世界坐标系中，这似乎是因为物体在建模的时候是以局部坐标系作为参考，而在渲染的过程需要需要统一到世界坐标囍中，model matrix其主要记录了物体的平移、旋转和缩放，这可以通过矩阵的变换来定义。在此任务中，主要是相机绕着物体旋转，而物体保持不动，故model matrix应为单位阵，可认为其不参与变换。</p>
+</li>
+<li><p>视图矩阵<strong>（view matrix）</strong>，用以将世界坐标系中的三维对象转换到相机坐标系中，也就是从观察者（相机）的视角来观察场景。view matrix的含义主要是记录相机的三维空间位置和倾斜旋转（绕xyz轴旋转的角度），这可以直接定义，并在移动/倾斜/旋转镜头的时候调整相关参数。另外，这也可以通过<strong>相机位置（camera Position）</strong>、<strong>相机朝向点（Target Point）</strong>和<strong>上向量（Up Vector）</strong>来定义。后者本质上是通过相机位置和相机朝向点计算相机坐标系下<strong>前向量（Front Vector）</strong>（图示指向$at$），上向量一般设置为世界坐标系中的$y$轴单位向量，第一次通过对前向量和上向量的叉乘可以求得相机坐标系下的<strong>右向量（Right Vector）</strong>，第二次通过对右向量和前向量的叉乘可以求得相机坐标系下的上向量（图示指向up），通过旋转平移变换以此将世界坐标系转换到坐标系中。</p>
+<ul>
+<li>在此任务中，”<strong>transform_matrix</strong>“定义了该图的对应的view matrix，即相机的三维空间位置和旋转角度。</li>
+</ul>
+<p><img src="/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/视图矩阵参数含义.png" alt="视图矩阵参数含义" style="width: 33%;"></p>
+</li>
+<li><p>投影矩阵<strong>（projection matrix)</strong>，透视投影是为了获得三维物体在二维屏幕上正确的透视效果，用以将三维空间中的物体映射到二维屏幕空间，即从相机坐标系转换到屏幕坐标系。这可以通过<strong>视场（Field of View, FOV, 单位角度）</strong>、<strong>纵横比（Aspect Ratio）</strong>、<strong>近裁剪面（Near Plane）</strong>和<strong>远裁剪面（Far Plane）</strong>来定义。</p>
+<ul>
+<li>在此任务中，”<strong>camera_angle_x</strong>“定义了水平视场，图像的宽高定义了纵横比，而代码中定义了远近裁切面（Nerf中分别为2.0和6.0）。</li>
+<li>实际上图中还省略了一步，通过投影矩阵的四个参数本质上是定义了一个<strong>视椎体（frustum）</strong>，通过构造出的投影矩阵进行变换能使视椎体的物体被挤压到一个正方体中，也就是<strong>裁剪空间（Clip Space）</strong>，还需通过<strong>透视除法（Perspective divide）</strong> 将其变换到<strong>标准设备坐标（Normalized Device Coordinates，NDC）</strong>中，透视除法的作用是将物体的齐次坐标转换常规的三维坐标。在NDC中，xyz各轴取值范围为[-1, 1]，超过此范围的物体，也就是超出视椎体的物体会被裁切而不显示。</li>
+</ul>
+</li>
+<li><p>最后通过<strong>视口变换（Viewport Transform）</strong>，用以将标准设备坐标转换到<strong>屏幕空间（Screen Space）</strong>中，也就是图像像素空间。</p>
+<p><img src="/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Clip Space and NDC.png" alt="Clip Space and NDC"></p>
+</li>
+</ul>
+<h2 id="Colmap数据集"><a href="#Colmap数据集" class="headerlink" title="Colmap数据集"></a>Colmap数据集</h2><p>为了让逆渲染能应用到真实世界图像中，需要一种能从真实世界图像数据集中估计出相机内外参的工具，Colmap是一个流行的开源<strong>SfM（Structure from Motion）</strong>软件框架，用于从图像集合中进行三维重建，通过运行Colmap，可以得到以下数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;location&gt;</span><br><span class="line">|---input</span><br><span class="line">|   |---&lt;image 0&gt;</span><br><span class="line">|   |---&lt;image 1&gt;</span><br><span class="line">|   |---...</span><br><span class="line">|---distorted</span><br><span class="line">    |---database.db</span><br><span class="line">    |---sparse</span><br><span class="line">        |---0</span><br><span class="line">            |---cameras.bin</span><br><span class="line">            |---images.bin</span><br><span class="line">            |---points3D.bin</span><br></pre></td></tr></table></figure>
+<p>其中<code>images.bin</code> 记录的是相机外参，主要包括估计出的相机的位移向量tvec和旋转矩阵qvec(由四元数表示)，<code>cameras.bin</code>记录的是相机内参，主要包括视口的宽高，焦距(PINHOLE分为focal_x和focal_y主要是考虑畸变的影响，最后还有图像的中心点，表示是图像坐标系的原点。例子如下所示：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CAMERA_ID, MODEL, WIDTH, HEIGHT, PARAMS[fx,fy,cx,cy]</span></span><br><span class="line"><span class="comment"># Number of cameras: 1</span></span><br><span class="line"><span class="attribute">1</span> PINHOLE <span class="number">800</span> <span class="number">800</span> <span class="number">1111</span>.<span class="number">1110311937682</span> <span class="number">1111</span>.<span class="number">1110311937682</span> <span class="number">400</span>.<span class="number">0</span> <span class="number">400</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>注：SIMPLE_PINHOLE模式只有一个focal。</p>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>需要注意的是，Colmap上定义的矩阵为行主序，而Blender(NeRF)中的矩阵为列主序；另外，如下图所示，Colmap和Blender数据在y和z轴的方向是相反的，如果要使用相同的训练代码，两者需要转化到同一矩阵形式和坐标空间中。</p>
+<p><img src="/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Colmap和Blender数据集变换示意图.jpeg" alt="Colmap和Blender数据集变换示意图"></p>
+<h2 id="三维物体的表示方法"><a href="#三维物体的表示方法" class="headerlink" title="三维物体的表示方法"></a>三维物体的表示方法</h2><p>三维重建中，三维物体的表示方法有显示表达和隐式表达两种，显式表达是指直接以明确和具体的数学形式定义三维物体或场景的方法。它通常涉及精确的几何数据和结构化的信息。隐式表达是指不直接定义物体的几何形状，而是通过数学函数来隐式地表示物体的存在，物体的内部和外部由这些函数的值来区分。</p>
+<p>显式表达包括：</p>
+<ul>
+<li>点云（Point Cloud）</li>
+<li>体素（Voxel）</li>
+<li>三角形网格（Polygon Mesh）</li>
+<li>深度图（存疑）</li>
+<li><strong>3D gaussian splatting（三维高斯点云）</strong></li>
+</ul>
+<p>隐式表达包括：</p>
+<ul>
+<li>Occupancy function</li>
+<li>Signed Distance Function（SDF）</li>
+<li><strong>Nerf（神经辐射场）</strong></li>
+</ul>
+<p><img src="/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/常见的三维表示.png" alt="常见的三维表示"></p>
+<h1 id="Nerf相关论文"><a href="#Nerf相关论文" class="headerlink" title="Nerf相关论文"></a>Nerf相关论文</h1><h2 id="Nerf"><a href="#Nerf" class="headerlink" title="Nerf"></a>Nerf</h2><p><strong>NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis</strong></p>
+<p><img src="/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Nerf示意图.png" alt="Nerf示意图"></p>
+<p>辐射（radiance）在图形学中是一个描述物体表面或光源颜色属性的一个度量，可以看成是颜色和亮度的结合；所谓的神经辐射场目的是使用神经网络隐式地表示一个三维场景；算法的本质是训练一个神经网络以拟合空间各点视角相关的颜色信息，并通过体渲染的方式进行成像，其概要如下：</p>
+<ol>
+<li><p><strong>发射光线</strong>：在不同的相机视角下，以(半)焦距为光源，以屏幕上的每个像素为方向，向场景中发射HW条光线，其中H为图像的长，W为图像的宽。射线方程是：</p>
+<script type="math/tex; mode=display">
+r(t)=o+td</script><p><img src="/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/光线发射示意图.png" alt="光线发射示意图" style="width: 50%;"></p>
+</li>
+<li><p><strong>连续采样：</strong>如上图（a）所示，远近平面之间的三维空间将沿着在光线方向进行采样。一般而言，采样空间有两种，一种是在<strong>裁剪空间</strong>上进行等间隔均匀采样，即采样点线性于深度；另外一种是在<strong>视差空间(disparity space)</strong>上进行等间隔均匀采样，即采样点线性于<strong>深度的倒数</strong>，这样做法的动机为了在深度较大的地方使用频率更高的采样率，从而防止锯齿（alias）出现。当然，如果只进行间隔采样，会使网络拟合出一个离散的函数而不是一个“场”，由于不连续，将会使训练出的网络在新视角合成中有很大的质量退化，为了拟合一个连续的函数，算法会在均匀采样点上沿着光线方向加入一些均匀分布的扰动，使得光线上每个点都具有相同的概率被采样到。</p>
+<script type="math/tex; mode=display">
+t_i\sim \mathcal U[t_n+\frac{i-1}{N}(t_f-t_n), t_n+\frac{i}{N}(t_f-t_n)].</script><p><img src="/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/线性空间和视差空间采样对比.png" alt="线性空间和视差空间采样对比" style="width: 50%;"></p>
+</li>
+<li><p><strong>网络输入：</strong>通过采样可以得到从近片面出发，沿着射线方向到远平面的一系列采样，这些采样点将按深度由浅到深输入到神经网络中，输入信息包括采样点的三维空间坐标<script type="math/tex">(x,y,z)</script>，以及入射方向<script type="math/tex">(\theta, \phi)</script>，这是由<strong>球面坐标</strong>的极角和方位角（Polar and azimuth angles）表示。另外值得一提的是，尽管神经网络是通用函数逼近器，然而相关研究表明：深度网络倾向于学习低频函数，将输入映射到更高维度空间后再传递给网络，能够更好地拟合包含高频变化的数据。为此Nerf中输入的三维空间坐标和球面坐标都将通过<strong>位置编码</strong>映射到高维特征后再输入到网络中。</p>
+<script type="math/tex; mode=display">
+\gamma(p)=(\sin(2^0\pi\rho),\cos(2^0\pi\rho),...,\sin(2^{L-1}\pi\rho),\cos(2^{L-1}\pi\rho))</script></li>
+<li><p><strong>体渲染：</strong>输入采样点的信息到神经网络中，将被训练输出采样点的颜色和透明度，然而这并不直接作为当前视图成像的输出，而是使用一种叫做体渲染（Volumn Render）的方式逐点累计成像，但体渲染并不是简单地对采样点进行加权平均，而是通过设置一个累计透光率作为权重，该参数会随着累计采样点的个数呈现一种递减的趋势，这是一种模拟光线在不发光粒子中传播中光强损耗的现象，也就是说，深度较浅的采样点会获得更高的权重，随着深度加深，采样点的权重会逐渐衰减；同时，该衰减速度将取决于采样点的透明度，采样点透明度越低，衰减速度越快。如果透光率提前衰减为0，则后续采样点将被抛弃而不参与当前像素的颜色计算；如果在遍历到深度最深的采样点后，透光率仍然大于0，则将使用背景颜色对当前像素的颜色进行累加。</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+&\hat C(r)=\sum_{i=1}^N T_i(1-\exp(-\sigma_i\delta_i))c_i, \\
+&\text{where}\;T_i=\exp(-\sum_{j=1}^{i-1}\sigma_i\delta_i)\;\text{is accumulated transmittance.} \\
+&\sigma_i=t_{i+1}-t_i\;\text{is the distance between adjacent samples.} \\
+&c_i\;\text{and}\;\sigma_i\;\text{are the output of network}.
+\end{align*}</script><ul>
+<li>在我看来，体渲染在整个算法里是一个非常核心的工具：从渲染角度来看，相较于传统渲染管线光栅化方法的不可微，体渲染是一种可微渲染，这使得神经渲染结果误差能通过梯度进行优化。从优化的角度上，它提供了近采样点比远采样点以更高的权重这样的先验，而不是为每个采样点赋予相同的权重，这符合物理规律，也使得优化更易进行。</li>
+</ul>
+</li>
+<li><p><strong>分层体积采样（Hierarchical volume sampling）：</strong>另外，Nerf会同时优化粗网络（coarse network）和细网络（fine network）做三维空间的分层采样，其中粗网络如上所述在近远平面之间的光线上进行采样，可以认为粗网络在学习整个三维场景的隐式表征，这意味着大量对结果贡献较小的空点也将参与到网络的训练中，并且，在渲染的时候会采样很多空点参与到网络查询中，这将使得渲染低效和不精准。为此，在粗网络输入采样点的基础上，其输出一系列离散点的颜色和透明度估计，此透明度将结合透光率计算出该点的权重，对这些权重归一化后<script type="math/tex">\hat w_i=w_i/\sum_{j=1}^{N_c}w_j</script>可以使用<strong>逆变换抽样</strong>（Inverse Transform Sampling）计算累积分布函数（Cumulative Distribution Function，CDF），从而能根据重要性进行二次采样，二次采样点将输入到细网络进行训练，并输出最终的视角渲染图。</p>
+</li>
+<li><p><strong>网络训练</strong>：网络训练损失是粗细网络采样点体渲染结果与当前视图之前的误差：</p>
+<script type="math/tex; mode=display">
+\mathcal L=\sum_{r\in \mathcal R}[||\hat C_c(r)-C(r)||^2_2+||\hat C_f(r)-C(r)||^2_2]</script></li>
+</ol>
+<h2 id="Mip-Nerf"><a href="#Mip-Nerf" class="headerlink" title="Mip-Nerf"></a>Mip-Nerf</h2><p><strong>Mip-NeRF: A Multiscale Representation for Anti-Aliasing Neural Radiance Fields</strong></p>
+<p>Mip-Nerf主要想解决的问题是，虽然原始Nerf在射线上设定了扰动来使采样尽可能连续，但是对于每个像素而言，其只发射的一根射线，这对于神经网络拟合整个三维场景来说采样的密度仍然是不够的，可以认为由于其他分辨率下的一些采样点并没有被训练，这样的网络难以泛化到其他分辨率的新视角合成中，从而产生<strong>模糊</strong>或者<strong>锯齿</strong>。解决这个问题的思路容易让人联想到图形学中的<strong>多重抗锯齿采样（Multisampling Anti-Aliasing，MSAA）</strong>技术，因此，一种可能的方法是一个像素上发射更多的射线进行采样并加权得到最后的渲染结果，然而由于每根射线上的采样点在渲染成像的时候都需要查询网络，这使得这样的算法非常地耗时。</p>
+<p>进一步分析，产生模糊的原因是在低分辨率下训练，而在高分辨率上渲染，这是由于网络只学习了低频信息，换言之，其学习到的采样率并不足以渲染一高频图像；产生锯齿的原因则相反，往往是在高分辨率上训练，而在低分辨率上渲染，也就是说，网络学习到的高频信息，在低分辨率图像上会呈现剧烈的像素变化，使得锯齿的产生。因此，另外一个解决思路是联想到图形学中的<strong>多级渐远纹理（Mipmap）</strong>技术，这也是算法取名<strong>Mip-Nerf</strong>的启发，其主要思想是在不同分辨率下生成多级纹理贴图，在不同分辨率下使用不同级的纹理贴图渲染图像。对应到神经辐射场中，直接的做法是让一个网络对同一视图下不同分辨率下的渲染结果同时训练，然而，这样的做法也非常耗时，效率低下。</p>
+<p><img src="/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/mip-nerf示意图.png" alt="mip-nerf示意图"></p>
+<p>此时，就不得不祭出图形学中的传统艺能——采样，与Nerf在光线上采样不同，Mip-Nerf选择在<script type="math/tex">[t_{n-1},t_n]</script>之间的圆锥上进行采样，在Mip-Nerf中的做法是，将该圆锥定义成一个关于<script type="math/tex">(\mu_t,\sigma_t^2,\sigma_r^2)</script>的多元高斯分布其中<script type="math/tex">\mu_t</script>是平行于光线方向的平均距离，<script type="math/tex">\sigma_t^2</script>是平行于光线方向的方差，而<script type="math/tex">\sigma_r^2</script>是垂直于光线方向的方差。下面是一个些推理，由于推导比较难，这里只简单梳理一下关系：</p>
+<script type="math/tex; mode=display">(\mu_t,\sigma_t^2,\sigma_r^2)$$的这些参数如公式(7)将由中点深度$$t_\mu=(t_0+t_1)/2$$，和半长$$t_\delta=(t_1-t_0)/2$$进行参数化，最后形成的多元高斯分布见公式(8)所示，(8)这个多元高斯分布实际上xyz特征是耦合的，感觉这里的思想是将特征通过正交变换映射到高维特征进行解耦，公式(9)定义了一个分别对不同维度输入做位置编码的矩阵$P$，这里特指的是空间坐标xyz的高维映射矩阵，可以看到其中的线性变换（每$$3\times 3$$矩阵看成是一个线性变换，共$L$次变换到高维特征）是正交的，根据多元高斯分布线性变化的性质，公式(10)展示了可以得到经过位置编码后的高维特征(**IPE feature**)的高斯分布$$(\mu_\gamma,\sum_\gamma)$$，公式(11-12)展示了多元高斯分布分别经过sine和cosine变换后的期望的近似形式，公式(13-14)展示了高斯分布经过高维映射后的特征的期望，这里为了计算协方差矩阵$$\sum_\gamma$$，如(9)所示由于位置编码是分别对不同维度进行高维映射，也就是说两两维度之间并无相关性，也就是说只需要计算各维度变量的边缘分布而无需计算联合分布，也就是说只需计算的对角阵即可得到其协方差矩阵。即便如此，计算高维特征协方差矩阵的对角阵然非常耗时，因此可以通过公式(15-16)计算低维特征协方差矩阵后，再通过位置编码做高维映射得到高维特征协方差矩阵的对角阵。
+
+<img src="./2024-04-21-算法理解之从Nerf到gaussian-splatting/Mip-Nerf相关公式.png" alt="Mip-Nerf相关公式" style="zoom:67%;" />
+
+## Mip-Nerf 360
+
+**Mip-NeRF 360: Unbounded Anti-Aliased Neural Radiance Fields**
+
+这篇论文基于Mip-Nerf改进，Mip-NeRF 360要解决的问题是：
+
+1. 无界场景(unbounded scene)中，这个无界场景是指相机可能指向任何方向，并且内容（前景和背景）可能存在于任何距离，这使得背景范围可能过大，难以设置采样范围，并且由于采样率过低，这将导致结果严重劣化，该问题最早由Nerf++(NeRF++: Analyzing and Improving Neural Radiance Fields.)提出，其解决思路相类似(将背景映射到视差空间)，**解决思路**：而在Mip-Nerf 360中是将Mip-Nerf中使用的高斯分布进行重参数化，如下图所示，定义了一个坐标平滑变化，用于将坐标进行映射：</script><p>   f(x)=<br>   \begin{cases}<br>   \begin{align}<br>   &amp;x\;\;\;\;\;&amp;||x||\le1\<br>   &amp;(2-\frac{1}{||x||})(\frac{x}{||x||})\;\;\;&amp;||x||\gt1<br>   \end{align}<br>   \end{cases}</p>
+<script type="math/tex; mode=display">
+   如下图所示，公式的意义是将远景从欧氏距离空间（超出蓝色部分）重参数化到视差空间（橙色部分）。
+
+   ![Mip-Nerf 360 scene parameterization](./2024-04-21-算法理解之从Nerf到gaussian-splatting/Mip-Nerf 360 scene parameterization.png)
+
+2.  提升效率。动机是Mip-NeRF用coarse和fine MLP两个网络，其中coarse网络并输出最终结果，其指负责输出一个用于fine MLP的采样权重概率分布（也可以说是密度直方图），这非常耗时。而在Nerf++中，其用两个MLP分别学习该场景的前景和背景。**解决思路**：作者提出训练提议网络（propose network）专门用于预测采样权重概率分布，而无需使用重建损失训练它，因此可以使用一个较浅的网络，该提议网络的输出将用于监督重建网络的训练，这里作者没有使用一个分布损失来约束两者的采样权重概率分布，而是通过约束直方图上界来使两者一致，这背后有一定的理论支撑：</script><p>   \text{bound}(\hat t, \hat w, T)=\sum<em>{j:T\cup{}\hat T_j\ne ∅}{\hat w_j}\<br>   \mathcal L</em>{prop}(t,w,\hat t, \hat w)=\sum_i\frac{1}{w_i}\max(0,w_i-\text{bound}(\hat t, \hat w,T_i))^2</p>
+<script type="math/tex; mode=display">
+   ![Mip-Nerf 360网络结构](./2024-04-21-算法理解之从Nerf到gaussian-splatting/Mip-Nerf 360网络结构.png)
+
+3. 歧义问题。经过训练的nerf通常表现出"floats"和"background collaps"两个问题，"floats"指的是原本应该表现体积密集空间中，出现了一些小的间断区域，这是由于在训练中该区域只存在于很小一部分数据，由于问题的欠定，只从几个视图网络无法推断出其中的点是否紧密联系，这将导致从别的视角看向该位置会出现一些类似模糊云的现象。"background collaps"指的是远处的表面被错误地建模为靠近相机的密集内容的半透明云的现象，类似的，这也是因为背景或远处的表面在训练集中所含分布权重较低所导致。**解决思路**：加入了一个启发式的正则损失，动机是使得用于重建的采样点密度更集中，这比NeRF在体积密度中注入噪声的方法更有效：</script><p>   L<em>{\text{dist}}(s, w) = \sum</em>{i,j} w<em>i w_j \left( \frac{s_i + s</em>{i+1}}{2} - \frac{s<em>j + s</em>{j+1}}{2} \right) + \frac{1}{3} \sum<em>i w_i^2 (s</em>{i+1} - s_i)</p>
+<p>   $$<br>   这个正则化器的思想是通过以下方式来鼓励每个光线尽可能紧凑：</p>
+<ol>
+<li><strong>最小化每个间隔的宽度</strong>：通过正则化器的第一项来实现，该项最小化所有间隔中点对的加权距离。</li>
+<li><strong>将远处的间隔拉近</strong>：通过正则化器的第二项来实现间隔之间的距离减小来实现。</li>
+<li><strong>将权重整合到一个或少数几个附近的间隔中</strong>：通过鼓励权重集中在较小的区域内来实现。</li>
+<li><strong>在可能的情况下将所有权重推向零</strong>：例如，当整个光线都未被占据时。</li>
+</ol>
+<p><img src="/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Mip-Nerf 360正则示意图.png" alt="Mip-Nerf 360正则示意图"></p>
+<h2 id="Instant-NGP"><a href="#Instant-NGP" class="headerlink" title="Instant-NGP"></a>Instant-NGP</h2><p><strong>Instant Neural Graphics Primitives with a Multiresolution Hash Encoding</strong></p>
+<p>Instant-NGP主要解决的问题是Nerf系列工作训练和渲染耗时较长的问题，其核心主要是使用多分辨率网格结构对场景信息进行记录，但是该多分辨率网格并不是一个结构化数据，而是通过稀疏的多级哈希表来维护。</p>
+<p>在每一级哈希表中，哈希函数通过逐维度地对三维坐标进行线性缩放、向下取整、与质数相乘以及模运算，然后将所有维度的结果进行累加，并最终对哈希表的大小进行模运算，得到一个在哈希表大小范围内的索引，这种哈希函数的设计允许神经网络自动学习解决哈希冲突，通过统计学习概率密度较高（物体表面）的三维坐标将被映射在哈希值上，避免了在训练过程中对数据结构进行结构更新的需要。</p>
+<p>哈希表的值是该三维坐标在该分辨率下的特征，这是一个可学习参数，在训练中更新。</p>
+<p>如下图所示，不同分辨率 $L$ 下的特征 $F$ 和额外输入 $\xi$ 输入到一个浅层MLP中，由于查询哈希表几乎不需要耗时，而相较于原始Nerf中使用的8层MLP网络，这极大地提高了模型训练和体渲染速度，这是一种以存带算的思想。该算法中既有基于体素网格（voxel grid）的结构，也有基于神经网络的结构，可以看成是一种两者混合算法。</p>
+<p><img src="/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/instant-NGP示意图.png" alt="instant-NGP示意图"></p>
+<h2 id="Plenoxels"><a href="#Plenoxels" class="headerlink" title="Plenoxels"></a>Plenoxels</h2><p><strong>Plenoxels: Radiance Fields without Neural Networks</strong></p>
+<p>如果把Nerf看成是一个纯网络的算法，Instant-NGP是一个神经网络和体素网格（voxel grid）一类的混合算法，那么Plenoxels就是一个纯体素网格一类的算法。相较于Instant-NGP，其需要解决的问题是如何学习场景中视角（view-dependent）相关的颜色，如下图所示，这里主要通过为网格每个节点学习球谐（spherical harmonics)函数。类似的，场景被表示为一个稀疏的三维体素(grid)网格。在这个网格中，只有非空的体素被存储和处理，这有助于减少计算量和内存使用，这存在了从粗网格到细网格的策略对网格进行压缩裁剪（见PlenOctrees）。为了使结果更加平滑，对相邻网格的各向邻近差值使用Total variation损失进行正则化。</p>
+<p><img src="/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Plenoxel示意图.png" alt="Plenoxel示意图"></p>
+<h2 id="NeILF"><a href="#NeILF" class="headerlink" title="NeILF"></a>NeILF</h2><p><strong>NeILF: Neural Incident Light Field for Physically-based Material Estimation</strong></p>
+<h2 id="Ref-Nerf"><a href="#Ref-Nerf" class="headerlink" title="Ref-Nerf"></a>Ref-Nerf</h2><p><strong>Ref-NeRF: Structured View-Dependent Appearance for Neural Radiance Fields</strong></p>
+<h2 id="RawNerf"><a href="#RawNerf" class="headerlink" title="RawNerf"></a>RawNerf</h2><p><strong>NeRF in the Dark: High Dynamic Range View Synthesis from Noisy Raw Images</strong></p>
+<h2 id="技术要点分类"><a href="#技术要点分类" class="headerlink" title="技术要点分类"></a>技术要点分类</h2><h3 id="推理速度"><a href="#推理速度" class="headerlink" title="推理速度"></a>推理速度</h3><p>基于神经网络（neural network）和基于体素网格（voxel grid），体素网格能分担一部分场景表达能力，优势是速度更快，代价是存储更大。</p>
+<h3 id="逆渲染场景"><a href="#逆渲染场景" class="headerlink" title="逆渲染场景"></a>逆渲染场景</h3><ul>
+<li>forward-facing</li>
+<li>360°</li>
+<li>real</li>
+<li>unbounded scenes：使用归一化设备坐标(NDC)或多球体图像(MSI)背景模型来扩展其表示，使其能够处理更广阔的视野。</li>
+</ul>
+<h1 id="3DGS相关论文"><a href="#3DGS相关论文" class="headerlink" title="3DGS相关论文"></a>3DGS相关论文</h1><h2 id="3DGS"><a href="#3DGS" class="headerlink" title="3DGS"></a>3DGS</h2><p><strong>3d gaussian splatting for real-time radiance field rendering</strong></p>
+
+    </div>
+
+    
+    
+    
+      
+<div class="post-widgets">
+      <div id="needsharebutton-postbottom">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lifengjun
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/" title="【论文阅读】从Nerf到3D gaussian-splatting的逆渲染">https://lifengjun.xin/2024/04/21/算法理解之从Nerf到gaussian-splatting/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/computer-vision/" rel="tag"># computer vision</a>
+              <a href="/tags/computer-graphic/" rel="tag"># computer graphic</a>
+              <a href="/tags/nerf/" rel="tag"># nerf</a>
+              <a href="/tags/3D-gaussian-splatting/" rel="tag"># 3D gaussian splatting</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/" rel="prev" title="图形算法Plug and play">
+      <i class="fa fa-chevron-left"></i> 图形算法Plug and play
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE"><span class="nav-number">2.</span> <span class="nav-text">训练数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Blender%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">2.1.</span> <span class="nav-text">Blender数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Colmap%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">2.2.</span> <span class="nav-text">Colmap数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%BA%E5%88%AB"><span class="nav-number">2.3.</span> <span class="nav-text">区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E7%BB%B4%E7%89%A9%E4%BD%93%E7%9A%84%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95"><span class="nav-number">2.4.</span> <span class="nav-text">三维物体的表示方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nerf%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87"><span class="nav-number">3.</span> <span class="nav-text">Nerf相关论文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Nerf"><span class="nav-number">3.1.</span> <span class="nav-text">Nerf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mip-Nerf"><span class="nav-number">3.2.</span> <span class="nav-text">Mip-Nerf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Instant-NGP"><span class="nav-number">3.3.</span> <span class="nav-text">Instant-NGP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Plenoxels"><span class="nav-number">3.4.</span> <span class="nav-text">Plenoxels</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NeILF"><span class="nav-number">3.5.</span> <span class="nav-text">NeILF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ref-Nerf"><span class="nav-number">3.6.</span> <span class="nav-text">Ref-Nerf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RawNerf"><span class="nav-number">3.7.</span> <span class="nav-text">RawNerf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E8%A6%81%E7%82%B9%E5%88%86%E7%B1%BB"><span class="nav-number">3.8.</span> <span class="nav-text">技术要点分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E7%90%86%E9%80%9F%E5%BA%A6"><span class="nav-number">3.8.1.</span> <span class="nav-text">推理速度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%86%E6%B8%B2%E6%9F%93%E5%9C%BA%E6%99%AF"><span class="nav-number">3.8.2.</span> <span class="nav-text">逆渲染场景</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3DGS%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87"><span class="nav-number">4.</span> <span class="nav-text">3DGS相关论文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3DGS"><span class="nav-number">4.1.</span> <span class="nav-text">3DGS</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lifengjun"
+      src="https://avatars0.githubusercontent.com/u/25082467?v=4">
+  <p class="site-author-name" itemprop="name">lifengjun</p>
+  <div class="site-description" itemprop="description">个人学习笔记和日志</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/543877815" title="GitHub → https://github.com/543877815" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:543877815@qq.com" title="E-Mail → mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lifengjun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"7lnT19QcEeBPLqbdFz6RXmt6-gzGzoHsz","app_key":"0m9MYgfgDxi38rb89hJ8gUHF","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/',]
+      });
+      });
+  </script>
+
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+      pbOptions = {};
+        pbOptions.iconStyle = "box";
+        pbOptions.boxForm = "horizontal";
+        pbOptions.position = "bottomCenter";
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+  </script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '970dc8fd856c3e17f9f0',
+      clientSecret: '7f6d29828dd1f4a02336c480ba1012f1851b0eb0',
+      repo        : '543877815.github.io',
+      owner       : '543877815',
+      admin       : ['543877815'],
+      id          : 'cb6a3081c35cce1276eed923c495adc8',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

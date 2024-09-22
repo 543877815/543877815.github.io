@@ -23,12 +23,12 @@
 
   <meta name="description" content="Vscode准备工作官方文档：https:&#x2F;&#x2F;code.visualstudio.com&#x2F;docs&#x2F;cpp&#x2F;config-mingw 参考：  在vscode运行c++：https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_62411288&#x2F;article&#x2F;details&#x2F;130796591 在vscode用makefile运行opengl：https:&#x2F;&#x2F;blog.csdn.net&#x2F;weix">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Visual Studio与VSCode的C++配置手册">
+<meta property="og:title" content="Visual Studio与VSCode中C++构建工具的配置手册">
 <meta property="og:url" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/index.html">
 <meta property="og:site_name" content="逗比学长的博客">
 <meta property="og:description" content="Vscode准备工作官方文档：https:&#x2F;&#x2F;code.visualstudio.com&#x2F;docs&#x2F;cpp&#x2F;config-mingw 参考：  在vscode运行c++：https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_62411288&#x2F;article&#x2F;details&#x2F;130796591 在vscode用makefile运行opengl：https:&#x2F;&#x2F;blog.csdn.net&#x2F;weix">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/vscode%E5%AE%89%E8%A3%85c++%20extension.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/vscode%E5%AE%89%E8%A3%85c++%E6%8B%93%E5%B1%95.png">
 <meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/root_directory.png">
 <meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/c_cpp_properties.png">
 <meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/gcc-c_cpp_properties_json_ui.png">
@@ -54,12 +54,20 @@
 <meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Library%20directory.png">
 <meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/library.png">
 <meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/post%20build%20event.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/dll.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/visual%20studio%E9%80%89%E9%A1%B9%E5%8D%A1%E6%98%BE%E7%A4%BA%E5%A4%9A%E8%A1%8C.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/vcpkg%20issue.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/include%20path%20for%20libtorch.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/library%20path%20for%20libtorch.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/library%20for%20libtorch.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/dll%20for%20libtorch.png">
+<meta property="og:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/cuda%20availiable%20for%20libtorch.png">
 <meta property="article:published_time" content="2024-02-01T13:34:27.000Z">
-<meta property="article:modified_time" content="2024-02-16T15:16:45.988Z">
+<meta property="article:modified_time" content="2024-09-07T14:20:49.568Z">
 <meta property="article:author" content="lifengjun">
 <meta property="article:tag" content="word">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/vscode%E5%AE%89%E8%A3%85c++%20extension.png">
+<meta name="twitter:image" content="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/vscode%E5%AE%89%E8%A3%85c++%E6%8B%93%E5%B1%95.png">
 
 <link rel="canonical" href="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/">
 
@@ -89,7 +97,7 @@
 </style>
 <script src="/js/src/echarts.common.min.js"></script>
 
-  <title>Visual Studio与VSCode的C++配置手册 | 逗比学长的博客</title>
+  <title>Visual Studio与VSCode中C++构建工具的配置手册 | 逗比学长的博客</title>
   
 
 
@@ -276,7 +284,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Visual Studio与VSCode的C++配置手册
+          Visual Studio与VSCode中C++构建工具的配置手册
         </h1>
 
         <div class="post-meta">
@@ -293,7 +301,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-16 23:16:45" itemprop="dateModified" datetime="2024-02-16T23:16:45+08:00">2024-02-16</time>
+                <time title="修改时间：2024-09-07 22:20:49" itemprop="dateModified" datetime="2024-09-07T22:20:49+08:00">2024-09-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -306,7 +314,7 @@
             </span>
 
           
-            <span id="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/" class="post-meta-item leancloud_visitors" data-flag-title="Visual Studio与VSCode的C++配置手册" title="阅读次数">
+            <span id="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/" class="post-meta-item leancloud_visitors" data-flag-title="Visual Studio与VSCode中C++构建工具的配置手册" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -323,7 +331,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Vscode准备工作"><a href="#Vscode准备工作" class="headerlink" title="Vscode准备工作"></a>Vscode准备工作</h1><p>官方文档：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-mingw">https://code.visualstudio.com/docs/cpp/config-mingw</a></p>
+        <h1 id="Vscode"><a href="#Vscode" class="headerlink" title="Vscode"></a>Vscode</h1><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>官方文档：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-mingw">https://code.visualstudio.com/docs/cpp/config-mingw</a></p>
 <p>参考：</p>
 <ol>
 <li>在vscode运行c++：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62411288/article/details/130796591">https://blog.csdn.net/weixin_62411288/article/details/130796591</a></li>
@@ -336,7 +344,7 @@
 <li><p>下载vscode <a target="_blank" rel="noopener" href="https://code.visualstudio.com/">Visual Studio Code - Code Editing. Redefined</a></p>
 </li>
 <li><p>vscode安装c++扩展；</p>
-<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/vscode安装c++ extension.png" alt="vscode安装c++ extension" style="width: 67%;"></p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/vscode安装c++拓展.png" alt="vscode安装c++ extension" style="width: 67%;"></p>
 </li>
 <li><p>g++的话推荐是安装 <a target="_blank" rel="noopener" href="https://www.msys2.org/">MSYS2</a>；MSVC的话需要安装 <a target="_blank" rel="noopener" href="https://visualstudio.microsoft.com/">visual studio</a>。</p>
 </li>
@@ -350,14 +358,14 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cl -V</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h1 id="Vscode-amp-amp-g"><a href="#Vscode-amp-amp-g" class="headerlink" title="Vscode &amp;&amp; g++"></a>Vscode &amp;&amp; g++</h1><p>官方文档：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-mingw">https://code.visualstudio.com/docs/cpp/config-mingw</a></p>
+<h2 id="Vscode-amp-amp-g"><a href="#Vscode-amp-amp-g" class="headerlink" title="Vscode &amp;&amp; g++"></a>Vscode &amp;&amp; g++</h2><p>官方文档：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-mingw">https://code.visualstudio.com/docs/cpp/config-mingw</a></p>
 <p>以<a target="_blank" rel="noopener" href="https://github.com/JoeyDeVries/LearnOpenGL">learnOpenGL</a>源码为例，需要配置的有glfw、glad等库。</p>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>需要用cmake-gui进行 <code>Configure</code> 和 <code>Generate</code> 生成 <code>root_directory.h</code>，随后需要 Include 到目录中。</p>
+<h3 id="准备工作-1"><a href="#准备工作-1" class="headerlink" title="准备工作"></a>准备工作</h3><p>需要用cmake-gui进行 <code>Configure</code> 和 <code>Generate</code> 生成 <code>root_directory.h</code>，随后需要 Include 到目录中。</p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/root_directory.png" alt="cmake-gui生成root_directory.h" style="width: 80%;"></p>
 <p>生成的<code>root_directory.h</code> 在 <code>abs_path/build_vs2022/configuration/</code> 中。</p>
 <p>这个代码运行的过程中会遇到 <strong>undefined reference to ‘stbi_load’</strong> 的问题，需要在代码 <code>#include &lt;stb_image.h&gt;</code> <strong>后</strong>加入 <code>STB_IMAGE_IMPLEMENTATION</code> 宏的定义。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stb_image.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> STB_IMAGE_IMPLEMENTATION</span></span><br></pre></td></tr></table></figure>
-<h2 id="配置编译器-c-cpp-properties-json"><a href="#配置编译器-c-cpp-properties-json" class="headerlink" title="配置编译器(c_cpp_properties.json)"></a>配置编译器(c_cpp_properties.json)</h2><p>在vscode中输入 <code>ctrl+shift+p</code> 调出命令行，输入选择 <code>C/C++: Edit Configurations (UI)</code>：</p>
+<h3 id="配置编译器-c-cpp-properties-json"><a href="#配置编译器-c-cpp-properties-json" class="headerlink" title="配置编译器(c_cpp_properties.json)"></a>配置编译器(c_cpp_properties.json)</h3><p>在vscode中输入 <code>ctrl+shift+p</code> 调出命令行，输入选择 <code>C/C++: Edit Configurations (UI)</code>：</p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/c_cpp_properties.png" alt="c_cpp_properties.json" style="width: 50%;"></p>
 <p>这个操作会在 <code>.vscode</code> 的文件夹中创建 <code>c_cpp_properties.json</code> 文件，其中需要设置的是 <code>Include Path</code>、 <code>Compiler Path</code> 和 <code>IntelliSense Mode</code> </p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/gcc-c_cpp_properties_json_ui.png" alt="gcc-c_cpp_properties_ui" style="width:70%;"></p>
@@ -369,7 +377,7 @@
 </ul>
 <p>这等价于在 <code>c_cpp_properties.json</code> 进行相应的编辑：</p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/gcc-c_cpp_properties_json.png" alt="gcc-c_cpp_properties_json" style="width: 50%;"></p>
-<h2 id="配置构建任务-tasks-json"><a href="#配置构建任务-tasks-json" class="headerlink" title="配置构建任务(tasks.json)"></a>配置构建任务(tasks.json)</h2><p>在vscode中输入 <code>ctrl+shift+p</code> 调出命令行，输入选择 <code>Tasks:Configure Default Build Task</code>：</p>
+<h3 id="配置构建任务-tasks-json"><a href="#配置构建任务-tasks-json" class="headerlink" title="配置构建任务(tasks.json)"></a>配置构建任务(tasks.json)</h3><p>在vscode中输入 <code>ctrl+shift+p</code> 调出命令行，输入选择 <code>Tasks:Configure Default Build Task</code>：</p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Configure Default Build Task.png" alt="Configure Default Build Task" style="width: 50%;"></p>
 <p>再选择 <code>C/C++: g++.exe build active file</code>：</p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/build active file.png" alt="build active file" style="width: 50%;"></p>
@@ -378,22 +386,22 @@
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Compile&quot;</span><span class="punctuation">,</span> <span class="comment">// 任务名称，与launch.json的preLaunchTask相对应</span></span><br><span class="line">            <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;clang++&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span> <span class="comment">//编译时的参数</span></span><br><span class="line">                <span class="string">&quot;$&#123;file&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-o&quot;</span><span class="punctuation">,</span> <span class="comment">//指定输出文件名</span></span><br><span class="line">                <span class="string">&quot;$&#123;fileDirname&#125;/$&#123;fileBasenameNoExtension&#125;.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-g&quot;</span><span class="punctuation">,</span> <span class="comment">//添加gdb调试选项</span></span><br><span class="line">                <span class="string">&quot;-Wall&quot;</span><span class="punctuation">,</span>  <span class="comment">//开启额外警告</span></span><br><span class="line">                <span class="string">&quot;-static-libgcc&quot;</span><span class="punctuation">,</span> <span class="comment">//静态链接libgcc</span></span><br><span class="line">                <span class="string">&quot;--target=x86_64-w64-mingw&quot;</span><span class="punctuation">,</span>  <span class="comment">//clang编译器需要加上这条，因为它默认的target是msvc；如果用gcc或者linux要注释掉</span></span><br><span class="line">                <span class="string">&quot;-std=c++17&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-I$&#123;workspaceFolder&#125;/include&quot;</span><span class="punctuation">,</span> <span class="comment">//添加工作路径下的include</span></span><br><span class="line">                <span class="string">&quot;-L$&#123;workspaceFolder&#125;/lib&quot;</span><span class="punctuation">,</span> <span class="comment">//添加工作路径下的lib</span></span><br><span class="line">                <span class="string">&quot;-lglut32&quot;</span><span class="punctuation">,</span> <span class="comment">//使用glut</span></span><br><span class="line">                <span class="string">&quot;-lglu32&quot;</span><span class="punctuation">,</span>  <span class="comment">//使用glut</span></span><br><span class="line">                <span class="string">&quot;-lopengl32&quot;</span><span class="punctuation">,</span> <span class="comment">//使用opengl</span></span><br><span class="line">                <span class="string">&quot;-lglad&quot;</span><span class="punctuation">,</span> <span class="comment">//使用glad+glfw，这里可以先注释掉</span></span><br><span class="line">                <span class="string">&quot;-lglfw3&quot;</span><span class="punctuation">,</span>  <span class="comment">//使用glad+glfw，这里可以先注释掉 </span></span><br><span class="line">                <span class="string">&quot;-lglfw3dll&quot;</span><span class="punctuation">,</span> <span class="comment">//使用glad+glfw，这里可以先注释掉</span></span><br><span class="line">                <span class="string">&quot;-lgdi32&quot;</span><span class="punctuation">,</span>  <span class="comment">//使用glad+glfw，这里可以先注释掉</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;group&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;kind&quot;</span><span class="punctuation">:</span> <span class="string">&quot;build&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;isDefault&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span> <span class="comment">//表示快捷键Ctrl+Shift+B可以运行该任务</span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;presentation&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;echo&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;reveal&quot;</span><span class="punctuation">:</span> <span class="string">&quot;always&quot;</span><span class="punctuation">,</span> <span class="comment">// 执行任务时是否跳转到终端面板</span></span><br><span class="line">                <span class="attr">&quot;focus&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;panel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shared&quot;</span> <span class="comment">// 不同的文件的编译信息共享一个终端面板</span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;problemMatcher&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 <p>在这个demo中，配置如下：</p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/gcc_tasks_json.png" alt="gcc-tasks.json" style="width: 50%;"></p>
-<h2 id="配置调试设置-launch-json"><a href="#配置调试设置-launch-json" class="headerlink" title="配置调试设置(launch.json)"></a>配置调试设置(launch.json)</h2><p>菜单栏点击 <code>run and debug</code>，或者直接用 <code>F5</code>：</p>
+<h3 id="配置调试设置-launch-json"><a href="#配置调试设置-launch-json" class="headerlink" title="配置调试设置(launch.json)"></a>配置调试设置(launch.json)</h3><p>菜单栏点击 <code>run and debug</code>，或者直接用 <code>F5</code>：</p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/run and debug.png" alt="run and debug" style="width: 25%;"></p>
 <p>选择 <code>C++(GDB/LLDB)</code>：</p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Debug.png" alt="(GDB/LLDB)" style="width: 50%;"></p>
 <p>这个操作会在 <code>.vscode</code> 的文件夹中创建 <code>launch.json</code> 文件：</p>
 <p>其相关配置说明如下：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;(gdb) Launch&quot;</span><span class="punctuation">,</span> <span class="comment">// 配置名称，将会在启动配置的下拉菜单中显示</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span> <span class="comment">// 配置类型，cppdbg对应cpptools提供的调试功能；可以认为此处只能是cppdbg</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span> <span class="comment">// 请求配置类型，可以为launch（启动）或attach（附加）</span></span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;/$&#123;fileBasenameNoExtension&#125;.exe&quot;</span><span class="punctuation">,</span> <span class="comment">// 将要进行调试的程序的路径</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span> <span class="comment">// 程序调试时传递给程序的命令行参数，一般设为空即可</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span> <span class="comment">// 设为true时程序将暂停在程序入口处，相当于在main上打断点</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="punctuation">,</span> <span class="comment">// 调试程序时的工作目录，此为工作区文件夹；改成$&#123;fileDirname&#125;可变为文件所在目录</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span> <span class="comment">// 环境变量</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span> <span class="comment">// 为true时使用单独的cmd窗口，与其它IDE一致；18年10月后设为false可调用VSC内置终端</span></span><br><span class="line">            <span class="attr">&quot;internalConsoleOptions&quot;</span><span class="punctuation">:</span> <span class="string">&quot;neverOpen&quot;</span><span class="punctuation">,</span> <span class="comment">// 如果不设为neverOpen，调试时会跳到“调试控制台”选项卡，你应该不需要对gdb手动输命令吧？</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span> <span class="comment">// 指定连接的调试器，可以为gdb或lldb。但我没试过lldb</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb.exe&quot;</span><span class="punctuation">,</span> <span class="comment">// 调试器路径，Windows下后缀不能省略，Linux下则不要</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="punctuation">&#123;</span> <span class="comment">// 模板自带，好像可以更好地显示STL容器的内容，具体作用自行Google</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Compile&quot;</span> <span class="comment">// 调试会话开始前执行的任务，一般为编译程序。与tasks.json的label相对应</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<h1 id="Vscode-amp-amp-MSVC"><a href="#Vscode-amp-amp-MSVC" class="headerlink" title="Vscode &amp;&amp; MSVC"></a>Vscode &amp;&amp; MSVC</h1><p>官方文档：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-msvc">https://code.visualstudio.com/docs/cpp/config-msvc</a></p>
+<h2 id="Vscode-amp-amp-MSVC"><a href="#Vscode-amp-amp-MSVC" class="headerlink" title="Vscode &amp;&amp; MSVC"></a>Vscode &amp;&amp; MSVC</h2><p>官方文档：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-msvc">https://code.visualstudio.com/docs/cpp/config-msvc</a></p>
 <p>以<a target="_blank" rel="noopener" href="https://github.com/JoeyDeVries/LearnOpenGL">learnOpenGL</a>源码为例，需要配置的有glfw、glad等库。</p>
-<h2 id="准备工作-1"><a href="#准备工作-1" class="headerlink" title="准备工作"></a>准备工作</h2><p>准备工作基本同上。</p>
+<h3 id="准备工作-2"><a href="#准备工作-2" class="headerlink" title="准备工作"></a>准备工作</h3><p>准备工作基本同上。</p>
 <p>需要用cmake-gui进行 <code>Configure</code> 和 <code>Generate</code> 生成 <code>root_directory.h</code>，随后需要 Include 到目录中。</p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/root_directory.png" alt="cmake-gui生成root_directory.h" style="width: 80%;"></p>
 <p>生成的<code>root_directory.h</code> 在 <code>abs_path/build_vs2022/configuration/</code> 中。</p>
 <p>这个代码运行的过程中会遇到 <strong>undefined reference to ‘stbi_load’</strong> 的问题，需要在代码 <code>#include &lt;stb_image.h&gt;</code> <strong>后</strong>加入 <code>STB_IMAGE_IMPLEMENTATION</code> 宏的定义。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stb_image.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> STB_IMAGE_IMPLEMENTATION</span></span><br></pre></td></tr></table></figure>
-<h2 id="配置编译器-c-cpp-properties-json-1"><a href="#配置编译器-c-cpp-properties-json-1" class="headerlink" title="配置编译器(c_cpp_properties.json)"></a>配置编译器(c_cpp_properties.json)</h2><p>在vscode中输入 <code>ctrl+shift+p</code> 调出命令行，输入选择 <code>C/C++: Edit Configurations (UI)</code>：</p>
+<h3 id="配置编译器-c-cpp-properties-json-1"><a href="#配置编译器-c-cpp-properties-json-1" class="headerlink" title="配置编译器(c_cpp_properties.json)"></a>配置编译器(c_cpp_properties.json)</h3><p>在vscode中输入 <code>ctrl+shift+p</code> 调出命令行，输入选择 <code>C/C++: Edit Configurations (UI)</code>：</p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/c_cpp_properties.png" alt="c_cpp_properties.json" style="width: 50%;"></p>
 <p>这个操作会在 <code>.vscode</code> 的文件夹中创建 <code>c_cpp_properties.json</code> 文件，其中需要设置的是 <code>Include Path</code>、 <code>Compiler Path</code> 和 <code>IntelliSense Mode</code> </p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/msvc-c_cpp_properties_json_ui.png" alt="msvc-c_cpp_properties_json_ui" style="width:70%;"></p>
@@ -405,7 +413,7 @@
 </ul>
 <p>这等价于在 <code>c_cpp_properties.json</code> 进行相应的编辑：</p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/msvc-c_cpp_properties_json.png" alt="msvc-c_cpp_properties.json" style="width:80%;"></p>
-<h2 id="配置构建任务-tasks-json-1"><a href="#配置构建任务-tasks-json-1" class="headerlink" title="配置构建任务(tasks.json)"></a>配置构建任务(tasks.json)</h2><h3 id="使用Develop-Command-Prompt启动"><a href="#使用Develop-Command-Prompt启动" class="headerlink" title="使用Develop Command Prompt启动"></a>使用Develop Command Prompt启动</h3><p>启动Develop Command Prompt，输入<code>where cl</code>可以得到<code>cl.exe</code>的位置：</p>
+<h3 id="配置构建任务-tasks-json-1"><a href="#配置构建任务-tasks-json-1" class="headerlink" title="配置构建任务(tasks.json)"></a>配置构建任务(tasks.json)</h3><h4 id="使用Develop-Command-Prompt启动"><a href="#使用Develop-Command-Prompt启动" class="headerlink" title="使用Develop Command Prompt启动"></a>使用Develop Command Prompt启动</h4><p>启动Develop Command Prompt，输入<code>where cl</code>可以得到<code>cl.exe</code>的位置：</p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/where cl.png" alt="where cl" style="width:80%;"></p>
 <p>可以看到默认是使用<code>x86</code>，通过命令<code>set path=D:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Tools\MSVC\14.38.33130\bin\Hostx64\x64;%path%</code>修改环境变量可以修改为使用 <code>x64</code>：</p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/update x86 cl to x64 cl.png" alt="update x86 cl.exe to x64 cl.exe" style="width:80%;"></p>
@@ -433,10 +441,10 @@
 <li><strong><code>$&#123;workspaceFolder&#125;/build_vs2022/Debug/STB_IMAGE.lib&quot;</code></strong>：链接到 <code>STB_IMAGE.lib</code> 库。</li>
 <li><strong><code>$&#123;workspaceFolder&#125;/build_vs2022/Debug/GLAD.lib&quot;</code></strong>：链接到 <code>GLAD.lib</code> 库。</li>
 </ul>
-<h3 id="使用vscode直接启动-还没验证"><a href="#使用vscode直接启动-还没验证" class="headerlink" title="使用vscode直接启动(还没验证)"></a>使用vscode直接启动(还没验证)</h3><p>需要加上<code>&quot;windows&quot;</code> 部分，可从官网上复制：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-msvc">https://code.visualstudio.com/docs/cpp/config-msvc</a></p>
+<h4 id="使用vscode直接启动-还没验证"><a href="#使用vscode直接启动-还没验证" class="headerlink" title="使用vscode直接启动(还没验证)"></a>使用vscode直接启动(还没验证)</h4><p>需要加上<code>&quot;windows&quot;</code> 部分，可从官网上复制：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-msvc">https://code.visualstudio.com/docs/cpp/config-msvc</a></p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/msvc-tasks.json.png" alt="msvc-tasks.json" style="width:80%;"></p>
 <p>这里的：<strong><code>&quot;\&quot;D:/Program Files/Microsoft Visual Studio/2022/Professional/Common7/Tools/VsDevCmd.bat\&quot;&quot;</code></strong>：这是要运行的批处理文件的路径。在这里，<code>VsDevCmd.bat</code> 是 <strong>Visual Studio</strong> 的开发者命令提示符批处理文件。它设置了一些环境变量和路径，以便在命令行中使用 <strong>Visual Studio</strong> 的工具和编译器。</p>
-<h1 id="Visual-Studio"><a href="#Visual-Studio" class="headerlink" title="Visual Studio"></a>Visual Studio</h1><p><strong>环境设置</strong>。用一个油管up主thecherno的环境设置：<a target="_blank" rel="noopener" href="http://thecherno.com/vs">http://thecherno.com/vs</a></p>
+<h1 id="Visual-Studio"><a href="#Visual-Studio" class="headerlink" title="Visual Studio"></a>Visual Studio</h1><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p><strong>环境设置</strong>。用一个油管up主thecherno的环境设置：<a target="_blank" rel="noopener" href="http://thecherno.com/vs">http://thecherno.com/vs</a></p>
 <p>在Visual Studio中，使用<code>工具-&gt;导入导出设置</code>：</p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Environment setting.png" alt="Environment setting" style="width:50%;"></p>
 <p>一直点下一步，在这个界面通过预览来找到需要加载的环境配置文件：</p>
@@ -450,7 +458,357 @@
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/Library directory.png" alt="Library directory" style="width:75%;"></p>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/library.png" alt="library" style="width:75%;"></p>
 <p><strong>生成事件</strong>可用于拷贝 <code>.dll</code> 到 <code>.exe</code> 所在目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy $(SolutionDir)xxxx\xxxx.dll $(SolutionDir)yyyy\yyyy.dll  /y</span><br></pre></td></tr></table></figure>
 <p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/post build event.png" alt="post event" style="width:75%;"></p>
+<p><strong>动态链接库</strong>。在<code>属性页-&gt;配置属性-&gt;调试-&gt;环境</code>处进行配置：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/dll.png" alt="dll"></p>
+<h2 id="配置选项卡显示多行"><a href="#配置选项卡显示多行" class="headerlink" title="配置选项卡显示多行"></a>配置选项卡显示多行</h2><p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/visual studio选项卡显示多行.png" alt="visual studio选项卡显示多行"></p>
+<h2 id="cmd输出中文乱码问题"><a href="#cmd输出中文乱码问题" class="headerlink" title="cmd输出中文乱码问题"></a>cmd输出中文乱码问题</h2><p>见<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39900031/article/details/115498976?spm=1001.2014.3001.5506">cmd窗口汉字显示乱码</a></p>
+<ol>
+<li><p><code>win+R</code>输入<code>regedit</code>进入注册表。</p>
+</li>
+<li><p>找到<code>HKEY CURRENT USER\Console%SystemRoot%system:32cmd.exe</code>如果该项下已存在CodePage项，则把值改为十进制”65001”；如果不存在，在该项下新建一个DWORD(32位值)，命名为“CodePage”,值设为“65001”。</p>
+</li>
+<li><p>重启cmd后生效。</p>
+</li>
+<li><p>对于Power shell修改同样，只需在第2步修改%SystemRoot%system32 WindowsPowerShell_v1.0_powershell.exe下的项。</p>
+</li>
+</ol>
+<h2 id="配置中文保存不乱码"><a href="#配置中文保存不乱码" class="headerlink" title="配置中文保存不乱码"></a>配置中文保存不乱码</h2><p>拓展安装 <strong>Force UTF-8 2022</strong>。</p>
+<h2 id="vcpkg安装包"><a href="#vcpkg安装包" class="headerlink" title="vcpkg安装包"></a><strong>vcpkg安装包</strong></h2><p><strong>遇到问题：</strong>vcpkg install error:in triplet x64-windows: Unable to find a valid Visual Studio instance Could not locate a complete Visual Studio instance，见<a target="_blank" rel="noopener" href="https://github.com/microsoft/vcpkg/issues/22074：">https://github.com/microsoft/vcpkg/issues/22074：</a></p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/vcpkg issue.png" alt="vcpkg issue"></p>
+<p>安装命令：<code>vcpkg install curl:x64-windows</code></p>
+<p>卸载命令：<code>vcpkg remove curl:x64-windows</code></p>
+<p>将 <code>vcpkg</code> 集成到项目或开发环境中：<code>vcpkg.exe integrate install</code></p>
+<p>取消将 <code>vcpkg</code> 集成：<code>vcpkg.exe integrate remove</code></p>
+<h2 id="curl编译"><a href="#curl编译" class="headerlink" title="curl编译"></a>curl编译</h2><p><code>build-openssl.bat vc14.30 x64 debug D:\jupyter_notebook\compile_curl\openssl -VSpath D:\Program Files\Microsoft Visual Studio -perlpath D:\jupyter_notebook\vcpkg\downloads\tools\perl</code></p>
+<h2 id="看so"><a href="#看so" class="headerlink" title="看so"></a>看so</h2><p><code>readelf -d</code></p>
+<h2 id="库配置"><a href="#库配置" class="headerlink" title="库配置"></a>库配置</h2><h3 id="Libtorch"><a href="#Libtorch" class="headerlink" title="Libtorch"></a>Libtorch</h3><p>附加包含目录：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/include path for libtorch.png" alt="include path for libtorch"></p>
+<p>附加库目录：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/library path for libtorch.png" alt="library path for libtorch"></p>
+<p>附加依赖项，包含上述所有<code>.lib</code>：</p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/library for libtorch.png" alt="library for libtorc"></p>
+<p><strong>动态依赖库：</strong></p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/dll for libtorch.png" alt="image-20240811111642254"></p>
+<p><strong>支持cuda命令：</strong><code>/INCLUDE:“?ignore_this_library_placeholder@@YAHXZ”</code></p>
+<p><img src="/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/cuda availiable for libtorch.png" alt="cuda availiable for libtorch.png"></p>
+<h1 id="Cmake语法解释"><a href="#Cmake语法解释" class="headerlink" title="Cmake语法解释"></a>Cmake语法解释</h1><h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><ol>
+<li><p><strong>设置变量</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(VARIABLE_NAME <span class="string">&quot;value&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>这将创建一个名为<code>VARIABLE_NAME</code>的变量，并赋予它字符串值<code>&quot;value&quot;</code>。</p>
+</li>
+<li><p><strong>修改变量</strong>：<br>如果变量已经存在，你可以使用<code>set</code>来修改它的值：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(VARIABLE_NAME <span class="string">&quot;new_value&quot;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用变量</strong>：<br>在CMake脚本中，你可以使用<code>$&#123;VARIABLE_NAME&#125;</code>来引用变量的值。</p>
+</li>
+<li><p><strong>设置缓存变量</strong>：<br>使用<code>CACHE</code>选项可以将变量设置为缓存变量，这意味着它的值会在CMake的缓存中保存，并且可以在图形界面中编辑：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(VARIABLE_NAME <span class="string">&quot;value&quot;</span> CACHE <span class="keyword">STRING</span> <span class="string">&quot;Description of the variable&quot;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>条件设置变量</strong>：<br>你可以使用条件语句来根据条件设置变量的值：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(VARIABLE_NAME <span class="string">&quot;value1&quot;</span> CACHE <span class="keyword">STRING</span> <span class="string">&quot;Description of the variable&quot;</span>)</span><br><span class="line"><span class="keyword">if</span>(CONDITION)</span><br><span class="line">  <span class="keyword">set</span>(VARIABLE_NAME <span class="string">&quot;value2&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>设置多个变量</strong>：<br>你可以使用一个<code>set</code>命令来设置多个变量：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(VARIABLE1 <span class="string">&quot;value1&quot;</span> VARIABLE2 <span class="string">&quot;value2&quot;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用PARENT_SCOPE</strong>：<br>默认情况下，<code>set</code>命令只在当前作用域内有效。如果你想在父作用域中设置变量，可以使用<code>PARENT_SCOPE</code>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span>(some_function)</span><br><span class="line">  <span class="keyword">set</span>(VARIABLE_NAME <span class="string">&quot;value&quot;</span> PARENT_SCOPE)</span><br><span class="line"><span class="keyword">endfunction</span>()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用APPEND或PREPEND</strong>：<br>你可以使用<code>APPEND</code>或<code>PREPEND</code>选项来向现有变量的值添加内容：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(VARIABLE_NAME <span class="string">&quot;initial_value&quot;</span>)</span><br><span class="line"><span class="keyword">set</span>(VARIABLE_NAME <span class="string">&quot;$&#123;VARIABLE_NAME&#125; additional_value&quot;</span> APPEND)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用FILE PATH</strong>：<br><code>set</code>命令可以与<code>FILE PATH</code>一起使用，以确保变量包含一个有效的文件路径：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(VARIABLE_NAME <span class="string">&quot;$&#123;CMAKE_SOURCE_DIR&#125;/path/to/file&quot;</span> FILEPATH)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用PATH</strong>：<br><code>set</code>命令可以与<code>PATH</code>一起使用，以确保变量包含一个有效的路径列表：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(VARIABLE_NAME <span class="string">&quot;path1;path2&quot;</span> PATH)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="option"><a href="#option" class="headerlink" title="option"></a>option</h2><p>在CMake中，如果你想为变量设置一个默认值，并且希望用户可以在CMake配置过程中修改这个值，你可以使用<code>option</code>命令。<code>option</code>命令允许用户在运行<code>cmake</code>时设置一个布尔选项的值，通常用于启用或禁用某些特性或组件。</p>
+<p>以下是<code>option</code>命令的基本用法：</p>
+<ol>
+<li><p><strong>定义选项</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">option</span>(OPTION_NAME <span class="string">&quot;Description of the option&quot;</span> DEFAULT_VALUE)</span><br></pre></td></tr></table></figure>
+<p>这里<code>OPTION_NAME</code>是选项的名称，<code>Description of the option</code>是选项的描述，<code>DEFAULT_VALUE</code>是选项的默认值，可以是<code>ON</code>或<code>OFF</code>。</p>
+</li>
+<li><p><strong>使用选项</strong>：<br>一旦定义了选项，你可以在CMake脚本中使用<code>OPTION_NAME</code>变量，它的值将是用户设置的值，如果没有设置，则为默认值。</p>
+</li>
+<li><p><strong>条件编译</strong>：<br>根据选项的值，你可以控制条件编译：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(OPTION_NAME)</span><br><span class="line">  <span class="comment"># 代码块，当选项为ON时执行</span></span><br><span class="line"><span class="keyword">else</span>()</span><br><span class="line">  <span class="comment"># 代码块，当选项为OFF时执行</span></span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>在命令行中设置选项</strong>：<br>用户可以在运行CMake时使用<code>-D</code>选项来设置变量的值：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -DOPTION_NAME=ON ..</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>在CMakeLists.txt中使用选项</strong>：<br>你可以在<code>CMakeLists.txt</code>文件中使用<code>option</code>命令来定义选项，并在后续的命令中引用这个选项。</p>
+</li>
+<li><p><strong>选项的缓存类型</strong>：<br><code>option</code>命令会自动将选项设置为缓存变量，并设置为<code>BOOL</code>类型。</p>
+</li>
+<li><p><strong>选项的高级用法</strong>：<br>你可以使用<code>FORCE</code>关键字来强制重新评估选项，即使它已经在缓存中：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">option</span>(OPTION_NAME <span class="string">&quot;Description&quot;</span> DEFAULT_VALUE FORCE)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>使用<code>option</code>命令可以让用户在构建系统外部控制项目的配置，而无需修改源代码。</p>
+<h2 id="include-directories"><a href="#include-directories" class="headerlink" title="include_directories"></a>include_directories</h2><p>在CMake中，<code>include_directories</code>命令用于向项目添加头文件搜索路径。这个命令会告诉编译器在哪里查找头文件，这对于编译依赖于外部库的项目非常有用。</p>
+<p>以下是<code>include_directories</code>的一些基本用法：</p>
+<ol>
+<li><p><strong>添加单个头文件搜索路径</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include_directories</span>(PATH_TO_INCLUDE)</span><br></pre></td></tr></table></figure>
+<p>这将添加<code>PATH_TO_INCLUDE</code>到编译器的头文件搜索路径中。</p>
+</li>
+<li><p><strong>添加多个头文件搜索路径</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include_directories</span>(PATH1 PATH2 PATH3)</span><br></pre></td></tr></table></figure>
+<p>这将添加多个路径到编译器的头文件搜索路径中。</p>
+</li>
+<li><p><strong>使用变量添加头文件搜索路径</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(MY_INCLUDE_PATHS PATH1 PATH2)</span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;MY_INCLUDE_PATHS&#125;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>条件添加头文件搜索路径</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(SOME_CONDITION)</span><br><span class="line">  <span class="keyword">include_directories</span>(PATH_CONDITIONAL)</span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用系统头文件搜索路径</strong>：<br>使用<code>SYSTEM</code>关键字可以告诉CMake将这些路径视为系统目录。在这些目录中找到的库通常不会触发编译器警告：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include_directories</span>(SYSTEM PATH_TO_SYSTEM_INCLUDE)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>注意</strong>：</p>
+<ul>
+<li>从CMake 3.4开始，推荐使用<code>target_include_directories</code>来替代<code>include_directories</code>，因为这样可以更精确地控制哪些目标应该包含这些头文件路径。</li>
+<li><code>include_directories</code>会影响全局编译器命令行，可能会在项目的不同部分产生冲突。使用<code>target_include_directories</code>可以提供更细粒度的控制。</li>
+</ul>
+</li>
+<li><p><strong>使用<code>target_include_directories</code></strong>：<br>你可以使用<code>target_include_directories</code>为特定目标添加头文件搜索路径：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_executable</span>(my_app main.cpp)</span><br><span class="line"><span class="keyword">target_include_directories</span>(my_app PRIVATE PATH_TO_PRIVATE_INCLUDE</span><br><span class="line">                                          PUBLIC PATH_TO_PUBLIC_INCLUDE)</span><br></pre></td></tr></table></figure>
+<p>这里<code>PRIVATE</code>表示只有<code>my_app</code>可以访问<code>PATH_TO_PRIVATE_INCLUDE</code>，而<code>PUBLIC</code>表示<code>my_app</code>及其依赖项都可以访问<code>PATH_TO_PUBLIC_INCLUDE</code>。</p>
+</li>
+<li><p><strong>使用<code>INTERFACE</code>或<code>PUBLIC</code>/<code>PRIVATE</code>关键字</strong>：<br>使用<code>target_include_directories</code>时，你可以使用<code>INTERFACE</code>关键字为依赖项添加头文件搜索路径，或者使用<code>PUBLIC</code>/<code>PRIVATE</code>关键字来控制路径的可见性：</p>
+<ul>
+<li><code>PUBLIC</code>：头文件路径对目标本身及其依赖项可见。</li>
+<li><code>PRIVATE</code>：头文件路径仅对目标本身可见。</li>
+</ul>
+</li>
+</ol>
+<p>使用<code>include_directories</code>可以方便地添加头文件搜索路径，但要注意不要过度使用，以免造成依赖关系混乱。在可能的情况下，使用<code>target_include_directories</code>来替代全局的头文件路径添加。</p>
+<h2 id="add-definitions"><a href="#add-definitions" class="headerlink" title="add_definitions"></a>add_definitions</h2><p>在CMake中，<code>add_definitions</code>命令用于向编译器添加编译器定义。这些定义通常用于在编译时启用或禁用特定的宏，这对于条件编译非常有用。</p>
+<p>以下是<code>add_definitions</code>命令的一些基本用法：</p>
+<ol>
+<li><p><strong>添加单个定义</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_definitions</span>(-DDEFINITION)</span><br></pre></td></tr></table></figure>
+<p>这将向编译器添加一个预处理器宏<code>DEFINITION</code>。</p>
+</li>
+<li><p><strong>添加多个定义</strong>：<br>你可以一次性添加多个定义：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_definitions</span>(-DDEFINITION1 -DDEFINITION2)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用变量添加定义</strong>：<br>你可以将定义存储在变量中，然后使用这个变量来添加定义：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(MY_DEFINITIONS -DDEFINITION1 -DDEFINITION2)</span><br><span class="line"><span class="keyword">add_definitions</span>(<span class="variable">$&#123;MY_DEFINITIONS&#125;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>条件添加定义</strong>：<br>根据条件添加定义：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(MY_CONDITION)</span><br><span class="line">  <span class="keyword">add_definitions</span>(-DCONDITIONAL_DEFINITION)</span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>添加定义到特定目标</strong>：<br>从CMake 3.4开始，推荐使用<code>target_compile_definitions</code>代替<code>add_definitions</code>，因为这样可以更精确地控制哪些目标应该包含这些定义。例如：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_executable</span>(my_app main.cpp)</span><br><span class="line"><span class="keyword">target_compile_definitions</span>(my_app PRIVATE -DAPP_DEFINITION)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用<code>INTERFACE</code>或<code>PUBLIC</code>/<code>PRIVATE</code>关键字</strong>：<br>使用<code>target_compile_definitions</code>时，你可以使用<code>INTERFACE</code>关键字为依赖项添加定义，或者使用<code>PUBLIC</code>/<code>PRIVATE</code>关键字来控制定义的可见性：</p>
+<ul>
+<li><code>PUBLIC</code>：定义对目标本身及其依赖项可见。</li>
+<li><code>PRIVATE</code>：定义仅对目标本身可见。</li>
+</ul>
+</li>
+<li><p><strong>使用<code>add_definitions</code>添加的宏定义</strong>：<br>添加的宏定义可以在源代码中使用<code>#ifdef</code>、<code>#ifndef</code>、<code>#if</code>等预处理指令进行条件编译。</p>
+</li>
+<li><p><strong>注意</strong>：</p>
+<ul>
+<li>从CMake 3.11开始，<code>add_definitions</code>添加的定义默认只影响C和C++源文件。如果你需要添加对其他语言的支持，可以使用<code>-DDEFINITION LANGS CXX</code>。</li>
+<li>由于<code>add_definitions</code>会影响全局编译器命令行，因此可能会在项目的不同部分产生冲突。使用<code>target_compile_definitions</code>可以提供更细粒度的控制。</li>
+</ul>
+</li>
+</ol>
+<p>使用<code>add_definitions</code>可以方便地在编译时控制代码的行为，但要注意不要过度使用，以免造成依赖关系混乱。在可能的情况下，使用条件编译和<code>target_compile_definitions</code>来替代全局的宏定义。</p>
+<h2 id="cmake-minimum-required"><a href="#cmake-minimum-required" class="headerlink" title="cmake_minimum_required"></a>cmake_minimum_required</h2><p><code>cmake_minimum_required</code> 是 CMake 脚本中非常重要的一个命令，用于指定项目所需的最低 CMake 版本。这个命令必须放在 <code>CMakeLists.txt</code> 文件的最开始位置，以确保在进一步处理之前满足所需的 CMake 版本。</p>
+<p>以下是 <code>cmake_minimum_required</code> 的基本用法：</p>
+<ol>
+<li><p><strong>指定最低 CMake 版本</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.10</span>)</span><br></pre></td></tr></table></figure>
+<p>这行命令指定了项目的最低 CMake 版本需求是 3.10。如果用户使用的 CMake 版本低于这个版本，CMake 会报错并提示用户升级。</p>
+</li>
+<li><p><strong>指定政策</strong>：<br>从 CMake 2.8.12 开始，<code>cmake_minimum_required</code> 还可以指定一个政策版本，以确保项目遵循某些特定的 CMake 行为：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.10</span>...<span class="number">3.12</span>)</span><br></pre></td></tr></table></figure>
+<p>这里 <code>...3.12</code> 表示除了指定最低版本 3.10 外，还指定了政策版本，即项目应该遵循 CMake 3.10 到 3.12 之间的政策。</p>
+</li>
+<li><p><strong>指定精确版本</strong>：<br>如果你希望项目严格使用某个特定版本的 CMake，可以指定一个精确的版本号：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.10</span> EXACT)</span><br></pre></td></tr></table></figure>
+<p>使用 <code>EXACT</code> 关键字后，如果用户使用的 CMake 版本不是 3.10，CMake 将报错。</p>
+</li>
+<li><p><strong>指定最低和最高版本</strong>：<br>你还可以在一定范围内指定最低和最高版本：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.10</span>.<span class="number">2</span> UPGRADE)</span><br></pre></td></tr></table></figure>
+<p>使用 <code>UPGRADE</code> 关键字后，如果用户使用的 CMake 版本低于 3.10.2，CMake 会报错；如果版本高于 3.10.2，CMake 会尝试升级到新的行为。</p>
+</li>
+<li><p><strong>指定特性</strong>：<br><code>cmake_minimum_required</code> 还可以用于确保 CMake 支持某些特性，例如：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.1</span> FATAL_ERROR)</span><br></pre></td></tr></table></figure>
+<p>这里 <code>FATAL_ERROR</code> 表示如果用户使用的 CMake 版本低于指定版本，CMake 将终止并报错。</p>
+</li>
+<li><p><strong>注意</strong>：</p>
+<ul>
+<li>确保 <code>cmake_minimum_required</code> 是 <code>CMakeLists.txt</code> 中的第一个命令。</li>
+<li>根据项目需求选择合适的 CMake 版本。新版本的 CMake 通常包含更多的特性和改进。</li>
+</ul>
+</li>
+</ol>
+<p>使用 <code>cmake_minimum_required</code> 可以确保项目的构建环境符合预期，避免因 CMake 版本不兼容导致的问题。</p>
+<h2 id="add-library"><a href="#add-library" class="headerlink" title="add_library"></a>add_library</h2><p><code>add_library</code> 是 CMake 中用于定义库目标的命令。库可以是静态库（<code>STATIC</code>）、动态库（<code>SHARED</code>）或对象库（<code>OBJECT</code>），并且可以包含源文件、编译选项、依赖关系等。</p>
+<p>以下是 <code>add_library</code> 命令的一些基本用法：</p>
+<ol>
+<li><p><strong>创建静态库</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(mylib STATIC source1.cpp source2.cpp)</span><br></pre></td></tr></table></figure>
+<p>这将创建一个名为 <code>mylib</code> 的静态库，包含 <code>source1.cpp</code> 和 <code>source2.cpp</code> 两个源文件。</p>
+</li>
+<li><p><strong>创建动态库</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(mylib SHARED source1.cpp source2.cpp)</span><br></pre></td></tr></table></figure>
+<p>这将创建一个名为 <code>mylib</code> 的动态库。</p>
+</li>
+<li><p><strong>创建对象库</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(mylib OBJECT source1.cpp source2.cpp)</span><br></pre></td></tr></table></figure>
+<p>对象库不生成最终的二进制文件，而是生成对象文件，这些对象文件可以被其他库或可执行文件目标重用。</p>
+</li>
+<li><p><strong>添加头文件</strong>：<br>通常，头文件不直接添加到库中，但可以指定头文件的路径，以便其他目标包含：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(mylib STATIC source1.cpp)</span><br><span class="line"><span class="keyword">target_include_directories</span>(mylib PUBLIC <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/<span class="keyword">include</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>设置库的别名</strong>：<br>别名可以在其他命令中引用库：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(mylib::mylib ALIAS source1.cpp source2.cpp)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>设置库的输出名称</strong>：<br>使用 <code>OUTPUT_NAME</code> 选项来指定库文件的名称：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(mylib STATIC source1.cpp source2.cpp)</span><br><span class="line"><span class="keyword">set_target_properties</span>(mylib PROPERTIES OUTPUT_NAME <span class="string">&quot;my_library&quot;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>设置库的版本</strong>：<br>使用 <code>VERSION</code> 和 <code>SOVERSION</code> 选项来指定库的版本：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(mylib SHARED source1.cpp source2.cpp)</span><br><span class="line"><span class="keyword">set_target_properties</span>(mylib PROPERTIES VERSION <span class="number">1.2</span> SOVERSION <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>为库添加编译选项</strong>：<br>使用 <code>target_compile_options</code> 为库添加特定的编译选项：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(mylib STATIC source1.cpp)</span><br><span class="line"><span class="keyword">target_compile_options</span>(mylib PRIVATE -Wall)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>为库添加定义</strong>：<br>使用 <code>target_compile_definitions</code> 为库添加预处理器定义：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(mylib STATIC source1.cpp)</span><br><span class="line"><span class="keyword">target_compile_definitions</span>(mylib PRIVATE <span class="string">&quot;MYLIB_DEFINE&quot;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>为库添加依赖</strong>：<br>使用 <code>target_link_libraries</code> 为库添加链接库或框架：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(mylib STATIC source1.cpp)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(mylib PRIVATE otherlib)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>为库设置安装规则</strong>：<br>使用 <code>install</code> 命令为库设置安装规则：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">install</span>(TARGETS mylib</span><br><span class="line">        LIBRARY DESTINATION lib</span><br><span class="line">        ARCHIVE DESTINATION lib/static)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><code>add_library</code> 是构建库的基础命令，通过与 <code>set_target_properties</code>、<code>target_include_directories</code>、<code>target_compile_options</code> 等其他命令结合使用，可以定义库的各种属性和行为。</p>
+<h2 id="find-library"><a href="#find-library" class="headerlink" title="find_library"></a>find_library</h2><p><code>find_library</code> 是 CMake 中的一个命令，用于在系统上搜索库文件。这个命令通常与 <code>find_package</code> 一起使用，作为查找第三方库的一部分。<code>find_library</code> 可以找到库的路径，然后你可以使用这个路径来链接库。</p>
+<p>以下是 <code>find_library</code> 的基本用法：</p>
+<ol>
+<li><p><strong>基本搜索</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_library</span>(LIBRARY_NAME</span><br><span class="line">             NAMES libname      <span class="comment"># 库文件的名称，例如 &quot;mylib&quot;</span></span><br><span class="line">             PATHS /path/to/search <span class="comment"># 可选的搜索路径列表</span></span><br><span class="line">             PATH_SUFFIXES bin lib <span class="comment"># 可选的路径后缀列表</span></span><br><span class="line">             NO_DEFAULT_PATH <span class="comment"># 可选，不使用默认的搜索路径</span></span><br><span class="line">             NO_CMAKE_ENVIRONMENT_PATH <span class="comment"># 可选，不使用环境变量中的路径</span></span><br><span class="line">             NO_CMAKE_PATH <span class="comment"># 可选，不使用 CMake 路径变量中的路径</span></span><br><span class="line">             NO_SYSTEM_ENVIRONMENT_PATH <span class="comment"># 可选，不使用系统环境变量中的路径</span></span><br><span class="line">             )</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用搜索结果</strong>：<br>如果 <code>find_library</code> 成功找到库，<code>LIBRARY_NAME</code> 变量将被设置为库的完整路径。你可以使用这个变量来链接库：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(LIBRARY_NAME)</span><br><span class="line">  <span class="keyword">target_link_libraries</span>(my_target <span class="variable">$&#123;LIBRARY_NAME&#125;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>指定库的类型</strong>：<br><code>find_library</code> 可以搜索不同类型的库文件，例如静态库（.a）、动态库（.so、.dll）等。通过 <code>NAMES</code> 参数指定库的名称时，你可以指定多个名称，以覆盖不同类型的库：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_library</span>(LIBRARY_NAME NAMES mylib mylib_static)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用变量</strong>：<br>你可以将库的名称存储在变量中，然后在 <code>find_library</code> 中使用这个变量：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(LIB_NAME <span class="string">&quot;mylib&quot;</span>)</span><br><span class="line"><span class="keyword">find_library</span>(LIBRARY_NAME NAMES <span class="variable">$&#123;LIB_NAME&#125;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>组合使用多个 <code>find_library</code></strong>：<br>如果你的项目需要链接多个库，可以为每个库调用一次 <code>find_library</code>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_library</span>(LIBRARY_NAME1 NAMES lib1)</span><br><span class="line"><span class="keyword">find_library</span>(LIBRARY_NAME2 NAMES lib2)</span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用 <code>pkg-config</code></strong>：<br>如果库提供了 <code>pkg-config</code> 文件，你可以使用 <code>pkg_check_modules</code> 来查找库，这通常比 <code>find_library</code> 更方便：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkg_check_modules(LIB_NAME REQUIRED mylib)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>注意</strong>：</p>
+<ul>
+<li><code>find_library</code> 只返回第一个找到的库路径。</li>
+<li>如果库文件不在标准的库搜索路径中，你可能需要指定 <code>PATHS</code> 参数。</li>
+<li>使用 <code>find_library</code> 时，最好结合条件判断来检查库是否真正被找到，以避免在找不到库时产生错误。</li>
+</ul>
+</li>
+</ol>
+<p><code>find_library</code> 是 CMake 中查找库文件位置的一个有用工具，但随着 CMake 的发展，推荐使用 <code>find_package</code> 和 <code>pkg_check_modules</code> 来处理库的查找和配置，因为这些命令提供了更高级的功能和更好的错误处理。</p>
+<h2 id="target-link-libraries"><a href="#target-link-libraries" class="headerlink" title="target_link_libraries"></a>target_link_libraries</h2><p><code>target_link_libraries</code> 是 CMake 中的一个命令，用于为目标（可执行文件或库）添加链接库。这个命令允许你指定目标应该链接的库，包括库的名称、路径或目标名称。</p>
+<p>以下是 <code>target_link_libraries</code> 的一些基本用法：</p>
+<ol>
+<li><p><strong>链接单个库</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_executable</span>(my_app main.cpp)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(my_app mylib)</span><br></pre></td></tr></table></figure>
+<p>这里 <code>my_app</code> 是可执行文件目标，<code>mylib</code> 是要链接的库目标或库文件的路径。</p>
+</li>
+<li><p><strong>链接多个库</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_link_libraries</span>(my_app mylib1 mylib2)</span><br></pre></td></tr></table></figure>
+<p>这将链接 <code>my_app</code> 到 <code>mylib1</code> 和 <code>mylib2</code>。</p>
+</li>
+<li><p><strong>链接库文件的路径</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_link_libraries</span>(my_app <span class="string">&quot;/path/to/libmylib.a&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>如果库文件不在标准搜索路径中，可以指定库文件的完整路径。</p>
+</li>
+<li><p><strong>使用链接选项</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_link_libraries</span>(my_app mylib INTERFACE)</span><br></pre></td></tr></table></figure>
+<p>使用 <code>INTERFACE</code> 关键字可以指定链接库仅作为接口链接，这意味着链接库的依赖项不会传递给依赖 <code>my_app</code> 的其他目标。</p>
+</li>
+<li><p><strong>链接系统库</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_link_libraries</span>(my_app PRIVATE <span class="variable">$&#123;CMAKE_DL_LIBS&#125;</span>)</span><br></pre></td></tr></table></figure>
+<p><code>CMAKE_DL_LIBS</code> 是 CMake 预定义的变量，包含了链接动态加载器所需的库。</p>
+</li>
+<li><p><strong>链接条件库</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(MY_CONDITION)</span><br><span class="line">  <span class="keyword">target_link_libraries</span>(my_app PRIVATE mylib)</span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
+<p>根据条件添加链接库。</p>
+</li>
+<li><p><strong>使用 <code>LINK_PUBLIC</code> 和 <code>LINK_PRIVATE</code></strong>：<br>使用 <code>LINK_PUBLIC</code> 或 <code>LINK_PRIVATE</code> 指定链接库的可见性：</p>
+<ul>
+<li><code>LINK_PUBLIC</code>：链接库对目标及其依赖项都可见。</li>
+<li><code>LINK_PRIVATE</code>：链接库仅对目标本身可见。</li>
+</ul>
+</li>
+<li><p><strong>链接编译器选项</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_link_options</span>(my_app PRIVATE -Wl,--as-needed)</span><br></pre></td></tr></table></figure>
+<p><code>target_link_options</code> 命令用于为目标添加链接选项。</p>
+</li>
+<li><p><strong>链接库的依赖项</strong>：<br>当你链接一个 CMake 目标时，它的依赖项也会自动链接。例如：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(mylib STATIC source.cpp)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(mylib PRIVATE otherlib)</span><br><span class="line"><span class="keyword">add_executable</span>(my_app main.cpp)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(my_app PRIVATE mylib)</span><br></pre></td></tr></table></figure>
+<p><code>my_app</code> 将链接 <code>mylib</code> 以及 <code>mylib</code> 依赖的 <code>otherlib</code>。</p>
+</li>
+<li><p><strong>注意</strong>：</p>
+<ul>
+<li>确保库目标在调用 <code>target_link_libraries</code> 之前已经定义。</li>
+<li>使用 <code>target_link_libraries</code> 时，最好指定库的别名或目标名称，而不是直接指定库文件路径，这样可以提高构建系统的可移植性。</li>
+</ul>
+</li>
+</ol>
+<p><code>target_link_libraries</code> 是构建系统中链接库的重要工具，它允许你精确控制目标的链接过程，包括链接哪些库以及这些库的链接方式。</p>
+<h2 id="add-executable"><a href="#add-executable" class="headerlink" title="add_executable"></a>add_executable</h2><p><code>add_executable</code> 是 CMake 中用于定义可执行文件目标的命令。使用这个命令，你可以指定生成一个可执行文件，并且列出构成这个可执行文件的所有源文件。</p>
+<p>以下是 <code>add_executable</code> 的一些基本用法：</p>
+<ol>
+<li><p><strong>定义可执行文件</strong>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_executable</span>(my_app main.cpp other_source.cpp)</span><br></pre></td></tr></table></figure>
+<p>这将创建一个名为 <code>my_app</code> 的可执行文件，由 <code>main.cpp</code> 和 <code>other_source.cpp</code> 源文件编译而成。</p>
+</li>
+<li><p><strong>添加源文件</strong>：<br>你可以在 <code>add_executable</code> 命令中列出所有源文件，或者之后使用 <code>target_sources</code> 命令添加：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_executable</span>(my_app main.cpp)</span><br><span class="line"><span class="keyword">target_sources</span>(my_app PRIVATE other_source.cpp)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>设置可执行文件的输出名称</strong>：<br>使用 <code>OUTPUT_NAME</code> 属性来指定可执行文件的输出名称：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_executable</span>(my_app main.cpp)</span><br><span class="line"><span class="keyword">set_target_properties</span>(my_app PROPERTIES OUTPUT_NAME <span class="string">&quot;my_application&quot;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>设置可执行文件的版本</strong>：<br>使用 <code>VERSION</code> 和 <code>SOVERSION</code> 属性来指定可执行文件的版本（这些属性通常用于共享库）：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set_target_properties</span>(my_app PROPERTIES VERSION <span class="number">1.2</span> SOVERSION <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>为可执行文件添加编译选项</strong>：<br>使用 <code>target_compile_options</code> 命令为可执行文件添加特定的编译选项：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_compile_options</span>(my_app PRIVATE -Wall)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>为可执行文件添加定义</strong>：<br>使用 <code>target_compile_definitions</code> 命令为可执行文件添加预处理器定义：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_compile_definitions</span>(my_app PRIVATE <span class="string">&quot;MY_APP_DEFINE&quot;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>为可执行文件添加头文件搜索路径</strong>：<br>使用 <code>target_include_directories</code> 命令为可执行文件添加头文件搜索路径：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_include_directories</span>(my_app PRIVATE <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/<span class="keyword">include</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>链接库到可执行文件</strong>：<br>使用 <code>target_link_libraries</code> 命令将库链接到可执行文件：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_link_libraries</span>(my_app PRIVATE mylib)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>添加依赖项</strong>：<br>如果你的可执行文件依赖于在构建过程中生成的其他目标，可以使用 <code>add_dependencies</code> 命令添加依赖：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_dependencies</span>(my_app my_dependency)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>为可执行文件设置安装规则</strong>：<br>使用 <code>install</code> 命令为可执行文件设置安装规则：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">install</span>(TARGETS my_app RUNTIME DESTINATION bin)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><code>add_executable</code> 是构建可执行文件的基础命令，通过与 <code>set_target_properties</code>、<code>target_compile_options</code>、<code>target_link_libraries</code> 等其他命令结合使用，可以定义可执行文件的各种属性和行为。</p>
 
     </div>
 
@@ -474,7 +832,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/" title="Visual Studio与VSCode的C++配置手册">https://lifengjun.xin/2024/02/01/VS与VSC的C-配置手册/</a>
+    <a href="https://lifengjun.xin/2024/02/01/VS%E4%B8%8EVSC%E7%9A%84C-%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C/" title="Visual Studio与VSCode中C++构建工具的配置手册">https://lifengjun.xin/2024/02/01/VS与VSC的C-配置手册/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -497,7 +855,10 @@
     <a href="/2023/12/24/%E4%BB%A5%E4%B8%80%E7%A7%8D%E7%9B%B4%E8%A7%82%E7%9A%84%E6%96%B9%E5%BC%8F%E7%90%86%E8%A7%A3%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/" rel="prev" title="以一种直观的方式理解扩散生成模型">
       <i class="fa fa-chevron-left"></i> 以一种直观的方式理解扩散生成模型
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2024/02/20/%E4%B8%80%E4%BA%9Bhigh-level%E7%9A%84%E6%A6%82%E5%BF%B5%E5%92%8C%E7%90%86%E8%A7%A3/" rel="next" title="一些high-level的概念和理解">
+      一些high-level的概念和理解 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -557,7 +918,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vscode%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">Vscode准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vscode-amp-amp-g"><span class="nav-number">2.</span> <span class="nav-text">Vscode &amp;&amp; g++</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%BC%96%E8%AF%91%E5%99%A8-c-cpp-properties-json"><span class="nav-number">2.2.</span> <span class="nav-text">配置编译器(c_cpp_properties.json)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%9E%84%E5%BB%BA%E4%BB%BB%E5%8A%A1-tasks-json"><span class="nav-number">2.3.</span> <span class="nav-text">配置构建任务(tasks.json)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%B0%83%E8%AF%95%E8%AE%BE%E7%BD%AE-launch-json"><span class="nav-number">2.4.</span> <span class="nav-text">配置调试设置(launch.json)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vscode-amp-amp-MSVC"><span class="nav-number">3.</span> <span class="nav-text">Vscode &amp;&amp; MSVC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C-1"><span class="nav-number">3.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%BC%96%E8%AF%91%E5%99%A8-c-cpp-properties-json-1"><span class="nav-number">3.2.</span> <span class="nav-text">配置编译器(c_cpp_properties.json)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%9E%84%E5%BB%BA%E4%BB%BB%E5%8A%A1-tasks-json-1"><span class="nav-number">3.3.</span> <span class="nav-text">配置构建任务(tasks.json)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Develop-Command-Prompt%E5%90%AF%E5%8A%A8"><span class="nav-number">3.3.1.</span> <span class="nav-text">使用Develop Command Prompt启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8vscode%E7%9B%B4%E6%8E%A5%E5%90%AF%E5%8A%A8-%E8%BF%98%E6%B2%A1%E9%AA%8C%E8%AF%81"><span class="nav-number">3.3.2.</span> <span class="nav-text">使用vscode直接启动(还没验证)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Visual-Studio"><span class="nav-number">4.</span> <span class="nav-text">Visual Studio</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vscode"><span class="nav-number">1.</span> <span class="nav-text">Vscode</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vscode-amp-amp-g"><span class="nav-number">1.2.</span> <span class="nav-text">Vscode &amp;&amp; g++</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%BC%96%E8%AF%91%E5%99%A8-c-cpp-properties-json"><span class="nav-number">1.2.2.</span> <span class="nav-text">配置编译器(c_cpp_properties.json)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%9E%84%E5%BB%BA%E4%BB%BB%E5%8A%A1-tasks-json"><span class="nav-number">1.2.3.</span> <span class="nav-text">配置构建任务(tasks.json)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%B0%83%E8%AF%95%E8%AE%BE%E7%BD%AE-launch-json"><span class="nav-number">1.2.4.</span> <span class="nav-text">配置调试设置(launch.json)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vscode-amp-amp-MSVC"><span class="nav-number">1.3.</span> <span class="nav-text">Vscode &amp;&amp; MSVC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C-2"><span class="nav-number">1.3.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%BC%96%E8%AF%91%E5%99%A8-c-cpp-properties-json-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">配置编译器(c_cpp_properties.json)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%9E%84%E5%BB%BA%E4%BB%BB%E5%8A%A1-tasks-json-1"><span class="nav-number">1.3.3.</span> <span class="nav-text">配置构建任务(tasks.json)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Develop-Command-Prompt%E5%90%AF%E5%8A%A8"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">使用Develop Command Prompt启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8vscode%E7%9B%B4%E6%8E%A5%E5%90%AF%E5%8A%A8-%E8%BF%98%E6%B2%A1%E9%AA%8C%E8%AF%81"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">使用vscode直接启动(还没验证)</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Visual-Studio"><span class="nav-number">2.</span> <span class="nav-text">Visual Studio</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%80%89%E9%A1%B9%E5%8D%A1%E6%98%BE%E7%A4%BA%E5%A4%9A%E8%A1%8C"><span class="nav-number">2.2.</span> <span class="nav-text">配置选项卡显示多行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cmd%E8%BE%93%E5%87%BA%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98"><span class="nav-number">2.3.</span> <span class="nav-text">cmd输出中文乱码问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%AD%E6%96%87%E4%BF%9D%E5%AD%98%E4%B8%8D%E4%B9%B1%E7%A0%81"><span class="nav-number">2.4.</span> <span class="nav-text">配置中文保存不乱码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vcpkg%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">2.5.</span> <span class="nav-text">vcpkg安装包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#curl%E7%BC%96%E8%AF%91"><span class="nav-number">2.6.</span> <span class="nav-text">curl编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%8Bso"><span class="nav-number">2.7.</span> <span class="nav-text">看so</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%93%E9%85%8D%E7%BD%AE"><span class="nav-number">2.8.</span> <span class="nav-text">库配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Libtorch"><span class="nav-number">2.8.1.</span> <span class="nav-text">Libtorch</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cmake%E8%AF%AD%E6%B3%95%E8%A7%A3%E9%87%8A"><span class="nav-number">3.</span> <span class="nav-text">Cmake语法解释</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#set"><span class="nav-number">3.1.</span> <span class="nav-text">set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#option"><span class="nav-number">3.2.</span> <span class="nav-text">option</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#include-directories"><span class="nav-number">3.3.</span> <span class="nav-text">include_directories</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#add-definitions"><span class="nav-number">3.4.</span> <span class="nav-text">add_definitions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cmake-minimum-required"><span class="nav-number">3.5.</span> <span class="nav-text">cmake_minimum_required</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#add-library"><span class="nav-number">3.6.</span> <span class="nav-text">add_library</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#find-library"><span class="nav-number">3.7.</span> <span class="nav-text">find_library</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#target-link-libraries"><span class="nav-number">3.8.</span> <span class="nav-text">target_link_libraries</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#add-executable"><span class="nav-number">3.9.</span> <span class="nav-text">add_executable</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -573,7 +934,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -586,7 +947,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
