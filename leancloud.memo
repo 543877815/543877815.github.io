@@ -37,4 +37,7 @@
 {"title":"一些high-level的概念和理解","url":"/2024/02/20/一些high-level的概念和理解/"},
 {"title":"图形算法Plug and play","url":"/2024/03/04/Plug-and-play-图形算法/"},
 {"title":"【论文阅读】从Nerf到3D gaussian-splatting的逆渲染","url":"/2024/04/21/算法理解之从Nerf到gaussian-splatting/"},
+{"title":"skia学习记录","url":"/2024/11/02/skia学习记录/"},
+{"title":"提高生产效率工具的使用","url":"/2024/11/14/提高生产效率工具的使用/"},
+{"title":"CMakeLists 写法记录","url":"/2025/05/31/CMakeLists-写法记录/"},
 ]
