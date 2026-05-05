@@ -18,29 +18,29 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"localhost","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="矩阵标准化矩阵 遍历矩阵每列求特征的平均值。 遍历矩阵每个元素减去该列的平均值。">
+  <meta name="description" content="矩阵标准化矩阵 遍历矩阵每列求特征的平均值。 遍历矩阵每个元素减去该列的平均值。  1234567891011121314151617Mat&lt;T&gt; normalize() &amp;#123;    std::vector&lt;double&gt;colWiseMean(m_col);    for (size_t col &#x3D; 0; col &lt; this-&gt;m_col; col+">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图形算法Plug and play">
-<meta property="og:url" content="https://lifengjun.xin/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:url" content="http://localhost:4000/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="逗比学长的博客">
-<meta property="og:description" content="矩阵标准化矩阵 遍历矩阵每列求特征的平均值。 遍历矩阵每个元素减去该列的平均值。">
+<meta property="og:description" content="矩阵标准化矩阵 遍历矩阵每列求特征的平均值。 遍历矩阵每个元素减去该列的平均值。  1234567891011121314151617Mat&lt;T&gt; normalize() &amp;#123;    std::vector&lt;double&gt;colWiseMean(m_col);    for (size_t col &#x3D; 0; col &lt; this-&gt;m_col; col+">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lifengjun.xin/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/JacobiIteration.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/Bresenham%E2%80%98s%20line%E7%AE%97%E6%B3%95.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/faceculling_frontback.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/Moller-Trumbore%E7%AE%97%E6%B3%95.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/d493c52da4cabe9a057c26f696784956.png">
+<meta property="og:image" content="http://localhost:4000/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/JacobiIteration.png">
+<meta property="og:image" content="http://localhost:4000/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/Bresenham%E2%80%98s%20line%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="http://localhost:4000/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/faceculling_frontback.png">
+<meta property="og:image" content="http://localhost:4000/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/Moller-Trumbore%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="http://localhost:4000/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/d493c52da4cabe9a057c26f696784956.png">
 <meta property="article:published_time" content="2024-03-03T16:03:54.000Z">
-<meta property="article:modified_time" content="2025-09-12T17:26:02.378Z">
+<meta property="article:modified_time" content="2025-09-12T17:55:48.837Z">
 <meta property="article:author" content="lifengjun">
 <meta property="article:tag" content="lfj945051">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lifengjun.xin/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/JacobiIteration.png">
+<meta name="twitter:image" content="http://localhost:4000/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/JacobiIteration.png">
 
-<link rel="canonical" href="https://lifengjun.xin/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/">
+<link rel="canonical" href="http://localhost:4000/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/">
 
 
 <script id="page-configurations">
@@ -242,7 +242,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
@@ -272,7 +272,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-13 01:26:02" itemprop="dateModified" datetime="2025-09-13T01:26:02+08:00">2025-09-13</time>
+                <time title="修改时间：2025-09-13 01:55:48" itemprop="dateModified" datetime="2025-09-13T01:55:48+08:00">2025-09-13</time>
               </span>
 
           
@@ -297,7 +297,6 @@
 <li>遍历矩阵每列求特征的平均值。</li>
 <li>遍历矩阵每个元素减去该列的平均值。</li>
 </ol>
-<span id="more"></span>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Mat&lt;T&gt; <span class="title">normalize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::vector&lt;<span class="type">double</span>&gt;<span class="built_in">colWiseMean</span>(m_col);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">size_t</span> col = <span class="number">0</span>; col &lt; <span class="keyword">this</span>-&gt;m_col; col++) &#123;</span><br><span class="line">        <span class="type">double</span> mean = <span class="number">0.0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">size_t</span> row = <span class="number">0</span>; row &lt; <span class="keyword">this</span>-&gt;m_row; row++) &#123;</span><br><span class="line">            mean += (*<span class="keyword">this</span>)[row][col];</span><br><span class="line">        &#125;</span><br><span class="line">        colWiseMean[col] = mean / <span class="keyword">this</span>-&gt;m_row;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">size_t</span> row = <span class="number">0</span>; row &lt; <span class="keyword">this</span>-&gt;m_row; row++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">size_t</span> col = <span class="number">0</span>; col &lt; <span class="keyword">this</span>-&gt;m_col; col++) &#123;</span><br><span class="line">            (*<span class="keyword">this</span>)[row][col] -= colWiseMean[col];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="矩阵变换-可看做modelMatrix"><a href="#矩阵变换-可看做modelMatrix" class="headerlink" title="矩阵变换(可看做modelMatrix)"></a>矩阵变换(可看做modelMatrix)</h2><h3 id="平移"><a href="#平移" class="headerlink" title="平移"></a>平移</h3><script type="math/tex; mode=display">
 T = \begin{bmatrix}
@@ -484,7 +483,7 @@ x^{(k+1)}=Bx^{(k)}+d
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://lifengjun.xin/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/" title="图形算法Plug and play">https://lifengjun.xin/2024/03/04/Plug-and-play-图形算法/</a>
+    <a href="http://localhost:4000/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/" title="图形算法Plug and play">http://localhost:4000/2024/03/04/Plug-and-play-图形算法/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -583,20 +582,20 @@ x^{(k+1)}=Bx^{(k)}+d
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-count">60</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -639,7 +638,7 @@ x^{(k+1)}=Bx^{(k)}+d
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="user"></i>
   </span>
@@ -857,7 +856,7 @@ x^{(k+1)}=Bx^{(k)}+d
       quicklink({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://lifengjun.xin/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://localhost:4000/2024/03/04/Plug-and-play-%E5%9B%BE%E5%BD%A2%E7%AE%97%E6%B3%95/',]
       });
       });
   </script>

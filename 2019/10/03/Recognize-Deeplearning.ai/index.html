@@ -18,144 +18,144 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"localhost","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="这篇文章是我在网易云上学习吴恩达深度学习做的一些总结，我是先看了一遍视频才来做的总结，所以很多参考了黄广海博士的翻译和笔记，另外有的知识点与之前吴恩达机器学习上的有所重复，就记录得比较简单，可见这里，还有一篇笔记也我觉得也记得很好。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Recognize Deeplearning.ai">
-<meta property="og:url" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/index.html">
+<meta property="og:url" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/index.html">
 <meta property="og:site_name" content="逗比学长的博客">
 <meta property="og:description" content="这篇文章是我在网易云上学习吴恩达深度学习做的一些总结，我是先看了一遍视频才来做的总结，所以很多参考了黄广海博士的翻译和笔记，另外有的知识点与之前吴恩达机器学习上的有所重复，就记录得比较简单，可见这里，还有一篇笔记也我觉得也记得很好。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/5.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/6.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/1.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/2.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/3.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/4.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/7.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/9.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/8.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/10.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/11.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/12.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/13.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/14.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/56.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/15.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/16.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/17.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/18.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/19.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/20.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/21.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/22.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/23.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/24.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/25.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/26.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/27.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/28.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/29.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/30.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/31.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/32.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/33.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/34.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/35.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/36.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/37.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/38.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/42.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/43.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/44.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/45.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/46.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/47.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/48.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/49.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/50.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/51.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/52.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/53.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/54.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/55.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/57.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/58.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/59.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/60.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/61.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/62.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/63.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/64.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/65.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/67.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/66.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/68.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/69.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/70.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/71.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/72.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/73.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/74.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/75.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/76.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/77.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/78.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/79.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/80.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/81.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/82.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/83.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/84.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/85.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/86.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/87.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/88.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/89.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/90.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/91.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/92.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/93.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/94.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/95.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/96.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/97.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/98.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/99.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/100.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/101.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/102.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/103.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/104.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/105.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/106.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/107.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/108.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/109.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/111.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/110.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/112.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/113.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/114.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/116.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/115.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/117.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/118.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/119.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/120.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/121.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/122.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/5.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/6.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/1.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/2.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/3.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/4.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/7.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/9.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/8.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/10.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/11.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/12.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/13.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/14.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/56.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/15.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/16.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/17.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/18.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/19.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/20.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/21.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/22.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/23.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/24.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/25.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/26.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/27.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/28.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/29.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/30.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/31.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/32.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/33.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/34.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/35.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/36.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/37.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/38.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/42.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/43.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/44.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/45.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/46.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/47.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/48.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/49.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/50.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/51.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/52.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/53.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/54.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/55.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/57.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/58.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/59.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/60.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/61.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/62.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/63.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/64.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/65.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/67.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/66.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/68.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/69.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/70.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/71.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/72.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/73.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/74.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/75.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/76.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/77.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/78.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/79.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/80.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/81.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/82.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/83.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/84.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/85.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/86.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/87.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/88.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/89.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/90.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/91.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/92.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/93.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/94.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/95.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/96.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/97.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/98.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/99.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/100.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/101.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/102.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/103.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/104.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/105.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/106.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/107.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/108.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/109.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/111.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/110.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/112.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/113.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/114.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/116.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/115.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/117.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/118.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/119.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/120.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/121.png">
+<meta property="og:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/122.png">
 <meta property="article:published_time" content="2019-10-03T11:35:23.000Z">
 <meta property="article:modified_time" content="2021-07-04T09:09:55.249Z">
 <meta property="article:author" content="lifengjun">
-<meta property="article:tag" content="deep learning">
 <meta property="article:tag" content="machine learning">
+<meta property="article:tag" content="deep learning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/5.png">
+<meta name="twitter:image" content="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/5.png">
 
-<link rel="canonical" href="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/">
+<link rel="canonical" href="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/">
 
 
 <script id="page-configurations">
@@ -357,7 +357,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
@@ -1437,7 +1437,7 @@ P\left( w_{i} \right) = \frac{f\left( w_{i} \right)^{\frac{3}{4}}}{\sum_{j = 1}^
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/" title="Recognize Deeplearning.ai">https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/</a>
+    <a href="http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/" title="Recognize Deeplearning.ai">http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -1448,8 +1448,8 @@ P\left( w_{i} \right) = \frac{f\left( w_{i} \right)^{\frac{3}{4}}}{\sum_{j = 1}^
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
               <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+              <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
           </div>
 
         
@@ -1540,20 +1540,20 @@ P\left( w_{i} \right) = \frac{f\left( w_{i} \right)^{\frac{3}{4}}}{\sum_{j = 1}^
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-count">60</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1596,7 +1596,7 @@ P\left( w_{i} \right) = \frac{f\left( w_{i} \right)^{\frac{3}{4}}}{\sum_{j = 1}^
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="user"></i>
   </span>
@@ -1814,7 +1814,7 @@ P\left( w_{i} \right) = \frac{f\left( w_{i} \right)^{\frac{3}{4}}}{\sum_{j = 1}^
       quicklink({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://lifengjun.xin/2019/10/03/Recognize-Deeplearning.ai/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://localhost:4000/2019/10/03/Recognize-Deeplearning.ai/',]
       });
       });
   </script>

@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"localhost","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Stage 1 创建词表联系：  输入的文本需要被转化成Token 每个Token会对应词表的一个Token ID 这个ID可以用nn.Paramater()，这个本质上就是一个可以训练的矩阵，矩阵的行是词表的数量，矩阵的宽是Token embeddings(嵌入)的特征维度。 用nn.Parameter()实现的话好处就是直接通过Token ID来访问矩阵的第ID行特征，速度快，nn.Param">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LLMs-From-Scatch总结">
+<meta property="og:url" content="http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="逗比学长的博客">
+<meta property="og:description" content="Stage 1 创建词表联系：  输入的文本需要被转化成Token 每个Token会对应词表的一个Token ID 这个ID可以用nn.Paramater()，这个本质上就是一个可以训练的矩阵，矩阵的行是词表的数量，矩阵的宽是Token embeddings(嵌入)的特征维度。 用nn.Parameter()实现的话好处就是直接通过Token ID来访问矩阵的第ID行特征，速度快，nn.Param">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323010244791.png">
+<meta property="og:image" content="http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260322222552069.png">
+<meta property="og:image" content="http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260322232304473.png">
+<meta property="og:image" content="c:/Users/54387/AppData/Roaming/Typora/typora-user-images/image-20260323005208804.png">
+<meta property="og:image" content="http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260322233928925.png">
+<meta property="og:image" content="http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323010041618.png">
+<meta property="og:image" content="http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323010134797.png">
+<meta property="og:image" content="http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323010348123.png">
+<meta property="og:image" content="http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323010522680.png">
+<meta property="og:image" content="http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323010744172.png">
+<meta property="og:image" content="http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323010949203.png">
+<meta property="og:image" content="http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323011118768.png">
+<meta property="og:image" content="http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323012529668.png">
+<meta property="article:published_time" content="2026-03-22T14:20:23.000Z">
+<meta property="article:modified_time" content="2026-03-22T17:28:55.419Z">
+<meta property="article:author" content="lifengjun">
+<meta property="article:tag" content="lfj945051">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323010244791.png">
+
+<link rel="canonical" href="http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css"><style>
+#needsharebutton-postbottom {
+  cursor: pointer;
+  height: 26px;
+  margin-top: 10px;
+  position: relative;
+}
+#needsharebutton-postbottom .btn {
+  border: 1px solid $btn-default-border-color;
+  border-radius: 3px;
+  display: initial;
+  padding: 1px 4px;
+}
+</style>
+<script src="/js/src/echarts.common.min.js"></script>
+
+  <title>LLMs-From-Scatch总结 | 逗比学长的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/543877815" class="github-corner" aria-label="View source on GitHub">
+    <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#000000; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+    <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">逗比学长的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">此人有“亿”点强迫症</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-quick-check">
+
+    <a href="/quick-check" rel="section"><i class="fa fa-calendar fa-fw"></i>速查</a>
+
+  </li>
+        <li class="menu-item menu-item-portal">
+
+    <a href="/portal" rel="section"><i class="fa fa-rocket fa-fw"></i>传送门</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/aigc/" rel="section"><i class="fa fa-camera fa-fw"></i>展览</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
+      <meta itemprop="name" content="lifengjun">
+      <meta itemprop="description" content="个人学习笔记和日志">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逗比学长的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LLMs-From-Scatch总结
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2026-03-22 22:20:23" itemprop="dateCreated datePublished" datetime="2026-03-22T22:20:23+08:00">2026-03-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-03-23 01:28:55" itemprop="dateModified" datetime="2026-03-23T01:28:55+08:00">2026-03-23</time>
+              </span>
+
+          
+            <span id="/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="LLMs-From-Scatch总结" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Stage-1"><a href="#Stage-1" class="headerlink" title="Stage 1"></a>Stage 1</h1><p><img src="/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323010244791.png" alt="image-20260323010244791"></p>
+<h2 id="创建词表"><a href="#创建词表" class="headerlink" title="创建词表"></a>创建词表</h2><p>联系：</p>
+<ol>
+<li>输入的文本需要被转化成Token</li>
+<li>每个Token会对应词表的一个Token ID</li>
+<li>这个ID可以用nn.Paramater()，这个本质上就是一个可以训练的矩阵，矩阵的行是词表的数量，矩阵的宽是Token embeddings(嵌入)的特征维度。</li>
+<li>用nn.Parameter()实现的话好处就是直接通过Token ID来访问矩阵的第ID行特征，速度快，nn.Parameter()一般是用高斯分布进行初始化。</li>
+<li>也可以使用nn.Linear()来实现Token embeddings，除了有bias之外，使用nn.Linear的好处是有更好的初始化，比如Xavier初始化或者Kaiming初始化。<ol>
+<li>Xavier 初始化（适用于 tanh/sigmoid 激活），核心是让输入和输出的方差尽可能一致。</li>
+<li>Kaiming 初始化（适用于 ReLU/LeakyReLU 激活），核心是针对 ReLU 类激活函数的「死神经元」问题优化。</li>
+</ol>
+</li>
+</ol>
+<p><img src="/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260322222552069.png" alt="image-20260322222552069"></p>
+<p>一些换行，或者结尾，以及没见过的会进行特殊编码，举例如下：</p>
+<p><img src="/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260322232304473.png" alt="image-20260322232304473"></p>
+<p>这些特殊编码会被add到Token Id的最后：</p>
+<p><img src="C:/Users/54387/AppData/Roaming/Typora/typora-user-images/image-20260323005208804.png" alt="image-20260323005208804"></p>
+<h2 id="BytePair-encoding-BPE编码"><a href="#BytePair-encoding-BPE编码" class="headerlink" title="BytePair encoding(BPE编码)"></a>BytePair encoding(BPE编码)</h2><p>实际中，这些token Id并不是简单的对单词进行one-hot编码，而是将单词进行拆分，然后根据字符结合的频次进行编码，这个技术叫做BPE编码：</p>
+<ol>
+<li>先把所有词拆成<strong>单个字符</strong>。</li>
+<li>统计所有<strong>相邻字符对</strong>的出现频次。</li>
+<li>把<strong>频次最高</strong>的那一对，合并成一个新符号。</li>
+<li>重复步骤 2–3，直到达到你想要的词表大小。</li>
+</ol>
+<p>至于和字节的关系则是因为，他把单词拆成字节的基础单元，也就是将通过字节编码(UTF-8/ASCII)映射字符串，无论是中文还是英文。合并高频字符串的本质就是合并高频字节对。</p>
+<p><img src="/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260322233928925.png" alt="image-20260322233928925"></p>
+<h2 id="位置编码"><a href="#位置编码" class="headerlink" title="位置编码"></a>位置编码</h2><p>另外这些token embedding还需要有一个位置编码信息才会被送进网络：</p>
+<p><img src="/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323010041618.png" alt="image-20260323010041618"></p>
+<p>如果训练是一个文本预测任务，所以dataloader可以使用滑动窗口来采样训练数据：</p>
+<p><img src="/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323010134797.png" alt="image-20260323010134797"></p>
+<h1 id="Stage-2"><a href="#Stage-2" class="headerlink" title="Stage 2"></a>Stage 2</h1><p><img src="/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323010348123.png" alt="image-20260323010348123"></p>
+<h2 id="Self-Attention"><a href="#Self-Attention" class="headerlink" title="Self-Attention"></a>Self-Attention</h2><p>每个token embedding通过不同的可学习的权重矩阵分别计算得到QKV，然后QK得到一个注意力矩阵，再和V进行相乘得到V。</p>
+<p><img src="/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323010522680.png" alt="image-20260323010522680"></p>
+<h2 id="Causal-self-attention-因果注意力"><a href="#Causal-self-attention-因果注意力" class="headerlink" title="Causal self-attention(因果注意力)"></a>Causal self-attention(因果注意力)</h2><p>构建一个<strong>上三角掩码矩阵</strong>（下三角可见、上三角不可见），遮挡掉当前 token 对「未来位置」的注意力计算；计算注意力权重时，被掩码的位置权重会被设为极小值（如 <code>-1e9</code>），经过 Softmax 后几乎为 0，相当于 “看不见” 未来信息。</p>
+<p><img src="/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323010744172.png" alt="image-20260323010744172"></p>
+<h2 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h2><p>在实际操作中还可以通过Dropout来减少过拟和。</p>
+<p><img src="/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323010949203.png" alt="image-20260323010949203"></p>
+<h3 id="实现1-CausalAttention）"><a href="#实现1-CausalAttention）" class="headerlink" title="实现1(CausalAttention）"></a>实现1(CausalAttention）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CausalAttention</span>(nn.Module):</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, d_in, d_out, context_length,</span></span><br><span class="line"><span class="params">             dropout, qkv_bias=<span class="literal">False</span></span>):</span><br><span class="line">    <span class="built_in">super</span>().__init__()</span><br><span class="line">    self.d_out = d_out</span><br><span class="line">    self.W_query = nn.Linear(d_in, d_out, bias=qkv_bias)</span><br><span class="line">    self.W_key   = nn.Linear(d_in, d_out, bias=qkv_bias)</span><br><span class="line">    self.W_value = nn.Linear(d_in, d_out, bias=qkv_bias)</span><br><span class="line">    self.dropout = nn.Dropout(dropout) <span class="comment"># New</span></span><br><span class="line">    self.register_buffer(<span class="string">&#x27;mask&#x27;</span>, torch.triu(torch.ones(context_length, context_length), diagonal=<span class="number">1</span>)) <span class="comment"># New</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">    b, num_tokens, d_in = x.shape <span class="comment"># New batch dimension b</span></span><br><span class="line">    keys = self.W_key(x)</span><br><span class="line">    queries = self.W_query(x)</span><br><span class="line">    values = self.W_value(x)</span><br><span class="line"></span><br><span class="line">    attn_scores = queries @ keys.transpose(<span class="number">1</span>, <span class="number">2</span>) <span class="comment"># Changed transpose</span></span><br><span class="line">    attn_scores.masked_fill_(  <span class="comment"># New, _ ops are in-place</span></span><br><span class="line">        self.mask.<span class="built_in">bool</span>()[:num_tokens, :num_tokens], -torch.inf)  <span class="comment"># `:num_tokens` to account for cases where the number of tokens in the batch is smaller than the supported context_size</span></span><br><span class="line">    attn_weights = torch.softmax(</span><br><span class="line">        attn_scores / keys.shape[-<span class="number">1</span>]**<span class="number">0.5</span>, dim=-<span class="number">1</span></span><br><span class="line">    )</span><br><span class="line">    attn_weights = self.dropout(attn_weights) <span class="comment"># New</span></span><br><span class="line"></span><br><span class="line">    context_vec = attn_weights @ values</span><br><span class="line">    <span class="keyword">return</span> context_vec</span><br></pre></td></tr></table></figure>
+<h2 id="多头注意力"><a href="#多头注意力" class="headerlink" title="多头注意力"></a>多头注意力</h2><p>把注意力分成多组，让模型同时从不同角度、不同子空间去理解语义。实现上就是通过多组的<code>Wq</code>，<code>Wk</code>, <code>Wv</code>来实现不同子空间的映射。</p>
+<p><img src="/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323011118768.png" alt="image-20260323011118768"></p>
+<h3 id="实现2-stack多个头"><a href="#实现2-stack多个头" class="headerlink" title="实现2(stack多个头)"></a>实现2(stack多个头)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Ch03_MHA</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, d_in, d_out, context_length, dropout, num_heads, qkv_bias=<span class="literal">False</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="keyword">assert</span> d_out % num_heads == <span class="number">0</span>, <span class="string">&quot;d_out must be divisible by num_heads&quot;</span></span><br><span class="line">    self.d_out = d_out</span><br><span class="line">    self.num_heads = num_heads</span><br><span class="line">    self.head_dim = d_out // num_heads  <span class="comment"># Reduce the projection dim to match desired output dim</span></span><br><span class="line"></span><br><span class="line">    self.W_query = nn.Linear(d_in, d_out, bias=qkv_bias)</span><br><span class="line">    self.W_key = nn.Linear(d_in, d_out, bias=qkv_bias)</span><br><span class="line">    self.W_value = nn.Linear(d_in, d_out, bias=qkv_bias)</span><br><span class="line">    self.out_proj = nn.Linear(d_out, d_out)  <span class="comment"># Linear layer to combine head outputs</span></span><br><span class="line">    self.dropout = nn.Dropout(dropout)</span><br><span class="line">    self.register_buffer(<span class="string">&quot;mask&quot;</span>, torch.triu(torch.ones(context_length, context_length), diagonal=<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">    b, num_tokens, d_in = x.shape</span><br><span class="line"></span><br><span class="line">    keys = self.W_key(x)  <span class="comment"># Shape: (b, num_tokens, d_out)</span></span><br><span class="line">    queries = self.W_query(x)</span><br><span class="line">    values = self.W_value(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># We implicitly split the matrix by adding a `num_heads` dimension</span></span><br><span class="line">    <span class="comment"># Unroll last dim: (b, num_tokens, d_out) -&gt; (b, num_tokens, num_heads, head_dim)</span></span><br><span class="line">    keys = keys.view(b, num_tokens, self.num_heads, self.head_dim)</span><br><span class="line">    values = values.view(b, num_tokens, self.num_heads, self.head_dim)</span><br><span class="line">    queries = queries.view(b, num_tokens, self.num_heads, self.head_dim)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Transpose: (b, num_tokens, num_heads, head_dim) -&gt; (b, num_heads, num_tokens, head_dim)</span></span><br><span class="line">    keys = keys.transpose(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    queries = queries.transpose(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    values = values.transpose(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Compute scaled dot-product attention (aka self-attention) with a causal mask</span></span><br><span class="line">    attn_scores = queries @ keys.transpose(<span class="number">2</span>, <span class="number">3</span>)  <span class="comment"># Dot product for each head</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Original mask truncated to the number of tokens and converted to boolean</span></span><br><span class="line">    mask_bool = self.mask.<span class="built_in">bool</span>()[:num_tokens, :num_tokens]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Use the mask to fill attention scores</span></span><br><span class="line">    attn_scores.masked_fill_(mask_bool, -torch.inf)</span><br><span class="line"></span><br><span class="line">    attn_weights = torch.softmax(attn_scores / keys.shape[-<span class="number">1</span>]**<span class="number">0.5</span>, dim=-<span class="number">1</span>)</span><br><span class="line">    attn_weights = self.dropout(attn_weights)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Shape: (b, num_tokens, num_heads, head_dim)</span></span><br><span class="line">    context_vec = (attn_weights @ values).transpose(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Combine heads, where self.d_out = self.num_heads * self.head_dim</span></span><br><span class="line">    context_vec = context_vec.contiguous().view(b, num_tokens, self.d_out)</span><br><span class="line">    context_vec = self.out_proj(context_vec)  <span class="comment"># optional projection</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> context_vec</span><br></pre></td></tr></table></figure>
+<h3 id="实现3-Combined-Weight"><a href="#实现3-Combined-Weight" class="headerlink" title="实现3(Combined Weight)"></a>实现3(Combined Weight)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MultiHeadAttentionCombinedQKV</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, d_in, d_out, num_heads, context_length, dropout=<span class="number">0.0</span>, qkv_bias=<span class="literal">False</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">    <span class="keyword">assert</span> d_out % num_heads == <span class="number">0</span>, <span class="string">&quot;embed_dim is indivisible by num_heads&quot;</span></span><br><span class="line"></span><br><span class="line">    self.num_heads = num_heads</span><br><span class="line">    self.context_length = context_length</span><br><span class="line">    self.head_dim = d_out // num_heads</span><br><span class="line"></span><br><span class="line">    self.qkv = nn.Linear(d_in, <span class="number">3</span> * d_out, bias=qkv_bias)</span><br><span class="line">    self.proj = nn.Linear(d_out, d_out)</span><br><span class="line">    self.dropout = nn.Dropout(dropout)</span><br><span class="line"></span><br><span class="line">    self.register_buffer(</span><br><span class="line">        <span class="string">&quot;mask&quot;</span>, torch.triu(torch.ones(context_length, context_length), diagonal=<span class="number">1</span>)</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">    batch_size, num_tokens, embed_dim = x.shape</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (b, num_tokens, embed_dim) --&gt; (b, num_tokens, 3 * embed_dim)</span></span><br><span class="line">    qkv = self.qkv(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (b, num_tokens, 3 * embed_dim) --&gt; (b, num_tokens, 3, num_heads, head_dim)</span></span><br><span class="line">    qkv = qkv.view(batch_size, num_tokens, <span class="number">3</span>, self.num_heads, self.head_dim)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (b, num_tokens, 3, num_heads, head_dim) --&gt; (3, b, num_heads, num_tokens, head_dim)</span></span><br><span class="line">    qkv = qkv.permute(<span class="number">2</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (3, b, num_heads, num_tokens, head_dim) -&gt; 3 times (b, num_head, num_tokens, head_dim)</span></span><br><span class="line">    queries, keys, values = qkv.unbind(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (b, num_heads, num_tokens, head_dim) --&gt; (b, num_heads, num_tokens, num_tokens)</span></span><br><span class="line">    attn_scores = queries @ keys.transpose(-<span class="number">2</span>, -<span class="number">1</span>)</span><br><span class="line">    attn_scores = attn_scores.masked_fill(</span><br><span class="line">        self.mask.<span class="built_in">bool</span>()[:num_tokens, :num_tokens], -torch.inf</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    attn_weights = torch.softmax(attn_scores / keys.shape[-<span class="number">1</span>]**-<span class="number">0.5</span>, dim=-<span class="number">1</span>)</span><br><span class="line">    attn_weights = self.dropout(attn_weights)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (b, num_heads, num_tokens, num_tokens) --&gt; (b, num_heads, num_tokens, head_dim)</span></span><br><span class="line">    context_vec = attn_weights @ values</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (b, num_heads, num_tokens, head_dim) --&gt; (b, num_tokens, num_heads, head_dim)</span></span><br><span class="line">    context_vec = context_vec.transpose(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (b, num_tokens, num_heads, head_dim) --&gt; (b, num_tokens, embed_dim)</span></span><br><span class="line">    context_vec = context_vec.contiguous().view(batch_size, num_tokens, embed_dim)</span><br><span class="line"></span><br><span class="line">    context_vec = self.proj(context_vec)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> context_vec</span><br></pre></td></tr></table></figure>
+<h3 id="实现4-einsum"><a href="#实现4-einsum" class="headerlink" title="实现4(einsum)"></a>实现4<a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/generated/torch.einsum.html">(<code>einsum</code>)</a></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MHAEinsum</span>(nn.Module):</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, d_in, d_out, context_length, dropout, num_heads, qkv_bias=<span class="literal">False</span></span>):</span><br><span class="line">    <span class="built_in">super</span>().__init__()</span><br><span class="line">    <span class="keyword">assert</span> d_out % num_heads == <span class="number">0</span>, <span class="string">&quot;d_out must be divisible by num_heads&quot;</span></span><br><span class="line"></span><br><span class="line">    self.d_out = d_out</span><br><span class="line">    self.num_heads = num_heads</span><br><span class="line">    self.head_dim = d_out // num_heads</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Initialize parameters for Q, K, V</span></span><br><span class="line">    self.W_query = nn.Parameter(torch.randn(d_out, d_in))</span><br><span class="line">    self.W_key = nn.Parameter(torch.randn(d_out, d_in))</span><br><span class="line">    self.W_value = nn.Parameter(torch.randn(d_out, d_in))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> qkv_bias:</span><br><span class="line">        self.bias_q = nn.Parameter(torch.zeros(d_out))</span><br><span class="line">        self.bias_k = nn.Parameter(torch.zeros(d_out))</span><br><span class="line">        self.bias_v = nn.Parameter(torch.zeros(d_out))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        self.register_parameter(<span class="string">&quot;bias_q&quot;</span>, <span class="literal">None</span>)</span><br><span class="line">        self.register_parameter(<span class="string">&quot;bias_k&quot;</span>, <span class="literal">None</span>)</span><br><span class="line">        self.register_parameter(<span class="string">&quot;bias_v&quot;</span>, <span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line">    self.out_proj = nn.Linear(d_out, d_out)</span><br><span class="line">    self.dropout = nn.Dropout(dropout)</span><br><span class="line">    self.register_buffer(<span class="string">&quot;mask&quot;</span>, torch.triu(torch.ones(context_length, context_length), diagonal=<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Initialize parameters</span></span><br><span class="line">    self.reset_parameters()</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reset_parameters</span>(<span class="params">self</span>):</span><br><span class="line">    nn.init.kaiming_uniform_(self.W_query, a=math.sqrt(<span class="number">5</span>))</span><br><span class="line">    nn.init.kaiming_uniform_(self.W_key, a=math.sqrt(<span class="number">5</span>))</span><br><span class="line">    nn.init.kaiming_uniform_(self.W_value, a=math.sqrt(<span class="number">5</span>))</span><br><span class="line">    <span class="keyword">if</span> self.bias_q <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        fan_in, _ = nn.init._calculate_fan_in_and_fan_out(self.W_query)</span><br><span class="line">        bound = <span class="number">1</span> / math.sqrt(fan_in)</span><br><span class="line">        nn.init.uniform_(self.bias_q, -bound, bound)</span><br><span class="line">        nn.init.uniform_(self.bias_k, -bound, bound)</span><br><span class="line">        nn.init.uniform_(self.bias_v, -bound, bound)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">    b, n, _ = x.shape</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Calculate Q, K, V using einsum, first perform linear transformations</span></span><br><span class="line">    Q = torch.einsum(<span class="string">&quot;bnd,di-&gt;bni&quot;</span>, x, self.W_query)</span><br><span class="line">    K = torch.einsum(<span class="string">&quot;bnd,di-&gt;bni&quot;</span>, x, self.W_key)</span><br><span class="line">    V = torch.einsum(<span class="string">&quot;bnd,di-&gt;bni&quot;</span>, x, self.W_value)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Add biases if they are used</span></span><br><span class="line">    <span class="keyword">if</span> self.bias_q <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        Q += self.bias_q</span><br><span class="line">        K += self.bias_k</span><br><span class="line">        V += self.bias_v</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Reshape for multi-head attention</span></span><br><span class="line">    Q = Q.view(b, n, self.num_heads, self.head_dim).transpose(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    K = K.view(b, n, self.num_heads, self.head_dim).transpose(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    V = V.view(b, n, self.num_heads, self.head_dim).transpose(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Scaled dot-product attention</span></span><br><span class="line">    scores = torch.einsum(<span class="string">&quot;bhnd,bhmd-&gt;bhnm&quot;</span>, Q, K) / (self.head_dim ** <span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Apply mask</span></span><br><span class="line">    mask = self.mask[:n, :n].unsqueeze(<span class="number">0</span>).unsqueeze(<span class="number">1</span>).expand(b, self.num_heads, n, n)</span><br><span class="line">    scores = scores.masked_fill(mask.<span class="built_in">bool</span>(), -torch.inf)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Softmax and dropout</span></span><br><span class="line">    attn_weights = torch.softmax(scores, dim=-<span class="number">1</span>)</span><br><span class="line">    attn_weights = self.dropout(attn_weights)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Aggregate the attended context vectors</span></span><br><span class="line">    context_vec = torch.einsum(<span class="string">&quot;bhnm,bhmd-&gt;bhnd&quot;</span>, attn_weights, V)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Combine heads and project the output</span></span><br><span class="line">    context_vec = context_vec.transpose(<span class="number">1</span>, <span class="number">2</span>).reshape(b, n, self.d_out)</span><br><span class="line">    context_vec = self.out_proj(context_vec)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> context_vec</span><br></pre></td></tr></table></figure>
+<h3 id="实现5-flash-Attention接口"><a href="#实现5-flash-Attention接口" class="headerlink" title="实现5(flash-Attention接口)"></a>实现5(flash-Attention接口)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MHAPyTorchScaledDotProduct</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, d_in, d_out, num_heads, context_length, dropout=<span class="number">0.0</span>, qkv_bias=<span class="literal">False</span></span>):</span><br><span class="line">    <span class="built_in">super</span>().__init__()</span><br><span class="line">   	<span class="keyword">assert</span> d_out % num_heads == <span class="number">0</span>, <span class="string">&quot;embed_dim is indivisible by num_heads&quot;</span></span><br><span class="line"></span><br><span class="line">    self.num_heads = num_heads</span><br><span class="line">    self.context_length = context_length</span><br><span class="line">    self.head_dim = d_out // num_heads</span><br><span class="line">    self.d_out = d_out</span><br><span class="line"></span><br><span class="line">    self.qkv = nn.Linear(d_in, <span class="number">3</span> * d_out, bias=qkv_bias)</span><br><span class="line">    self.proj = nn.Linear(d_out, d_out)</span><br><span class="line">    self.dropout = dropout</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">    batch_size, num_tokens, embed_dim = x.shape</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (b, num_tokens, embed_dim) --&gt; (b, num_tokens, 3 * embed_dim)</span></span><br><span class="line">    qkv = self.qkv(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (b, num_tokens, 3 * embed_dim) --&gt; (b, num_tokens, 3, num_heads, head_dim)</span></span><br><span class="line">    qkv = qkv.view(batch_size, num_tokens, <span class="number">3</span>, self.num_heads, self.head_dim)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (b, num_tokens, 3, num_heads, head_dim) --&gt; (3, b, num_heads, num_tokens, head_dim)</span></span><br><span class="line">    qkv = qkv.permute(<span class="number">2</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (3, b, num_heads, num_tokens, head_dim) -&gt; 3 times (b, num_heads, num_tokens, head_dim)</span></span><br><span class="line">    queries, keys, values = qkv</span><br><span class="line"></span><br><span class="line">    use_dropout = <span class="number">0.</span> <span class="keyword">if</span> <span class="keyword">not</span> self.training <span class="keyword">else</span> self.dropout</span><br><span class="line"></span><br><span class="line">    context_vec = nn.functional.scaled_dot_product_attention(</span><br><span class="line">        queries, keys, values, attn_mask=<span class="literal">None</span>, dropout_p=use_dropout, is_causal=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Combine heads, where self.d_out = self.num_heads * self.head_dim</span></span><br><span class="line">    context_vec = context_vec.transpose(<span class="number">1</span>, <span class="number">2</span>).contiguous().view(batch_size, num_tokens, self.d_out)</span><br><span class="line"></span><br><span class="line">    context_vec = self.proj(context_vec)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> context_vec</span><br></pre></td></tr></table></figure>
+<h2 id="性能对比"><a href="#性能对比" class="headerlink" title="性能对比"></a>性能对比</h2><p>Speed comparison (Nvidia A100 GPU) with warmup and compilation (forward and backward pass)</p>
+<p><strong>compilation（编译）</strong> 指的是「将 PyTorch 等框架的动态图代码，编译为 GPU 可直接执行的优化机器码」的过程，是实现 FlashAttention 这类高性能算子加速的核心步骤。</p>
+<p><img src="/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/image-20260323012529668.png" alt="image-20260323012529668"></p>
+
+    </div>
+
+    
+    
+    
+      
+<div class="post-widgets">
+      <div id="needsharebutton-postbottom">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lifengjun
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/" title="LLMs-From-Scatch总结">http://localhost:4000/2026/03/22/LLMs-From-Scatch总结/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/12/26/%E8%AE%BA%E6%96%87%E7%90%86%E8%A7%A3%E6%89%8B%E7%BB%98/" rel="prev" title="论文理解手绘">
+      <i class="fa fa-chevron-left"></i> 论文理解手绘
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2026/04/04/Claude%20Code%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="Claude Code 学习笔记">
+      Claude Code 学习笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Stage-1"><span class="nav-number">1.</span> <span class="nav-text">Stage 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%AF%8D%E8%A1%A8"><span class="nav-number">1.1.</span> <span class="nav-text">创建词表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BytePair-encoding-BPE%E7%BC%96%E7%A0%81"><span class="nav-number">1.2.</span> <span class="nav-text">BytePair encoding(BPE编码)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">位置编码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Stage-2"><span class="nav-number">2.</span> <span class="nav-text">Stage 2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Self-Attention"><span class="nav-number">2.1.</span> <span class="nav-text">Self-Attention</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Causal-self-attention-%E5%9B%A0%E6%9E%9C%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="nav-number">2.2.</span> <span class="nav-text">Causal self-attention(因果注意力)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dropout"><span class="nav-number">2.3.</span> <span class="nav-text">Dropout</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B01-CausalAttention%EF%BC%89"><span class="nav-number">2.3.1.</span> <span class="nav-text">实现1(CausalAttention）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="nav-number">2.4.</span> <span class="nav-text">多头注意力</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B02-stack%E5%A4%9A%E4%B8%AA%E5%A4%B4"><span class="nav-number">2.4.1.</span> <span class="nav-text">实现2(stack多个头)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B03-Combined-Weight"><span class="nav-number">2.4.2.</span> <span class="nav-text">实现3(Combined Weight)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B04-einsum"><span class="nav-number">2.4.3.</span> <span class="nav-text">实现4(einsum)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B05-flash-Attention%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.4.4.</span> <span class="nav-text">实现5(flash-Attention接口)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94"><span class="nav-number">2.5.</span> <span class="nav-text">性能对比</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="lifengjun"
+      src="https://avatars0.githubusercontent.com/u/25082467?v=4">
+  <p class="site-author-name" itemprop="name">lifengjun</p>
+  <div class="site-description" itemprop="description">个人学习笔记和日志</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/543877815" title="GitHub → https://github.com/543877815" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:543877815@qq.com" title="E-Mail → mailto:543877815@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lifengjun</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"7lnT19QcEeBPLqbdFz6RXmt6-gzGzoHsz","app_key":"0m9MYgfgDxi38rb89hJ8gUHF","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://localhost:4000/2026/03/22/LLMs-From-Scatch%E6%80%BB%E7%BB%93/',]
+      });
+      });
+  </script>
+
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+      pbOptions = {};
+        pbOptions.iconStyle = "box";
+        pbOptions.boxForm = "horizontal";
+        pbOptions.position = "bottomCenter";
+        pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+  </script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '970dc8fd856c3e17f9f0',
+      clientSecret: '7f6d29828dd1f4a02336c480ba1012f1851b0eb0',
+      repo        : '543877815.github.io',
+      owner       : '543877815',
+      admin       : ['543877815'],
+      id          : 'c082c7e8c6b12dda405d7c2b5870e121',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

@@ -18,33 +18,33 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"localhost","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="主要记录图形算法、建模思想，不记录公式推导和训练思路：  【Nerf】Representing Scenes as Neural Radiance Fields for View Synthesis. 【Mip-Nerf】Mip-NeRF: A Multiscale Representation for Anti-Aliasing Neural Radiance Fields. 【Mip-Nerf">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【论文阅读】从Nerf到3D gaussian-splatting的逆渲染">
-<meta property="og:url" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/index.html">
+<meta property="og:url" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/index.html">
 <meta property="og:site_name" content="逗比学长的博客">
 <meta property="og:description" content="主要记录图形算法、建模思想，不记录公式推导和训练思路：  【Nerf】Representing Scenes as Neural Radiance Fields for View Synthesis. 【Mip-Nerf】Mip-NeRF: A Multiscale Representation for Anti-Aliasing Neural Radiance Fields. 【Mip-Nerf">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E9%80%86%E6%B8%B2%E6%9F%93%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Blender%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%ADJson%E6%96%87%E4%BB%B6%E7%9A%84%E5%86%85%E5%AE%B9.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E7%84%A6%E6%AE%B5%E5%92%8C%E8%A7%92%E5%BA%A6%E5%85%B3%E7%B3%BB.jpg">
-<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E8%A7%86%E8%A7%92%E5%92%8C%E7%84%A6%E8%B7%9D%E7%9A%84%E5%85%B3%E7%B3%BB.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/coordinate_systems.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E8%A7%86%E5%9B%BE%E7%9F%A9%E9%98%B5%E5%8F%82%E6%95%B0%E5%90%AB%E4%B9%89.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Clip%20Space%20and%20NDC.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Colmap%E5%92%8CBlender%E6%95%B0%E6%8D%AE%E9%9B%86%E5%8F%98%E6%8D%A2%E7%A4%BA%E6%84%8F%E5%9B%BE.jpeg">
-<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E5%B8%B8%E8%A7%81%E7%9A%84%E4%B8%89%E7%BB%B4%E8%A1%A8%E7%A4%BA.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Nerf%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E5%85%89%E7%BA%BF%E5%8F%91%E5%B0%84%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4%E5%92%8C%E8%A7%86%E5%B7%AE%E7%A9%BA%E9%97%B4%E9%87%87%E6%A0%B7%E5%AF%B9%E6%AF%94.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/mip-nerf%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/2024-04-21-%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Mip-Nerf%E7%9B%B8%E5%85%B3%E5%85%AC%E5%BC%8F.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Mip-Nerf%20360%E6%AD%A3%E5%88%99%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/instant-NGP%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
-<meta property="og:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Plenoxel%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E9%80%86%E6%B8%B2%E6%9F%93%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Blender%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%ADJson%E6%96%87%E4%BB%B6%E7%9A%84%E5%86%85%E5%AE%B9.png">
+<meta property="og:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E7%84%A6%E6%AE%B5%E5%92%8C%E8%A7%92%E5%BA%A6%E5%85%B3%E7%B3%BB.jpg">
+<meta property="og:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E8%A7%86%E8%A7%92%E5%92%8C%E7%84%A6%E8%B7%9D%E7%9A%84%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/coordinate_systems.png">
+<meta property="og:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E8%A7%86%E5%9B%BE%E7%9F%A9%E9%98%B5%E5%8F%82%E6%95%B0%E5%90%AB%E4%B9%89.png">
+<meta property="og:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Clip%20Space%20and%20NDC.png">
+<meta property="og:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Colmap%E5%92%8CBlender%E6%95%B0%E6%8D%AE%E9%9B%86%E5%8F%98%E6%8D%A2%E7%A4%BA%E6%84%8F%E5%9B%BE.jpeg">
+<meta property="og:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E5%B8%B8%E8%A7%81%E7%9A%84%E4%B8%89%E7%BB%B4%E8%A1%A8%E7%A4%BA.png">
+<meta property="og:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Nerf%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E5%85%89%E7%BA%BF%E5%8F%91%E5%B0%84%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4%E5%92%8C%E8%A7%86%E5%B7%AE%E7%A9%BA%E9%97%B4%E9%87%87%E6%A0%B7%E5%AF%B9%E6%AF%94.png">
+<meta property="og:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/mip-nerf%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/2024-04-21-%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Mip-Nerf%E7%9B%B8%E5%85%B3%E5%85%AC%E5%BC%8F.png">
+<meta property="og:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Mip-Nerf%20360%E6%AD%A3%E5%88%99%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/instant-NGP%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/Plenoxel%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
 <meta property="article:published_time" content="2024-04-21T08:54:23.000Z">
 <meta property="article:modified_time" content="2024-07-10T13:53:04.181Z">
 <meta property="article:author" content="lifengjun">
@@ -53,9 +53,9 @@
 <meta property="article:tag" content="nerf">
 <meta property="article:tag" content="3D gaussian splatting">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E9%80%86%E6%B8%B2%E6%9F%93%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta name="twitter:image" content="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/%E9%80%86%E6%B8%B2%E6%9F%93%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
 
-<link rel="canonical" href="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/">
+<link rel="canonical" href="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/">
 
 
 <script id="page-configurations">
@@ -257,7 +257,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
@@ -509,7 +509,7 @@ t_i\sim \mathcal U[t_n+\frac{i-1}{N}(t_f-t_n), t_n+\frac{i}{N}(t_f-t_n)].</scrip
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/" title="【论文阅读】从Nerf到3D gaussian-splatting的逆渲染">https://lifengjun.xin/2024/04/21/算法理解之从Nerf到gaussian-splatting/</a>
+    <a href="http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/" title="【论文阅读】从Nerf到3D gaussian-splatting的逆渲染">http://localhost:4000/2024/04/21/算法理解之从Nerf到gaussian-splatting/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -614,20 +614,20 @@ t_i\sim \mathcal U[t_n+\frac{i-1}{N}(t_f-t_n), t_n+\frac{i}{N}(t_f-t_n)].</scrip
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-count">60</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -670,7 +670,7 @@ t_i\sim \mathcal U[t_n+\frac{i-1}{N}(t_f-t_n), t_n+\frac{i}{N}(t_f-t_n)].</scrip
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="user"></i>
   </span>
@@ -888,7 +888,7 @@ t_i\sim \mathcal U[t_n+\frac{i-1}{N}(t_f-t_n), t_n+\frac{i}{N}(t_f-t_n)].</scrip
       quicklink({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://lifengjun.xin/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://localhost:4000/2024/04/21/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3%E4%B9%8B%E4%BB%8ENerf%E5%88%B0gaussian-splatting/',]
       });
       });
   </script>

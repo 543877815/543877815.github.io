@@ -18,48 +18,48 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lifengjun.xin","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"localhost","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="​    我之前在写学校艺术中心的项目页面的时候要求有大量的动画，一开始我写的页面动画非常不流畅，有很多卡顿，因此我通过在慕课网上学习了让你页面速度飞起来 Web前端性能优化以及在优达学堂(我是通过在谷歌开发者帮助上找到这个网址的)来了解一些关于现代浏览器页面渲染的原理和过程，当然还有The Applied Science of Runtime Performance - Chrome Dev S">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端页面性能优化小记">
-<meta property="og:url" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/index.html">
+<meta property="og:url" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/index.html">
 <meta property="og:site_name" content="逗比学长的博客">
 <meta property="og:description" content="​    我之前在写学校艺术中心的项目页面的时候要求有大量的动画，一开始我写的页面动画非常不流畅，有很多卡顿，因此我通过在慕课网上学习了让你页面速度飞起来 Web前端性能优化以及在优达学堂(我是通过在谷歌开发者帮助上找到这个网址的)来了解一些关于现代浏览器页面渲染的原理和过程，当然还有The Applied Science of Runtime Performance - Chrome Dev S">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image1.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image2.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image3.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image4.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image5.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image6.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image7.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image8.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image9.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image10.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image11.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image12.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image13.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image14.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image15.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image17.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/CQN88%601T02C5I%7DMZ000Q%7DDM.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image32.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image33.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image34.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image35.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image36.png">
-<meta property="og:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image37.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image1.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image2.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image3.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image4.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image5.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image6.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image7.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image8.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image9.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image10.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image11.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image12.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image13.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image14.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image15.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image17.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/CQN88%601T02C5I%7DMZ000Q%7DDM.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image32.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image33.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image34.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image35.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image36.png">
+<meta property="og:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image37.png">
 <meta property="article:published_time" content="2019-02-08T08:23:20.000Z">
 <meta property="article:modified_time" content="2020-11-13T13:55:58.737Z">
 <meta property="article:author" content="lifengjun">
 <meta property="article:tag" content="性能">
 <meta property="article:tag" content="优化">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image1.png">
+<meta name="twitter:image" content="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/image1.png">
 
-<link rel="canonical" href="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/">
+<link rel="canonical" href="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/">
 
 
 <script id="page-configurations">
@@ -261,7 +261,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25082467?v=4">
@@ -463,7 +463,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/" title="前端页面性能优化小记">https://lifengjun.xin/2019/02/08/前端页面性能优化小记/</a>
+    <a href="http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/" title="前端页面性能优化小记">http://localhost:4000/2019/02/08/前端页面性能优化小记/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -566,20 +566,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-count">60</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -622,7 +622,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="user"></i>
   </span>
@@ -787,7 +787,7 @@
       quicklink({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://lifengjun.xin/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://localhost:4000/2019/02/08/%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/',]
       });
       });
   </script>
